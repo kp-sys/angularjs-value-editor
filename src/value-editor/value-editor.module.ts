@@ -9,6 +9,6 @@ import TextValueEditorComponent from './editors/text/text.value-editor.component
  */
 
 export default register('angularjs-value-editor')
-    .component(TextValueEditorComponent.componentName, TextValueEditorComponent)
     .component(ValueEditorComponent.componentName, ValueEditorComponent)
+    .component(TextValueEditorComponent.componentName, TextValueEditorComponent)
     .name();

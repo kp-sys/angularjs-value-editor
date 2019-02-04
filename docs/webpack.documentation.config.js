@@ -83,7 +83,7 @@ module.exports = {
                     {
                         loader: 'ngtemplate-loader',
                         options: {
-                            relativeTo: path.resolve(__dirname, 'src')
+                            relativeTo: path.resolve(__dirname, '..', 'src')
                         }
                     },
                     {

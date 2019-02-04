@@ -30,8 +30,24 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
  * @ngdoc component
  * @name kpValueEditor
  * @module angularjs-value-editor
+ *
+ * @requires ng.type.ngModel.NgModelController
+ *
+ * @param {string} id Input id.
+ * @param {string} name Input name.
+ * @param {string} placeholder Placeholder.
+ * @param {string} type ValueEditor type. <.
+ * @param {boolean} disabled If input is disabled. <.
+ * @param {boolean} visible If input is visible. <.
+ * @param {boolean} required If input is required. <.
+ * @param {ValueEditorOptions} options ValueEditor options. Type depends on ValueEditor type.
+ * @param {ng.type.ngModel.NgModelController} status Status of input.
+ *
+ * @description
+ * Generic value editor depends on type:
+ *
+ * - `text`, `number`, `textarea`, `rich-textarea`: {@link component:textValueEditor}
  */
-// tslint:disable-next-line
 export default class ValueEditorComponent {
     public static componentName = 'kpValueEditor';
 
@@ -59,3 +75,10 @@ export default class ValueEditorComponent {
 export interface ValueEditorOptions {
     cssClasses?: string[];
 }
+/**
+ * @ngdoc type
+ * @name ValueEditorOptions
+ * @module angularjs-value-editor
+ *
+ * @property {string[]} [cssClasses] Optional additional CSS classes
+ */
