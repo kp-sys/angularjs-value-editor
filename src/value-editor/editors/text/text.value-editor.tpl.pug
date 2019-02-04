@@ -1,0 +1,19 @@
+
+input( ng-if="$ctrl.options.type === 'text'"
+type="{{$ctrl.options.type}}"
+
+id="{{$ctrl.valueEditorController.id}}"
+name="{{$ctrl.valueEditorController.name}}"
+placeholder="{{$ctrl.valueEditorController.placeholder}}"
+ng-class="$ctrl.options.cssClasses"
+
+ng-model="$ctrl.model"
+ng-model-options="{ getterSetter: true}"
+
+ng-disabled="$ctrl.valueEditorController.disabled"
+ng-required="$ctrl.valueEditorController.required"
+
+ng-minlength="$ctrl.options.minLength"
+ng-maxlength="$ctrl.options.maxLength"
+ng-pattern="$ctrl.options.pattern"
+)
