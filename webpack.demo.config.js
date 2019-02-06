@@ -14,6 +14,15 @@ module.exports = {
         filename: '[name].js'
     },
 
+    externals: {
+        "angularjs-register": {
+            commonjs: 'angularjs-register',
+            commonjs2: 'angularjs-register',
+            amd: 'angularjs-register',
+            root: 'angularjs-register'
+        }
+    },
+
     module: {
         rules: [
             {

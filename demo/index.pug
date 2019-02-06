@@ -1,13 +1,13 @@
 doctype html
 
 html
-	head
-		title Value Editor Demo
+    head
+        title Value Editor Demo
 
-	body(ng-app="app")
-		h1 Value Editor Demo
-		main(ng-controller="demoController as dc")
-			kp-value-editor(ng-model="value" type="'text'" status="status" name="text")
-			hr
-			input(type="text" ng-model="value")
-			span {{status | json}}
+    body(ng-app="app")
+        h1 Value Editor Demo
+        main(ng-controller="demoController as dc")
+            kp-value-editor(ng-model="value" type="'text'" status="status")
+            hr
+            input(type="text" ng-model="value")
+            span {{status | json}}

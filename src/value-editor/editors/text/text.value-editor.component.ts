@@ -1,5 +1,10 @@
 import NgModelConnector from '../ng-model-connector';
-import ValueEditorComponent, {ValueEditorComponentController, ValueEditorOptions} from '../../value-editor.component';
+import ValueEditorComponent, {
+    ValueEditorBindings,
+    ValueEditorComponentController,
+    ValueEditorOptions,
+    ValueEditorValidations
+} from '../../value-editor.component';
 import {IPostLink} from 'angular';
 
 const DEFAULT_OPTIONS: TextValueEditorOptions = {
@@ -7,11 +12,11 @@ const DEFAULT_OPTIONS: TextValueEditorOptions = {
 };
 
 export class TextValueEditorComponentController extends NgModelConnector<string> implements IPostLink {
-    public valueEditorController: ValueEditorComponentController<string, TextValueEditorOptions>;
+    public valueEditorController: ValueEditorComponentController<string, TextValueEditorOptions, TextValueEditorValidations>;
     public options: TextValueEditorOptions;
 
     public $postLink(): void {
-        this.options = Object.assign({}, DEFAULT_OPTIONS);
+        this.options = Object.assign({}, this.valueEditorController.options, DEFAULT_OPTIONS);
     }
 }
 
@@ -71,21 +76,36 @@ export default class TextValueEditorComponent {
 type TTextValueEditorType = 'text' | 'number' | 'textarea' | 'rich-textarea';
 
 export interface TextValueEditorOptions extends ValueEditorOptions {
-    type: TTextValueEditorType;
-    minLength?: number;
-    maxLength?: number;
-    pattern?: string;
+    type?: TTextValueEditorType;
 }
+export interface TextValueEditorValidations extends ValueEditorValidations {
+    minlength?: number;
+    maxlength?: number;
+    pattern?: string | RegExp;
+}
+
+export interface TextValueEditorBindings extends ValueEditorBindings<TextValueEditorOptions, TextValueEditorValidations> {}
+
 /**
  * @ngdoc type
  * @name TextValueEditorOptions
  * @module angularjs-value-editor
  *
  * @property {string} type Input type. Possible values are `text`, `number`, `textarea`, `rich-textarea`.
- * @property {number=} minLength Min length.
- * @property {number=} maxLength Max length.
- * @property {string=} pattern Regexp pattern.
  *
  * @description
  * Extends {@link type:ValueEditorOptions}
+ */
+
+/**
+ * @ngdoc type
+ * @name TextValueEditorValidations
+ * @module angularjs-value-editor
+ *
+ * @property {number=} minlength Min length.
+ * @property {number=} maxlength Max length.
+ * @property {string=} pattern Regexp pattern.
+ *
+ * @description
+ * Extends {@link type:ValueEditorValidations}
  */

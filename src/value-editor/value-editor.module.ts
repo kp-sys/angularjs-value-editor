@@ -12,3 +12,8 @@ export default register('angularjs-value-editor')
     .component(ValueEditorComponent.componentName, ValueEditorComponent)
     .component(TextValueEditorComponent.componentName, TextValueEditorComponent)
     .name();
+
+/**
+ * @typedef ng.type.ngModel
+ * @typedef ng.type.ngModel.NgModelController
+ */

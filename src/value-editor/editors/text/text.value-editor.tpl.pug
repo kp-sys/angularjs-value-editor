@@ -1,19 +1,21 @@
 // TEXT
-input( ng-if="$ctrl.options.type === 'text'"
-type="{{$ctrl.options.type}}"
+input(  ng-if="$ctrl.options.type === 'text'"
+        type="{{$ctrl.options.type}}"
 
-id="{{$ctrl.valueEditorController.id}}"
-name="{{$ctrl.valueEditorController.name}}"
-placeholder="{{$ctrl.valueEditorController.placeholder}}"
-ng-class="$ctrl.options.cssClasses"
+        id="{{$ctrl.valueEditorController.id}}"
+        name="{{$ctrl.valueEditorController.name}}"
+        placeholder="{{$ctrl.valueEditorController.placeholder}}"
+        ng-class="$ctrl.options.cssClasses"
 
-ng-model="$ctrl.model"
-ng-model-options="{ getterSetter: true}"
+        ng-model="$ctrl.model"
+        ng-model-options="{ getterSetter: true}"
 
-ng-disabled="$ctrl.valueEditorController.disabled"
-ng-required="$ctrl.valueEditorController.required"
+        ng-disabled="$ctrl.valueEditorController.disabled"
 
-ng-minlength="$ctrl.options.minLength"
-ng-maxlength="$ctrl.options.maxLength"
-ng-pattern="$ctrl.options.pattern"
-)
+        ng-required="$ctrl.valueEditorController.validations.required"
+        ng-minlength="$ctrl.valueEditorController.validations.minlength"
+        ng-maxlength="$ctrl.valueEditorController.validations.maxlength"
+        ng-pattern="$ctrl.valueEditorController.validations.pattern"
+
+        data-main-input
+    )
