@@ -9,7 +9,7 @@
     "repository": "https://github.com/DostalTomas/angularjs-value-editor.git",
     "dependencies": {
         "angular": "latest",
-        "angularjs-register": "github:DostalTomas/angularjs-register",
+        "angularjs-register": "github:DostalTomas/angularjs-register#v1.1.3",
         "@kpsys/angular-ui-bootstrap": "latest"
     },
     "main": "dist/value-editor.js",
@@ -32,7 +32,10 @@
     "devDependencies": {
         "@babel/core": "latest",
         "@types/angular": "latest",
+        "@types/angular-mocks": "latest",
         "@types/node": "latest",
+        "@types/jasmine": "latest",
+        "angular-mocks": "latest",
         "babel-loader": "next",
         "babel-plugin-angularjs-annotate": "latest",
         "babel-preset-env": "next",
@@ -44,6 +47,19 @@
         "extract-text-webpack-plugin": "next",
         "grunt": "latest",
         "grunt-cli": "latest",
+        "istanbul": "latest",
+        "istanbul-instrumenter-loader": "latest",
+        "jasmine": "latest",
+        "jasmine-core": "latest",
+        "karma": "3.1.4",
+        "karma-chrome-launcher": "latest",
+        "karma-cli": "latest",
+        "karma-coverage-istanbul-reporter": "latest",
+        "karma-jasmine": "latest",
+        "karma-source-map-support": "latest",
+        "karma-sourcemap-loader": "latest",
+        "karma-spec-reporter": "latest",
+        "karma-webpack": "^4.0.0-rc.6",
         "less": "latest",
         "less-loader": "latest",
         "pug-html-loader": "latest",
@@ -68,6 +84,7 @@
         "demo": "webpack-dev-server --config webpack.demo.config.js --progress",
         "docs:build": "webpack --config docs/webpack.documentation.config.js --progress",
         "docs:serve": "webpack-dev-server --config ./docs/webpack.documentation.config.js --progress",
-        "docs:grunt": "grunt --gruntfile ./docs/GruntFile.js --base . docs"
+        "docs:grunt": "grunt --gruntfile ./docs/GruntFile.js --base . docs",
+        "test": "karma start test/karma.conf.js"
     }
 }
