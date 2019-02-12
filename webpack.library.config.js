@@ -1,5 +1,5 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UnminifiedWebpackPlugin = require('unminified-webpack-plugin');
 
@@ -21,12 +21,7 @@ module.exports = (env, {mode}) => ({
 
     externals: {
         angular: 'angular',
-        '@kpsys/angularjs-register': {
-            commonjs: '@kpsys/angularjs-register',
-            commonjs2: '@kpsys/angularjs-register',
-            amd: '@kpsys/angularjs-register',
-            root: 'register'
-        },
+        '@kpsys/angularjs-register': '@kpsys/angularjs-register',
         '@kpsys/angular-ui-bootstrap': '@kpsys/angular-ui-bootstrap',
         'angular-ui-ace': 'angular-ui-ace'
     },
@@ -64,23 +59,23 @@ module.exports = (env, {mode}) => ({
             },
             {
                 test: /(\.less$)|(\.css$)/,
-                use: ExtractTextPlugin.extract({
-                    use: [
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                sourceMap: true
-                            }
-                        },
-                        {
-                            loader: 'less-loader',
-                            options: {
-                                sourceMap: true
-                            }
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true
                         }
-                    ],
-                    fallback: 'style-loader'
-                })
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    }
+                ]
             },
             {
                 test: /\.tpl.pug/,
@@ -109,10 +104,16 @@ module.exports = (env, {mode}) => ({
     optimization: {
         splitChunks: {
             cacheGroups: {
-                vendors: {
-                    test: isVendor,
+                jsVendors: {
+                    test: isJsVendor,
                     name: 'vendors',
                     chunks: 'all'
+                },
+                cssVendors: {
+                    test: isCssVendor,
+                    name: 'vendors',
+                    chunks: 'all',
+                    enforce: true
                 }
             }
         }
@@ -121,7 +122,10 @@ module.exports = (env, {mode}) => ({
     devtool: 'source-map',
 
     plugins: (function () {
-        const plugins = [new ExtractTextPlugin({filename: '[name].css', disable: false, allChunks: true}),
+        const plugins = [
+            new MiniCssExtractPlugin({
+                filename: '[name].css'
+            }),
             new CleanWebpackPlugin(
                 ['dist/*.*'],
                 {
@@ -138,8 +142,14 @@ module.exports = (env, {mode}) => ({
     })()
 });
 
-function isVendor({resource}) {
+function isJsVendor({resource}) {
     return resource &&
         resource.indexOf('node_modules') >= 0 &&
         resource.match(/.js$/);
+}
+
+function isCssVendor({resource}) {
+    return resource &&
+        resource.indexOf('node_modules') >= 0 &&
+        resource.match(/.css$/);
 }

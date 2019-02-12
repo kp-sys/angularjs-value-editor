@@ -1,5 +1,5 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -50,23 +50,23 @@ module.exports = {
             },
             {
                 test: /(\.less$)|(\.css$)/,
-                use: ExtractTextPlugin.extract({
-                    use: [
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                sourceMap: true
-                            }
-                        },
-                        {
-                            loader: 'less-loader',
-                            options: {
-                                sourceMap: true
-                            }
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true
                         }
-                    ],
-                    fallback: 'style-loader'
-                })
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    }
+                ]
             },
             {
                 test: /\.tpl.pug$/,
@@ -82,10 +82,16 @@ module.exports = {
     optimization: {
         splitChunks: {
             cacheGroups: {
-                vendors: {
-                    test: isVendor,
+                jsVendors: {
+                    test: isJsVendor,
                     name: 'vendors',
                     chunks: 'all'
+                },
+                cssVendors: {
+                    test: isCssVendor,
+                    name: 'vendors',
+                    chunks: 'all',
+                    enforce: true
                 }
             }
         }
@@ -100,15 +106,23 @@ module.exports = {
     },
 
     plugins: [
-        new ExtractTextPlugin({filename: 'demo/[name].css', disable: false, allChunks: true}),
+        new MiniCssExtractPlugin({
+            filename: '[name].css'
+        }),
         new HtmlWebpackPlugin({
             template: 'html-loader!pug-html-loader!demo/index.pug'
         })
     ]
 };
 
-function isVendor({resource}) {
+function isJsVendor({resource}) {
     return resource &&
         resource.indexOf('node_modules') >= 0 &&
         resource.match(/.js$/);
+}
+
+function isCssVendor({resource}) {
+    return resource &&
+        resource.indexOf('node_modules') >= 0 &&
+        resource.match(/.css$/);
 }

@@ -1,18 +1,11 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = ({
     mode: 'development',
 
     externals: {
         angular: 'angular',
-
-        '@kpsys/angular-ui-bootstrap': {
-            commonjs: '@kpsys/angular-ui-bootstrap',
-            commonjs2: '@kpsys/angular-ui-bootstrap',
-            amd: '@kpsys/angular-ui-bootstrap',
-            root: '@kpsys/angular-ui-bootstrap'
-        }
+        '@kpsys/angular-ui-bootstrap': '@kpsys/angular-ui-bootstrap'
     },
 
     module: {
