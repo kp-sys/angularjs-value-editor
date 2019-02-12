@@ -31,7 +31,7 @@
         "dist/",
         "src/",
         "webpack.demo.config.js",
-      "webpack.library.config.js",
+        "webpack.library.config.js",
         "tsconfig.json"
     ],
     "devDependencies": {
