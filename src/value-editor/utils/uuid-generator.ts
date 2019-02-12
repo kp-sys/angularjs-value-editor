@@ -1,3 +1,6 @@
+/**
+ * Generates random pseudo-UUID.
+ */
 export function generateUuid(): string {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
         // tslint:disable-next-line

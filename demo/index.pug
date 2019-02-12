@@ -7,7 +7,7 @@ html
     body(ng-app="app")
         h1 Value Editor Demo
         main(ng-controller="demoController as dc" ng-init="disabled = false")
-            kp-value-editor(ng-model="value" editor-id="ajdy" type="'text'" status="status" options="{type: 'rich-textarea'}" disabled="true")
+            kp-value-editor(ng-model="value" editor-id="ajdy" type="'text'" status="status" options="{type: 'rich-textarea'}" disabled="disabled")
             hr
             div
                 label Disabled:

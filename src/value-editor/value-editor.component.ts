@@ -2,7 +2,7 @@ import {IFormController, INgModelController, IOnChanges, IOnInit, IScope} from '
 import NgModelConnector from './editors/ng-model-connector';
 import {generateUuid} from './utils/uuid-generator';
 
-export type TValueEditorType = 'text' | 'number' | 'text-area' | 'rich-textarea';
+export type TValueEditorType = 'text' | 'text-area' | 'rich-textarea';
 
 export const EVENTS = Object.freeze({
     disabled: 'value-editor:disabled'
@@ -102,10 +102,24 @@ export default class ValueEditorComponent {
     public templateUrl = require('./value-editor.tpl.pug');
 }
 
+/**
+ * @ngdoc type
+ * @name ValueEditorValidations
+ * @module angularjs-value-editor
+ *
+ * @property {boolean=} required Optional required validation.
+ */
 export interface ValueEditorValidations {
     required?: boolean;
 }
 
+/**
+ * @ngdoc type
+ * @name ValueEditorOptions
+ * @module angularjs-value-editor
+ *
+ * @property {string[]} [cssClasses] Optional additional CSS classes
+ */
 export interface ValueEditorOptions {
     cssClasses?: string[];
 }
@@ -121,19 +135,3 @@ export interface ValueEditorBindings<EDITOROPTS extends ValueEditorOptions = Val
     options?: EDITOROPTS;
     status?: INgModelController;
 }
-
-/**
- * @ngdoc type
- * @name ValueEditorValidations
- * @module angularjs-value-editor
- *
- * @property {boolean=} required Optional required validation.
- */
-
-/**
- * @ngdoc type
- * @name ValueEditorOptions
- * @module angularjs-value-editor
- *
- * @property {string[]} [cssClasses] Optional additional CSS classes
- */

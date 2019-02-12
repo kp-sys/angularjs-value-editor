@@ -134,20 +134,6 @@ export default class TextValueEditorComponent {
 
 export type TTextValueEditorType = 'text' | 'textarea' | 'rich-textarea';
 
-export interface TextValueEditorOptions extends ValueEditorOptions {
-    type?: TTextValueEditorType;
-    aceOptions?: any;
-}
-
-export interface TextValueEditorValidations extends ValueEditorValidations {
-    minlength?: number;
-    maxlength?: number;
-    pattern?: string | RegExp;
-}
-
-export interface TextValueEditorBindings extends ValueEditorBindings<TextValueEditorOptions, TextValueEditorValidations> {
-}
-
 /**
  * @ngdoc type
  * @name TextValueEditorOptions
@@ -169,6 +155,10 @@ export interface TextValueEditorBindings extends ValueEditorBindings<TextValueEd
  *  }
  * ```
  */
+export interface TextValueEditorOptions extends ValueEditorOptions {
+    type?: TTextValueEditorType;
+    aceOptions?: any;
+}
 
 /**
  * @ngdoc type
@@ -182,3 +172,11 @@ export interface TextValueEditorBindings extends ValueEditorBindings<TextValueEd
  * @description
  * Extends {@link type:ValueEditorValidations}
  */
+export interface TextValueEditorValidations extends ValueEditorValidations {
+    minlength?: number;
+    maxlength?: number;
+    pattern?: string | RegExp;
+}
+
+export interface TextValueEditorBindings extends ValueEditorBindings<TextValueEditorOptions, TextValueEditorValidations> {
+}

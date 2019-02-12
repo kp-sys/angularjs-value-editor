@@ -1,5 +1,8 @@
 import {INgModelController, IOnInit} from 'angular';
 
+/**
+ * Connects outer required ngModel with inner ngModel
+ */
 export default class NgModelConnector<MODEL = any> implements IOnInit {
     public ngModelController: INgModelController;
     protected modelValue: MODEL;
