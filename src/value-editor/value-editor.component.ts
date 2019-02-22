@@ -2,10 +2,11 @@ import {IFormController, INgModelController, IOnChanges, IOnInit, IScope} from '
 import NgModelConnector from './editors/ng-model-connector';
 import {generateUuid} from './utils/uuid-generator';
 
-export type TValueEditorType = 'text' | 'text-area' | 'rich-textarea';
+export type TValueEditorType = 'text' | 'number';
 
 export const EVENTS = Object.freeze({
-    disabled: 'value-editor:disabled'
+    disabled: 'value-editor:disabled',
+    options: 'value-editor:options',
 });
 
 export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS extends ValueEditorOptions = ValueEditorOptions, EDITORVALIDATIONS extends ValueEditorValidations = ValueEditorValidations>
@@ -49,6 +50,10 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
         if (onChangesObj.disabled) {
             this.$scope.$broadcast(EVENTS.disabled, {disabled: onChangesObj.disabled.currentValue});
         }
+
+        if (onChangesObj.options) {
+            this.$scope.$broadcast(EVENTS.options, {newOptions: onChangesObj.options.currentValue, oldOptions: onChangesObj.options.previousValue});
+        }
     }
 
     private generateEditorName(): string {
@@ -77,6 +82,7 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
  * Generic value editor depends on type:
  *
  * - `text`, `textarea`, `rich-textarea`: {@link component:textValueEditor}
+ * - `number`: {@link component:numberValueEditor}
  */
 export default class ValueEditorComponent {
     public static componentName = 'kpValueEditor';

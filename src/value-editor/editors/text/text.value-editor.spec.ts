@@ -353,4 +353,38 @@ describe('text-value-editor', () => {
             expect(aceEditorTextarea.attributes.getNamedItem('readonly')).not.toBe(null);
         });
     });
+
+    describe('transition between types', () => {
+        beforeEach(() => {
+            angular.mock.module(valueEditorModule);
+
+            inject(($compile, $rootScope) => {
+                $scope = $rootScope.$new();
+                valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
+            });
+        });
+
+        it('should keep disabled state', () => {
+            valueEditorMocker.create('text', {disabled: true, options: {type: 'text'}});
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect(valueEditorMocker.getInputElement<HTMLInputElement>().disabled).toBe(true);
+
+            $scope.options = {type: 'textarea'};
+            $scope.$apply();
+
+            expect(valueEditorMocker.getInputElement().tagName.toLowerCase()).toBe('textarea');
+            expect(valueEditorMocker.getInputElement<HTMLTextAreaElement>().disabled).toBe(true);
+
+            $scope.options = {type: 'rich-textarea'};
+            $scope.$apply();
+
+            expect(valueEditorMocker.getInputElement().tagName.toLowerCase()).toBe('div');
+            const aceEditorTextarea = valueEditorMocker.getInputElement<HTMLDivElement>().querySelector('textarea');
+            expect(aceEditorTextarea.attributes.getNamedItem('readonly')).not.toBe(null);
+        });
+
+    });
 });

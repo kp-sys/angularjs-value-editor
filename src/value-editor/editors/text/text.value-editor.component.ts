@@ -1,14 +1,13 @@
-import './text-value-editor.less';
-import NgModelConnector from '../ng-model-connector';
+import './text.value-editor.less';
 import ValueEditorComponent, {
     EVENTS,
     ValueEditorBindings,
-    ValueEditorComponentController,
     ValueEditorOptions,
     ValueEditorValidations
 } from '../../value-editor.component';
 import {IPostLink, IScope} from 'angular';
 import {Ace} from 'ace-builds';
+import AbstractValueEditor from '../abstract-value-editor';
 import angular = require('angular');
 
 const DEFAULT_OPTIONS: TextValueEditorOptions = {
@@ -19,19 +18,15 @@ const DEFAULT_OPTIONS: TextValueEditorOptions = {
     }
 };
 
-export class TextValueEditorComponentController extends NgModelConnector<string> implements IPostLink {
-    public valueEditorController: ValueEditorComponentController<string, TextValueEditorOptions, TextValueEditorValidations>;
-    public options: TextValueEditorOptions;
+export class TextValueEditorComponentController extends AbstractValueEditor<string, TextValueEditorOptions> implements IPostLink {
     private aceEditor: Ace.Editor;
 
     /*@ngInject*/
-    constructor(private $scope: IScope) {
-        super();
+    constructor($scope: IScope) {
+        super($scope, DEFAULT_OPTIONS);
     }
 
-    public $postLink(): void {
-        this.options = angular.merge({}, DEFAULT_OPTIONS, this.valueEditorController.options);
-
+    protected onOptionsChange(newOptions: TextValueEditorOptions, oldOptions: TextValueEditorOptions) {
         if (this.options.type === 'rich-textarea') {
             this.options.aceOptions.onLoad = (ace) => {
                 this.aceEditor = ace;
