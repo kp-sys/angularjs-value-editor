@@ -2,6 +2,7 @@ import register from '@kpsys/angularjs-register';
 import 'angular-ui-ace';
 import ValueEditorComponent from './value-editor.component';
 import TextValueEditorComponent from './editors/text/text.value-editor.component';
+import NumberValueEditorComponent from './editors/number/number.value-editor.component';
 
 /**
  * @ngdoc module
@@ -12,6 +13,7 @@ import TextValueEditorComponent from './editors/text/text.value-editor.component
 export default register('angularjs-value-editor', ['ui.ace'])
     .component(ValueEditorComponent.componentName, ValueEditorComponent)
     .component(TextValueEditorComponent.componentName, TextValueEditorComponent)
+    .component(NumberValueEditorComponent.componentName, NumberValueEditorComponent)
     .name();
 
 /**
