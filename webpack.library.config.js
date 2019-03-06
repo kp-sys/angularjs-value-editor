@@ -23,7 +23,9 @@ module.exports = (env, {mode}) => ({
         angular: 'angular',
         '@kpsys/angularjs-register': '@kpsys/angularjs-register',
         '@kpsys/angular-ui-bootstrap': '@kpsys/angular-ui-bootstrap',
-        'angular-ui-ace': 'angular-ui-ace'
+        'angular-ui-ace': 'angular-ui-ace',
+        '@kpsys/angularjs-date-parser': '@kpsys/angularjs-date-parser',
+        '@kpsys/angularjs-bootstrap-datetimepicker': '@kpsys/angularjs-bootstrap-datetimepicker'
     },
 
     module: {
@@ -147,14 +149,10 @@ module.exports = (env, {mode}) => ({
             new MiniCssExtractPlugin({
                 filename: '[name].css'
             }),
-            new CleanWebpackPlugin(
-                ['dist/*.*'],
-                {
-                    root: path.resolve(__dirname),
-                    verbose: true,
-                    exclude: ['.gitkeep']
-                }
-            )];
+            new CleanWebpackPlugin.CleanWebpackPlugin({
+                verbose: true,
+                cleanStaleWebpackAssets: false
+            })];
         if (mode === 'production') {
             plugins.push(new UnminifiedWebpackPlugin());
         }

@@ -1,11 +1,10 @@
 const path = require('path');
 
 module.exports = ({
-    mode: 'development',
+    mode: 'production',
 
     externals: {
-        angular: 'angular',
-        '@kpsys/angular-ui-bootstrap': '@kpsys/angular-ui-bootstrap'
+        angular: 'angular'
     },
 
     module: {
@@ -83,8 +82,7 @@ module.exports = ({
                     {
                         loader: 'sass-loader',
                         options: {
-                            sourceMap: true,
-                            implementation: require('sass')
+                            sourceMap: true
                         }
                     }
                 ]

@@ -3,14 +3,14 @@ module.exports = (grunt) => {
 
     grunt.initConfig({
         'extract-comments': {
-            'dist/docs/comments.js': ['src/**/*.ts']
+            'docs/comments.js': ['src/**/*.ts']
         },
         copy: {
             files: {
                 expand: true,
                 cwd: 'dist',
                 src: ['angularjs-value-editor.js', 'angularjs-value-editor.css'],
-                dest: 'dist/docs'
+                dest: 'docs'
             }
         },
         watch: {
@@ -56,9 +56,9 @@ module.exports = (grunt) => {
                 title: 'AngularJS Value Editor Doc',
                 version: pkg.version,
                 expand: false,
-                dest: 'dist/docs',
+                dest: 'docs',
                 src: [
-                    'dist/docs/comments.js',
+                    'docs/comments.js',
                     'src/**/*.ngdoc'
                 ]
             }

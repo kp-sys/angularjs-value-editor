@@ -14,7 +14,7 @@ describe('text-value-editor', () => {
         beforeEach(() => {
             angular.mock.module(valueEditorModule);
 
-            inject(($compile, $rootScope) => {
+            inject(/*@ngInject*/ ($compile, $rootScope) => {
                 $scope = $rootScope.$new();
                 valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
             });
@@ -124,7 +124,7 @@ describe('text-value-editor', () => {
         beforeEach(() => {
             angular.mock.module(valueEditorModule);
 
-            inject(($compile, $rootScope) => {
+            inject(/*@ngInject*/ ($compile, $rootScope) => {
                 $scope = $rootScope.$new();
                 valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
             });
@@ -251,7 +251,7 @@ describe('text-value-editor', () => {
         beforeEach(() => {
             angular.mock.module(valueEditorModule);
 
-            inject(($compile, $rootScope) => {
+            inject(/*@ngInject*/($compile, $rootScope) => {
                 $scope = $rootScope.$new();
                 valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
             });
@@ -381,7 +381,7 @@ describe('text-value-editor', () => {
         beforeEach(() => {
             angular.mock.module(valueEditorModule);
 
-            inject(($compile, $rootScope) => {
+            inject(/*@ngInject*/ ($compile, $rootScope) => {
                 $scope = $rootScope.$new();
                 valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
             });

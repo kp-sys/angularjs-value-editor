@@ -5,7 +5,7 @@ html
         title Value Editor Demo
         link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css")
 
-    body(ng-app="app")
+    body(ng-app="app" ng-strict-di)
         h1 Value Editor Demo
         main(ng-controller="demoController as dc" ng-init="disabled = false; value='ANO'")
 

@@ -15,7 +15,7 @@ describe('html-value-editor', () => {
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
-        inject(($compile, $rootScope) => {
+        inject(/*@ngInject*/ ($compile, $rootScope) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<HtmlValueEditorBindings>($compile, $scope);
         });
