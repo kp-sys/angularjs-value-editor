@@ -4,12 +4,15 @@ html
     head
         title Value Editor Demo
         link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css")
+        script(src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous")
 
     body(ng-app="app" ng-strict-di)
         h1 Value Editor Demo
-        main(ng-controller="demoController as dc" ng-init="disabled = false; value='ANO'")
+        main(ng-controller="demoController as dc" ng-init="disabled = false")
 
-            kp-value-editor(ng-model="value" editor-id="ajdy" type="'html'" status="status" disabled="disabled" validations="{required: true}" placeholder="Write some clever...")
+            kp-value-editor(ng-model="value" editor-id="ajdy" type="'date'" status="status" disabled="disabled" validations="{required: true}" options={maximumGranularity: 'minute', viewFormat: 'd.L.y HH:mm'} placeholder="Insert date")
+
+            datetimepicker(id="picker" ng-model="model")
 
             hr
             div

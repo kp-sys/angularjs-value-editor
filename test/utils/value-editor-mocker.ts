@@ -15,13 +15,20 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
      * Creates and compiles element with value-editor.
      * @param {TValueEditorType} type Value editor type.
      * @param {object} bindings Component bindings
+     * @param {boolean=} attachToBody If `true`, element wil be attached to `body` element before compilation.
      * @returns {JQLite} Compiled element
      */
-    public create(type: TValueEditorType, bindings?: BINDINGS): JQLite {
+    public create(type: TValueEditorType, bindings?: BINDINGS, attachToBody?: boolean): JQLite {
 
         const template = this.getTemplate(type, bindings);
 
-        this.compiledElement = this.$compile(angular.element(template))(this.$scope);
+        const element = angular.element(template);
+
+        if (attachToBody) {
+            angular.element(document.body).append(element);
+        }
+
+        this.compiledElement = this.$compile(element)(this.$scope);
         this.$scope.$apply();
 
         return this.compiledElement;

@@ -1,0 +1,43 @@
+.input-group(uib-dropdown='' dropdown-append-to-body='' is-open='datePickerOpen')
+    input(
+        type='text'
+
+        ng-attr-id="{{$ctrl.valueEditorController.editorId}}"
+        ng-attr-name="{{$ctrl.valueEditorController.name}}"
+        ng-attr-placeholder="{{$ctrl.valueEditorController.placeholder}}"
+
+        ng-class="$ctrl.options.cssClasses"
+
+        ng-model="$ctrl.model"
+        ng-model-options="{ getterSetter: true}"
+
+        ng-disabled="$ctrl.valueEditorController.disabled"
+
+        ng-required="$ctrl.valueEditorController.validations.required"
+
+        kp-date-parser
+        min-date='$ctrl.valueEditorController.validations.minDate ? $ctrl.valueEditorController.validations.minDate : null'
+        max-date='$ctrl.valueEditorController.validations.maxDate ? $ctrl.valueEditorController.validations.maxDate : null'
+        view-format='{{$ctrl.options.viewFormat}}'
+
+        data-main-input
+    )
+
+
+    div(uib-dropdown-menu='')
+        datetimepicker(
+            ng-model="$ctrl.model"
+            ng-model-options="{ getterSetter: true}"
+
+            datetimepicker-config='{minView: $ctrl.options.maximumGranularity}'
+
+            on-set-time='datePickerOpen = false'
+            before-render='$ctrl.dateRestriction($dates, $view)'
+            view-format='{{$ctrl.options.viewFormat}}'
+
+            kp-date-parser
+        )
+
+    span.input-group-btn
+        button.btn.btn-default(type='button' ng-disabled="$ctrl.valueEditorController.disabled" uib-dropdown-toggle='')
+            span.glyphicon.glyphicon-calendar

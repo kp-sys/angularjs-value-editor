@@ -30,7 +30,7 @@ module.exports = {
             },
             {
                 test: /\.ts$/,
-                include: [/demo/, /dist/],
+                include: [/demo/, /dist/, /src/],
                 use: [
                     {
                         loader: 'babel-loader',

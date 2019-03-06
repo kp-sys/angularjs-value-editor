@@ -33,6 +33,12 @@ module.exports = (config) => {
 
         frameworks: ['jasmine'],
 
+        client: {
+            jasmine: {
+                random: false
+            }
+        },
+
         files: [
             path.resolve(__dirname, '..', 'node_modules', 'jquery', 'dist', 'jquery.js'),
             path.resolve(__dirname, '..', 'node_modules', 'angular', 'angular.js'),

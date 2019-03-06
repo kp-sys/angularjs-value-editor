@@ -1,6 +1,6 @@
 {
     "name": "@kpsys/angularjs-value-editor",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "author": {
         "email": "tomas.dostal@kpsys.cz",
         "name": "Tomas Dostal"
@@ -19,7 +19,10 @@
         "angular-ui-ace": "0.2.x",
         "jquery": "3.x",
         "pretty-checkbox": "3.x",
-        "trumbowyg": "2.x"
+        "trumbowyg": "2.x",
+        "luxon": "1.x",
+        "@kpsys/angularjs-date-parser": "1.1.0",
+        "@kpsys/angularjs-bootstrap-datetimepicker": "2.x"
     },
     "main": "dist/angularjs-value-editor.min.js",
     "style": "dist/angularjs-value-editor.min.css",
@@ -49,6 +52,7 @@
         "@types/angular-mocks": "latest",
         "@types/jasmine": "latest",
         "@types/jquery": "latest",
+        "@types/luxon": "latest",
         "@types/node": "latest",
         "@types/webpack": "latest",
         "@types/webpack-env": "latest",
@@ -56,7 +60,6 @@
         "angular": "latest",
         "angular-mocks": "latest",
         "angular-ui-ace": "latest",
-        "angularjs-bootstrap-datetimepicker": "github:DostalTomas/angularjs-bootstrap-datetimepicker#1.0.1",
         "babel-loader": "latest",
         "babel-plugin-angularjs-annotate": "latest",
         "clean-webpack-plugin": "latest",
@@ -81,7 +84,7 @@
         "karma-chrome-launcher": "latest",
         "karma-cli": "latest",
         "karma-coverage-istanbul-reporter": "latest",
-        "karma-jasmine": "latest",
+        "karma-jasmine": "3.0.3",
         "karma-source-map-support": "latest",
         "karma-sourcemap-loader": "latest",
         "karma-spec-reporter": "latest",
@@ -117,6 +120,7 @@
         "docs:build": "grunt docs:build",
         "docs:watch": "grunt docs:watch",
         "docs:serve": "http-server docs -p 3001 ",
-        "test": "karma start test/karma.conf.js"
+        "test": "karma start test/karma.conf.js",
+        "test:watch": "karma start test/karma.conf.js --no-single-run"
     }
 }

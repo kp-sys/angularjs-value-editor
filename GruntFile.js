@@ -42,9 +42,16 @@ module.exports = (grunt) => {
                                 'https://unpkg.com/@kpsys/angularjs-register@1.1.4/dist/register.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js',
                                 'https://unpkg.com/angular-ui-ace@0.2.3/src/ui-ace.js',
+                                'https://unpkg.com/luxon@1.22.0/build/global/luxon.min.js',
+                                'https://unpkg.com/@kpsys/angularjs-date-parser@1.1.2/dist/angularjs-date-parser.js',
+                                'https://unpkg.com/@kpsys/angularjs-bootstrap-datetimepicker@2.1.1/dist/angularjs-bootstrap-datetimepicker.js',
+                                'https://unpkg.com/@kpsys/angular-ui-bootstrap@2.5.5/dist/ui-bootstrap-tpls.js',
 	                            `${process.env.EXAMPLES_SCRIPTS_URL_PREFIX || ''}/angularjs-value-editor.js`
                             ],
                             stylesheets: [
+                                'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
+                                'https://unpkg.com/@kpsys/angular-ui-bootstrap@2.5.5/dist/ui-bootstrap-csp.css',
+                                'https://unpkg.com/@kpsys/angularjs-bootstrap-datetimepicker@2.1.1/dist/angularjs-bootstrap-datetimepicker.css',
                                 `${process.env.EXAMPLES_SCRIPTS_URL_PREFIX || ''}/angularjs-value-editor.css`
                             ]
                         }
