@@ -3,4 +3,4 @@
 # angularjs-value-editors
 Dynamically created inputs
 
-[Documentation](https://dostaltomas.github.io/angularjs-value-editor/#/api/angularjs-value-editor)
+[Documentation](https://kp-sys.github.io/angularjs-value-editor/#/api/angularjs-value-editor)
