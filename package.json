@@ -15,6 +15,7 @@
         "@kpsys/angularjs-register": "1.x",
         "ace-builds": "1.4.x",
         "angular": "1.7.x",
+        "angular-sanitize": "1.7.x",
         "angular-trumbowyg": "1.x",
         "angular-ui-ace": "0.2.x",
         "jquery": "3.x",
@@ -22,7 +23,8 @@
         "trumbowyg": "2.x",
         "luxon": "1.x",
         "@kpsys/angularjs-date-parser": "1.1.0",
-        "@kpsys/angularjs-bootstrap-datetimepicker": "2.x"
+        "@kpsys/angularjs-bootstrap-datetimepicker": "2.x",
+        "ui-select": "^0.19.8"
     },
     "main": "dist/angularjs-value-editor.min.js",
     "style": "dist/angularjs-value-editor.min.css",
@@ -42,6 +44,8 @@
         "tsconfig.json"
     ],
     "devDependencies": {
+        "ui-select": "^0.19.8",
+        "angular-sanitize": "1.7.x",
         "@babel/core": "latest",
         "@babel/preset-env": "latest",
         "@kpsys/angular-ui-bootstrap": "latest",

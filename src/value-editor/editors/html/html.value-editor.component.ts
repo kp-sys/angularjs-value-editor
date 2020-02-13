@@ -6,8 +6,9 @@ import ValueEditorComponent, {
 } from '../../value-editor.component';
 import {IOnDestroy, IPostLink, IScope} from 'angular';
 import AbstractValueEditor from '../abstract-value-editor';
+import {DefaultOptions} from '../../typings';
 
-const DEFAULT_OPTIONS: HtmlValueEditorOptions = {
+const DEFAULT_OPTIONS: DefaultOptions<HtmlValueEditorOptions> = {
     editorOptions: {
         btns: [
             ['formatting'],

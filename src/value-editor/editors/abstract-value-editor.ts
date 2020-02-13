@@ -1,6 +1,7 @@
 import NgModelConnector from './ng-model-connector';
 import {IOnInit, IPostLink, IScope} from 'angular';
 import {EVENTS, ValueEditorComponentController, ValueEditorOptions} from '../value-editor.component';
+import {DefaultOptions} from '../typings';
 import angular = require('angular');
 
 export interface OptionsChangeEventObject<OPTIONS extends ValueEditorOptions = ValueEditorOptions> {
@@ -17,7 +18,7 @@ export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEd
     protected options: OPTIONS;
     protected valueEditorController: ValueEditorComponentController<MODEL, OPTIONS>;
 
-    constructor(protected $scope: IScope, protected defaultOptions: OPTIONS) {
+    constructor(protected $scope: IScope, protected defaultOptions: DefaultOptions<OPTIONS>) {
         super();
         this.options = angular.merge({}, this.defaultOptions);
     }

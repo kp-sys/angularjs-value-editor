@@ -6,9 +6,10 @@ import ValueEditorComponent, {
 } from '../../value-editor.component';
 import {IScope} from 'angular';
 import AbstractValueEditor from '../abstract-value-editor';
+import {DefaultOptions} from '../../typings';
 import angular = require('angular');
 
-const DEFAULT_OPTIONS: DateValueEditorOptions = {
+const DEFAULT_OPTIONS: DefaultOptions<DateValueEditorOptions> = {
     cssClasses: ['form-control'],
     maximumGranularity: 'day',
     viewFormat: 'd.L.y'

@@ -6,9 +6,10 @@ import ValueEditorComponent, {
 } from '../../value-editor.component';
 import {INgModelController, IPostLink, IScope} from 'angular';
 import AbstractValueEditor from '../abstract-value-editor';
+import {DefaultOptions} from '../../typings';
 import angular = require('angular');
 
-const DEFAULT_OPTIONS: BooleanValueEditorOptions = {
+const DEFAULT_OPTIONS: DefaultOptions<BooleanValueEditorOptions> = {
     type: 'checkbox',
     trueValue: undefined,
     falseValue: undefined,

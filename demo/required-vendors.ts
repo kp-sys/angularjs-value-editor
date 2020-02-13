@@ -7,6 +7,8 @@ import 'trumbowyg/dist/plugins/colors/ui/trumbowyg.colors.min.css';
 import 'trumbowyg/dist/plugins/table/ui/trumbowyg.table.min.css';
 import {DateTime, Settings} from 'luxon';
 import '@kpsys/angularjs-bootstrap-datetimepicker/dist/angularjs-bootstrap-datetimepicker.min.css';
+import 'ui-select/dist/select.css';
+
 // tslint:disable-next-line:no-var-requires
 $.trumbowyg.svgPath = require('trumbowyg/dist/ui/icons.svg');
 Settings.defaultLocale = DateTime.local().resolvedLocaleOpts().locale;

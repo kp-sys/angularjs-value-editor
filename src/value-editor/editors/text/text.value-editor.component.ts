@@ -8,9 +8,10 @@ import ValueEditorComponent, {
 import {IScope} from 'angular';
 import {Ace} from 'ace-builds';
 import AbstractValueEditor from '../abstract-value-editor';
+import {DefaultOptions} from '../../typings';
 import angular = require('angular');
 
-const DEFAULT_OPTIONS: TextValueEditorOptions = {
+const DEFAULT_OPTIONS: DefaultOptions<TextValueEditorOptions> = {
     type: 'text',
     aceOptions: {
         useWrapMode: false,

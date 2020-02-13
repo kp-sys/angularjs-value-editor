@@ -26,7 +26,9 @@ module.exports = (env, {mode}) => ({
         'luxon': 'luxon',
         '@kpsys/angular-ui-bootstrap': '@kpsys/angular-ui-bootstrap',
         '@kpsys/angularjs-date-parser': '@kpsys/angularjs-date-parser',
-        '@kpsys/angularjs-bootstrap-datetimepicker': '@kpsys/angularjs-bootstrap-datetimepicker'
+        '@kpsys/angularjs-bootstrap-datetimepicker': '@kpsys/angularjs-bootstrap-datetimepicker',
+        'angular-sanitize': 'angular-sanitize',
+        'ui-select': 'ui-select'
     },
 
     module: {
