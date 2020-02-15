@@ -8,7 +8,7 @@ html
 
     body(ng-app="app" ng-strict-di)
         h1 Value Editor Demo
-        main(ng-controller="demoController as dc" ng-init="disabled = false; template = '{{value.x}}'")
+        main(ng-controller="demoController as dc" ng-init="disabled = false; template = '{{$item.x}}'")
 
             kp-value-editor(
                 ng-model="value"
@@ -17,7 +17,18 @@ html
                 status="status"
                 disabled="disabled"
                 validations="{required: true}"
-                options="{acceptableValues: dc.acceptableValues, listValueTemplate: template, viewValueTemplate: '{{$select.selected.x}}'}"
+                options="{" +
+                    "acceptableValues: dc.acceptableValues," +
+                    "optionsTemplate: '{{$item.x}}'," +
+                    "singleSelectedValueTemplate: '{{$select.selected.x}}'," +
+                    "multiSelectedValueTemplate: '{{$item.x}}'," +
+                    "multiselectable: true," +
+                    "showFirstCount: 5," +
+                    "switchToCheckboxesThreshold: 0," +
+                    "selectedFirst: true," +
+                    "comparator: dc.comp," +
+                    "sortModel: false" +
+                "}"
                 placeholder="Select..."
             )
 

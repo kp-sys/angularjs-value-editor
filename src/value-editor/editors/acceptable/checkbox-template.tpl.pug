@@ -1,0 +1,17 @@
+.pretty.p-icon.p-smooth.p-curve
+    input(
+        type="checkbox"
+        name!="\\{\\{$ctrl.valueEditorController.name\\}\\}"
+
+        ng-model="$ctrl.checkboxModel($item)"
+        ng-model-options="{getterSetter: true}"
+
+        ng-click="$ctrl.updateModel($item)"
+
+        ng-disabled="$ctrl.valueEditorController.disabled"
+    )
+
+    .state.p-primary
+        i.icon.glyphicon.glyphicon-ok
+        label
+            span {{optionsTemplate}}

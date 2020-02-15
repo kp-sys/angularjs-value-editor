@@ -42,8 +42,16 @@ export interface AcceptableValueEditorLocalizationsService extends AbstractValue
  */
 export interface AcceptableValueEditorLocalizations extends ValueEditorLocalizations {
     allSelected;
+    more;
+    less;
+    selectAll;
+    deselectAll;
 }
 
 const DEFAULT_ACCEPTABLE_VALUE_EDITOR_LOCALIZATIONS: Readonly<AcceptableValueEditorLocalizations> = Object.freeze({
-    allSelected: 'All selected'
+    allSelected: 'All selected',
+    more: 'More',
+    less: 'Less',
+    selectAll: 'Select all',
+    deselectAll: 'Deselect all'
 });
