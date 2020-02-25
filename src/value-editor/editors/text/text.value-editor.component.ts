@@ -7,7 +7,7 @@ import ValueEditorComponent, {
 } from '../../value-editor.component';
 import {IScope} from 'angular';
 import {Ace} from 'ace-builds';
-import AbstractValueEditor from '../abstract-value-editor';
+import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
 import {DefaultOptions} from '../../typings';
 import angular = require('angular');
 
@@ -27,15 +27,6 @@ export class TextValueEditorComponentController extends AbstractValueEditor<stri
         super($scope, DEFAULT_OPTIONS);
     }
 
-    protected onOptionsChange(newOptions: TextValueEditorOptions, oldOptions: TextValueEditorOptions) {
-        if (this.options.type === 'rich-textarea') {
-            this.options.aceOptions.onLoad = (ace) => {
-                this.aceEditor = ace;
-                this.initACE();
-            };
-        }
-    }
-
     /**
      * Get number of rows between nim and max range.
      */
@@ -45,6 +36,19 @@ export class TextValueEditorComponentController extends AbstractValueEditor<stri
         }
 
         return minRows;
+    }
+
+    protected onOptionsChange(newOptions: TextValueEditorOptions, oldOptions, whatChanged: OptionsChangeDetection<TextValueEditorOptions>) {
+        if (whatChanged.type && this.options.type === 'rich-textarea') {
+            if (!this.options.aceOptions) {
+                this.options.aceOptions = this.defaultOptions.aceOptions;
+            }
+
+            this.options.aceOptions.onLoad = (ace) => {
+                this.aceEditor = ace;
+                this.initACE();
+            };
+        }
     }
 
     /**
@@ -69,7 +73,7 @@ export class TextValueEditorComponentController extends AbstractValueEditor<stri
 
         // Propagate disabled -> set Ace to readonly
         this.aceEditor.setReadOnly(this.valueEditorController.disabled);
-        this.$scope.$on(EVENTS.disabled, (event, {disabled}: {disabled: boolean}) => {
+        this.$scope.$on(EVENTS.disabled, (event, {disabled}: { disabled: boolean }) => {
             this.aceEditor.setReadOnly(disabled);
         });
     }

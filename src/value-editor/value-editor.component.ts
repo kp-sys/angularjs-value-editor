@@ -1,13 +1,14 @@
 import {IDoCheck, IFormController, INgModelController, IOnChanges, IOnInit, IScope} from 'angular';
 import NgModelConnector from './editors/ng-model-connector';
 import {generateUuid} from './utils/uuid-generator';
+import customEquals from './utils/equals';
+import AbstractValueEditor from './editors/abstract-value-editor';
 import angular = require('angular');
 
 export type TValueEditorType = 'text' | 'number' | 'boolean' | 'hidden' | 'html' | 'date';
 
 export const EVENTS = Object.freeze({
-    disabled: 'value-editor:disabled',
-    options: 'value-editor:options',
+    disabled: 'value-editor:disabled'
 });
 
 export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS extends ValueEditorOptions = ValueEditorOptions, EDITORVALIDATIONS extends ValueEditorValidations = ValueEditorValidations>
@@ -26,14 +27,7 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
     /* Internal */
     public form: IFormController;
     private previousOptions: EDITOROPTS;
-
-    public get status() {
-        return this.form[this.name];
-    }
-
-    public set status(s) {
-        //
-    }
+    private valueEditorInstance: AbstractValueEditor<MODEL, EDITOROPTS>;
 
     /*@ngInject*/
     constructor(private $scope: IScope) {
@@ -60,10 +54,22 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
      * Manually check options update. $onChanges is not applicable, because we need deep equals, which $onChanges does not perform.
      */
     public $doCheck(): void {
-        if (!angular.equals(this.options, this.previousOptions)) {
-            this.$scope.$broadcast(EVENTS.options, {newOptions: this.options, oldOptions: this.previousOptions});
+        if (!customEquals(this.options, this.previousOptions)) {
+            this.valueEditorInstance.changeOptions(this.options, this.previousOptions);
             this.previousOptions = angular.copy(this.options);
         }
+    }
+
+    public get status() {
+        return this.form[this.name];
+    }
+
+    public set status(s) {
+        //
+    }
+
+    public registerValueEditor<CONTROLLER extends AbstractValueEditor<MODEL, EDITOROPTS>>(editorController: CONTROLLER) {
+        this.valueEditorInstance = editorController;
     }
 
     private generateEditorName(): string {
