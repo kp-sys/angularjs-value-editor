@@ -51,6 +51,13 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
     }
 
     /**
+     * Remove attached element from document
+     */
+    public detachElementFromDocument() {
+        angular.element(this.compiledElement).remove();
+    }
+
+    /**
      * Create HTML template from value editor type and bindings.
      * @param {TValueEditorType} type Value editor type.
      * @param {object} bindings Component bindings

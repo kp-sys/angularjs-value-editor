@@ -12,6 +12,8 @@ ui-select(
     ng-disabled!="$ctrl.valueEditorController.disabled || $ctrl.options.acceptableValues.length === 1 && $ctrl.valueEditorController.validations.required"
 
     ng-required="$ctrl.valueEditorController.validations.required"
+
+    data-main-input
 )
     ui-select-choices(repeat="$item in $ctrl.options.acceptableValues {{sort ? '| orderBy : \\'\\' : false : $ctrl.uiSelectComparator' : ''}} {{searchable ? '| filter:$select.search' : ''}} track by $index") {{optionsTemplate}}
     ui-select-match(placeholder="\\{\\{$ctrl.valueEditorController.placeholder\\}\\}") {{multiselectable ? multiSelectedValueTemplate : singleSelectedValueTemplate}}

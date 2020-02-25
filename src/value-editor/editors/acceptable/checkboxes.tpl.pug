@@ -1,4 +1,4 @@
-div(ng-class="{'with-more': $ctrl.hasMore()}")
+.checkboxes-mode(ng-class="{'with-more': $ctrl.hasMore()}" data-main-input)
     ul(ng-ref="ulElement")
         li.av-item(ng-repeat="$item in $ctrl.getAcceptableValues() track by $index")
             include checkbox-template.tpl.pug
@@ -20,5 +20,5 @@ div(ng-class="{'with-more': $ctrl.hasMore()}")
                     include checkbox-template.tpl.pug
 
     .btn-group
-        button.btn.btn-default.btn-xs(type="button" ng-disabled="$ctrl.model.length === $ctrl.options.acceptableValues.length" ng-click="$ctrl.model = $ctrl.options.acceptableValues.slice()") {{ '{' + '{$ctrl.acceptableValueEditorLocalizationsService.getLocalization("selectAll")}' + '}' }}
-        button.btn.btn-default.btn-xs(type="button" ng-disabled="$ctrl.model.length === 0" ng-click="$ctrl.model = []") {{ '{' + '{$ctrl.acceptableValueEditorLocalizationsService.getLocalization("deselectAll")}' + '}' }}
+        button.btn.btn-default.btn-xs.select-all(type="button" ng-disabled="$ctrl.model.length === $ctrl.options.acceptableValues.length" ng-click="$ctrl.model = $ctrl.options.acceptableValues.slice()") {{ '{' + '{$ctrl.acceptableValueEditorLocalizationsService.getLocalization("selectAll")}' + '}' }}
+        button.btn.btn-default.btn-xs.deselect-all(type="button" ng-disabled="$ctrl.model.length === 0" ng-click="$ctrl.model = []") {{ '{' + '{$ctrl.acceptableValueEditorLocalizationsService.getLocalization("deselectAll")}' + '}' }}

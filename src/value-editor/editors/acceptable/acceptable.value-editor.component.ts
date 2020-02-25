@@ -12,6 +12,31 @@ import angular = require('angular');
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.acceptableValueEditor';
 
+/**
+ * @ngdoc constant
+ * @name acceptableValueEditorDefaultOptions
+ * @module angularjs-value-editor.acceptable
+ *
+ * @description
+ * ```javascript
+ *  {
+ *      cssClasses: ['form-control'],
+ *      acceptableValues: [],
+ *      multiselectable: false,
+ *      searchable: true,
+ *      optionsTemplate: '{{$item}}',
+ *      singleSelectedValueTemplate: '{{$select.selected}}',
+ *      multiSelectedValueTemplate: '{{$item}}',
+ *      equalityComparator: angular.equals,
+ *      reorderable: false,
+ *      showFirstCount: 0,
+ *      selectedFirst: false,
+ *      sortComparator: undefined,
+ *      sortModel: false,
+ *      switchToCheckboxesThreshold: 13
+ *  }
+ * ```
+ */
 export const DEFAULT_OPTIONS: DefaultOptions<AcceptableValueEditorOptions<null>> = {
     cssClasses: ['form-control'],
     acceptableValues: [],
@@ -20,7 +45,7 @@ export const DEFAULT_OPTIONS: DefaultOptions<AcceptableValueEditorOptions<null>>
     optionsTemplate: '{{$item}}',
     singleSelectedValueTemplate: '{{$select.selected}}',
     multiSelectedValueTemplate: '{{$item}}',
-    equalityComparator: (e1, e2) => e1 === e2,
+    equalityComparator: angular.equals,
     reorderable: false,
     showFirstCount: 0,
     selectedFirst: false,
@@ -68,11 +93,11 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractVal
 
         if (this.options.selectedFirst) {
             const selected = this.options.acceptableValues
-                .filter((value) => this.model.includes(value))
+                .filter((value) => this.includes(this.adjustToArrayIfNot(this.model), value))
                 .sort(this.options.sortComparator);
 
             const unSelected = this.options.acceptableValues
-                .filter((value) => !this.model.includes(value))
+                .filter((value) => !this.includes(this.adjustToArrayIfNot(this.model), value))
                 .sort(this.options.sortComparator);
 
             values = selected.concat(unSelected);
@@ -92,7 +117,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractVal
     }
 
     public updateModel(item: VALUE) {
-        const newModel = this.model.slice();
+        const newModel = this.adjustToArrayIfNot(this.model).slice();
 
         if (this.isChecked(item)) {
             const indexOfRemovingItem = this.getIndexOfItemInModelUsingEqualityComparator(item);
@@ -105,7 +130,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractVal
     }
 
     public uiSelectComparator(e1: IFilterOrderByItem, e2: IFilterOrderByItem): number {
-        return this.options.sortComparator(e1.value, e2.value);
+        return this.options.sortComparator ? this.options.sortComparator(e1.value, e2.value) : 0;
     }
 
     protected onOptionsChange(newOptions: AcceptableValueEditorOptions<VALUE>, oldOptions: AcceptableValueEditorOptions<VALUE>, whichOptionIsChanged: OptionsChangeDetection<AcceptableValueEditorOptions<VALUE>>) {
@@ -117,16 +142,9 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractVal
             whichOptionIsChanged.sortComparator ||
             whichOptionIsChanged.reorderable ||
             whichOptionIsChanged.acceptableValues ||
-            whichOptionIsChanged.switchToCheckboxesThreshold) {
+            whichOptionIsChanged.switchToCheckboxesThreshold ||
+            whichOptionIsChanged.selectedFirst) {
             this.updateTemplate();
-        }
-
-        if (whichOptionIsChanged.multiselectable && this.options.multiselectable && !Array.isArray(this.model)) {
-            if (this.model) {
-                this.model = [this.model];
-            } else {
-                this.model = [];
-            }
         }
 
         if (whichOptionIsChanged.selectedFirst) {
@@ -139,10 +157,26 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractVal
         }
     }
 
+    private adjustToArrayIfNot(value: VALUE | VALUE[]): VALUE[] {
+        if (!value) {
+            return [];
+        }
+
+        if (!Array.isArray(value)) {
+            return [value];
+        } else {
+            return value;
+        }
+    }
+
     private isChecked(item: VALUE): boolean {
+        return this.includes(this.model, item);
+    }
+
+    private includes(array: VALUE[], item: VALUE): boolean {
         const comparator = this.options.equalityComparator ? this.options.equalityComparator : DEFAULT_OPTIONS.equalityComparator;
 
-        return Array.isArray(this.model) && this.model.some(comparator.bind(null, item));
+        return Array.isArray(array) && array.some(comparator.bind(null, item));
     }
 
     private getMoreCount(): number {
@@ -218,7 +252,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractVal
  *                  switchToCheckboxesThreshold: $ctrl.switchToCheckboxesThreshold,
  *                  sortComparator: $ctrl.sortComparator,
  *                  equalityComparator: $ctrl.equalityComparator
- *              }">
+ *              }" placeholder="Select...">
  *              </kp-value-editor>
  *              <div>Model: {{model}}</div>
  *              <hr>
@@ -243,7 +277,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractVal
  *     </file>
  *     <file name="script.js">
  *         angular.module('acceptableValueEditorExample', ['angularjs-value-editor'])
- *          .controller('demoController', ['acceptableDefaultOptions', class {
+ *          .controller('demoController', ['acceptableValueEditorDefaultOptions', class {
  *              multiselectable;
  *              optionsTemplate;
  *              singleSelectedValueTemplate;
@@ -257,8 +291,8 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractVal
  *              sortComparatorString = '(e1, e2) => e1.x.localeCompare(e2.x)*-1';
  *              equalityComparatorString = '(e1, e2) => e1.x === e2.x';
  *
- *              constructor(acceptableDefaultOptions) {
- *                  angular.merge(this, acceptableDefaultOptions);
+ *              constructor(acceptableValueEditorDefaultOptions) {
+ *                  angular.merge(this, acceptableValueEditorDefaultOptions);
  *                  this.acceptableValues = [{x: 'a'}, {x: 'b'}, {x: 'c'}, {x: 'd'}, {x: 'e'}, {x: 'f'}, {x: 'g'}, {x: 'h'}];
  *                  this.evalComparators();
  *              }
@@ -317,24 +351,7 @@ export default class AcceptableValueEditorComponent {
  * @description
  * Extends {@link type:ValueEditorOptions}
  *
- * Default value:
- * ```javascript
- *  {
- *      cssClasses: ['form-control'],
- *      multiselectable: true,
- *      acceptableValues: [],
- *      searchable: true,
- *      optionsTemplate: '{{$item}}',
- *      singleSelectedValueTemplate: '{{$select.selected}}',
- *      multiSelectedValueTemplate: '{{$item}}',
- *      reorderable: false,
- *      showFirstCount: 0,
- *      selectedFirst: false,
- *      sortComparator: undefined,
- *      sortModel: false,
- *      switchToCheckboxesThreshold: 13
- *  }
- * ```
+ * Default value: {@link acceptableValueEditorDefaultOptions}
  */
 export interface AcceptableValueEditorOptions<VALUE> extends ValueEditorOptions {
     acceptableValues: VALUE[];
@@ -362,7 +379,6 @@ export interface AcceptableValueEditorOptions<VALUE> extends ValueEditorOptions 
  */
 // tslint:disable-next-line:no-empty-interface
 export interface AcceptableValueEditorValidations extends ValueEditorValidations {
-
 }
 
 export interface AcceptableValueEditorBindings<VALUE> extends ValueEditorBindings<AcceptableValueEditorOptions<VALUE>, AcceptableValueEditorValidations> {

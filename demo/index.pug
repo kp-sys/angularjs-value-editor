@@ -8,43 +8,64 @@ html
 
     body(ng-app="app" ng-strict-di)
         h1 Value Editor Demo
-        main(ng-controller="demoController as dc" ng-init="disabled = false; template = '{{$item.x}}'")
+        main(ng-controller="demoController as dc")
 
-            kp-value-editor(
-                ng-model="value"
-                editor-id="ajdy"
-                type="'acceptable'"
-                status="status"
-                disabled="disabled"
-                validations="{required: true}"
-                options="{" +
-                    "acceptableValues: dc.acceptableValues," +
-                    "optionsTemplate: '{{$item.x}}'," +
-                    "singleSelectedValueTemplate: '{{$select.selected.x}}'," +
-                    "multiSelectedValueTemplate: '{{$item.x}}'," +
-                    "multiselectable: true," +
-                    "showFirstCount: 5," +
-                    "switchToCheckboxesThreshold: 0," +
-                    "selectedFirst: true," +
-                    "comparator: dc.comp," +
-                    "sortModel: false" +
-                "}"
-                placeholder="Select..."
-            )
+            kp-value-editor(type="'acceptable'" ng-model='dc.model' options='{\
+              acceptableValues: dc.acceptableValues,\
+              multiselectable: dc.multiselectable,\
+              optionsTemplate: dc.optionsTemplate,\
+              singleSelectedValueTemplate: dc.singleSelectedValueTemplate,\
+              multiSelectedValueTemplate: dc.multiSelectedValueTemplate,\
+              searchable: dc.searchable,\
+              reorderable: dc.reorderable,\
+              showFirstCount: dc.showFirstCount,\
+              selectedFirst: dc.selectedFirst,\
+              sortModel: dc.sortModel,\
+              switchToCheckboxesThreshold: dc.switchToCheckboxesThreshold,\
+              sortComparator: dc.sortComparator,\
+              equalityComparator: dc.equalityComparator\
+              }')
 
+            div Model: {{dc.model}}
             hr
+            |      Options:
+            div {{dc.acceptableValues}}
+            |      Settings:
             div
-                label Template:
-                    input(type="text" ng-model="template")
-
+                | multiselectable:
+                input(type='checkbox' ng-model='dc.multiselectable')
             div
-                label Disabled:
-                    input(type="checkbox" ng-model="disabled")
-
-            div Value:
-                input(ng-model="value")
-
-            div Model: {{value | json}}
-            div {{status | json}}
-            ul
-                li(ng-repeat="(errorName, errorValue) in status.$error") {{errorName}}
+                | optionsTemplate:
+                input(type='text' ng-model='dc.optionsTemplate')
+            div
+                | singleSelectedValueTemplate:
+                input(type='text' ng-model='dc.singleSelectedValueTemplate')
+            div
+                | multiSelectedValueTemplate:
+                input(type='text' ng-model='dc.multiSelectedValueTemplate')
+            div
+                | searchable:
+                input(type='checkbox' ng-model='dc.searchable')
+            div
+                | reorderable:
+                input(type='checkbox' ng-model='dc.reorderable')
+            div
+                | showFirstCount:
+                input(type='number' ng-model='dc.showFirstCount')
+            div
+                | selectedFirst:
+                input(type='checkbox' ng-model='dc.selectedFirst')
+            div
+                | sortModel:
+                input(type='checkbox' ng-model='dc.sortModel')
+            div
+                | switchToCheckboxesThreshold:
+                input(type='number' ng-model='dc.switchToCheckboxesThreshold')
+            div
+                | sortComparator:
+                input(type='text' ng-model='dc.sortComparatorString' ng-change='dc.evalComparators()')
+            div
+                | equalityComparator:
+                input(type='text' ng-model='dc.equalityComparatorString' ng-change='dc.evalComparators()')
+            |      OPTS:
+            div {{dc.multiselectable | json}}

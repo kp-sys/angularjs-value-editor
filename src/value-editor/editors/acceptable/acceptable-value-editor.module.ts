@@ -18,7 +18,7 @@ import AcceptableValueEditorComponent, {DEFAULT_OPTIONS} from './acceptable.valu
 
 export default register('angularjs-value-editor.acceptable', ['ngSanitize', 'ui.select'])
     .decorator(uiSelectDecorator.decoratorName, uiSelectDecorator)
-    .constant('acceptableDefaultOptions', DEFAULT_OPTIONS)
+    .constant('acceptableValueEditorDefaultOptions', DEFAULT_OPTIONS)
     .provider(AcceptableValueEditorLocalizationsProvider.providerName, AcceptableValueEditorLocalizationsProvider)
     .component(AcceptableValueEditorComponent.componentName, AcceptableValueEditorComponent)
     .name();
