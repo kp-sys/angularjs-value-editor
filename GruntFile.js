@@ -31,7 +31,8 @@ module.exports = (grunt) => {
                     './packages/jsdoc-ext',
                     './packages/ngdoc-ext',
                     './packages/links-ext',
-                    './packages/examples-ext'
+                    './packages/examples-ext',
+                    require('./src/dgeni/packages/ng-constants')
                 ],
                 deployments: [{
                     name: 'default',
