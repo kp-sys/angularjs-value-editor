@@ -1,25 +1,15 @@
 import './date.value-editor.less';
-import ValueEditorComponent, {
-    ValueEditorBindings,
-    ValueEditorOptions,
-    ValueEditorValidations
-} from '../../value-editor.component';
+import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
 import {IScope} from 'angular';
 import AbstractValueEditor from '../abstract-value-editor';
-import {DefaultOptions} from '../../typings';
+import {DateValueEditorConfigurationService, DateValueEditorOptions} from './date-value-editor-configuration.provider';
 import angular = require('angular');
-
-const DEFAULT_OPTIONS: DefaultOptions<DateValueEditorOptions> = {
-    cssClasses: ['form-control'],
-    maximumGranularity: 'day',
-    viewFormat: 'd.L.y'
-};
 
 export class DateValueEditorComponentController extends AbstractValueEditor<string, DateValueEditorOptions> {
 
     /*@ngInject*/
-    constructor($scope: IScope) {
-        super($scope, DEFAULT_OPTIONS);
+    constructor($scope: IScope, dateValueEditorConfigurationService: DateValueEditorConfigurationService) {
+        super($scope, dateValueEditorConfigurationService);
     }
 
     protected onOptionsChange(newOptions: DateValueEditorOptions, oldOptions: DateValueEditorOptions) {
@@ -30,7 +20,7 @@ export class DateValueEditorComponentController extends AbstractValueEditor<stri
 /**
  * @ngdoc component
  * @name dateValueEditor
- * @module angularjs-value-editor
+ * @module angularjs-value-editor.date
  *
  * @requires ng.type.ngModel.NgModelController
  * @requires component:kpValueEditor
@@ -71,43 +61,8 @@ export default class DateValueEditorComponent {
 
 /**
  * @ngdoc type
- * @name TDateValueEditorGranularity
- * @module angularjs-value-editor
- *
- * @description
- * Date picker maximum granularity.
- *
- * Possible values are: `'minute' | 'hour' | 'day' | 'month' | 'year'`.
- */
-export type TDateValueEditorGranularity = 'minute' | 'hour' | 'day' | 'month' | 'year';
-
-/**
- * @ngdoc type
- * @name DateValueEditorOptions
- * @module angularjs-value-editor
- *
- * @property {TDateValueEditorGranularity=} maximumGranularity Set maximum date resolution.
- * @property {string=} viewFormat How to format date in input.
- *
- * @description
- * Extends {@link type:ValueEditorOptions}
- * Default value:
- * ```javascript
- *  {
- *      maximumGranularity: 'day',
- *      viewFormat: 'd.L.y'
- *  }
- * ```
- */
-export interface DateValueEditorOptions extends ValueEditorOptions {
-    maximumGranularity?: TDateValueEditorGranularity;
-    viewFormat?: string;
-}
-
-/**
- * @ngdoc type
  * @name DateValueEditorValidations
- * @module angularjs-value-editor
+ * @module angularjs-value-editor.date
  *
  * @property {string=} minDate Minimum date in ISO format.
  * @property {string=} maxDate Maximum date in ISO format.

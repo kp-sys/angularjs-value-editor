@@ -9,7 +9,11 @@
  * Generic provider for value editor localizations.
  */
 export default abstract class AbstractValueEditorLocalizationProvider<LOC extends ValueEditorLocalizations> {
-    protected abstract localizations: LOC;
+    private localizations: LOC;
+
+    protected constructor(defaultLocalizations: Required<Readonly<LOC>>) {
+        this.localizations = Object.assign({}, defaultLocalizations);
+    }
 
     /**
      * @ngdoc method
@@ -37,7 +41,7 @@ export default abstract class AbstractValueEditorLocalizationProvider<LOC extend
      * Sets localizations at once.
      */
     public setAll(localizations: LOC) {
-        this.localizations = localizations;
+        this.localizations = Object.assign({}, localizations);
     }
 
     /**

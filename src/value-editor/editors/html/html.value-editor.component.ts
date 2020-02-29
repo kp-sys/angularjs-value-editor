@@ -1,36 +1,15 @@
-import ValueEditorComponent, {
-    EVENTS,
-    ValueEditorBindings,
-    ValueEditorOptions,
-    ValueEditorValidations
-} from '../../value-editor.component';
+import ValueEditorComponent, {EVENTS, ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
 import {IOnDestroy, IPostLink, IScope} from 'angular';
 import AbstractValueEditor from '../abstract-value-editor';
-import {DefaultOptions} from '../../typings';
-
-const DEFAULT_OPTIONS: DefaultOptions<HtmlValueEditorOptions> = {
-    editorOptions: {
-        btns: [
-            ['formatting'],
-            ['bold', 'italic', 'underline', 'del', 'removeformat'],
-            ['superscript', 'subscript'],
-            ['foreColor', 'backColor'],
-            ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
-            ['unorderedList', 'orderedList'],
-            ['table'],
-            ['link', 'insertImage'],
-            ['fullscreen', 'viewHTML']
-        ]
-    }
-};
+import {HtmlValueEditorConfigurationService, HtmlValueEditorOptions} from './html-value-editor-configuration.provider';
 
 export class HtmlValueEditorComponentController extends AbstractValueEditor<string, HtmlValueEditorOptions> implements IPostLink, IOnDestroy {
     public container: JQuery;
     private disabledEventDeregisterer: () => void;
 
     /*@ngInject*/
-    constructor($scope: IScope) {
-        super($scope, DEFAULT_OPTIONS);
+    constructor($scope: IScope, htmlValueEditorConfigurationService: HtmlValueEditorConfigurationService) {
+        super($scope, htmlValueEditorConfigurationService);
     }
 
     public $postLink(): void {
@@ -72,7 +51,7 @@ export class HtmlValueEditorComponentController extends AbstractValueEditor<stri
 /**
  * @ngdoc component
  * @name htmlValueEditor
- * @module angularjs-value-editor
+ * @module angularjs-value-editor.html-editor
  *
  * @requires ng.type.ngModel.NgModelController
  * @requires component:kpValueEditor
@@ -131,39 +110,6 @@ export default class HtmlValueEditorComponent {
     public templateUrl = require('./html.value-editor.tpl.pug');
 
     public controller = HtmlValueEditorComponentController;
-}
-
-/**
- * @ngdoc type
- * @name HtmlValueEditorOptions
- * @module angularjs-value-editor
- *
- * @property editorOptions <a href="https://alex-d.github.io/Trumbowyg/documentation/#basic-options">Trumbowyg options</a>
- *
- * @description
- * Extends {@link type:ValueEditorOptions}
- * Default value:
- *
- * ```javascript
- * {
- *      editorOptions: {
- *          btns: [
- *              ['formatting'],
- *              ['bold', 'italic', 'underline', 'del', 'removeformat'],
- *              ['superscript', 'subscript'],
- *              ['foreColor', 'backColor'],
- *              ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
- *              ['unorderedList', 'orderedList'],
- *              ['table'],
- *              ['link', 'insertImage'],
- *              ['fullscreen', 'viewHTML']
- *          ]
- *      }
- *  }
- * ```
- */
-export interface HtmlValueEditorOptions extends ValueEditorOptions {
-    editorOptions?: JQueryTrumbowyg.Options;
 }
 
 export interface HtmlValueEditorBindings extends ValueEditorBindings<HtmlValueEditorOptions, ValueEditorValidations> {

@@ -1,29 +1,19 @@
 import './boolean.value-editor.scss';
-import ValueEditorComponent, {
-    ValueEditorBindings,
-    ValueEditorOptions,
-    ValueEditorValidations
-} from '../../value-editor.component';
+import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
 import {INgModelController, IPostLink, IScope} from 'angular';
 import AbstractValueEditor from '../abstract-value-editor';
-import {DefaultOptions} from '../../typings';
+import {
+    BooleanValueEditorConfigurationService,
+    BooleanValueEditorOptions
+} from './boolean-value-editor-configuration.provider';
 import angular = require('angular');
-
-const DEFAULT_OPTIONS: DefaultOptions<BooleanValueEditorOptions> = {
-    type: 'checkbox',
-    trueValue: undefined,
-    falseValue: undefined,
-    nullAsIndeterminate: false
-};
-
-export type TBooleanValueEditorType = 'checkbox' | 'switch';
 
 export class BooleanValueEditorComponentController<MODEL = boolean> extends AbstractValueEditor<MODEL, BooleanValueEditorOptions> implements IPostLink {
     public inputElementModelController: INgModelController;
 
     /*@ngInject*/
-    constructor($scope: IScope) {
-        super($scope, DEFAULT_OPTIONS);
+    constructor($scope: IScope, booleanValueEditorConfigurationService: BooleanValueEditorConfigurationService) {
+        super($scope, booleanValueEditorConfigurationService);
     }
 
     public $postLink(): void {
@@ -78,7 +68,7 @@ export class BooleanValueEditorComponentController<MODEL = boolean> extends Abst
 /**
  * @ngdoc component
  * @name booleanValueEditor
- * @module angularjs-value-editor
+ * @module angularjs-value-editor.boolean
  *
  * @requires ng.type.ngModel.NgModelController
  * @requires component:kpValueEditor
@@ -116,36 +106,6 @@ export default class BooleanValueEditorComponent {
     public templateUrl = require('./boolean.value-editor.tpl.pug');
 
     public controller = BooleanValueEditorComponentController;
-}
-
-/**
- * @ngdoc type
- * @name BooleanValueEditorOptions
- * @module angularjs-value-editor
- *
- * @property {string} [type=checkbox] Type of display: `'checkbox'` or `'switch'`.
- * @property [trueValue=undefined] Custom value if editor is `true`. If undefined, `true` is used.
- * @property [falseValue=undefined] Custom value if editor is `false`. If undefined, `false` is used.
- * @property {boolean} [nullAsIndeterminate=false] If true, `null` model value is displayed as indeterminate state.
- *
- * @description
- * Extends {@link type:ValueEditorOptions}
- * Default value:
- * ```javascript
- *
- *  {
- *      type: 'checkbox',
- *      trueValue: undefined,
- *      falseValue: undefined,
- *      nullAsIndeterminate: false
- *  }
- * ```
- */
-export interface BooleanValueEditorOptions extends ValueEditorOptions {
-    type?: TBooleanValueEditorType;
-    trueValue?: any;
-    falseValue?: any;
-    nullAsIndeterminate?: boolean;
 }
 
 export interface BooleanValueEditorBindings extends ValueEditorBindings<BooleanValueEditorOptions, ValueEditorValidations> {

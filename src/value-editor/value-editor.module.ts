@@ -4,15 +4,16 @@ import dateParserModule from '@kpsys/angularjs-date-parser';
 import '@kpsys/angular-ui-bootstrap';
 import dateTimePickerModule from '@kpsys/angularjs-bootstrap-datetimepicker';
 
-import acceptableValueEditorModule from './editors/acceptable/acceptable-value-editor.module';
+import acceptableValueEditorModule from './editors/acceptable/acceptable.value-editor.module';
+import booleanValueEditorModule from './editors/boolean/boolean.value-editor.module';
+import dateValueEditorModule from './editors/date/date.value-editor.module';
+import hiddenValueEditorModule from './editors/hidden/hidden.value-editor.module';
+import htmlValueEditorModule from './editors/html/html.value-editor.module';
+import numberValueEditorModule from './editors/number/number.value-editor.module';
+import textValueEditorModule from './editors/text/text.value-editor.module';
 
 import ValueEditorComponent from './value-editor.component';
-import TextValueEditorComponent from './editors/text/text.value-editor.component';
-import NumberValueEditorComponent from './editors/number/number.value-editor.component';
-import BooleanValueEditorComponent from './editors/boolean/boolean.value-editor.component';
-import HiddenValueEditorComponent from './editors/hidden/hidden.value-editor.component';
-import HtmlValueEditorComponent from './editors/html/html.value-editor.component';
-import DateValueEditorComponent from './editors/date/date.value-editor.component';
+import {EmptyConfigurationService} from './editors/abstract-value-editor';
 
 /**
  * @ngdoc module
@@ -20,14 +21,21 @@ import DateValueEditorComponent from './editors/date/date.value-editor.component
  * @module angularjs-value-editor
  */
 
-export default register('angularjs-value-editor', ['ui.ace', dateParserModule, 'ui.bootstrap', dateTimePickerModule, acceptableValueEditorModule])
+export default register('angularjs-value-editor', [
+    'ui.ace',
+    dateParserModule,
+    'ui.bootstrap',
+    dateTimePickerModule,
+    acceptableValueEditorModule,
+    booleanValueEditorModule,
+    dateValueEditorModule,
+    hiddenValueEditorModule,
+    htmlValueEditorModule,
+    numberValueEditorModule,
+    textValueEditorModule
+])
+    .service(EmptyConfigurationService.serviceName, EmptyConfigurationService)
     .component(ValueEditorComponent.componentName, ValueEditorComponent)
-    .component(TextValueEditorComponent.componentName, TextValueEditorComponent)
-    .component(NumberValueEditorComponent.componentName, NumberValueEditorComponent)
-    .component(BooleanValueEditorComponent.componentName, BooleanValueEditorComponent)
-    .component(HiddenValueEditorComponent.componentName, HiddenValueEditorComponent)
-    .component(HtmlValueEditorComponent.componentName, HtmlValueEditorComponent)
-    .component(DateValueEditorComponent.componentName, DateValueEditorComponent)
     .name();
 
 /**

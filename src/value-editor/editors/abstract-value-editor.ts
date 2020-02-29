@@ -1,8 +1,8 @@
 import NgModelConnector from './ng-model-connector';
 import {IOnInit, IPostLink, IScope} from 'angular';
 import {ValueEditorComponentController, ValueEditorOptions} from '../value-editor.component';
-import {DefaultOptions} from '../typings';
 import customEquals from '../utils/equals';
+import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../common/abstract-value-editor-configuration.provider';
 import angular = require('angular');
 
 /**
@@ -11,25 +11,25 @@ import angular = require('angular');
  * @template OPTIONS
  */
 export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEditorOptions> extends NgModelConnector<MODEL> implements IPostLink, IOnInit {
-    private static $inject = ['$scope'];
+    private static $inject = ['$scope', 'emptyConfigurationService'];
 
     protected options: OPTIONS;
     protected valueEditorController: ValueEditorComponentController<MODEL, OPTIONS>;
 
-    constructor(protected $scope: IScope, protected defaultOptions: DefaultOptions<OPTIONS>) {
+    constructor(protected $scope: IScope, protected configurationService: AbstractValueEditorConfigurationService<OPTIONS>) {
         super();
-        this.options = angular.merge({}, this.defaultOptions);
+        this.options = angular.merge({}, this.configurationService.getConfiguration());
     }
 
     public $onInit(): void {
         super.$onInit();
-        this.options = angular.merge({}, this.defaultOptions, this.valueEditorController.options);
+        this.options = angular.merge({}, this.configurationService.getConfiguration(), this.valueEditorController.options);
         this.valueEditorController.registerValueEditor(this);
     }
 
     public $postLink(): void {
-        if (!customEquals(this.options, this.defaultOptions)) {
-            this.onOptionsChange(this.options, undefined, this.whichPropertiesIsNotEqual(this.options, this.defaultOptions as unknown as OPTIONS));
+        if (!customEquals(this.options, this.configurationService.getConfiguration())) {
+            this.onOptionsChange(this.options, undefined, this.whichPropertiesIsNotEqual(this.options, this.configurationService.getConfiguration() as unknown as OPTIONS));
         }
     }
 
@@ -67,4 +67,12 @@ export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEd
 
 export type OptionsChangeDetection<T> = {
     readonly [name in keyof T]?: boolean;
+}
+
+export class EmptyConfigurationService extends AbstractValueEditorConfigurationProvider<{}> {
+    public static readonly serviceName = 'emptyConfigurationService';
+
+    constructor() {
+        super({});
+    }
 }

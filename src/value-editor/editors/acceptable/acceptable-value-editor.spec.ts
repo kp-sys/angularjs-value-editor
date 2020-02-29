@@ -1,7 +1,8 @@
 import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
-import {AcceptableValueEditorBindings, AcceptableValueEditorOptions} from './acceptable.value-editor.component';
+import {AcceptableValueEditorBindings} from './acceptable.value-editor.component';
+import {AcceptableValueEditorOptions} from './acceptable-value-editor-configuration.provider';
 
 interface AcceptableValueEditorModel {
     value: string;

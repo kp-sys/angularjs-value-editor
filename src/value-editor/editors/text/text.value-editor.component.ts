@@ -1,30 +1,17 @@
 import './text.value-editor.less';
-import ValueEditorComponent, {
-    EVENTS,
-    ValueEditorBindings,
-    ValueEditorOptions,
-    ValueEditorValidations
-} from '../../value-editor.component';
+import ValueEditorComponent, {EVENTS, ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
 import {IScope} from 'angular';
 import {Ace} from 'ace-builds';
 import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
-import {DefaultOptions} from '../../typings';
+import {TextValueEditorConfigurationService, TextValueEditorOptions} from './text-value-editor-configuration.provider';
 import angular = require('angular');
-
-const DEFAULT_OPTIONS: DefaultOptions<TextValueEditorOptions> = {
-    type: 'text',
-    aceOptions: {
-        useWrapMode: false,
-        showGutter: true
-    }
-};
 
 export class TextValueEditorComponentController extends AbstractValueEditor<string, TextValueEditorOptions> {
     private aceEditor: Ace.Editor;
 
     /*@ngInject*/
-    constructor($scope: IScope) {
-        super($scope, DEFAULT_OPTIONS);
+    constructor($scope: IScope, private textValueEditorConfigurationService: TextValueEditorConfigurationService) {
+        super($scope, textValueEditorConfigurationService);
     }
 
     /**
@@ -41,7 +28,7 @@ export class TextValueEditorComponentController extends AbstractValueEditor<stri
     protected onOptionsChange(newOptions: TextValueEditorOptions, oldOptions, whatChanged: OptionsChangeDetection<TextValueEditorOptions>) {
         if (whatChanged.type && this.options.type === 'rich-textarea') {
             if (!this.options.aceOptions) {
-                this.options.aceOptions = this.defaultOptions.aceOptions;
+                this.options.aceOptions = this.textValueEditorConfigurationService.getConfiguration().aceOptions;
             }
 
             this.options.aceOptions.onLoad = (ace) => {
@@ -82,7 +69,7 @@ export class TextValueEditorComponentController extends AbstractValueEditor<stri
 /**
  * @ngdoc component
  * @name textValueEditor
- * @module angularjs-value-editor
+ * @module angularjs-value-editor.text
  *
  * @requires ng.type.ngModel.NgModelController
  * @requires component:kpValueEditor
@@ -130,34 +117,6 @@ export default class TextValueEditorComponent {
     public templateUrl = require('./text.value-editor.tpl.pug');
 
     public controller = TextValueEditorComponentController;
-}
-
-export type TTextValueEditorType = 'text' | 'textarea' | 'rich-textarea';
-
-/**
- * @ngdoc type
- * @name TextValueEditorOptions
- * @module angularjs-value-editor
- *
- * @property {string} type Input type. Possible values are `text`, `textarea`, `rich-textarea`.
- * @property {object} aceOptions Options for ACE editor. Applicable only if `type` is `'rich-textarea'`.
- *
- * @description
- * Extends {@link type:ValueEditorOptions}
- * Default value:
- * ```javascript
- *  {
- *      type: 'text',
- *      aceOptions: {
- *          useWrapMode: false,
- *          showGutter: true
- *      }
- *  }
- * ```
- */
-export interface TextValueEditorOptions extends ValueEditorOptions {
-    type?: TTextValueEditorType;
-    aceOptions?: any;
 }
 
 /**

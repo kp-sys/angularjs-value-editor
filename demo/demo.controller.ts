@@ -1,5 +1,6 @@
 /* tslint:disable:no-eval */
 import angular = require('angular');
+import {AcceptableValueEditorConfigurationService} from '../src/value-editor/editors/acceptable/acceptable-value-editor-configuration.provider';
 
 export default class DemoController {
     public model;
@@ -20,8 +21,8 @@ export default class DemoController {
     private equalityComparator: any;
 
     /*@ngInject*/
-    constructor(acceptableValueEditorDefaultOptions) {
-        angular.merge(this, acceptableValueEditorDefaultOptions);
+    constructor(acceptableValueEditorConfigurationService: AcceptableValueEditorConfigurationService<any>) {
+        angular.merge(this, acceptableValueEditorConfigurationService.getConfiguration());
 
         this.acceptableValues = [{x: 'a'}, {x: 'b'}, {x: 'c'}, {x: 'd'}, {x: 'e'}, {x: 'f'}, {x: 'g'}, {x: 'h'}];
         this.evalComparators();

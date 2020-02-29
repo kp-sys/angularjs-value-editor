@@ -14,7 +14,10 @@ import AbstractValueEditorLocalizationProvider, {
 export default class AcceptableValueEditorLocalizationsProvider extends AbstractValueEditorLocalizationProvider<AcceptableValueEditorLocalizations> {
     public static readonly providerName = 'acceptableValueEditorLocalizationsService';
 
-    localizations = Object.assign({}, DEFAULT_ACCEPTABLE_VALUE_EDITOR_LOCALIZATIONS);
+    /*@ngInject*/
+    constructor(acceptableValueEditorDefaultLocalizations: AcceptableValueEditorLocalizations) {
+        super(acceptableValueEditorDefaultLocalizations);
+    }
 }
 
 /**
@@ -25,7 +28,6 @@ export default class AcceptableValueEditorLocalizationsProvider extends Abstract
  * @description
  * See {@link AbstractValueEditorLocalizationService}
  */
-
 export interface AcceptableValueEditorLocalizationsService extends AbstractValueEditorLocalizationService<AcceptableValueEditorLocalizations> {
 
 }
@@ -35,10 +37,14 @@ export interface AcceptableValueEditorLocalizationsService extends AbstractValue
  * @name AcceptableValueEditorLocalizations
  * @module angularjs-value-editor.acceptable
  *
- * @property {string} allSelected `'All selected'`
+ * @property {string} allSelected
+ * @property {string} more
+ * @property {string} less
+ * @property {string} selectAll
+ * @property {string} deselectAll
  *
  * @description
- *
+ * Default localizations: {@link acceptableValueEditorDefaultLocalizations}
  */
 export interface AcceptableValueEditorLocalizations extends ValueEditorLocalizations {
     allSelected;
@@ -48,7 +54,23 @@ export interface AcceptableValueEditorLocalizations extends ValueEditorLocalizat
     deselectAll;
 }
 
-const DEFAULT_ACCEPTABLE_VALUE_EDITOR_LOCALIZATIONS: Readonly<AcceptableValueEditorLocalizations> = Object.freeze({
+/**
+ * @ngdoc constant
+ * @name acceptableValueEditorDefaultLocalizations
+ * @module angularjs-value-editor.acceptable
+ *
+ * @description
+ * ```
+ * {
+ *     allSelected: 'All selected',
+ *     more: 'More',
+ *     less: 'Less',
+ *     selectAll: 'Select all',
+ *     deselectAll: 'Deselect all'
+ * }
+ * ```
+ */
+export const ACCEPTABLE_VALUE_EDITOR_DEFAULT_LOCALIZATIONS: Readonly<AcceptableValueEditorLocalizations> = Object.freeze({
     allSelected: 'All selected',
     more: 'More',
     less: 'Less',

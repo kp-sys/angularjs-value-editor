@@ -12,7 +12,7 @@ export class HiddenValueEditorComponentController extends AbstractValueEditor<an
 /**
  * @ngdoc component
  * @name hiddenValueEditor
- * @module angularjs-value-editor
+ * @module angularjs-value-editor.hidden
  *
  * @requires ng.type.ngModel.NgModelController
  * @requires component:kpValueEditor

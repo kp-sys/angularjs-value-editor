@@ -1,25 +1,18 @@
 import './number.value-editor.less';
-import ValueEditorComponent, {
-    ValueEditorBindings,
-    ValueEditorOptions,
-    ValueEditorValidations
-} from '../../value-editor.component';
+import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
 import {IScope} from 'angular';
 import AbstractValueEditor from '../abstract-value-editor';
-import {DefaultOptions} from '../../typings';
+import {
+    NumberValueEditorConfigurationService,
+    NumberValueEditorOptions
+} from './number-value-editor-configuration.provider';
 import angular = require('angular');
-
-const DEFAULT_OPTIONS: DefaultOptions<NumberValueEditorOptions> = {
-    decimal: false,
-    step: 1,
-    hideSpinners: false
-};
 
 export class NumberValueEditorComponentController extends AbstractValueEditor<number, NumberValueEditorOptions> {
 
     /*@ngInject*/
-    constructor($scope: IScope) {
-        super($scope, DEFAULT_OPTIONS);
+    constructor($scope: IScope, numberValueEditorConfigurationService: NumberValueEditorConfigurationService) {
+        super($scope, numberValueEditorConfigurationService);
     }
 
     protected onOptionsChange(newOptions: NumberValueEditorOptions, oldOptions: NumberValueEditorOptions) {
@@ -30,7 +23,7 @@ export class NumberValueEditorComponentController extends AbstractValueEditor<nu
 /**
  * @ngdoc component
  * @name numberValueEditor
- * @module angularjs-value-editor
+ * @module angularjs-value-editor.number
  *
  * @requires ng.type.ngModel.NgModelController
  * @requires component:kpValueEditor
@@ -66,32 +59,6 @@ export default class NumberValueEditorComponent {
     public templateUrl = require('./number.value-editor.tpl.pug');
 
     public controller = NumberValueEditorComponentController;
-}
-
-/**
- * @ngdoc type
- * @name NumberValueEditorOptions
- * @module angularjs-value-editor
- *
- * @property {boolean=} decimal Allow to input decimal numbers.
- * @property {number=} step Step
- * @property {boolean=} hideSpinners If true, number input hide spinner buttons.
- *
- * @description
- * Extends {@link type:ValueEditorOptions}
- * Default value:
- * ```javascript
- *  {
- *      decimal: false,
- *      step: 1,
- *      hideSpinners: false
- *  }
- * ```
- */
-export interface NumberValueEditorOptions extends ValueEditorOptions {
-    decimal?: boolean;
-    step?: number;
-    hideSpinners?: boolean;
 }
 
 /**
