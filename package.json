@@ -22,7 +22,7 @@
         "pretty-checkbox": "3.x",
         "trumbowyg": "2.x",
         "luxon": "1.x",
-        "@kpsys/angularjs-date-parser": "1.1.0",
+        "@kpsys/angularjs-date-parser": "1.2.0",
         "@kpsys/angularjs-bootstrap-datetimepicker": "2.x",
         "ui-select": "^0.19.8"
     },
@@ -50,7 +50,7 @@
         "@babel/preset-env": "latest",
         "@kpsys/angular-ui-bootstrap": "latest",
         "@kpsys/angularjs-bootstrap-datetimepicker": "latest",
-        "@kpsys/angularjs-date-parser": "latest",
+        "@kpsys/angularjs-date-parser": "^1.2.0",
         "@kpsys/angularjs-register": "latest",
         "@types/angular": "latest",
         "@types/angular-mocks": "latest",

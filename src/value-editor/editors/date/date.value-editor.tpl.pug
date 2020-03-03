@@ -29,7 +29,7 @@
             ng-model="$ctrl.model"
             ng-model-options="{ getterSetter: true}"
 
-            datetimepicker-config='{minView: $ctrl.options.maximumGranularity}'
+            datetimepicker-config='{minView: $ctrl.options.maximumGranularity, startView: $ctrl.startView}'
 
             on-set-time='datePickerOpen = false'
             before-render='$ctrl.dateRestriction($dates, $view)'

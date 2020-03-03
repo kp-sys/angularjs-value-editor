@@ -1,19 +1,55 @@
 import './date.value-editor.less';
-import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
-import {IScope} from 'angular';
-import AbstractValueEditor from '../abstract-value-editor';
-import {DateValueEditorConfigurationService, DateValueEditorOptions} from './date-value-editor-configuration.provider';
+import ValueEditorComponent, {
+    ValueEditorBindings,
+    ValueEditorComponentController,
+    ValueEditorValidations
+} from '../../value-editor.component';
+import {IOnInit, IScope} from 'angular';
+import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
+import {
+    DateValueEditorConfigurationService,
+    DateValueEditorOptions,
+    TDateValueEditorGranularity
+} from './date-value-editor-configuration.provider';
+import {DateTime} from 'luxon';
 import angular = require('angular');
 
-export class DateValueEditorComponentController extends AbstractValueEditor<string, DateValueEditorOptions> {
+export class DateValueEditorComponentController extends AbstractValueEditor<string, DateValueEditorOptions> implements IOnInit {
+    public startView: TDateValueEditorGranularity;
+    protected valueEditorController: ValueEditorComponentController<string, DateValueEditorOptions, DateValueEditorValidations>;
 
     /*@ngInject*/
     constructor($scope: IScope, dateValueEditorConfigurationService: DateValueEditorConfigurationService) {
         super($scope, dateValueEditorConfigurationService);
     }
 
-    protected onOptionsChange(newOptions: DateValueEditorOptions, oldOptions: DateValueEditorOptions) {
-        //
+    public $onInit(): void {
+        super.$onInit();
+        this.startView = this.options.maximumGranularity;
+    }
+
+    public dateRestriction(dates, view) {
+        const minDate = DateTime.fromISO(this.valueEditorController.validations.minDate);
+        const maxDate = DateTime.fromISO(this.valueEditorController.validations.maxDate);
+
+        if (!maxDate.isValid && !minDate.isValid) {
+            return;
+        }
+
+        for (const date of dates) {
+            date.selectable = (!minDate.isValid || minDate.startOf(view) <= date.dateTime.startOf(view)) &&
+                (!maxDate.isValid || date.dateTime.startOf(view) <= maxDate.startOf(view));
+        }
+    }
+
+    protected onOptionsChange(newOptions: DateValueEditorOptions, oldOptions: DateValueEditorOptions, whichOptionChanged: OptionsChangeDetection<DateValueEditorOptions>) {
+        if (whichOptionChanged.maximumGranularity) {
+            if (newOptions.maximumGranularity === 'minute') {
+                this.startView = 'day';
+            } else {
+                this.startView = newOptions.maximumGranularity;
+            }
+        }
     }
 }
 

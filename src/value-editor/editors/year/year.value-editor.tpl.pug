@@ -1,0 +1,20 @@
+kp-value-editor(
+    editor-id="{{$ctrl.valueEditorController.editorId}}"
+    name="{{$ctrl.valueEditorController.name}}"
+    placeholder="{{$ctrl.valueEditorController.placeholder}}"
+    class="{{$ctrl.options.cssClasses}}"
+
+    type="'date'"
+
+    ng-model="$ctrl.model"
+    ng-model-options="{ getterSetter: true}"
+
+    disabled="$ctrl.valueEditorController.disabled"
+
+    options="{viewFormat: 'y', maximumGranularity: 'year'}"
+    validations="{" +
+        "minDate: $ctrl.convertYearToISO($ctrl.valueEditorController.validations.minDate), " +
+        "maxDate: $ctrl.convertYearToISO($ctrl.valueEditorController.validations.maxDate), " +
+        "required: $ctrl.valueEditorController.validations.required" +
+    "}"
+)

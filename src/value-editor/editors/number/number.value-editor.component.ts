@@ -64,7 +64,7 @@ export default class NumberValueEditorComponent {
 /**
  * @ngdoc type
  * @name NumberValueEditorValidations
- * @module angularjs-value-editor
+ * @module angularjs-value-editor.number
  *
  * @property {number=} minlength Min length.
  * @property {number=} maxlength Max length.

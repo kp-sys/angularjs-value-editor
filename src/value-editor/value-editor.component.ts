@@ -5,7 +5,7 @@ import customEquals from './utils/equals';
 import AbstractValueEditor from './editors/abstract-value-editor';
 import angular = require('angular');
 
-export type TValueEditorType = 'text' | 'number' | 'boolean' | 'hidden' | 'html' | 'date' | 'acceptable';
+export type TValueEditorType = 'text' | 'number' | 'boolean' | 'hidden' | 'html' | 'date' | 'acceptable' | 'year';
 
 export const EVENTS = Object.freeze({
     disabled: 'value-editor:disabled'

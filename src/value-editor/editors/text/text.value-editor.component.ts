@@ -122,7 +122,7 @@ export default class TextValueEditorComponent {
 /**
  * @ngdoc type
  * @name TextValueEditorValidations
- * @module angularjs-value-editor
+ * @module angularjs-value-editor.text
  *
  * @property {number=} minlength Min length.
  * @property {number=} maxlength Max length.
