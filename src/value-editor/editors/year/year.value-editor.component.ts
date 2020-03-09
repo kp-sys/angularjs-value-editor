@@ -99,8 +99,8 @@ export default class YearValueEditorComponent {
  * Extends {@link type:ValueEditorValidations}
  */
 export interface YearValueEditorValidations extends ValueEditorValidations {
-    minDate: number;
-    maxDate: number;
+    minDate?: number;
+    maxDate?: number;
 }
 
 export interface YearValueEditorBindings extends ValueEditorBindings<never, YearValueEditorValidations> {

@@ -76,18 +76,18 @@ describe('boolean-value-editor', () => {
     });
 
     it('should has working required validation', () => {
-        valueEditorMocker.create('boolean', {options: {nullAsIndeterminate: true}, validations: {required: true}});
+        valueEditorMocker.create('boolean', {name: 'bool', options: {nullAsIndeterminate: true}, validations: {required: true}});
 
         $scope.model = null;
         $scope.$apply();
 
         expect(valueEditorMocker.getInputElement<HTMLInputElement>().indeterminate).toBe(true);
-        expect($scope.status.$error).toEqual({required: true});
+        expect($scope.form.bool.$error).toEqual({required: true});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().checked = true;
         valueEditorMocker.triggerHandlerOnInput('change');
 
-        expect($scope.status.$error).toEqual({});
+        expect($scope.form.bool.$error).toEqual({});
     });
 
     it('should has working model value substitution options.{trueValue, falseValue} - checkbox -> model', () => {

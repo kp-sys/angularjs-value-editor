@@ -29,6 +29,10 @@ export class DateValueEditorComponentController extends AbstractValueEditor<stri
     }
 
     public dateRestriction(dates, view) {
+        if (!this.valueEditorController.validations) {
+            return;
+        }
+
         const minDate = DateTime.fromISO(this.valueEditorController.validations.minDate);
         const maxDate = DateTime.fromISO(this.valueEditorController.validations.maxDate);
 

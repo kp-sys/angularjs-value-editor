@@ -29,7 +29,7 @@ function openDateTimePicker(inputElement: HTMLInputElement): HTMLElement {
     throw new Error('DateTimePicker is not visible');
 }
 
-// TODO: Write some more test, for example: Test for some settings options.
+// TODO: Write some more test, for example: Test for some settings options and for min/max validations.
 
 describe('date-value-editor', () => {
 
@@ -74,19 +74,19 @@ describe('date-value-editor', () => {
     });
 
     it('should has working required validation', () => {
-        valueEditorMocker.create('date', {validations: {required: true}});
+        valueEditorMocker.create('date', {name: 'date', validations: {required: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
         valueEditorMocker.triggerHandlerOnInput('input');
 
         $scope.$apply();
 
-        expect($scope.status.$error).toEqual({required: true});
+        expect($scope.form.date.$error).toEqual({required: true});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '22.2.2022';
         valueEditorMocker.triggerHandlerOnInput('input');
 
-        expect($scope.status.$error).toEqual({});
+        expect($scope.form.date.$error).toEqual({});
     });
 
     it('should add additional classes to input element', () => {

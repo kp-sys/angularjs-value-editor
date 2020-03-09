@@ -73,7 +73,7 @@ describe('html-value-editor', () => {
     });
 
     it('should has working required validation', (done) => {
-        valueEditorMocker.create('html', {validations: {required: true}});
+        valueEditorMocker.create('html', {name: 'html', validations: {required: true}});
         $scope.$apply();
 
         setTimeout(() => {
@@ -82,11 +82,11 @@ describe('html-value-editor', () => {
 
             $scope.$apply();
 
-            expect($scope.status.$error).toEqual({required: true});
+            expect($scope.form.html.$error).toEqual({required: true});
 
             $(valueEditorMocker.getInputElement<HTMLTextAreaElement>()).trumbowyg('html', 'hello');
 
-            expect($scope.status.$error).toEqual({});
+            expect($scope.form.html.$error).toEqual({});
             done();
         }, 0);
     });

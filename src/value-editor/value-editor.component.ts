@@ -1,4 +1,4 @@
-import {IDoCheck, IFormController, INgModelController, IOnChanges, IOnInit, IScope} from 'angular';
+import {IDoCheck, IFormController, IOnChanges, IOnInit, IScope} from 'angular';
 import NgModelConnector from './editors/ng-model-connector';
 import {generateUuid} from './utils/uuid-generator';
 import customEquals from './utils/equals';
@@ -60,14 +60,6 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
         }
     }
 
-    public get status() {
-        return this.form[this.name];
-    }
-
-    public set status(s) {
-        //
-    }
-
     public registerValueEditor<CONTROLLER extends AbstractValueEditor<MODEL, EDITOROPTS>>(editorController: CONTROLLER) {
         this.valueEditorInstance = editorController;
     }
@@ -92,7 +84,6 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
  * @param {boolean} visible If input is visible. <.
  * @param {ValueEditorValidations} validations ValueEditor validations. <.
  * @param {ValueEditorOptions} options ValueEditor options. Type depends on ValueEditor type.
- * @param {ng.type.ngModel.NgModelController} status Status of input.
  *
  * @description
  * Generic value editor depends on type:
@@ -115,8 +106,7 @@ export default class ValueEditorComponent {
         disabled: '<?',
         visible: '<?',
         validations: '<?',
-        options: '<?',
-        status: '=?'
+        options: '<?'
     };
 
     public controller = ValueEditorComponentController;
@@ -155,5 +145,4 @@ export interface ValueEditorBindings<EDITOROPTS extends ValueEditorOptions = Val
     visible?: boolean;
     validations?: EDITORVALIDATIONS;
     options?: EDITOROPTS;
-    status?: INgModelController;
 }

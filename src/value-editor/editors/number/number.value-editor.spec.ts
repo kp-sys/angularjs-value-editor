@@ -37,51 +37,51 @@ describe('number-value-editor', () => {
     });
 
     it('should has working required validation', () => {
-        valueEditorMocker.create('number', {validations: {required: true}});
+        valueEditorMocker.create('number', {name: 'number', validations: {required: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
         valueEditorMocker.triggerHandlerOnInput('input');
 
         $scope.$apply();
 
-        expect($scope.status.$error).toEqual({required: true});
+        expect($scope.form.number.$error).toEqual({required: true});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '123';
         valueEditorMocker.triggerHandlerOnInput('input');
 
-        expect($scope.status.$error).toEqual({});
+        expect($scope.form.number.$error).toEqual({});
     });
 
     it('should has working minlength validation', () => {
-        valueEditorMocker.create('number', {validations: {minlength: 3}});
+        valueEditorMocker.create('number', {name: 'number', validations: {minlength: 3}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '1';
         valueEditorMocker.triggerHandlerOnInput('input');
 
         $scope.$apply();
 
-        expect($scope.status.$error).toEqual({minlength: true});
+        expect($scope.form.number.$error).toEqual({minlength: true});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '123';
         valueEditorMocker.triggerHandlerOnInput('input');
 
-        expect($scope.status.$error).toEqual({});
+        expect($scope.form.number.$error).toEqual({});
     });
 
     it('should has working maxlength validation', () => {
-        valueEditorMocker.create('number', {validations: {maxlength: 3}});
+        valueEditorMocker.create('number', {name: 'number', validations: {maxlength: 3}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '12345';
         valueEditorMocker.triggerHandlerOnInput('input');
 
         $scope.$apply();
 
-        expect($scope.status.$error).toEqual({maxlength: true});
+        expect($scope.form.number.$error).toEqual({maxlength: true});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '123';
         valueEditorMocker.triggerHandlerOnInput('input');
 
-        expect($scope.status.$error).toEqual({});
+        expect($scope.form.number.$error).toEqual({});
     });
 
     it('should add additional classes to input element', () => {
@@ -109,20 +109,20 @@ describe('number-value-editor', () => {
 
     // working only in Firefox
     xit('should has implicit number validation', () => {
-        valueEditorMocker.create('number');
+        valueEditorMocker.create('number', {name: 'number'});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
         valueEditorMocker.triggerHandlerOnInput('input');
 
-        expect($scope.status.$error).toEqual({number: true});
+        expect($scope.form.number.$error).toEqual({number: true});
     });
 
     it('should has implicit step validation', () => {
-        valueEditorMocker.create('number', {options: {step: 0.01}});
+        valueEditorMocker.create('number', {name: 'number', options: {step: 0.01}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '43.364';
         valueEditorMocker.triggerHandlerOnInput('input');
 
-        expect($scope.status.$error).toEqual({step: true});
+        expect($scope.form.number.$error).toEqual({step: true});
     });
 });

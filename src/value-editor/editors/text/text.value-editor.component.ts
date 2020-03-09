@@ -54,7 +54,7 @@ export class TextValueEditorComponentController extends AbstractValueEditor<stri
     private initACE() {
         // Original directive doesn't sets model to touched if ACE editor is blurred. This fixes it.
         this.aceEditor.on('blur', () => {
-            this.valueEditorController.status.$setTouched();
+            this.ngModelController.$setTouched();
             this.$scope.$apply();
         });
 
