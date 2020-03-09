@@ -70,6 +70,7 @@ export class YearValueEditorComponentController extends AbstractValueEditor<numb
  *         </main>
  *     </file>
  *     <file name="script.js">
+ *         luxon.Settings.defaultLocale = luxon.DateTime.local().resolvedLocaleOpts().locale;
  *         angular.module('yearValueEditorExample', ['angularjs-value-editor']);
  *     </file>
  * </example>
