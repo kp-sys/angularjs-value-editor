@@ -1,4 +1,4 @@
-import angular = require('angular');
+import * as angular from 'angular';
 
 function isRegExp(value) {
     return toString.call(value) === '[object RegExp]';

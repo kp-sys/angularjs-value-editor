@@ -1,6 +1,6 @@
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorOptions} from '../../value-editor.component';
 import AbstractValueEditor from '../abstract-value-editor';
-import angular = require('angular');
+import * as angular from 'angular';
 
 export class HiddenValueEditorComponentController extends AbstractValueEditor<any, ValueEditorOptions> {
 

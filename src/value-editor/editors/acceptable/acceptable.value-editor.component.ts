@@ -8,7 +8,6 @@ import {
     AcceptableValueEditorConfigurationService,
     AcceptableValueEditorOptions
 } from './acceptable-value-editor-configuration.provider';
-import angular = require('angular');
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.acceptableValueEditor';
 

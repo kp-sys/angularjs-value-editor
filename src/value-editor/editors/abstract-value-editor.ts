@@ -1,9 +1,9 @@
 import NgModelConnector from './ng-model-connector';
+import * as angular from 'angular';
 import {IOnInit, IPostLink, IScope} from 'angular';
 import {ValueEditorComponentController, ValueEditorOptions} from '../value-editor.component';
 import customEquals from '../utils/equals';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../common/abstract-value-editor-configuration.provider';
-import angular = require('angular');
 
 /**
  * Abstract base class for general value-editor features.

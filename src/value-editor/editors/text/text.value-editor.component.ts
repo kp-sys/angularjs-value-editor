@@ -1,10 +1,10 @@
 import './text.value-editor.less';
 import ValueEditorComponent, {EVENTS, ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
+import * as angular from 'angular';
 import {IScope} from 'angular';
 import {Ace} from 'ace-builds';
 import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
 import {TextValueEditorConfigurationService, TextValueEditorOptions} from './text-value-editor-configuration.provider';
-import angular = require('angular');
 
 export class TextValueEditorComponentController extends AbstractValueEditor<string, TextValueEditorOptions> {
     private aceEditor: Ace.Editor;

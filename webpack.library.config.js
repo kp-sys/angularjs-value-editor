@@ -1,3 +1,5 @@
+const {babelLoaderOptions} = require('./babel-loader');
+
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -46,12 +48,7 @@ module.exports = (env, {mode}) => ({
                     {
                         loader: 'babel-loader',
                         options: {
-                            plugins: [
-                                'angularjs-annotate'
-                            ],
-                            presets: [
-                                '@babel/preset-env'
-                            ]
+                            ...babelLoaderOptions
                         }
                     },
                     {

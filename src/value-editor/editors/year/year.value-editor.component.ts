@@ -1,7 +1,7 @@
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
 import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
 import {DateTime} from 'luxon';
-import angular = require('angular');
+import * as angular from 'angular';
 
 export class YearValueEditorComponentController extends AbstractValueEditor<number, never> {
 

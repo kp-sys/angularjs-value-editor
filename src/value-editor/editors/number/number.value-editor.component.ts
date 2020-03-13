@@ -1,12 +1,12 @@
 import './number.value-editor.less';
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
+import * as angular from 'angular';
 import {IScope} from 'angular';
 import AbstractValueEditor from '../abstract-value-editor';
 import {
     NumberValueEditorConfigurationService,
     NumberValueEditorOptions
 } from './number-value-editor-configuration.provider';
-import angular = require('angular');
 
 export class NumberValueEditorComponentController extends AbstractValueEditor<number, NumberValueEditorOptions> {
 

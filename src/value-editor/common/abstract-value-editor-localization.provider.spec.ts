@@ -3,7 +3,7 @@ import AbstractValueEditorLocalizationProvider, {
     ValueEditorLocalizations
 } from './abstract-value-editor-localization.provider';
 import register from '@kpsys/angularjs-register';
-import angular = require('angular');
+import * as angular from 'angular';
 
 interface TestingLocalizations extends ValueEditorLocalizations {
     loc1;

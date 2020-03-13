@@ -1,11 +1,11 @@
+import * as angular from 'angular';
 import {IDoCheck, IFormController, IOnChanges, IOnInit, IScope} from 'angular';
 import NgModelConnector from './editors/ng-model-connector';
 import {generateUuid} from './utils/uuid-generator';
 import customEquals from './utils/equals';
 import AbstractValueEditor from './editors/abstract-value-editor';
-import angular = require('angular');
 
-export type TValueEditorType = 'text' | 'number' | 'boolean' | 'hidden' | 'html' | 'date' | 'acceptable' | 'year';
+export type TValueEditorType = 'text' | 'number' | 'boolean' | 'hidden' | 'html' | 'date' | 'acceptable' | 'year' | 'card-number';
 
 export const EVENTS = Object.freeze({
     disabled: 'value-editor:disabled'

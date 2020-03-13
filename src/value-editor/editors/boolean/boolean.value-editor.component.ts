@@ -1,12 +1,12 @@
 import './boolean.value-editor.scss';
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
+import * as angular from 'angular';
 import {INgModelController, IPostLink, IScope} from 'angular';
 import AbstractValueEditor from '../abstract-value-editor';
 import {
     BooleanValueEditorConfigurationService,
     BooleanValueEditorOptions
 } from './boolean-value-editor-configuration.provider';
-import angular = require('angular');
 
 export class BooleanValueEditorComponentController<MODEL = boolean> extends AbstractValueEditor<MODEL, BooleanValueEditorOptions> implements IPostLink {
     public inputElementModelController: INgModelController;

@@ -1,7 +1,7 @@
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from './abstract-value-editor-configuration.provider';
 import register from '@kpsys/angularjs-register';
 import {DefaultOptions} from '../typings';
-import angular = require('angular');
+import * as angular from 'angular';
 
 interface TestingOptions {
     opt1: string;

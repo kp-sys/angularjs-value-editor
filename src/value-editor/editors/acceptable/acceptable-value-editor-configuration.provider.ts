@@ -1,7 +1,7 @@
 import {DefaultOptions} from '../../typings';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../common/abstract-value-editor-configuration.provider';
 import {ValueEditorOptions} from '../../value-editor.component';
-import angular = require('angular');
+import * as angular from 'angular';
 
 /**
  * @ngdoc type

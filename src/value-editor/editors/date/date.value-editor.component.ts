@@ -4,6 +4,7 @@ import ValueEditorComponent, {
     ValueEditorComponentController,
     ValueEditorValidations
 } from '../../value-editor.component';
+import * as angular from 'angular';
 import {IOnInit, IScope} from 'angular';
 import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
 import {
@@ -12,7 +13,6 @@ import {
     TDateValueEditorGranularity
 } from './date-value-editor-configuration.provider';
 import {DateTime} from 'luxon';
-import angular = require('angular');
 
 export class DateValueEditorComponentController extends AbstractValueEditor<string, DateValueEditorOptions> implements IOnInit {
     public startView: TDateValueEditorGranularity;
