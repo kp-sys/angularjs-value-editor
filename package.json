@@ -1,13 +1,10 @@
 {
     "name": "@kpsys/angularjs-value-editor",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "author": {
         "email": "tomas.dostal@kpsys.cz",
         "name": "Tomas Dostal"
     },
-    "browserslist": [
-        "last 2 versions and > 1% and not ie < 11"
-    ],
     "description": "Dynamically created inputs for AngularJS",
     "repository": "https://github.com/DostalTomas/angularjs-value-editor.git",
     "peerDependencies": {
@@ -24,7 +21,8 @@
         "luxon": "1.x",
         "@kpsys/angularjs-date-parser": "1.2.0",
         "@kpsys/angularjs-bootstrap-datetimepicker": "2.x",
-        "ui-select": "^0.19.8"
+        "ui-select": "^0.19.8",
+        "@babel/runtime": "7.x"
     },
     "main": "dist/angularjs-value-editor.min.js",
     "style": "dist/angularjs-value-editor.min.css",
@@ -48,6 +46,8 @@
         "angular-sanitize": "1.7.x",
         "@babel/core": "latest",
         "@babel/preset-env": "latest",
+        "@babel/runtime": "latest",
+        "bind-decorator": "latest",
         "@kpsys/angular-ui-bootstrap": "latest",
         "@kpsys/angularjs-bootstrap-datetimepicker": "latest",
         "@kpsys/angularjs-date-parser": "^1.2.0",

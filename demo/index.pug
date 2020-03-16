@@ -15,9 +15,12 @@ html
                     ng-model="value"
                     editor-id="ajdy"
                     name="'jyr'"
-                    type="'year'"
+                    type="'card-number'"
                     disabled="disabled"
-                    placeholder="Year"
+                    placeholder="Card number"
+                    options="{" +
+                        "requestFunction: dc.generate" +
+                    "}"
                 )
 
             div

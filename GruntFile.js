@@ -49,6 +49,7 @@ module.exports = (grunt) => {
                                 'https://unpkg.com/@kpsys/angular-ui-bootstrap@2.5.5/dist/ui-bootstrap-tpls.js',
                                 'https://unpkg.com/angular-sanitize@1.7.9/angular-sanitize.js',
                                 'https://unpkg.com/ui-select@0.19.8/dist/select.js',
+                                'https://unpkg.com/regenerator-runtime@0.13.5/runtime.js',
 	                            `${process.env.EXAMPLES_SCRIPTS_URL_PREFIX || ''}/angularjs-value-editor.js`
                             ],
                             stylesheets: [

@@ -1,0 +1,35 @@
+.input-group
+    .input-group-btn
+        button.btn.btn-default.generate(
+            type="button"
+            ng-class="{{$ctrl.options.inputSize}}"
+            ng-disabled="$ctrl.valueEditorController.disabled"
+
+            ng-click="$ctrl.generate()"
+
+            ng-ref="$ctrl.generationButton"
+
+            uib-popover="{{$ctrl.popoverError}}"
+            popover-is-open="$ctrl.openPopover"
+            popover-trigger="'none'"
+
+        ) {{$ctrl.cardNumberValueEditorLocalizationsService.getLocalization('generate')}}
+
+    input.form-control(
+        type="text"
+
+        id="{{$ctrl.valueEditorController.editorId}}"
+        name="{{$ctrl.valueEditorController.name}}"
+        placeholder="{{$ctrl.valueEditorController.placeholder}}"
+
+        ng-class="$ctrl.options.cssClasses"
+
+        ng-model="$ctrl.model"
+        ng-model-options="{ getterSetter: true}"
+
+        ng-disabled="$ctrl.valueEditorController.disabled"
+
+        ng-required="$ctrl.valueEditorController.validations.required"
+
+        data-main-input
+    )
