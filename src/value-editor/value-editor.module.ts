@@ -10,6 +10,7 @@ import htmlValueEditorModule from './editors/html/html.value-editor.module';
 import numberValueEditorModule from './editors/number/number.value-editor.module';
 import textValueEditorModule from './editors/text/text.value-editor.module';
 import yearValueEditorModule from './editors/year/year.value-editor.module';
+import cardNumberValueEditorModule from './editors/card-number/card-number.value-editor.module';
 
 import ValueEditorComponent from './value-editor.component';
 import {EmptyConfigurationService} from './editors/abstract-value-editor';
@@ -29,7 +30,8 @@ export default register('angularjs-value-editor', [
     htmlValueEditorModule,
     numberValueEditorModule,
     textValueEditorModule,
-    yearValueEditorModule
+    yearValueEditorModule,
+    cardNumberValueEditorModule
 ])
     .service(EmptyConfigurationService.serviceName, EmptyConfigurationService)
     .component(ValueEditorComponent.componentName, ValueEditorComponent)
