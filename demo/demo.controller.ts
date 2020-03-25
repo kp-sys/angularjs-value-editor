@@ -1,17 +1,22 @@
-import {ITimeoutService} from 'angular';
-import bind from 'bind-decorator';
+import {Identified} from '../src/value-editor/editors/index-selection/index-selection.value-editor.component';
 
-export default class DemoController {
-    public model: number;
-
-    /*@ngInject*/
-    constructor(private $timeout: ITimeoutService) {
-    }
-
-    @bind
-    public generate() {
-        return new Promise(((resolve, reject) => {
-            this.$timeout(() => reject('generatedValue'), 1000)
-        }));
-    }
+export default class DemoController<T extends Identified<number>> {
+    public items: Identified<number>[] = [
+        {
+            id: 1,
+            text: 'one'
+        },
+        {
+            id: 2,
+            text: 'two'
+        },
+        {
+            id: 3,
+            text: 'three'
+        },
+        {
+            id: 4,
+            text: 'four'
+        }
+    ];
 }

@@ -1,0 +1,22 @@
+.list-group(
+    id!="\\{\\{$ctrl.valueEditorController.editorId\\}\\}"
+    ng-class="$ctrl.options.cssClasses"
+    data-main-input
+)
+    button.list-group-item(
+        type="button"
+        ng-disabled="$ctrl.valueEditorController.disabled"
+        ng-repeat="$item in $ctrl.options.items"
+        ng-class="{'active': $ctrl.isSelected($item), 'disabled': $ctrl.valueEditorController.disabled}"
+        ng-click="$ctrl.selectItem($item)"
+    ) {{optionsTemplate}}
+
+input(
+    type="hidden"
+    name="\\{\\{$ctrl.valueEditorController.name\\}\\}"
+
+    ng-model="$ctrl.model"
+    ng-model-options="{ getterSetter: true}"
+
+    ng-required="$ctrl.valueEditorController.validations.required"
+)

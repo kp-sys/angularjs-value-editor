@@ -30,10 +30,6 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractVal
         this.uiSelectComparator = this.uiSelectComparator.bind(this);
     }
 
-    public $onInit(): void {
-        super.$onInit();
-    }
-
     public get model(): VALUE[] {
         return super.model;
     }
