@@ -1,0 +1,18 @@
+kp-value-editor(
+    editor-id="{{$ctrl.valueEditorController.editorId}}"
+    name="{{$ctrl.valueEditorController.name}}"
+    placeholder="{{$ctrl.valueEditorController.placeholder}}"
+    class="{{$ctrl.options.cssClasses}}"
+
+    type="'text'"
+
+    ng-model="$ctrl.model"
+    ng-model-options="{ getterSetter: true}"
+
+    disabled="$ctrl.valueEditorController.disabled"
+
+    options="{type: 'rich-textarea', aceOptions: {useWrapMode: false, showGutter: true, mode: 'velocity'}}"
+    validations="{" +
+        "required: $ctrl.valueEditorController.validations.required" +
+    "}"
+)

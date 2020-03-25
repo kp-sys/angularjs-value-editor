@@ -12,13 +12,15 @@ import {ValueEditorOptions} from './value-editor.component';
  * type TValueEditorTypeAliases =
  *  'exemplar-bar-code' |
  *  'single-acceptable-root' |
- *  'multiple-acceptable-root';
+ *  'multiple-acceptable-root' |
+ *  'velocity-template';
  * ```
  */
 export type TValueEditorTypeAliases =
     'exemplar-bar-code' |
     'single-acceptable-root' |
-    'multiple-acceptable-root';
+    'multiple-acceptable-root' |
+    'velocity-template';
 
 
 /**
