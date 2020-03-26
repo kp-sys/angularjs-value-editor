@@ -14,14 +14,17 @@ html
                 kp-value-editor(
                     ng-model="value"
                     editor-id="ajdy"
-                    name="'jyr'"
-                    type="'card-number'"
+                    name="idx"
+                    type="'index-selection'"
                     disabled="disabled"
-                    placeholder="Card number"
+                    placeholder="Index"
                     options="{" +
-                        "requestFunction: dc.generate" +
+                         "items: dc.items" +
                     "}"
+                    validations="{required: false}"
                 )
+
+            button(type="button" ng-click="value = undefined") Reset
 
             div
                 label Disabled:
