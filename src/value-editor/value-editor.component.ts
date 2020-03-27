@@ -5,7 +5,7 @@ import {generateUuid} from './utils/uuid-generator';
 import customEquals from './utils/equals';
 import AbstractValueEditor from './editors/abstract-value-editor';
 
-export type TValueEditorType = 'text' | 'number' | 'boolean' | 'hidden' | 'html' | 'date' | 'acceptable' | 'year' | 'card-number' | 'index-selection';
+export type TValueEditorType = 'text' | 'number' | 'boolean' | 'hidden' | 'html' | 'date' | 'acceptable' | 'year' | 'card-number' | 'index-selection' | 'autocomplete';
 
 export const EVENTS = Object.freeze({
     disabled: 'value-editor:disabled'

@@ -15,13 +15,13 @@ html
                     ng-model="value"
                     editor-id="ajdy"
                     name="idx"
-                    type="'index-selection'"
+                    type="'autocomplete'"
                     disabled="disabled"
                     placeholder="Index"
                     options="{" +
-                         "items: dc.items" +
+                         "dataSource: dc.requestFunction" +
                     "}"
-                    validations="{required: false}"
+                    validations="{required: true}"
                 )
 
             button(type="button" ng-click="value = undefined") Reset

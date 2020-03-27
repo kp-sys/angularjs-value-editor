@@ -51,14 +51,14 @@ export const INDEX_SELECTION_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<IndexS
 
 /**
  * @ngdoc provider
- * @name IndexSelectionValueEditorConfigurationServiceProvider
+ * @name indexSelectionValueEditorConfigurationServiceProvider
  * @module angularjs-value-editor.index-selection
  *
  * @description
  *
  * See {@link AbstractValueEditorConfigurationProvider}
  *
- * Default options: {@link IndexSelectionValueEditorDefaultOptions}
+ * Default options: {@link indexSelectionValueEditorDefaultOptions}
  */
 export default class IndexSelectionValueEditorConfigurationProvider<ID, VALUE extends Identified<ID>> extends AbstractValueEditorConfigurationProvider<IndexSelectionValueEditorOptions<ID, VALUE>> {
     public static readonly providerName = 'indexSelectionValueEditorConfigurationService';
@@ -71,14 +71,14 @@ export default class IndexSelectionValueEditorConfigurationProvider<ID, VALUE ex
 
 /**
  * @ngdoc service
- * @name IndexSelectionValueEditorConfigurationService
+ * @name indexSelectionValueEditorConfigurationService
  * @module angularjs-value-editor.index-selection
  *
  * @description
  *
  * See {@link AbstractValueEditorConfigurationProvider}
  *
- * Default options: {@link IndexSelectionValueEditorDefaultOptions}
+ * Default options: {@link indexSelectionValueEditorDefaultOptions}
  */
 export interface IndexSelectionValueEditorConfigurationService<ID, VALUE extends Identified<ID>> extends AbstractValueEditorConfigurationService<IndexSelectionValueEditorOptions<ID, VALUE>> {
 }

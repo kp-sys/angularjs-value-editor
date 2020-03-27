@@ -11,7 +11,7 @@ import IndexSelectionValueEditorConfigurationProvider, {INDEX_SELECTION_VALUE_ED
  *
  */
 
-export default register('angularjs-value-editor.year')
+export default register('angularjs-value-editor.index-selection')
     .constant('indexSelectionValueEditorDefaultOptions', INDEX_SELECTION_VALUE_EDITOR_DEFAULT_OPTIONS)
     .provider(IndexSelectionValueEditorConfigurationProvider.providerName, IndexSelectionValueEditorConfigurationProvider)
     .component(IndexSelectionValueEditorComponent.componentName, IndexSelectionValueEditorComponent)

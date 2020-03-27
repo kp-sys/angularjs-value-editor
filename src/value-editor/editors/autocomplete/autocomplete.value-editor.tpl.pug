@@ -1,0 +1,35 @@
+div.kp-autocomplete.input-group
+    input.form-control(
+        id="{{$ctrl.valueEditorController.editorId}}"
+        name="{{$ctrl.valueEditorController.name}}"
+        placeholder="{{$ctrl.valueEditorController.placeholder}}"
+
+        ng-model="$ctrl.model"
+        ng-model-options="{getterSetter: true}"
+
+        ng-focus="$ctrl.fetchItemsIfNeed()"
+
+        uib-typeahead="item for item in $ctrl.items | filter : $viewValue"
+        typeahead-is-open="$ctrl.isOpen"
+        typeahead-min-length="$ctrl.minLength"
+
+        ng-disabled="$ctrl.valueEditorController.disabled"
+
+        ng-required="$ctrl.valueEditorController.validations.required"
+
+        data-main-input
+    )
+
+    span.input-group-btn
+        button.btn.btn-default(
+            type="button"
+
+            ng-disabled="$ctrl.valueEditorController.disabled"
+
+            ng-click="$ctrl.open()"
+
+            ng-blur="$ctrl.resetMinLength()"
+        )
+
+            i.glyphicon.glyphicon-chevron-down(ng-hide="$ctrl.loading")
+            ng-include(src="$ctrl.loadingSpinnerTemplateUrl" class="autocomplete-loading-svg" ng-show="$ctrl.loading")

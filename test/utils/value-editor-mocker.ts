@@ -40,7 +40,7 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
      * Find HTML input element
      * @returns {HTMLElement} Input element.
      */
-    public getInputElement<T extends HTMLElement>(): T {
+    public getInputElement<T extends HTMLElement = HTMLInputElement>(): T {
         return this.compiledElement[0].querySelector('[data-main-input]');
     }
 
