@@ -4,6 +4,7 @@ import {IOnInit, IPostLink, IScope} from 'angular';
 import {ValueEditorComponentController, ValueEditorOptions} from '../value-editor.component';
 import customEquals from '../utils/equals';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../common/abstract-value-editor-configuration.provider';
+import {AbstractValueEditorLocalizationService} from '../common/abstract-value-editor-localization.provider';
 
 /**
  * Abstract base class for general value-editor features.
@@ -16,7 +17,7 @@ export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEd
     protected options: OPTIONS;
     protected valueEditorController: ValueEditorComponentController<MODEL, OPTIONS>;
 
-    constructor(protected $scope: IScope, protected configurationService: AbstractValueEditorConfigurationService<OPTIONS>) {
+    constructor(protected $scope: IScope, protected configurationService: AbstractValueEditorConfigurationService<OPTIONS>, protected localizationService?: AbstractValueEditorLocalizationService<any>) {
         super();
         this.options = angular.merge({}, this.configurationService.getConfiguration());
     }
@@ -36,6 +37,14 @@ export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEd
     public changeOptions(newOptions: OPTIONS, oldOptions: OPTIONS) {
         this.options = newOptions;
         this.onOptionsChange(newOptions, oldOptions, this.whichPropertiesIsNotEqual(newOptions, oldOptions));
+    }
+
+    public localize(code: string): string {
+        if (this.localizationService) {
+            return (this.localizationService.getLocalization(code));
+        } else {
+            throw new Error('localizationService is not set');
+        }
     }
 
     /**

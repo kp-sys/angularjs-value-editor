@@ -12,6 +12,7 @@ import yearValueEditorModule from './editors/year/year.value-editor.module';
 import cardNumberValueEditorModule from './editors/card-number/card-number.value-editor.module';
 import indexSelectionValueEditorModule from './editors/index-selection/index-selection.value-editor.module';
 import autocompleteValueEditorModule from './editors/autocomplete/autocomplete.value-editor.module';
+import passwordValueEditorModule from './editors/password/password.value-editor.module';
 
 import ValueEditorComponent from './value-editor.component';
 import {EmptyConfigurationService} from './editors/abstract-value-editor';
@@ -47,7 +48,8 @@ export default register('angularjs-value-editor', [
     yearValueEditorModule,
     cardNumberValueEditorModule,
     indexSelectionValueEditorModule,
-    autocompleteValueEditorModule
+    autocompleteValueEditorModule,
+    passwordValueEditorModule
 ])
     .constant('loadingSpinnerTemplateUrl', LOADING_SPINNER_TPL_URL)
     .service(EmptyConfigurationService.serviceName, EmptyConfigurationService)

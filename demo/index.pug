@@ -9,20 +9,22 @@ html
     body(ng-app="app" ng-strict-di)
         h1 Value Editor Demo
         main(ng-controller="demoController as dc" ng-init="disabled = false")
-            form(name="dc.form")
+            form.form-horizontal(name="dc.form")
+                .form-group
+                    label.control-label.col-lg-2(for="editor") Label
+                    kp-value-editor.col-lg-10(
+                        ng-model="value"
+                        editor-id="editor"
+                        name="pass"
+                        type="'password'"
+                        disabled="disabled"
+                        placeholder="Password"
+                        options="{" +
+                            "withConfirmation: true" +
+                        "}"
+                        validations="{required: true, minlength: 4}"
+                    )
 
-                kp-value-editor(
-                    ng-model="value"
-                    editor-id="ajdy"
-                    name="idx"
-                    type="'autocomplete'"
-                    disabled="disabled"
-                    placeholder="Index"
-                    options="{" +
-                         "dataSource: dc.requestFunction" +
-                    "}"
-                    validations="{required: true}"
-                )
 
             button(type="button" ng-click="value = undefined") Reset
 
