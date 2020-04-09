@@ -8,7 +8,7 @@ html
 
     body(ng-app="app" ng-strict-di)
         h1 Value Editor Demo
-        main(ng-controller="demoController as dc" ng-init="disabled = false")
+        main(ng-controller="demoController as dc" ng-init="disabled = false; value = 'signatura'")
             form.form-horizontal(name="dc.form")
                 .form-group
                     label.control-label.col-lg-2(for="editor") Label
@@ -16,11 +16,11 @@ html
                         ng-model="value"
                         editor-id="editor"
                         name="pass"
-                        type="'password'"
+                        type="'signature'"
                         disabled="disabled"
                         placeholder="Password"
                         options="{" +
-                            "withConfirmation: true" +
+                            "canDoAction: true" +
                         "}"
                         validations="{required: true, minlength: 4}"
                     )

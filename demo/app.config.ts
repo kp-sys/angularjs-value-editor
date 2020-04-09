@@ -1,20 +1,13 @@
-import IndexSelectionValueEditorConfigurationProvider
-    from '../src/value-editor/editors/index-selection/index-selection-value-editor-configuration.provider';
-import * as angular from 'angular';
+import SignatureValueEditorConfigurationProvider
+    from '../src/value-editor/editors/signature/signature-value-editor-configuration.provider';
 
 /*@ngInject*/
-export default function config(indexSelectionValueEditorConfigurationServiceProvider: IndexSelectionValueEditorConfigurationProvider<number, any>) {
-    indexSelectionValueEditorConfigurationServiceProvider.setConfiguration({
-        optionsTemplate: '{{$item.text}}',
-        equalityComparator: (model, item) => {
+export default function config(signatureValueEditorConfigurationServiceProvider: SignatureValueEditorConfigurationProvider) {
+    signatureValueEditorConfigurationServiceProvider.setConfiguration({
+        dataSource: /*@ngInject*/ ($name, $model) => {
+            console.log($name, $model);
 
-            let singleModel = Array.isArray(model) ? model[0] : model;
-
-            if (typeof singleModel === 'string') {
-                singleModel = Number.parseInt(singleModel, 10)
-            }
-
-            return angular.equals(singleModel, item.id);
+            return Promise.resolve(['a', 'b', 'c', 'd', $name]);
         }
     });
 }

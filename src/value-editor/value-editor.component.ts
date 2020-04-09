@@ -5,7 +5,7 @@ import {generateUuid} from './utils/uuid-generator';
 import customEquals from './utils/equals';
 import AbstractValueEditor from './editors/abstract-value-editor';
 
-export type TValueEditorType = 'text' | 'number' | 'boolean' | 'hidden' | 'html' | 'date' | 'acceptable' | 'year' | 'card-number' | 'index-selection' | 'autocomplete' | 'password';
+export type TValueEditorType = 'text' | 'number' | 'boolean' | 'hidden' | 'html' | 'date' | 'acceptable' | 'year' | 'card-number' | 'index-selection' | 'autocomplete' | 'password' | 'signature';
 
 export const EVENTS = Object.freeze({
     disabled: 'value-editor:disabled'
@@ -24,8 +24,8 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
     public visible: boolean = true;
     public validations: EDITORVALIDATIONS;
     public options: EDITOROPTS;
+    public formController: IFormController;
     /* Internal */
-    public form: IFormController;
     private previousOptions: EDITOROPTS;
     private valueEditorInstance: AbstractValueEditor<MODEL, EDITOROPTS>;
 
@@ -95,7 +95,8 @@ export default class ValueEditorComponent {
     public static componentName = 'kpValueEditor';
 
     public require = {
-        ngModelController: 'ngModel'
+        ngModelController: 'ngModel',
+        formController: '?^^form'
     };
 
     public bindings = {

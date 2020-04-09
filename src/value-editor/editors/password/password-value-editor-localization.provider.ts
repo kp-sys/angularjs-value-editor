@@ -25,11 +25,6 @@ export default class PasswordValueEditorLocalizationsProvider extends AbstractVa
  * @name passwordValueEditorLocalizationsService
  * @module angularjs-value-editor.password
  *
- * @property {string} patternDescription Password pattern description.
- * @property {string} confirmPassword Label above confirmation input.
- * @property {string} noChangeIfEmpty Text next to password pattern, informing about possibility to leave both inputs blank.
- * @property {string} helpTextsSeparator Separator between pattern and leave blank messages.
- *
  * @description
  * See {@link AbstractValueEditorLocalizationService}
  */
@@ -41,7 +36,10 @@ export interface PasswordValueEditorLocalizationsService extends AbstractValueEd
  * @name PasswordValueEditorLocalizations
  * @module angularjs-value-editor.password
  *
- * @property {string} generate
+ * @property {string} patternDescription Password pattern description.
+ * @property {string} confirmPassword Label above confirmation input.
+ * @property {string} noChangeIfEmpty Text next to password pattern, informing about possibility to leave both inputs blank.
+ * @property {string} helpTextsSeparator Separator between pattern and leave blank messages.
  *
  * @description
  * Default localizations: {@link passwordValueEditorDefaultLocalizations}
