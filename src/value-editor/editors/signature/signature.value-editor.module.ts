@@ -1,4 +1,3 @@
-import './signature.value-editor.less';
 import register from '@kpsys/angularjs-register';
 import SignatureValueEditorComponent from './signature.value-editor.component';
 import SignatureValueEditorConfigurationProvider, {SIGNATURE_VALUE_EDITOR_DEFAULT_OPTIONS} from './signature-value-editor-configuration.provider';

@@ -36,7 +36,8 @@ export interface SignatureValueEditorLocalizationsService extends AbstractValueE
  * @name SignatureValueEditorLocalizations
  * @module angularjs-value-editor.signature
  *
- * @property {string} select
+ * @property {string} select Placeholder for select.
+ * @property {string} orType Placeholder for input if select is visible.
  *
  * @description
  * Default localizations: {@link signatureValueEditorDefaultLocalizations}

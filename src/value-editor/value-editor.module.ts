@@ -1,4 +1,5 @@
 import '@kpsys/angular-ui-bootstrap';
+import './resources/styles.less';
 
 import register from '@kpsys/angularjs-register';
 import acceptableValueEditorModule from './editors/acceptable/acceptable.value-editor.module';
@@ -14,6 +15,7 @@ import indexSelectionValueEditorModule from './editors/index-selection/index-sel
 import autocompleteValueEditorModule from './editors/autocomplete/autocomplete.value-editor.module';
 import passwordValueEditorModule from './editors/password/password.value-editor.module';
 import signatureValueEditorModule from './editors/signature/signature.value-editor.module';
+import accessNumberValueEditorModule from './editors/access-number/access-number.value-editor.module';
 
 import ValueEditorComponent from './value-editor.component';
 import {EmptyConfigurationService} from './editors/abstract-value-editor';
@@ -51,7 +53,8 @@ export default register('angularjs-value-editor', [
     indexSelectionValueEditorModule,
     autocompleteValueEditorModule,
     passwordValueEditorModule,
-    signatureValueEditorModule
+    signatureValueEditorModule,
+    accessNumberValueEditorModule
 ])
     .constant('loadingSpinnerTemplateUrl', LOADING_SPINNER_TPL_URL)
     .service(EmptyConfigurationService.serviceName, EmptyConfigurationService)

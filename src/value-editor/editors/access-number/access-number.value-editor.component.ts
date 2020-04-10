@@ -3,25 +3,25 @@ import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-edi
 import * as angular from 'angular';
 import {ILogService, IOnInit, ITimeoutService} from 'angular';
 import {
-    SignatureValueEditorConfigurationService,
-    SignatureValueEditorOptions
-} from './signature-value-editor-configuration.provider';
-import {SignatureValueEditorLocalizationsService} from './signature-value-editor-localization.provider';
+    AccessNumberValueEditorConfigurationService,
+    AccessNumberValueEditorOptions
+} from './access-number-value-editor-configuration.provider';
+import {AccessNumberValueEditorLocalizationsService} from './access-number-value-editor-localization.provider';
 import {TextValueEditorValidations} from '../text/text.value-editor.component';
 import {getFormModel} from '../../utils/forms';
 
-export class SignatureValueEditorComponentController extends AbstractValueEditor<string, SignatureValueEditorOptions> implements IOnInit {
+export class AccessNumberValueEditorComponentController extends AbstractValueEditor<string, AccessNumberValueEditorOptions> implements IOnInit {
     public items: string[] = [];
     public showSelect: boolean;
 
     /*@ngInject*/
     constructor($scope: angular.IScope,
-                signatureValueEditorConfigurationService: SignatureValueEditorConfigurationService,
-                signatureValueEditorLocalizationsService: SignatureValueEditorLocalizationsService,
+                accessNumberValueEditorConfigurationService: AccessNumberValueEditorConfigurationService,
+                accessNumberValueEditorLocalizationsService: AccessNumberValueEditorLocalizationsService,
                 private $injector: angular.auto.IInjectorService,
                 private $timeout: ITimeoutService,
                 private $log: ILogService) {
-        super($scope, signatureValueEditorConfigurationService, signatureValueEditorLocalizationsService);
+        super($scope, accessNumberValueEditorConfigurationService, accessNumberValueEditorLocalizationsService);
     }
 
     public $onInit() {
@@ -32,7 +32,11 @@ export class SignatureValueEditorComponentController extends AbstractValueEditor
         }
     }
 
-    protected onOptionsChange(newOptions: SignatureValueEditorOptions, oldOptions, whatChanged: OptionsChangeDetection<SignatureValueEditorOptions>) {
+    public get required() {
+        return getFormModel(this.valueEditorController.formController).issue ? false : this.valueEditorController?.validations?.required ?? false;
+    }
+
+    protected onOptionsChange(newOptions: AccessNumberValueEditorOptions, oldOptions, whatChanged: OptionsChangeDetection<AccessNumberValueEditorOptions>) {
         if (newOptions.canDoAction) {
             this.loadItems();
         }
@@ -59,47 +63,47 @@ export class SignatureValueEditorComponentController extends AbstractValueEditor
 
 /**
  * @ngdoc component
- * @name signatureValueEditor
- * @module angularjs-value-editor.signature
+ * @name accessNumberValueEditor
+ * @module angularjs-value-editor.access-number
  *
  * @requires ng.type.ngModel.NgModelController
  * @requires component:kpValueEditor
  *
  * @description
- * Value editor for signature input.
+ * Value editor for access number input.
  *
- * Supported options: {@link type:SignatureValueEditorOptions}
+ * Supported options: {@link type:AccessNumberValueEditorOptions}
  *
  * Supported validations: {@link type:TextValueEditorValidations}
  *
  * @example
- * <example name="signatureValueEditorExample" module="signatureValueEditorExample" frame-no-resize="true">
+ * <example name="accessNumberValueEditorExample" module="accessNumberValueEditorExample" frame-no-resize="true">
  *     <file name="index.html">
  *         <main>
- *              <kp-value-editor type="'signature'" ng-model="model" options="{canDoAction: true}"></kp-value-editor>
+ *              <kp-value-editor type="'access-number'" ng-model="model" options="{canDoAction: true}"></kp-value-editor>
  *              <div>Model: {{model}}</div>
  *         </main>
  *     </file>
  *     <file name="script.js">
- *         angular.module('signatureValueEditorExample', ['angularjs-value-editor'])
- *          .config((signatureValueEditorConfigurationServiceProvider) => signatureValueEditorConfigurationServiceProvider.setConfiguration({
+ *         angular.module('accessNumberValueEditorExample', ['angularjs-value-editor'])
+ *          .config((accessNumberValueEditorConfigurationServiceProvider) => accessNumberValueEditorConfigurationServiceProvider.setConfiguration({
  *              dataSource: () => Promise.resolve(['one', 'two', 'three'])
  *          }));
  *     </file>
  * </example>
  */
-export default class SignatureValueEditorComponent {
-    public static componentName = 'signatureValueEditor';
+export default class AccessNumberValueEditorComponent {
+    public static componentName = 'accessNumberValueEditor';
 
     public require = {
         ngModelController: 'ngModel',
         valueEditorController: `^${ValueEditorComponent.componentName}`
     };
 
-    public templateUrl = require('./signature.value-editor.tpl.pug');
+    public templateUrl = require('./access-number.value-editor.tpl.pug');
 
-    public controller = SignatureValueEditorComponentController;
+    public controller = AccessNumberValueEditorComponentController;
 }
 
-export interface SignatureValueEditorBindings extends ValueEditorBindings<SignatureValueEditorOptions, TextValueEditorValidations> {
+export interface AccessNumberValueEditorBindings extends ValueEditorBindings<AccessNumberValueEditorOptions, TextValueEditorValidations> {
 }

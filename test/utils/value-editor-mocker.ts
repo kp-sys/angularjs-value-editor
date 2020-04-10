@@ -7,6 +7,7 @@ import {ICompileService, IFormController, IScope} from 'angular';
  */
 export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = ValueEditorBindings> {
     private compiledElement: JQLite;
+    private customTemplate: string = null;
 
     constructor(private $compile: ICompileService, private $scope: ScopeWithBindings<any, BINDINGS>) {
     }
@@ -19,6 +20,7 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
      * @returns {JQLite} Compiled element
      */
     public create(type: TValueEditorType, bindings?: BINDINGS, attachToBody?: boolean): JQLite {
+        this.customTemplate = this.customTemplate || '';
 
         const template = this.getTemplate(type, bindings);
 
@@ -59,6 +61,14 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
         angular.element(this.compiledElement).remove();
     }
 
+    public setCustomTemplate(template: string) {
+        if (this.customTemplate === '') {
+            throw new Error('Custom template cannot be set after mock initialization (via create())');
+        }
+
+        this.customTemplate = template;
+    }
+
     /**
      * Create HTML template from value editor type and bindings.
      * @param {TValueEditorType} type Value editor type.
@@ -90,9 +100,12 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
 
         template = `
             <form name="form">
+            ${this.customTemplate}
             ${template}
             </form>
         `;
+
+        console.log(template);
 
         return template;
     }
