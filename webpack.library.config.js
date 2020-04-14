@@ -114,7 +114,8 @@ module.exports = (env, {mode}) => ({
                     },
                     {
                         loader: 'pug-html-loader'
-                    }
+                    }   
+                    
                 ]
             }
         ]

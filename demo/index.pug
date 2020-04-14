@@ -25,6 +25,18 @@ html
                         validations="{required: true, minlength: 4}"
                     )
 
+                kp-value-editor(
+                    ng-model="value"
+                    editor-id="ajdy"
+                    name="rng"
+                    type="'range'"
+                    disabled="disabled"
+                    placeholder="Range"
+                    options="{" +
+                         "items: dc.items" +
+                    "}"
+                    validations="{required: false}"
+                )
 
             button(type="button" ng-click="value = undefined") Reset
 

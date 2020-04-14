@@ -1,0 +1,23 @@
+input(  type="range"
+        ng-disabled="$ctrl.valueEditorController.disabled"
+        
+        id="{{$ctrl.valueEditorController.editorId}}"
+        name="{{$ctrl.valueEditorController.name}}"
+        placeholder="{{$ctrl.valueEditorController.placeholder}}"
+        
+        ng-model="$ctrl.model"
+        ng-model-options="{ getterSetter: true}"
+
+        ng-change="$ctrl.valueEditorController.valueChanged()"
+        between-to-array-converter="$ctrl.valueEditorController.editor.extremesAsNull"
+            
+        min="$ctrl.valueEditorController.editor.min"
+        max="$ctrl.valueEditorController.editor.max"
+            
+        snap="$ctrl.valueEditorController.editor.snap"
+        snap-points="$ctrl.valueEditorController.editor.snapPoints"
+        pit-points="$ctrl.valueEditorController.editor.pitPoints"
+    )
+
+
+
