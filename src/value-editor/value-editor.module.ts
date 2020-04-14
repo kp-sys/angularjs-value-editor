@@ -16,6 +16,7 @@ import autocompleteValueEditorModule from './editors/autocomplete/autocomplete.v
 import passwordValueEditorModule from './editors/password/password.value-editor.module';
 import signatureValueEditorModule from './editors/signature/signature.value-editor.module';
 import accessNumberValueEditorModule from './editors/access-number/access-number.value-editor.module';
+import numberRangeValueEditorModule from './editors/number-range/number-range.value-editor.module';
 
 import ValueEditorComponent from './value-editor.component';
 import {EmptyConfigurationService} from './editors/abstract-value-editor';
@@ -54,7 +55,8 @@ export default register('angularjs-value-editor', [
     autocompleteValueEditorModule,
     passwordValueEditorModule,
     signatureValueEditorModule,
-    accessNumberValueEditorModule
+    accessNumberValueEditorModule,
+    numberRangeValueEditorModule
 ])
     .constant('loadingSpinnerTemplateUrl', LOADING_SPINNER_TPL_URL)
     .service(EmptyConfigurationService.serviceName, EmptyConfigurationService)

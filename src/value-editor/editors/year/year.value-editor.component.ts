@@ -17,9 +17,7 @@ export class YearValueEditorComponentController extends AbstractValueEditor<numb
     }
 
     public convertYearToISO(year: number): string {
-        const retVal = year ? DateTime.fromFormat(String(year), 'y').toISODate() : undefined;
-        // console.log(retVal);
-        return retVal;
+        return year ? DateTime.fromFormat(String(year), 'y').toISODate() : undefined;
     }
 
     private convertISOToYear(date: string): number {
@@ -28,7 +26,6 @@ export class YearValueEditorComponentController extends AbstractValueEditor<numb
 
     private modelFormatter(isoDate: string): number {
         if (isoDate) {
-            // console.log(isoDate);
             return DateTime.fromISO(isoDate).year;
         }
 
@@ -38,7 +35,6 @@ export class YearValueEditorComponentController extends AbstractValueEditor<numb
     private modelParser(year: number): string {
         if (year) {
             const parsed = DateTime.fromFormat(String(year), 'y').toISODate();
-            // console.log(parsed);
             return parsed;
         }
 

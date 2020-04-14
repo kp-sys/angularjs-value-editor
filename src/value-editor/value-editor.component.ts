@@ -4,8 +4,7 @@ import NgModelConnector from './editors/ng-model-connector';
 import {generateUuid} from './utils/uuid-generator';
 import customEquals from './utils/equals';
 import AbstractValueEditor from './editors/abstract-value-editor';
-
-export type TValueEditorType = 'text' | 'number' | 'boolean' | 'hidden' | 'html' | 'date' | 'acceptable' | 'year' | 'card-number' | 'index-selection' | 'autocomplete' | 'password' | 'signature' | 'access-number';
+import {TValueEditorType} from './typings';
 
 export const EVENTS = Object.freeze({
     disabled: 'value-editor:disabled'

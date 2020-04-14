@@ -1,6 +1,7 @@
-import {TValueEditorType, ValueEditorBindings} from '../../src/value-editor/value-editor.component';
+import {ValueEditorBindings} from '../../src/value-editor/value-editor.component';
 import * as angular from 'angular';
-import {ICompileService, IFormController, IScope} from 'angular';
+import {IAugmentedJQuery, ICompileService, IFormController, IScope} from 'angular';
+import {TValueEditorType} from '../../src/value-editor/typings';
 
 /**
  * Helper for easy mocking of value-editor component
@@ -49,9 +50,10 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
     /**
      * Trigger custom event on input element.
      * @param {string} eventType Event name
+     * @param {HTMLInputElement | IAugmentedJQuery} customInput Specify custom input element
      */
-    public triggerHandlerOnInput(eventType: string) {
-        angular.element(this.compiledElement[0].querySelector('[data-main-input]')).triggerHandler(eventType);
+    public triggerHandlerOnInput(eventType: string, customInput?: HTMLInputElement | IAugmentedJQuery) {
+        angular.element(customInput ?? this.getInputElement()).triggerHandler(eventType);
     }
 
     /**
@@ -84,7 +86,7 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
             const bindingsTemplates = [];
             for (const key in bindings) {
                 if (Object.prototype.hasOwnProperty.call(bindings, key)) {
-                    if(nonExpressionFields.includes(key)) {
+                    if (nonExpressionFields.includes(key)) {
                         bindingsTemplates.push(`${key}="${bindings[key]}"`);
                     } else {
                         bindingsTemplates.push(`${key}="${key}"`);
@@ -105,10 +107,11 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
             </form>
         `;
 
-        console.log(template);
-
         return template;
     }
 }
 
-export type ScopeWithBindings<MODEL, BINDINGS extends ValueEditorBindings = ValueEditorBindings> = IScope & {[K in keyof BINDINGS]: BINDINGS[K]} & {model: MODEL, form: IFormController};
+export type ScopeWithBindings<MODEL, BINDINGS extends ValueEditorBindings = ValueEditorBindings> =
+    IScope
+    & { [K in keyof BINDINGS]: BINDINGS[K] }
+    & { model: MODEL, form: IFormController };

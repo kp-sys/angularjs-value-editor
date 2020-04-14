@@ -1,0 +1,41 @@
+.form-control.multi-input-group
+    .input-group.from
+        label.input-group-addon(for="{{$ctrl.uuid}}_from") {{$ctrl.localize('from')}}
+        input.form-control(
+            id="{{$ctrl.uuid}}_from"
+            type="number"
+
+            ng-model="$ctrl.modelFrom"
+            ng-change="$ctrl.setNgModel()"
+
+            ng-ref="$ctrl.fromRef"
+
+            ng-disabled="$ctrl.valueEditorController.disabled"
+        )
+
+    .input-group.to
+        label.input-group-addon(for="{{$ctrl.uuid}}_to") {{$ctrl.localize('to')}}
+        input.form-control(
+            id="{{$ctrl.uuid}}_to"
+            type="number"
+
+            ng-model="$ctrl.modelTo"
+            ng-change="$ctrl.setNgModel()"
+
+            ng-ref="$ctrl.toRef"
+
+            ng-disabled="$ctrl.valueEditorController.disabled"
+        )
+
+input(
+    type="hidden"
+    id="{{$ctrl.valueEditorController.editorId}}"
+    name="{{$ctrl.valueEditorController.name}}"
+
+    ng-model="$ctrl.model"
+    ng-model-options="{ getterSetter: true}"
+
+    number-range-validations="$ctrl.validNumber"
+
+    data-main-input
+)
