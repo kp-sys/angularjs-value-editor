@@ -1,7 +1,6 @@
 import './number.value-editor.less';
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
 import * as angular from 'angular';
-import {IScope} from 'angular';
 import AbstractValueEditor from '../abstract-value-editor';
 import {
     NumberValueEditorConfigurationService,
@@ -11,8 +10,8 @@ import {
 export class NumberValueEditorComponentController extends AbstractValueEditor<number, NumberValueEditorOptions> {
 
     /*@ngInject*/
-    constructor($scope: IScope, numberValueEditorConfigurationService: NumberValueEditorConfigurationService) {
-        super($scope, numberValueEditorConfigurationService);
+    constructor(numberValueEditorConfigurationService: NumberValueEditorConfigurationService) {
+        super(numberValueEditorConfigurationService);
     }
 
     protected onOptionsChange(newOptions: NumberValueEditorOptions, oldOptions: NumberValueEditorOptions) {

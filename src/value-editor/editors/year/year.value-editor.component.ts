@@ -5,7 +5,6 @@ import * as angular from 'angular';
 
 export class YearValueEditorComponentController extends AbstractValueEditor<number, never> {
 
-
     public $onInit(): void {
         super.$onInit();
         this.ngModelController.$parsers.push(this.modelFormatter);

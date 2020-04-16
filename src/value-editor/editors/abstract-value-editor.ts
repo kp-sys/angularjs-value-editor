@@ -1,6 +1,6 @@
 import NgModelConnector from './ng-model-connector';
 import * as angular from 'angular';
-import {IOnInit, IPostLink, IScope} from 'angular';
+import {IOnInit, IPostLink} from 'angular';
 import {ValueEditorComponentController, ValueEditorOptions} from '../value-editor.component';
 import customEquals from '../utils/equals';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../common/abstract-value-editor-configuration.provider';
@@ -12,12 +12,12 @@ import {AbstractValueEditorLocalizationService} from '../common/abstract-value-e
  * @template OPTIONS
  */
 export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEditorOptions> extends NgModelConnector<MODEL> implements IPostLink, IOnInit {
-    private static $inject = ['$scope', 'emptyConfigurationService'];
+    private static $inject = ['emptyConfigurationService'];
 
     protected options: OPTIONS;
     protected valueEditorController: ValueEditorComponentController<MODEL, OPTIONS>;
 
-    constructor(protected $scope: IScope, protected configurationService: AbstractValueEditorConfigurationService<OPTIONS>, protected localizationService?: AbstractValueEditorLocalizationService<any>) {
+    constructor(protected configurationService: AbstractValueEditorConfigurationService<OPTIONS>, protected localizationService?: AbstractValueEditorLocalizationService<any>) {
         super();
         this.options = angular.merge({}, this.configurationService.getConfiguration());
     }

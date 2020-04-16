@@ -13,10 +13,9 @@ export class PasswordValueEditorComponentController extends AbstractValueEditor<
     public passwordRepetition: string;
 
     /*@ngInject*/
-    constructor($scope: angular.IScope,
-                passwordValueEditorConfigurationService: PasswordValueEditorConfigurationService,
+    constructor(passwordValueEditorConfigurationService: PasswordValueEditorConfigurationService,
                 passwordValueEditorLocalizationsService: PasswordValueEditorLocalizationsService) {
-        super($scope, passwordValueEditorConfigurationService, passwordValueEditorLocalizationsService);
+        super(passwordValueEditorConfigurationService, passwordValueEditorLocalizationsService);
     }
 
     public $onInit(): void {

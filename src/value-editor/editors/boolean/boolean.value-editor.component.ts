@@ -1,7 +1,7 @@
 import './boolean.value-editor.scss';
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
 import * as angular from 'angular';
-import {INgModelController, IPostLink, IScope} from 'angular';
+import {INgModelController, IPostLink} from 'angular';
 import AbstractValueEditor from '../abstract-value-editor';
 import {
     BooleanValueEditorConfigurationService,
@@ -12,8 +12,8 @@ export class BooleanValueEditorComponentController<MODEL = boolean> extends Abst
     public inputElementModelController: INgModelController;
 
     /*@ngInject*/
-    constructor($scope: IScope, booleanValueEditorConfigurationService: BooleanValueEditorConfigurationService) {
-        super($scope, booleanValueEditorConfigurationService);
+    constructor(booleanValueEditorConfigurationService: BooleanValueEditorConfigurationService) {
+        super(booleanValueEditorConfigurationService);
     }
 
     public $postLink(): void {

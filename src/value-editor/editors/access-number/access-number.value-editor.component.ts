@@ -15,13 +15,12 @@ export class AccessNumberValueEditorComponentController extends AbstractValueEdi
     public showSelect: boolean;
 
     /*@ngInject*/
-    constructor($scope: angular.IScope,
-                accessNumberValueEditorConfigurationService: AccessNumberValueEditorConfigurationService,
+    constructor(accessNumberValueEditorConfigurationService: AccessNumberValueEditorConfigurationService,
                 accessNumberValueEditorLocalizationsService: AccessNumberValueEditorLocalizationsService,
                 private $injector: angular.auto.IInjectorService,
                 private $timeout: ITimeoutService,
                 private $log: ILogService) {
-        super($scope, accessNumberValueEditorConfigurationService, accessNumberValueEditorLocalizationsService);
+        super(accessNumberValueEditorConfigurationService, accessNumberValueEditorLocalizationsService);
     }
 
     public $onInit() {

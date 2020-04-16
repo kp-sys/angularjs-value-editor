@@ -1,18 +1,14 @@
 import * as angular from 'angular';
-import {IDoCheck, IFormController, IOnChanges, IOnInit, IScope} from 'angular';
+import {IDoCheck, IFormController, IOnInit} from 'angular';
 import NgModelConnector from './editors/ng-model-connector';
 import {generateUuid} from './utils/uuid-generator';
 import customEquals from './utils/equals';
 import AbstractValueEditor from './editors/abstract-value-editor';
 import {TValueEditorType} from './typings';
 
-export const EVENTS = Object.freeze({
-    disabled: 'value-editor:disabled'
-});
-
 export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS extends ValueEditorOptions = ValueEditorOptions, EDITORVALIDATIONS extends ValueEditorValidations = ValueEditorValidations>
     extends NgModelConnector<MODEL>
-    implements ValueEditorBindings<EDITOROPTS, EDITORVALIDATIONS>, IOnInit, IOnChanges, IDoCheck {
+    implements ValueEditorBindings<EDITOROPTS, EDITORVALIDATIONS>, IOnInit, IDoCheck {
 
     /* Bindings */
     public editorId: string;
@@ -28,11 +24,6 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
     private previousOptions: EDITOROPTS;
     private valueEditorInstance: AbstractValueEditor<MODEL, EDITOROPTS>;
 
-    /*@ngInject*/
-    constructor(private $scope: IScope) {
-        super();
-    }
-
     public $onInit(): void {
         super.$onInit();
 
@@ -40,12 +31,6 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
 
         if (!this.name) {
             this.name = this.generateEditorName();
-        }
-    }
-
-    public $onChanges(onChangesObj: angular.IOnChangesObject): void {
-        if (onChangesObj.disabled) {
-            this.$scope.$broadcast(EVENTS.disabled, {disabled: onChangesObj.disabled.currentValue});
         }
     }
 

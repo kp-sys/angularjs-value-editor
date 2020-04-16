@@ -1,17 +1,25 @@
 import './text.value-editor.less';
-import ValueEditorComponent, {EVENTS, ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
+import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
 import * as angular from 'angular';
-import {IScope} from 'angular';
+import {IDoCheck, ITimeoutService} from 'angular';
 import {Ace} from 'ace-builds';
 import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
 import {TextValueEditorConfigurationService, TextValueEditorOptions} from './text-value-editor-configuration.provider';
 
-export class TextValueEditorComponentController extends AbstractValueEditor<string, TextValueEditorOptions> {
+export class TextValueEditorComponentController extends AbstractValueEditor<string, TextValueEditorOptions> implements IDoCheck {
     private aceEditor: Ace.Editor;
+    private isDisabled: boolean;
 
     /*@ngInject*/
-    constructor($scope: IScope, private textValueEditorConfigurationService: TextValueEditorConfigurationService) {
-        super($scope, textValueEditorConfigurationService);
+    constructor(private textValueEditorConfigurationService: TextValueEditorConfigurationService, private $timeout: ITimeoutService) {
+        super(textValueEditorConfigurationService);
+    }
+
+    $doCheck(): void {
+        if (this.options.type === 'rich-textarea' && this.valueEditorController.disabled !== this.isDisabled && this.aceEditor) {
+            this.isDisabled = this.valueEditorController.disabled;
+            this.aceEditor.setReadOnly(this.isDisabled);
+        }
     }
 
     /**
@@ -55,14 +63,10 @@ export class TextValueEditorComponentController extends AbstractValueEditor<stri
         // Original directive doesn't sets model to touched if ACE editor is blurred. This fixes it.
         this.aceEditor.on('blur', () => {
             this.ngModelController.$setTouched();
-            this.$scope.$apply();
         });
 
         // Propagate disabled -> set Ace to readonly
         this.aceEditor.setReadOnly(this.valueEditorController.disabled);
-        this.$scope.$on(EVENTS.disabled, (event, {disabled}: { disabled: boolean }) => {
-            this.aceEditor.setReadOnly(disabled);
-        });
     }
 }
 

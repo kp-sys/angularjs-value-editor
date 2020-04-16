@@ -1,5 +1,6 @@
 import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
+import {ITimeoutService} from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {HtmlValueEditorBindings} from './html.value-editor.component';
 import 'trumbowyg/dist/trumbowyg';
@@ -11,18 +12,21 @@ describe('html-value-editor', () => {
 
     let valueEditorMocker: ValueEditorMocker<HtmlValueEditorBindings>;
     let $scope: ScopeWithBindings<string, HtmlValueEditorBindings>;
+    let $_timeout: ITimeoutService;
 
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
-        inject(/*@ngInject*/ ($compile, $rootScope) => {
+        inject(/*@ngInject*/ ($compile, $rootScope, $timeout) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<HtmlValueEditorBindings>($compile, $scope);
+            $_timeout = $timeout;
         });
     });
 
     it('should change model on input', (done) => {
         valueEditorMocker.create('html');
+        $_timeout.flush();
         $scope.$apply();
 
         setTimeout(() => {
@@ -61,6 +65,7 @@ describe('html-value-editor', () => {
 
     it('should has working input disabling', (done) => {
         valueEditorMocker.create('html', {disabled: true});
+        $_timeout.flush();
         $scope.$apply();
 
         setTimeout(() => {
@@ -74,6 +79,7 @@ describe('html-value-editor', () => {
 
     it('should has working required validation', (done) => {
         valueEditorMocker.create('html', {name: 'html', validations: {required: true}});
+        $_timeout.flush();
         $scope.$apply();
 
         setTimeout(() => {
@@ -87,19 +93,6 @@ describe('html-value-editor', () => {
             $(valueEditorMocker.getInputElement<HTMLTextAreaElement>()).trumbowyg('html', 'hello');
 
             expect($scope.form.html.$error).toEqual({});
-            done();
-        }, 0);
-    });
-
-    it('should has working input disabling', (done) => {
-        valueEditorMocker.create('html', {disabled: true});
-        $scope.$apply();
-
-        setTimeout(() => {
-            valueEditorMocker.getInputElement<HTMLTextAreaElement>().value = '123';
-            valueEditorMocker.triggerHandlerOnInput('input');
-
-            expect(valueEditorMocker.getInputElement<HTMLTextAreaElement>().disabled).toBe(true);
             done();
         }, 0);
     });

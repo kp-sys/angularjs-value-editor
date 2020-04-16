@@ -15,13 +15,12 @@ export class SignatureValueEditorComponentController extends AbstractValueEditor
     public showSelect: boolean;
 
     /*@ngInject*/
-    constructor($scope: angular.IScope,
-                signatureValueEditorConfigurationService: SignatureValueEditorConfigurationService,
+    constructor(signatureValueEditorConfigurationService: SignatureValueEditorConfigurationService,
                 signatureValueEditorLocalizationsService: SignatureValueEditorLocalizationsService,
                 private $injector: angular.auto.IInjectorService,
                 private $timeout: ITimeoutService,
                 private $log: ILogService) {
-        super($scope, signatureValueEditorConfigurationService, signatureValueEditorLocalizationsService);
+        super(signatureValueEditorConfigurationService, signatureValueEditorLocalizationsService);
     }
 
     public $onInit() {

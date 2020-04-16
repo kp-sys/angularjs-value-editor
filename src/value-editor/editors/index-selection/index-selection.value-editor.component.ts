@@ -24,12 +24,11 @@ export class IndexSelectionValueEditorComponentController<ID, VALUE extends Iden
     private template: string;
 
     /*@ngInject*/
-    constructor($scope: angular.IScope,
-                private indexSelectionValueEditorConfigurationService: IndexSelectionValueEditorConfigurationService<ID, VALUE>,
+    constructor(private indexSelectionValueEditorConfigurationService: IndexSelectionValueEditorConfigurationService<ID, VALUE>,
                 private $interpolate: IInterpolateService,
                 private $templateCache: ITemplateCacheService
     ) {
-        super($scope, indexSelectionValueEditorConfigurationService);
+        super(indexSelectionValueEditorConfigurationService);
         this.uuid = generateUuid();
     }
 

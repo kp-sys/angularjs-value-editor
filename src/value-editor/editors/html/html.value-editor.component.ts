@@ -1,28 +1,33 @@
-import ValueEditorComponent, {EVENTS, ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
-import {IOnDestroy, IPostLink, IScope} from 'angular';
+import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
+import {IDoCheck, IOnDestroy, IPostLink, ITimeoutService} from 'angular';
 import AbstractValueEditor from '../abstract-value-editor';
 import {HtmlValueEditorConfigurationService, HtmlValueEditorOptions} from './html-value-editor-configuration.provider';
+import bind from 'bind-decorator';
 
-export class HtmlValueEditorComponentController extends AbstractValueEditor<string, HtmlValueEditorOptions> implements IPostLink, IOnDestroy {
+export class HtmlValueEditorComponentController extends AbstractValueEditor<string, HtmlValueEditorOptions> implements IPostLink, IDoCheck, IOnDestroy {
     public container: JQuery;
-    private disabledEventDeregisterer: () => void;
+    private isDisabled: boolean;
 
     /*@ngInject*/
-    constructor($scope: IScope, htmlValueEditorConfigurationService: HtmlValueEditorConfigurationService) {
-        super($scope, htmlValueEditorConfigurationService);
+    constructor(htmlValueEditorConfigurationService: HtmlValueEditorConfigurationService, private $timeout: ITimeoutService) {
+        super(htmlValueEditorConfigurationService);
     }
 
     public $postLink(): void {
         super.$postLink();
 
-        this.$scope.$applyAsync(this.initTrumbowyg.bind(this));
+        this.$timeout(this.initTrumbowyg);
+    }
+
+    $doCheck(): void {
+        if (this.valueEditorController.disabled !== this.isDisabled && this.container?.trumbowyg) {
+            this.isDisabled = this.valueEditorController.disabled;
+            this.container.trumbowyg(this.isDisabled ? 'disable' : 'enable');
+        }
     }
 
     public $onDestroy(): void {
         this.container.trumbowyg('destroy');
-        if (this.disabledEventDeregisterer) {
-            this.disabledEventDeregisterer();
-        }
         this.container.off('tbwchange tbwpaste');
     }
 
@@ -30,6 +35,7 @@ export class HtmlValueEditorComponentController extends AbstractValueEditor<stri
         //
     }
 
+    @bind
     private initTrumbowyg() {
         const options = {...this.options.editorOptions, disabled: this.valueEditorController.disabled};
 
@@ -43,8 +49,6 @@ export class HtmlValueEditorComponentController extends AbstractValueEditor<stri
 
             this.container.trumbowyg('html', this.model);
         };
-
-        this.disabledEventDeregisterer = this.$scope.$on(EVENTS.disabled, (event, {disabled}) => this.container.trumbowyg(disabled ? 'disable' : 'enable'));
     }
 }
 

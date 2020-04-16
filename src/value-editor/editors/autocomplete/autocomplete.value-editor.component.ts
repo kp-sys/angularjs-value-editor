@@ -30,14 +30,13 @@ export class AutocompleteValueEditorComponentController extends AbstractValueEdi
     private minLength: number;
 
     /*@ngInject*/
-    constructor($scope: angular.IScope,
-                private autocompleteValueEditorConfigurationService: AutocompleteValueEditorConfigurationService,
+    constructor(private autocompleteValueEditorConfigurationService: AutocompleteValueEditorConfigurationService,
                 private loadingSpinnerTemplateUrl: string,
                 private $log: ILogService,
                 private $timeout: ITimeoutService,
                 private $element: IAugmentedJQuery
     ) {
-        super($scope, autocompleteValueEditorConfigurationService);
+        super(autocompleteValueEditorConfigurationService);
     }
 
     public $postLink(): void {

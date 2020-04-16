@@ -1,6 +1,6 @@
 import './acceptable.value-editor.less';
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
-import {IFilterOrderByItem, IInterpolateService, IOnInit, IScope, ITemplateCacheService} from 'angular';
+import {IFilterOrderByItem, IInterpolateService, IOnInit, ITemplateCacheService} from 'angular';
 import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
 import {generateUuid} from '../../utils/uuid-generator';
 import {AcceptableValueEditorLocalizationsService} from './acceptable-value-editor-localizations.provider';
@@ -19,12 +19,11 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractVal
     private uuid: string;
 
     /*@ngInject*/
-    constructor($scope: IScope,
-                private $interpolate: IInterpolateService,
+    constructor(private $interpolate: IInterpolateService,
                 private $templateCache: ITemplateCacheService,
                 public acceptableValueEditorLocalizationsService: AcceptableValueEditorLocalizationsService,
                 public acceptableValueEditorConfigurationService: AcceptableValueEditorConfigurationService<VALUE>) {
-        super($scope, acceptableValueEditorConfigurationService);
+        super(acceptableValueEditorConfigurationService);
 
         this.uuid = generateUuid();
         this.uiSelectComparator = this.uiSelectComparator.bind(this);

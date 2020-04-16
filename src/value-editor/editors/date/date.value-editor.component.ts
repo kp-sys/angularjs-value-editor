@@ -5,7 +5,7 @@ import ValueEditorComponent, {
     ValueEditorValidations
 } from '../../value-editor.component';
 import * as angular from 'angular';
-import {IOnInit, IScope} from 'angular';
+import {IOnInit} from 'angular';
 import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
 import {
     DateValueEditorConfigurationService,
@@ -19,8 +19,8 @@ export class DateValueEditorComponentController extends AbstractValueEditor<stri
     protected valueEditorController: ValueEditorComponentController<string, DateValueEditorOptions, DateValueEditorValidations>;
 
     /*@ngInject*/
-    constructor($scope: IScope, dateValueEditorConfigurationService: DateValueEditorConfigurationService) {
-        super($scope, dateValueEditorConfigurationService);
+    constructor(dateValueEditorConfigurationService: DateValueEditorConfigurationService) {
+        super(dateValueEditorConfigurationService);
     }
 
     public $onInit(): void {

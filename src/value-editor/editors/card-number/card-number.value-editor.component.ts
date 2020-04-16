@@ -4,7 +4,7 @@ import {
     CardNumberValueEditorConfigurationService,
     CardNumberValueEditorOptions
 } from './card-number-value-editor-configuration.provider';
-import {IAugmentedJQuery, IScope, ITimeoutService} from 'angular';
+import {IAugmentedJQuery, ITimeoutService} from 'angular';
 import {CardNumberValueEditorLocalizationsService} from './card-number-value-editor-localization.provider';
 
 export class CardNumberValueEditorComponentController extends AbstractValueEditor<string, CardNumberValueEditorOptions> {
@@ -13,11 +13,10 @@ export class CardNumberValueEditorComponentController extends AbstractValueEdito
     public popoverError: any;
 
     /*@ngInject*/
-    constructor($scope: IScope,
-                cardNumberValueEditorConfigurationService: CardNumberValueEditorConfigurationService,
+    constructor(cardNumberValueEditorConfigurationService: CardNumberValueEditorConfigurationService,
                 public cardNumberValueEditorLocalizationsService: CardNumberValueEditorLocalizationsService,
                 private $timeout: ITimeoutService) {
-        super($scope, cardNumberValueEditorConfigurationService);
+        super(cardNumberValueEditorConfigurationService);
     }
 
     public async generate() {

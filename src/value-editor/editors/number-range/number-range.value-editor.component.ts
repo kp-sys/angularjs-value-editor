@@ -38,10 +38,9 @@ export class NumberRangeValueEditorComponentController extends AbstractValueEdit
     public validNumber: boolean;
 
     /*@ngInject*/
-    constructor($scope: angular.IScope,
-                numberRangeValueEditorConfigurationService: NumberRangeValueEditorConfigurationService,
+    constructor(numberRangeValueEditorConfigurationService: NumberRangeValueEditorConfigurationService,
                 numberRangeValueEditorLocalizationsService: NumberRangeValueEditorLocalizationsService) {
-        super($scope, numberRangeValueEditorConfigurationService, numberRangeValueEditorLocalizationsService);
+        super(numberRangeValueEditorConfigurationService, numberRangeValueEditorLocalizationsService);
         this.uuid = generateUuid();
     }
 
