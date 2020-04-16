@@ -15,6 +15,7 @@ import * as angular from 'angular';
  * @property {string} optionsTemplate Angular template for displaying options. Current option is accessible via `$item` variable name.
  * @property {string} singleSelectedValueTemplate Angular template for displaying selected value in single select mode. Current option is accessible via `$select.selected` variable name.
  * @property {string} multiSelectedValueTemplate Angular template for displaying selected value in multiple select mode. Current option is accessible via `$item` variable name.
+ * @property {function(VALUE, VALUE): boolean} equalityComparator Custom equality comparator.
  * @property {boolean} searchable If true, select component will have search input. Applicable only for select mode.
  * @property {boolean} reorderable If true, multi-select component will have capability for manual ordering selected items. Applicable only for multiple select mode.
  * @property {function(VALUE, VALUE): number} sortComparator If defined, options will be sorted using this comparator function.

@@ -1,0 +1,126 @@
+@import "~bootstrap-less/bootstrap/variables";
+
+.hover(@bg-color, @border-color) {
+	background-color: darken(@bg-color, 10%);
+	border-color: darken(@border-color, 12%);
+}
+
+treecontrol.tree-boot {
+	li {
+		line-height: 30px;
+
+		&.tree-expanded,
+		&.tree-collapsed,
+		&.tree-leaf {
+			i.tree-branch-head {
+				padding: 0;
+				background: none;
+			}
+		}
+
+		&.tree-leaf i.tree-branch-head {
+			display: block;
+			visibility: hidden;
+		}
+	}
+
+	i.tree-branch-head::before {
+		display: block;
+		transition: transform 0.2s ease;
+	}
+
+	.tree-expanded > .item > .switcher > i.tree-branch-head::before {
+		transform: rotate(90deg);
+	}
+
+	.item {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+
+	.tree-label {
+		padding: 0 10px;
+	}
+
+	.content {
+		display: flex;
+		color: @btn-default-color;
+		background-color: @btn-default-bg;
+		border: 1px solid @btn-default-border;
+		border-radius: @border-radius-base;
+	}
+
+	.has-children .content {
+		border-radius: @border-radius-base 0 0 @border-radius-base;
+	}
+
+	.tree-selected {
+		color: @btn-primary-color;
+		background-color: @btn-primary-bg;
+		border-color: @btn-primary-border;
+	}
+
+	.selector, .multiselector {
+		padding: 0 10px;
+		border-left: 1px solid;
+		border-color: inherit;
+	}
+
+	.selector, .multiselector.clickable {
+		cursor: pointer;
+	}
+
+	.multiselector {
+		border-width: 1px 1px 1px 0;
+		border-style: solid;
+		border-color: @btn-default-border;
+		border-radius: 0 @border-radius-base @border-radius-base 0;
+		background-color: @btn-default-bg;
+		color: @btn-default-color;
+
+		&:hover {
+			background: darken(@btn-default-bg, 10%);
+		}
+
+		&.semi-checked {
+			background: linear-gradient(180deg, transparent, @btn-primary-bg);
+
+			&:hover {
+				background: linear-gradient(180deg, transparent, darken(@btn-primary-bg, 10%));
+			}
+		}
+
+		&.checked {
+			background-color: @btn-primary-bg;
+			border-color: @btn-primary-border;
+			color: white;
+
+			&:hover {
+				.hover(@btn-primary-bg, @btn-primary-border);
+			}
+		}
+	}
+
+	.has-not-children .multiselector {
+		display: none;
+	}
+
+	.tree-label, .selector {
+		&:hover {
+			.hover(@btn-default-bg, @btn-default-border);
+		}
+	}
+
+	.tree-selected {
+		.tree-label, .selector {
+			&:hover {
+				.hover(@btn-primary-bg, @btn-primary-border);
+			}
+		}
+
+		+ .multiselector {
+			border-color: @btn-primary-border;
+		}
+	}
+}

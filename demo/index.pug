@@ -16,13 +16,14 @@ html
                         ng-model="value"
                         editor-id="editor"
                         name="editor"
-                        type="'exemplar-bar-code'"
+                        type="'multiple-acceptable-root'"
                         disabled="disabled"
                         placeholder="Password"
-                        options=""
-                        validations="{" +
-                            "min: 3" +
+                        options="{" +
+                            "acceptableValue: dc.acceptableValue," +
+                            "optionsTemplate: '{{$node.text}}'" +
                         "}"
+                        validations=""
                     )
 
 

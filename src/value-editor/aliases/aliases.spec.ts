@@ -1,8 +1,13 @@
 import * as angular from 'angular';
 import aliasesModule from '../aliases/aliases.module';
 import AliasesService, {AliasesServiceProvider} from './aliases.service';
+import {ValueEditorOptions} from '../value-editor.component';
 
 const ALIAS_NAME = 'some-editor';
+
+interface SomeEditorOptions extends ValueEditorOptions {
+    some: string;
+}
 
 describe('aliases service', () => {
 
@@ -11,7 +16,7 @@ describe('aliases service', () => {
 
         angular.mock.module(aliasesModule, /*@ngInject*/(aliasesServiceProvider: AliasesServiceProvider) => {
             aliasesServiceProvider.addAlias(ALIAS_NAME, 'editor')
-                .withOptions({some: 'option'});
+                .withOptions<SomeEditorOptions>({some: 'option'});
         });
 
         inject(/*@ngInject*/ (aliasesService) => {
@@ -25,7 +30,7 @@ describe('aliases service', () => {
     it('should throw error if alias exist', () => {
         angular.mock.module(aliasesModule, /*@ngInject*/(aliasesServiceProvider: AliasesServiceProvider) => {
             aliasesServiceProvider.addAlias(ALIAS_NAME, 'editor')
-                .withOptions({some: 'option'});
+                .withOptions<SomeEditorOptions>({some: 'option'});
 
             expect(() => aliasesServiceProvider.addAlias(ALIAS_NAME, 'editor')).toThrow();
         });
@@ -34,7 +39,7 @@ describe('aliases service', () => {
     it('should remove alias', () => {
         angular.mock.module(aliasesModule, /*@ngInject*/(aliasesServiceProvider: AliasesServiceProvider) => {
             aliasesServiceProvider.addAlias(ALIAS_NAME, 'editor')
-                .withOptions({some: 'option'});
+                .withOptions<SomeEditorOptions>({some: 'option'});
 
             expect(() => aliasesServiceProvider.addAlias(ALIAS_NAME, 'editor')).toThrow();
 
@@ -49,7 +54,7 @@ describe('aliases service', () => {
 
         angular.mock.module(aliasesModule, /*@ngInject*/(aliasesServiceProvider: AliasesServiceProvider) => {
             aliasesServiceProvider.addAlias(ALIAS_NAME, 'editor')
-                .withOptions({some: 'option'});
+                .withOptions<SomeEditorOptions>({some: 'option'});
         });
 
         inject(/*@ngInject*/ (aliasesService) => {

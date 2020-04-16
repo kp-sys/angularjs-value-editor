@@ -2,13 +2,27 @@ import {ValueEditorOptions} from './value-editor.component';
 
 /**
  * @ngdoc type
+ * @name TValueEditorTypeAliases
+ * @module angularjs-value-editor
+ *
+ * @description
+ * Aliased value editor types.
+ */
+export type TValueEditorTypeAliases =
+    'exemplar-bar-code' |
+    'single-acceptable-root' |
+    'multiple-acceptable-root';
+
+
+/**
+ * @ngdoc type
  * @name TValueEditorType
  * @module angularjs-value-editor
  *
  * @description
  * Value editor types.
  */
-export type TValueEditorType =
+export type TValueEditorType = TValueEditorTypeAliases |
     'text' |
     'number' |
     'boolean' |
@@ -24,7 +38,7 @@ export type TValueEditorType =
     'signature' |
     'access-number' |
     'number-range' |
-    'exemplar-bar-code';
+    'acceptable-root';
 
 /**
  * Make all properties required except properties of ValueEditorOptions

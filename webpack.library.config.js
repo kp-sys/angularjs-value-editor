@@ -101,7 +101,7 @@ module.exports = (env, {mode}) => ({
                 ]
             },
             {
-                test: /\.tpl.pug/,
+                test: /\.tpl.pug$/,
                 use: [
                     {
                         loader: 'ngtemplate-loader',
@@ -116,6 +116,24 @@ module.exports = (env, {mode}) => ({
                         loader: 'pug-html-loader'
                     }
                 ]
+            },
+            {
+                test: /\.tpl.html$/,
+                use: [
+                    {
+                        loader: 'ngtemplate-loader',
+                        options: {
+                            relativeTo: path.resolve(__dirname, 'src')
+                        }
+                    },
+                    {
+                        loader: 'html-loader'
+                    }
+                ]
+            },
+            {
+                test: /\.woff/,
+                loader: "url-loader?limit=10000&mimetype=application/font-woff"
             }
         ]
     },

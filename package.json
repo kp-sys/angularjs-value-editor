@@ -1,6 +1,6 @@
 {
     "name": "@kpsys/angularjs-value-editor",
-    "version": "0.0.16",
+    "version": "0.0.17",
     "author": {
         "email": "tomas.dostal@kpsys.cz",
         "name": "Tomas Dostal"
@@ -22,7 +22,8 @@
         "@kpsys/angularjs-date-parser": "1.2.0",
         "@kpsys/angularjs-bootstrap-datetimepicker": "2.x",
         "ui-select": "^0.19.8",
-        "@babel/runtime": "7.x"
+        "@babel/runtime": "7.x",
+        "bootstrap-less": "^3.3.8"
     },
     "main": "dist/angularjs-value-editor.min.js",
     "style": "dist/angularjs-value-editor.min.css",
@@ -65,6 +66,7 @@
         "babel-loader": "^8.1.0",
         "babel-plugin-angularjs-annotate": "latest",
         "bind-decorator": "latest",
+        "bootstrap-less": "^3.3.8",
         "clean-webpack-plugin": "latest",
         "css-loader": "latest",
         "dgeni": "latest",
@@ -109,6 +111,7 @@
         "tslint-loader": "latest",
         "typescript": "^3.8.3",
         "ui-select": "^0.19.8",
+        "url-loader": "^4.1.0",
         "unminified-webpack-plugin": "latest",
         "webpack": "^4.42.1",
         "webpack-cli": "^3.3.11",

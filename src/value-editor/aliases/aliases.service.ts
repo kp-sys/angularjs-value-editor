@@ -1,5 +1,6 @@
 import {TValueEditorType} from '../typings';
 import {ILogProvider, ILogService, IServiceProvider} from 'angular';
+import {ValueEditorOptions} from '../value-editor.component';
 import IInjectorService = angular.auto.IInjectorService;
 
 /**
@@ -180,5 +181,5 @@ export interface AliasesServiceProviderBuildOptions {
      * @description
      * Add custom default aliased editor options.
      */
-    withOptions<OPTIONS>(options: OPTIONS);
+    withOptions<OPTIONS extends ValueEditorOptions>(options: OPTIONS);
 }

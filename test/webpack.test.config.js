@@ -103,6 +103,24 @@ module.exports = ({
                         loader: 'pug-html-loader'
                     }
                 ]
+            },
+            {
+                test: /\.tpl.html$/,
+                use: [
+                    {
+                        loader: 'ngtemplate-loader',
+                        options: {
+                            relativeTo: path.resolve(__dirname, '..', 'src')
+                        }
+                    },
+                    {
+                        loader: 'html-loader'
+                    }
+                ]
+            },
+            {
+                test: /\.woff/,
+                loader: "url-loader?limit=10000&mimetype=application/font-woff"
             }
         ]
     },

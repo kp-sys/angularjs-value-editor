@@ -1,0 +1,10 @@
+treecontrol.tree-boot(
+    tree-model="$ctrl.internalAcceptableValues"
+    options="$ctrl.treeOptions"
+    selected-node="$ctrl.model"
+    selected-nodes="$ctrl.model"
+    expanded-nodes="$ctrl.expandedNodes"
+)
+
+    span(ng-class="{'text-muted': !$ctrl.isSelectable(node)}") {{optionsTemplate}}
+    span(class="text-muted" ng-if="!$ctrl.isSelectable(node)") (\{\{$ctrl.localize('cannotSelect')\}\})
