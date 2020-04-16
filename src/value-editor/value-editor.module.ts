@@ -2,6 +2,7 @@ import '@kpsys/angular-ui-bootstrap';
 import './resources/styles.less';
 
 import register from '@kpsys/angularjs-register';
+import aliasesModule from './aliases/aliases.module';
 import acceptableValueEditorModule from './editors/acceptable/acceptable.value-editor.module';
 import booleanValueEditorModule from './editors/boolean/boolean.value-editor.module';
 import dateValueEditorModule from './editors/date/date.value-editor.module';
@@ -17,6 +18,7 @@ import passwordValueEditorModule from './editors/password/password.value-editor.
 import signatureValueEditorModule from './editors/signature/signature.value-editor.module';
 import accessNumberValueEditorModule from './editors/access-number/access-number.value-editor.module';
 import numberRangeValueEditorModule from './editors/number-range/number-range.value-editor.module';
+import exemplarBarCodeValueEditorModule from './editors/exemplar-bar-code/exemplar-bar-code.value-editor.module';
 
 import ValueEditorComponent from './value-editor.component';
 import {EmptyConfigurationService} from './editors/abstract-value-editor';
@@ -42,6 +44,7 @@ const LOADING_SPINNER_TPL_URL = require('ngtemplate-loader!html-loader!./resourc
 
 export default register('angularjs-value-editor', [
     'ui.bootstrap',
+    aliasesModule,
     acceptableValueEditorModule,
     booleanValueEditorModule,
     dateValueEditorModule,
@@ -56,7 +59,8 @@ export default register('angularjs-value-editor', [
     passwordValueEditorModule,
     signatureValueEditorModule,
     accessNumberValueEditorModule,
-    numberRangeValueEditorModule
+    numberRangeValueEditorModule,
+    exemplarBarCodeValueEditorModule
 ])
     .constant('loadingSpinnerTemplateUrl', LOADING_SPINNER_TPL_URL)
     .service(EmptyConfigurationService.serviceName, EmptyConfigurationService)

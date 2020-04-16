@@ -23,7 +23,8 @@ export type TValueEditorType =
     'password' |
     'signature' |
     'access-number' |
-    'number-range';
+    'number-range' |
+    'exemplar-bar-code';
 
 /**
  * Make all properties required except properties of ValueEditorOptions

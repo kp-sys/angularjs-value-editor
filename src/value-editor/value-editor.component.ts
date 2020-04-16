@@ -5,6 +5,7 @@ import {generateUuid} from './utils/uuid-generator';
 import customEquals from './utils/equals';
 import AbstractValueEditor from './editors/abstract-value-editor';
 import {TValueEditorType} from './typings';
+import AliasesService, {CustomValueEditorType} from './aliases/aliases.service';
 
 export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS extends ValueEditorOptions = ValueEditorOptions, EDITORVALIDATIONS extends ValueEditorValidations = ValueEditorValidations>
     extends NgModelConnector<MODEL>
@@ -24,8 +25,17 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
     private previousOptions: EDITOROPTS;
     private valueEditorInstance: AbstractValueEditor<MODEL, EDITOROPTS>;
 
+    /*@ngInject*/
+    constructor(private aliasesService: AliasesService) {
+        super();
+    }
+
     public $onInit(): void {
         super.$onInit();
+
+        if (this.aliasesService.isAlias(this.type)) {
+            this.options = Object.assign({}, this.options, this.aliasesService.getForAlias(this.type).options);
+        }
 
         this.previousOptions = angular.copy(this.options);
 
@@ -46,6 +56,10 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
 
     public registerValueEditor<CONTROLLER extends AbstractValueEditor<MODEL, EDITOROPTS>>(editorController: CONTROLLER) {
         this.valueEditorInstance = editorController;
+    }
+
+    public resolveAlias(type: CustomValueEditorType): CustomValueEditorType {
+        return this.aliasesService.isAlias(type) ? this.aliasesService.getForAlias(type).name : type;
     }
 
     private generateEditorName(): string {
