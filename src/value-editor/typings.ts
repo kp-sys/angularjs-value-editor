@@ -38,7 +38,8 @@ export type TValueEditorType = TValueEditorTypeAliases |
     'signature' |
     'access-number' |
     'number-range' |
-    'acceptable-root';
+    'acceptable-root' |
+    'search-text';
 
 /**
  * Make all properties required except properties of ValueEditorOptions

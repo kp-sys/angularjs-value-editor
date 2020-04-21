@@ -78,7 +78,7 @@ export type OptionsChangeDetection<T> = {
     readonly [name in keyof T]?: boolean;
 }
 
-export class EmptyConfigurationService extends AbstractValueEditorConfigurationProvider<{}> {
+export class EmptyConfigurationService extends AbstractValueEditorConfigurationProvider<never> {
     public static readonly serviceName = 'emptyConfigurationService';
 
     constructor() {
