@@ -77,8 +77,8 @@ export default class HtmlValueEditorConfigurationProvider extends AbstractValueE
     public static readonly providerName = 'htmlValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(htmlValueEditorDefaultOptions: DefaultOptions<HtmlValueEditorOptions>) {
-        super(htmlValueEditorDefaultOptions);
+    constructor(aliasesServiceProvider, htmlValueEditorDefaultOptions: DefaultOptions<HtmlValueEditorOptions>) {
+        super(aliasesServiceProvider, htmlValueEditorDefaultOptions);
     }
 }
 

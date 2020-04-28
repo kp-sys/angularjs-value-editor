@@ -1,7 +1,7 @@
 import './text.value-editor.less';
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
 import * as angular from 'angular';
-import {IDoCheck, ITimeoutService} from 'angular';
+import {IDoCheck} from 'angular';
 import {Ace} from 'ace-builds';
 import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
 import {TextValueEditorConfigurationService, TextValueEditorOptions} from './text-value-editor-configuration.provider';
@@ -11,7 +11,7 @@ export class TextValueEditorComponentController extends AbstractValueEditor<stri
     private isDisabled: boolean;
 
     /*@ngInject*/
-    constructor(private textValueEditorConfigurationService: TextValueEditorConfigurationService, private $timeout: ITimeoutService) {
+    constructor(private textValueEditorConfigurationService: TextValueEditorConfigurationService) {
         super(textValueEditorConfigurationService);
     }
 
@@ -36,7 +36,7 @@ export class TextValueEditorComponentController extends AbstractValueEditor<stri
     protected onOptionsChange(newOptions: TextValueEditorOptions, oldOptions, whatChanged: OptionsChangeDetection<TextValueEditorOptions>) {
         if (whatChanged.type && this.options.type === 'rich-textarea') {
             if (!this.options.aceOptions) {
-                this.options.aceOptions = this.textValueEditorConfigurationService.getConfiguration().aceOptions;
+                this.options.aceOptions = this.textValueEditorConfigurationService.forAlias(this.valueEditorController.type).getConfiguration().aceOptions;
             }
 
             this.options.aceOptions.onLoad = (ace) => {

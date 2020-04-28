@@ -1,7 +1,10 @@
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from './abstract-value-editor-configuration.provider';
 import register from '@kpsys/angularjs-register';
+import aliasesModule from '../aliases/aliases.module';
 import {DefaultOptions} from '../typings';
 import * as angular from 'angular';
+import {AliasesServiceProvider} from '../aliases/aliases.service';
+import objectContaining = jasmine.objectContaining;
 
 interface TestingOptions {
     opt1: string;
@@ -23,15 +26,15 @@ class TestingProvider extends AbstractValueEditorConfigurationProvider<TestingOp
     public static readonly providerName = 'testingService';
 
     /*@ngInject*/
-    constructor(testingOptions: TestingOptions) {
-        super(testingOptions);
+    constructor(aliasesServiceProvider, testingOptions: TestingOptions) {
+        super(aliasesServiceProvider, testingOptions);
     }
 }
 
 interface TestingService extends AbstractValueEditorConfigurationService<TestingOptions> {
 }
 
-const testingModule = register('configurations-module')
+const testingModule = register('configurations-module', [aliasesModule])
     .constant('testingOptions', TESTING_OPTIONS)
     .provider(TestingProvider.providerName, TestingProvider)
     .name();
@@ -101,5 +104,27 @@ describe('abstract-value-editor-configuration-provider', () => {
             opt2: CUSTOM_NUMBER,
             opt3: TESTING_OPTIONS.opt3
         });
+    });
+
+    it('should have working alias configuration', () => {
+        let testService: TestingService;
+        const ALIAS = 'custom-test';
+
+        angular.mock.module(testingModule, /*@ngInject*/(testingServiceProvider: TestingProvider, aliasesServiceProvider: AliasesServiceProvider) => {
+            aliasesServiceProvider.addAlias(ALIAS, 'test');
+
+            testingServiceProvider
+                .forAlias(ALIAS)
+                .setConfiguration({opt1: 'blablabla'});
+        });
+
+        inject(/*@ngInject*/ (testingService: TestingService) => {
+            testService = testingService;
+        });
+
+        expect(testService.getDefaults()).toEqual(TESTING_OPTIONS);
+        expect(testService.getConfiguration()).toEqual(TESTING_OPTIONS);
+
+        expect(testService.forAlias(ALIAS).getConfiguration()).toEqual(objectContaining({opt1: 'blablabla'}));
     });
 });

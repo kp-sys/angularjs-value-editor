@@ -104,8 +104,8 @@ export default class AcceptableValueEditorConfigurationProvider<VALUE> extends A
     public static readonly providerName = 'acceptableValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(acceptableValueEditorDefaultOptions: DefaultOptions<AcceptableValueEditorOptions<VALUE>>) {
-        super(acceptableValueEditorDefaultOptions);
+    constructor(aliasesServiceProvider, acceptableValueEditorDefaultOptions: DefaultOptions<AcceptableValueEditorOptions<VALUE>>) {
+        super(aliasesServiceProvider, acceptableValueEditorDefaultOptions);
     }
 }
 

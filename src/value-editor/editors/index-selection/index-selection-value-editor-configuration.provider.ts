@@ -64,8 +64,8 @@ export default class IndexSelectionValueEditorConfigurationProvider<ID, VALUE ex
     public static readonly providerName = 'indexSelectionValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(indexSelectionValueEditorDefaultOptions: DefaultOptions<IndexSelectionValueEditorOptions<ID, VALUE>>) {
-        super(indexSelectionValueEditorDefaultOptions);
+    constructor(aliasesServiceProvider, indexSelectionValueEditorDefaultOptions: DefaultOptions<IndexSelectionValueEditorOptions<ID, VALUE>>) {
+        super(aliasesServiceProvider, indexSelectionValueEditorDefaultOptions);
     }
 }
 

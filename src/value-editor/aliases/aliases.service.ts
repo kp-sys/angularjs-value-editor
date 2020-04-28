@@ -1,6 +1,5 @@
 import {TValueEditorType} from '../typings';
 import {ILogProvider, ILogService, IServiceProvider} from 'angular';
-import {ValueEditorOptions} from '../value-editor.component';
 import IInjectorService = angular.auto.IInjectorService;
 
 /**
@@ -15,26 +14,12 @@ import IInjectorService = angular.auto.IInjectorService;
  */
 export type CustomValueEditorType = TValueEditorType | string;
 
-/**
- * @ngdoc type
- * @name AliasDefinition
- * @module angularjs-value-editor.aliases
- *
- * @property {CustomValueEditorType} name Name of original (aliased) value editor.
- * @property {object} options Default options for alias.
- *
- * @description
- * Alias definition object.
- */
-export interface AliasDefinition {
-    name: CustomValueEditorType;
-    options?: {}
-}
+export const DEFAULT_ALIAS = 'DEFAULT';
 
 export class AliasesServiceProviderImpl implements AliasesServiceProvider {
     public static readonly providerName = 'aliasesService';
 
-    private aliases: Record<CustomValueEditorType, AliasDefinition> = {};
+    private aliases: Record<CustomValueEditorType, CustomValueEditorType> = {};
 
     private $log: ILogService;
 
@@ -44,16 +29,12 @@ export class AliasesServiceProviderImpl implements AliasesServiceProvider {
         this.$log = $injector.instantiate($logProvider.$get, {$window});
     }
 
-    public addAlias(aliasTypeName: CustomValueEditorType, editorType: CustomValueEditorType): AliasesServiceProviderBuildOptions {
+    public addAlias(aliasTypeName: CustomValueEditorType, editorType: CustomValueEditorType) {
         if (this.aliases[aliasTypeName]) {
             throw new Error(`Alias '${aliasTypeName}' is already defined`);
         }
 
-        this.aliases[aliasTypeName] = {name: editorType};
-
-        return {
-            withOptions: this.withOptions.bind(this, aliasTypeName)
-        };
+        this.aliases[aliasTypeName] = editorType;
     }
 
     public removeAlias(aliasTypeName: CustomValueEditorType) {
@@ -64,25 +45,23 @@ export class AliasesServiceProviderImpl implements AliasesServiceProvider {
         delete this.aliases[aliasTypeName];
     }
 
-    private withOptions(aliasTypeName: CustomValueEditorType, options: {}) {
-        this.aliases[aliasTypeName].options = options;
+    public getAlias(alias: CustomValueEditorType): CustomValueEditorType {
+        if (!this.aliases[alias]) {
+            throw new Error(`Alias '${alias}' not found.`);
+        }
+
+        return this.aliases[alias];
     }
 
-    // TODO: withValidations
+    public isAlias(type: CustomValueEditorType): boolean {
+        return !!this.aliases[type];
+    }
 
     private $get(): AliasesService {
         return {
-            getForAlias: (alias: CustomValueEditorType): AliasDefinition => {
-                if (!this.aliases[alias]) {
-                    throw new Error(`Alias '${alias}' not found.`);
-                }
+            getAlias: this.getAlias.bind(this),
 
-                return Object.assign({}, this.aliases[alias]);
-            },
-
-            isAlias: (type: CustomValueEditorType): boolean => {
-                return !!this.aliases[type];
-            }
+            isAlias: this.isAlias.bind(this)
         };
     }
 }
@@ -99,7 +78,7 @@ export default interface AliasesService {
 
     /**
      * @ngdoc method
-     * @name aliasesService#getForAlias
+     * @name aliasesService#getAlias
      *
      * @param {CustomValueEditorType} alias Get alias settings.
      *
@@ -108,7 +87,7 @@ export default interface AliasesService {
      * @description
      * Return alias definition.
      */
-    getForAlias(alias: CustomValueEditorType): AliasDefinition;
+    getAlias(alias: CustomValueEditorType): CustomValueEditorType;
 
     /**
      * @ngdoc method
@@ -132,7 +111,7 @@ export default interface AliasesService {
  * @description
  * Provider for define aliases.
  */
-export interface AliasesServiceProvider {
+export interface AliasesServiceProvider extends AliasesService {
 
     /**
      * @ngdoc method
@@ -146,7 +125,7 @@ export interface AliasesServiceProvider {
      * @description
      * Add new alias.
      */
-    addAlias(aliasTypeName: CustomValueEditorType, editorType: CustomValueEditorType): AliasesServiceProviderBuildOptions;
+    addAlias(aliasTypeName: CustomValueEditorType, editorType: CustomValueEditorType);
 
     /**
      * @ngdoc method
@@ -158,28 +137,4 @@ export interface AliasesServiceProvider {
      * Remove alias.
      */
     removeAlias(aliasTypeName: CustomValueEditorType);
-}
-
-/**
- * @ngdoc type
- * @name AliasesServiceProviderBuildOptions
- * @module angularjs-value-editor.aliases
- *
- * @description
- * Builder for setting default options to aliased editor.
- */
-export interface AliasesServiceProviderBuildOptions {
-
-    /**
-     * @ngdoc method
-     * @name AliasesServiceProviderBuildOptions#withOptions
-     *
-     * @template OPTIONS
-     *
-     * @param {OPTIONS} options Default editor options.
-     *
-     * @description
-     * Add custom default aliased editor options.
-     */
-    withOptions<OPTIONS extends ValueEditorOptions>(options: OPTIONS);
 }

@@ -74,8 +74,8 @@ export default class DateValueEditorConfigurationProvider extends AbstractValueE
     public static readonly providerName = 'dateValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(dateValueEditorDefaultOptions: DefaultOptions<DateValueEditorOptions>) {
-        super(dateValueEditorDefaultOptions);
+    constructor(aliasesServiceProvider, dateValueEditorDefaultOptions: DefaultOptions<DateValueEditorOptions>) {
+        super(aliasesServiceProvider, dateValueEditorDefaultOptions);
     }
 }
 

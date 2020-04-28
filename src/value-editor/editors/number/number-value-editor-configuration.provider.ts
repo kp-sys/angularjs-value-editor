@@ -60,8 +60,8 @@ export default class NumberValueEditorConfigurationProvider extends AbstractValu
     public static readonly providerName = 'numberValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(numberValueEditorDefaultOptions: DefaultOptions<NumberValueEditorOptions>) {
-        super(numberValueEditorDefaultOptions);
+    constructor(aliasesServiceProvider, numberValueEditorDefaultOptions: DefaultOptions<NumberValueEditorOptions>) {
+        super(aliasesServiceProvider, numberValueEditorDefaultOptions);
     }
 }
 

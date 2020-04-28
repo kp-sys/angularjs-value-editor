@@ -1,10 +1,15 @@
 import {AliasesServiceProvider} from '../../aliases/aliases.service';
-import {TextValueEditorOptions} from '../text/text-value-editor-configuration.provider';
+import TextValueEditorConfigurationProvider from '../text/text-value-editor-configuration.provider';
+
+const EXEMPLAR_BAR_CODE_ALIAS = 'exemplar-bar-code';
 
 /*@ngInject*/
-export default function exemplarBarCodeValueEditorConfig(aliasesServiceProvider: AliasesServiceProvider) {
+export default function exemplarBarCodeValueEditorConfig(aliasesServiceProvider: AliasesServiceProvider, textValueEditorConfigurationServiceProvider: TextValueEditorConfigurationProvider) {
     aliasesServiceProvider
-        .addAlias('exemplar-bar-code', 'text')
-        .withOptions<TextValueEditorOptions>({type: 'text'});
+        .addAlias(EXEMPLAR_BAR_CODE_ALIAS, 'text');
+
+    textValueEditorConfigurationServiceProvider
+        .forAlias(EXEMPLAR_BAR_CODE_ALIAS)
+        .setConfiguration({type: 'text'});
 }
 

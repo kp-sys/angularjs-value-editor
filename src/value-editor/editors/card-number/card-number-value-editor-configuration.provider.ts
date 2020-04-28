@@ -80,8 +80,8 @@ export default class CardNumberValueEditorConfigurationProvider extends Abstract
     public static readonly providerName = 'cardNumberValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(cardNumberValueEditorDefaultOptions: DefaultOptions<CardNumberValueEditorOptions>) {
-        super(cardNumberValueEditorDefaultOptions);
+    constructor(aliasesServiceProvider, cardNumberValueEditorDefaultOptions: DefaultOptions<CardNumberValueEditorOptions>) {
+        super(aliasesServiceProvider, cardNumberValueEditorDefaultOptions);
     }
 }
 

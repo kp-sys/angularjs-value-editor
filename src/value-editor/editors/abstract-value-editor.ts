@@ -5,6 +5,7 @@ import {ValueEditorComponentController, ValueEditorOptions} from '../value-edito
 import customEquals from '../utils/equals';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../common/abstract-value-editor-configuration.provider';
 import {AbstractValueEditorLocalizationService} from '../common/abstract-value-editor-localization.provider';
+import {AliasesServiceProvider, DEFAULT_ALIAS} from '../aliases/aliases.service';
 
 /**
  * Abstract base class for general value-editor features.
@@ -19,18 +20,18 @@ export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEd
 
     constructor(protected configurationService: AbstractValueEditorConfigurationService<OPTIONS>, protected localizationService?: AbstractValueEditorLocalizationService<any>) {
         super();
-        this.options = angular.merge({}, this.configurationService.getConfiguration());
+        this.options = angular.merge({}, this.configurationService.forAlias(DEFAULT_ALIAS).getConfiguration());
     }
 
     public $onInit(): void {
         super.$onInit();
-        this.options = angular.merge({}, this.configurationService.getConfiguration(), this.valueEditorController.options);
         this.valueEditorController.registerValueEditor(this);
+        this.options = angular.merge({}, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration(), this.valueEditorController.options);
     }
 
     public $postLink(): void {
-        if (!customEquals(this.options, this.configurationService.getConfiguration())) {
-            this.onOptionsChange(this.options, undefined, this.whichPropertiesIsNotEqual(this.options, this.configurationService.getConfiguration() as unknown as OPTIONS));
+        if (!customEquals(this.options, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration())) {
+            this.onOptionsChange(this.options, undefined, this.whichPropertiesIsNotEqual(this.options, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration() as unknown as OPTIONS));
         }
     }
 
@@ -81,7 +82,8 @@ export type OptionsChangeDetection<T> = {
 export class EmptyConfigurationService extends AbstractValueEditorConfigurationProvider<never> {
     public static readonly serviceName = 'emptyConfigurationService';
 
-    constructor() {
-        super({});
+    /*@ngInject*/
+    constructor(aliasesServiceProvider: AliasesServiceProvider) {
+        super(aliasesServiceProvider, {});
     }
 }

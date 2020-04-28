@@ -73,8 +73,8 @@ export default class BooleanValueEditorConfigurationProvider extends AbstractVal
     public static readonly providerName = 'booleanValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(booleanValueEditorDefaultOptions: DefaultOptions<BooleanValueEditorOptions>) {
-        super(booleanValueEditorDefaultOptions);
+    constructor(aliasesServiceProvider, booleanValueEditorDefaultOptions: DefaultOptions<BooleanValueEditorOptions>) {
+        super(aliasesServiceProvider, booleanValueEditorDefaultOptions);
     }
 }
 

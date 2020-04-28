@@ -68,8 +68,8 @@ export default class AutocompleteValueEditorConfigurationProvider extends Abstra
     public static readonly providerName = 'autocompleteValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(autocompleteValueEditorDefaultOptions: DefaultOptions<AutocompleteValueEditorOptions>) {
-        super(autocompleteValueEditorDefaultOptions);
+    constructor(aliasesServiceProvider, autocompleteValueEditorDefaultOptions: DefaultOptions<AutocompleteValueEditorOptions>) {
+        super(aliasesServiceProvider, autocompleteValueEditorDefaultOptions);
     }
 }
 

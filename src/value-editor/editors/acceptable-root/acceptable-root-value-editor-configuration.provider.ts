@@ -71,8 +71,8 @@ export default class AcceptableRootValueEditorConfigurationProvider<MODEL extend
     public static readonly providerName = 'acceptableRootValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(acceptableRootValueEditorDefaultOptions: DefaultOptions<AcceptableRootValueEditorOptions<MODEL>>) {
-        super(acceptableRootValueEditorDefaultOptions);
+    constructor(aliasesServiceProvider, acceptableRootValueEditorDefaultOptions: DefaultOptions<AcceptableRootValueEditorOptions<MODEL>>) {
+        super(aliasesServiceProvider, acceptableRootValueEditorDefaultOptions);
     }
 }
 

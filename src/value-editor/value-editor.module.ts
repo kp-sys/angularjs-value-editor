@@ -67,7 +67,7 @@ export default register('angularjs-value-editor', [
     searchTextValueEditorModule
 ])
     .constant('loadingSpinnerTemplateUrl', LOADING_SPINNER_TPL_URL)
-    .service(EmptyConfigurationService.serviceName, EmptyConfigurationService)
+    .provider(EmptyConfigurationService.serviceName, EmptyConfigurationService)
     .component(ValueEditorComponent.componentName, ValueEditorComponent)
     .name();
 

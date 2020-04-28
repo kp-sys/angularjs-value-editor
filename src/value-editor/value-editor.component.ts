@@ -33,10 +33,6 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
     public $onInit(): void {
         super.$onInit();
 
-        if (this.aliasesService.isAlias(this.type)) {
-            this.options = Object.assign({}, this.options, this.aliasesService.getForAlias(this.type).options);
-        }
-
         this.previousOptions = angular.copy(this.options);
 
         if (!this.name) {
@@ -58,8 +54,8 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
         this.valueEditorInstance = editorController;
     }
 
-    public resolveAlias(type: CustomValueEditorType): CustomValueEditorType {
-        return this.aliasesService.isAlias(type) ? this.aliasesService.getForAlias(type).name : type;
+    public resolveAlias(): CustomValueEditorType {
+        return this.aliasesService.isAlias(this.type) ? this.aliasesService.getAlias(this.type) : this.type;
     }
 
     private generateEditorName(): string {

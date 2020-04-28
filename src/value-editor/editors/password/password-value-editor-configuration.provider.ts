@@ -51,8 +51,8 @@ export default class PasswordValueEditorConfigurationProvider extends AbstractVa
     public static readonly providerName = 'passwordValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(passwordValueEditorDefaultOptions: DefaultOptions<PasswordValueEditorOptions>) {
-        super(passwordValueEditorDefaultOptions);
+    constructor(aliasesServiceProvider, passwordValueEditorDefaultOptions: DefaultOptions<PasswordValueEditorOptions>) {
+        super(aliasesServiceProvider, passwordValueEditorDefaultOptions);
     }
 }
 

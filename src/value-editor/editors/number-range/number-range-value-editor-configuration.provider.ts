@@ -46,8 +46,8 @@ export default class NumberRangeValueEditorConfigurationProvider extends Abstrac
     public static readonly providerName = 'numberRangeValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(numberRangeValueEditorDefaultOptions: DefaultOptions<NumberRangeValueEditorOptions>) {
-        super(numberRangeValueEditorDefaultOptions);
+    constructor(aliasesServiceProvider, numberRangeValueEditorDefaultOptions: DefaultOptions<NumberRangeValueEditorOptions>) {
+        super(aliasesServiceProvider, numberRangeValueEditorDefaultOptions);
     }
 }
 

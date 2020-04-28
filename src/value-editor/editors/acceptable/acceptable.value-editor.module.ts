@@ -1,4 +1,5 @@
 import register from '@kpsys/angularjs-register';
+import aliasesModule from '../../aliases/aliases.module';
 
 import 'angular-sanitize';
 import 'ui-select';
@@ -17,7 +18,7 @@ import AcceptableValueEditorConfigurationProvider, {ACCEPTABLE_VALUE_EDITOR_DEFA
  * Acceptable value editor module.
  */
 
-export default register('angularjs-value-editor.acceptable', ['ngSanitize', 'ui.select'])
+export default register('angularjs-value-editor.acceptable', [aliasesModule, 'ngSanitize', 'ui.select'])
     .decorator(uiSelectDecorator.decoratorName, uiSelectDecorator)
     .constant('acceptableValueEditorDefaultOptions', ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS)
     .constant('acceptableValueEditorDefaultLocalizations', ACCEPTABLE_VALUE_EDITOR_DEFAULT_LOCALIZATIONS)

@@ -63,8 +63,8 @@ export default class SignatureValueEditorConfigurationProvider extends AbstractV
     public static readonly providerName = 'signatureValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(signatureValueEditorDefaultOptions: DefaultOptions<SignatureValueEditorOptions>) {
-        super(signatureValueEditorDefaultOptions);
+    constructor(aliasesServiceProvider, signatureValueEditorDefaultOptions: DefaultOptions<SignatureValueEditorOptions>) {
+        super(aliasesServiceProvider, signatureValueEditorDefaultOptions);
     }
 }
 

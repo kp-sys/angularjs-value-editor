@@ -15,8 +15,7 @@ describe('aliases service', () => {
         let _aliasesService: AliasesService;
 
         angular.mock.module(aliasesModule, /*@ngInject*/(aliasesServiceProvider: AliasesServiceProvider) => {
-            aliasesServiceProvider.addAlias(ALIAS_NAME, 'editor')
-                .withOptions<SomeEditorOptions>({some: 'option'});
+            aliasesServiceProvider.addAlias(ALIAS_NAME, 'editor');
         });
 
         inject(/*@ngInject*/ (aliasesService) => {
@@ -24,13 +23,12 @@ describe('aliases service', () => {
         })
 
         expect(_aliasesService.isAlias(ALIAS_NAME)).toBe(true);
-        expect(_aliasesService.getForAlias(ALIAS_NAME)).toEqual({name: 'editor', options: {some: 'option'}});
+        expect(_aliasesService.getAlias(ALIAS_NAME)).toBe('editor');
     });
 
     it('should throw error if alias exist', () => {
         angular.mock.module(aliasesModule, /*@ngInject*/(aliasesServiceProvider: AliasesServiceProvider) => {
-            aliasesServiceProvider.addAlias(ALIAS_NAME, 'editor')
-                .withOptions<SomeEditorOptions>({some: 'option'});
+            aliasesServiceProvider.addAlias(ALIAS_NAME, 'editor');
 
             expect(() => aliasesServiceProvider.addAlias(ALIAS_NAME, 'editor')).toThrow();
         });
@@ -38,8 +36,7 @@ describe('aliases service', () => {
 
     it('should remove alias', () => {
         angular.mock.module(aliasesModule, /*@ngInject*/(aliasesServiceProvider: AliasesServiceProvider) => {
-            aliasesServiceProvider.addAlias(ALIAS_NAME, 'editor')
-                .withOptions<SomeEditorOptions>({some: 'option'});
+            aliasesServiceProvider.addAlias(ALIAS_NAME, 'editor');
 
             expect(() => aliasesServiceProvider.addAlias(ALIAS_NAME, 'editor')).toThrow();
 
@@ -53,8 +50,7 @@ describe('aliases service', () => {
         let _aliasesService: AliasesService;
 
         angular.mock.module(aliasesModule, /*@ngInject*/(aliasesServiceProvider: AliasesServiceProvider) => {
-            aliasesServiceProvider.addAlias(ALIAS_NAME, 'editor')
-                .withOptions<SomeEditorOptions>({some: 'option'});
+            aliasesServiceProvider.addAlias(ALIAS_NAME, 'editor');
         });
 
         inject(/*@ngInject*/ (aliasesService) => {
@@ -62,6 +58,6 @@ describe('aliases service', () => {
         })
 
         expect(_aliasesService.isAlias('sjkkdbcsj')).toBe(false);
-        expect(() => _aliasesService.getForAlias('dnwkejbfrj')).toThrow();
+        expect(() => _aliasesService.getAlias('dnwkejbfrj')).toThrow();
     });
 });

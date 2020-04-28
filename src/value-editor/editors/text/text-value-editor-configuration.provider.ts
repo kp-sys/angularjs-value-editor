@@ -78,8 +78,8 @@ export default class TextValueEditorConfigurationProvider extends AbstractValueE
     public static readonly providerName = 'textValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(textValueEditorDefaultOptions: DefaultOptions<TextValueEditorOptions>) {
-        super(textValueEditorDefaultOptions);
+    constructor(aliasesServiceProvider, textValueEditorDefaultOptions: DefaultOptions<TextValueEditorOptions>) {
+        super(aliasesServiceProvider, textValueEditorDefaultOptions);
     }
 }
 
