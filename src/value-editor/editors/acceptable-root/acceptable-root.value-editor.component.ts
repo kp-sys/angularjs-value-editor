@@ -33,7 +33,7 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
     constructor(acceptableRootValueEditorConfigurationService: AcceptableRootValueEditorConfigurationService<VALUE>,
                 public acceptableRootValueEditorLocalizationsService: AcceptableRootValueEditorLocalizationsService,
                 private $interpolate: IInterpolateService,
-                private $templateCache: ITemplateCacheService,) {
+                private $templateCache: ITemplateCacheService) {
         super(acceptableRootValueEditorConfigurationService, acceptableRootValueEditorLocalizationsService);
 
         this.uuid = generateUuid();

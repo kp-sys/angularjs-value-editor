@@ -7,6 +7,13 @@ import {ValueEditorOptions} from './value-editor.component';
  *
  * @description
  * Aliased value editor types.
+ *
+ * ```
+ * type TValueEditorTypeAliases =
+ *  'exemplar-bar-code' |
+ *  'single-acceptable-root' |
+ *  'multiple-acceptable-root';
+ * ```
  */
 export type TValueEditorTypeAliases =
     'exemplar-bar-code' |
@@ -19,8 +26,33 @@ export type TValueEditorTypeAliases =
  * @name TValueEditorType
  * @module angularjs-value-editor
  *
+ * @requires TValueEditorTypeAliases
+ *
  * @description
  * Value editor types.
+ *
+ * ```js
+ * type TValueEditorType =
+ *      TValueEditorTypeAliases |
+ *      'text' |
+ *      'number' |
+ *      'boolean' |
+ *      'hidden' |
+ *      'html' |
+ *      'date' |
+ *      'acceptable' |
+ *      'year' |
+ *      'card-number' |
+ *      'index-selection' |
+ *      'autocomplete' |
+ *      'password' |
+ *      'signature' |
+ *      'access-number' |
+ *      'number-range' |
+ *      'acceptable-root' |
+ *      'search-text' |
+ *      'searchable';
+ * ```
  */
 export type TValueEditorType = TValueEditorTypeAliases |
     'text' |
@@ -39,7 +71,8 @@ export type TValueEditorType = TValueEditorTypeAliases |
     'access-number' |
     'number-range' |
     'acceptable-root' |
-    'search-text';
+    'search-text' |
+    'searchable';
 
 /**
  * Make all properties required except properties of ValueEditorOptions

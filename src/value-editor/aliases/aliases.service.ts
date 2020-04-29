@@ -7,6 +7,8 @@ import IInjectorService = angular.auto.IInjectorService;
  * @name CustomValueEditorType
  * @module angularjs-value-editor.aliases
  *
+ * @requires TValueEditorType
+ *
  * @description
  * ```js
  *  type CustomValueEditorType = TValueEditorType | string

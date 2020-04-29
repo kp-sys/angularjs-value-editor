@@ -16,12 +16,13 @@ html
                         ng-model="value"
                         editor-id="editor"
                         name="editor"
-                        type="'search-text'"
+                        type="'searchable'"
                         disabled="disabled"
                         placeholder="Password"
                         options="{" +
+                            "editModelFunction: dc.editModelFunction" +
                         "}"
-                        validations=""
+                        validations="{required: true}"
                     )
 
 

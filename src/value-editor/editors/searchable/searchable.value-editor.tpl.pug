@@ -1,0 +1,31 @@
+| \{\{$model = $ctrl.model; ''\}\}
+
+span.model-value(ng-if="$ctrl.model") {{modelTemplate}}
+span.text-muted(ng-if="!$ctrl.model" ng-bind="$ctrl.valueEditorController.placeholder")
+
+button.search-button.btn.btn-default(type="button" ng-disabled="$ctrl.valueEditorController.disabled || $ctrl.searching" ng-click="$ctrl.search()")
+    span.glyphicon.glyphicon-search(ng-show="!$ctrl.searching")
+    ng-include.glyphicon.searchable-loading-svg(src="$ctrl.loadingSpinnerTemplateUrl" ng-show="$ctrl.searching")
+    span(ng-if="$ctrl.model" ng-bind="$ctrl.localize('searchOther')")
+    span(ng-if="!$ctrl.model" ng-bind="$ctrl.localize('search')")
+
+button.edit-button.btn.btn-default(type="button" ng-disabled="$ctrl.valueEditorController.disabled || $ctrl.editing" ng-show="$ctrl.hasEditModelFunction" ng-click="$ctrl.edit()")
+    span.glyphicon.glyphicon-pencil(ng-show="!$ctrl.editing")
+    ng-include.glyphicon.searchable-loading-svg(src="$ctrl.loadingSpinnerTemplateUrl" ng-show="$ctrl.editing")
+    span(ng-if="$ctrl.model" ng-bind="$ctrl.localize('editValue')")
+    span(ng-if="!$ctrl.model" ng-bind="$ctrl.localize('createNew')")
+
+input(
+    type="hidden"
+    id="\\{\\{$ctrl.valueEditorController.editorId\\}\\}"
+    name="\\{\\{$ctrl.valueEditorController.name\\}\\}"
+
+    ng-model="$ctrl.model"
+    ng-model-options="{ getterSetter: true}"
+
+    ng-disabled="$ctrl.valueEditorController.disabled"
+
+    ng-required="$ctrl.valueEditorController.validations.required"
+
+    data-main-input
+)

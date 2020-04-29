@@ -21,6 +21,7 @@ import numberRangeValueEditorModule from './editors/number-range/number-range.va
 import exemplarBarCodeValueEditorModule from './editors/exemplar-bar-code/exemplar-bar-code.value-editor.module';
 import acceptableRootValueEditorModule from './editors/acceptable-root/acceptable-root.value-editor.module';
 import searchTextValueEditorModule from './editors/search-text/search-text.value-editor.module';
+import searchableValueEditorModule from './editors/searchable/searchable.value-editor.module';
 
 import ValueEditorComponent from './value-editor.component';
 import {EmptyConfigurationService} from './editors/abstract-value-editor';
@@ -64,7 +65,8 @@ export default register('angularjs-value-editor', [
     numberRangeValueEditorModule,
     exemplarBarCodeValueEditorModule,
     acceptableRootValueEditorModule,
-    searchTextValueEditorModule
+    searchTextValueEditorModule,
+    searchableValueEditorModule
 ])
     .constant('loadingSpinnerTemplateUrl', LOADING_SPINNER_TPL_URL)
     .provider(EmptyConfigurationService.serviceName, EmptyConfigurationService)
