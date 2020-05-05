@@ -1,3 +1,5 @@
+/* istanbul ignore file */ // tested by angular team
+
 import * as angular from 'angular';
 
 function isRegExp(value) {

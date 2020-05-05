@@ -75,6 +75,7 @@ export class NumberRangeValueEditorComponentController extends AbstractValueEdit
         };
     }
 
+    /* istanbul ignore next */
     protected onOptionsChange(newOptions: NumberRangeValueEditorOptions, oldOptions, whatChanged: OptionsChangeDetection<NumberRangeValueEditorOptions>) {
         //
     }

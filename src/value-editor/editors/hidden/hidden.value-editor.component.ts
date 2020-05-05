@@ -4,6 +4,7 @@ import * as angular from 'angular';
 
 export class HiddenValueEditorComponentController extends AbstractValueEditor<any, ValueEditorOptions> {
 
+    /* istanbul ignore next */
     protected onOptionsChange(newOptions: ValueEditorOptions, oldOptions: ValueEditorOptions) {
         //
     }

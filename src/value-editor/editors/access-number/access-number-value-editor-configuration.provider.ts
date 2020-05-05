@@ -45,7 +45,7 @@ export interface AccessNumberValueEditorOptions extends ValueEditorOptions {
  */
 export const ACCESS_NUMBER_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<AccessNumberValueEditorOptions> = {
     canDoAction: false,
-    dataSource: () => Promise.resolve([])
+    dataSource: /* istanbul ignore next */ () => Promise.resolve([])
 };
 
 /**

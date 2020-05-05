@@ -48,7 +48,7 @@ export interface AutocompleteValueEditorOptions extends ValueEditorOptions {
  * ```
  */
 export const AUTOCOMPLETE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<AutocompleteValueEditorOptions> = {
-    dataSource: () => Promise.resolve([]),
+    dataSource: /* istanbul ignore next */ () => Promise.resolve([]),
     minLength: 1,
     staticParams: {}
 };

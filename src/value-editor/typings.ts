@@ -53,7 +53,8 @@ export type TValueEditorTypeAliases =
  *      'number-range' |
  *      'acceptable-root' |
  *      'search-text' |
- *      'searchable';
+ *      'searchable' |
+ *      'range';
  * ```
  */
 export type TValueEditorType = TValueEditorTypeAliases |
@@ -74,7 +75,8 @@ export type TValueEditorType = TValueEditorTypeAliases |
     'number-range' |
     'acceptable-root' |
     'search-text' |
-    'searchable';
+    'searchable' |
+    'range';
 
 /**
  * Make all properties required except properties of ValueEditorOptions

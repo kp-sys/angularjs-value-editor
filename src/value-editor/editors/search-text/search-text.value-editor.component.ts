@@ -60,6 +60,7 @@ export class SearchTextValueEditorComponentController extends AbstractValueEdito
         this.normalizeModel();
     }
 
+    /* istanbul ignore next */
     protected onOptionsChange(newOptions: never, oldOptions, whatChanged: OptionsChangeDetection<never>) {
         //
     }

@@ -95,7 +95,7 @@ export class AutocompleteValueEditorComponentController extends AbstractValueEdi
     }
 
     private asyncCall(func?: () => void) {
-        this.$timeout(func ? func.bind(this) : () => void 0, 0);
+        this.$timeout(func ? func.bind(this) : /* istanbul ignore next */ () => void 0, 0);
     }
 }
 

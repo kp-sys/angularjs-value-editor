@@ -11,6 +11,7 @@ export class YearValueEditorComponentController extends AbstractValueEditor<numb
         this.ngModelController.$formatters.push(this.modelParser);
     }
 
+    /* istanbul ignore next */
     protected onOptionsChange(newOptions: never, oldOptions, whatChanged: OptionsChangeDetection<never>) {
         //
     }

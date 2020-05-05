@@ -30,20 +30,32 @@ export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEd
     }
 
     public $postLink(): void {
+        // If initial options are not defaults, trigger options change.
         if (!customEquals(this.options, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration())) {
             this.onOptionsChange(this.options, undefined, this.whichPropertiesIsNotEqual(this.options, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration() as unknown as OPTIONS));
         }
     }
 
+    /**
+     * This method changes options.
+     * @param {OPTIONS} newOptions
+     * @param {OPTIONS} oldOptions
+     */
     public changeOptions(newOptions: OPTIONS, oldOptions: OPTIONS) {
         this.options = newOptions;
         this.onOptionsChange(newOptions, oldOptions, this.whichPropertiesIsNotEqual(newOptions, oldOptions));
     }
 
+    /**
+     * Simplifies localization. No need to call localization service.
+     * @param {string} code Message code.
+     * @returns {string} Localized message.
+     */
     public localize(code: string): string {
         if (this.localizationService) {
             return (this.localizationService.getLocalization(code));
         } else {
+            /* istanbul ignore else */
             throw new Error('localizationService is not set');
         }
     }

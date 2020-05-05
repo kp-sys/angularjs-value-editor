@@ -1,4 +1,3 @@
-import config from './app.config';
 import * as jQuery from 'jquery';
 import 'angular';
 import './required-vendors';
@@ -18,5 +17,4 @@ declare global {
 window.$ = window.jQuery = jQuery;
 
 register('app', [valueEditorModule])
-    .config(config)
     .controller('demoController', DemoController);

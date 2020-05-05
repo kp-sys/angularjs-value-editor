@@ -45,7 +45,7 @@ export interface SignatureValueEditorOptions extends ValueEditorOptions {
  */
 export const SIGNATURE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<SignatureValueEditorOptions> = {
     canDoAction: false,
-    dataSource: () => Promise.resolve([])
+    dataSource: /* istanbul ignore next */ () => Promise.resolve([])
 };
 
 /**

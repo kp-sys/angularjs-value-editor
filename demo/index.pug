@@ -8,7 +8,7 @@ html
 
     body(ng-app="app" ng-strict-di)
         h1 Value Editor Demo
-        main(ng-controller="demoController as dc" ng-init="disabled = false; value = 'signatura'")
+        main(ng-controller="demoController as dc" ng-init="disabled = false; value = {from: 22, to: 55}")
             form.form-horizontal(name="dc.form")
                 .form-group
                     label.control-label.col-lg-2(for="editor") Label
@@ -16,17 +16,27 @@ html
                         ng-model="value"
                         editor-id="editor"
                         name="editor"
-                        type="'searchable'"
+                        type="'range'"
                         disabled="disabled"
                         placeholder="Password"
                         options="{" +
-                            "editModelFunction: dc.editModelFunction" +
+                            "min: 0," +
+                            "max: 100," +
+                            "extremesAsNull: true," +
                         "}"
-                        validations="{required: true}"
+                        validations="{}"
                     )
 
 
             button(type="button" ng-click="value = undefined") Reset
+
+            div
+                label From
+                input(type="number" ng-model="value.from")
+
+            div
+                label To
+                input(type="number" ng-model="value.to")
 
             div
                 label Disabled:

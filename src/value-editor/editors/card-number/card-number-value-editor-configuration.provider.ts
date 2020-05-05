@@ -62,7 +62,7 @@ export interface CardNumberValueEditorOptions<PARAMS = {}> extends ValueEditorOp
 export const CARD_NUMBER_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<CardNumberValueEditorOptions> = {
     inputSize: 'sm',
     requestParameters: {},
-    requestFunction: (requestParameters, additionalParameters) => Promise.resolve(additionalParameters.currentValue)
+    requestFunction: /* istanbul ignore next */ (requestParameters, additionalParameters) => Promise.resolve(additionalParameters.currentValue)
 };
 
 /**

@@ -1,0 +1,18 @@
+div.curent-value {{currentValueTemplate}}
+td-slider(
+    ng-model="$ctrl.internalModel"
+    ng-model-options="{ getterSetter: true}"
+
+    slider-model-transformer="$ctrl.options.extremesAsNull"
+
+    min="$ctrl.options.min"
+    max="$ctrl.options.max"
+
+    snap="$ctrl.options.snap"
+    snap-points="$ctrl.options.snapPoints"
+    pit-points="$ctrl.options.pitPoints"
+
+    on-values-updated="$from = $values[0]; $to = $values[1]"
+
+    data-main-input
+)

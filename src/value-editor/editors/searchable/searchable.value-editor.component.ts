@@ -1,41 +1,39 @@
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
-import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
+import {OptionsChangeDetection} from '../abstract-value-editor';
 import * as angular from 'angular';
-import {IInterpolateService, IOnInit, ITemplateCacheService, ITimeoutService} from 'angular';
+import {IInterpolateService, ITemplateCacheService, ITimeoutService} from 'angular';
 import {
     SearchableValueEditorConfigurationService,
     SearchableValueEditorOptions
 } from './searchable-value-editor-configuration.provider';
 import {SearchableValueEditorLocalizationsService} from './searchable-value-editor-localization.provider';
-import {generateUuid} from '../../utils/uuid-generator';
+import AbstractTemplateValueEditor from '../abstract-template-value-editor';
 import IInjectorService = angular.auto.IInjectorService;
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.searchableValueEditor';
 
-export class SearchableValueEditorComponentController<MODEL = any> extends AbstractValueEditor<any, SearchableValueEditorOptions<MODEL>> implements IOnInit {
+export class SearchableValueEditorComponentController<MODEL = any> extends AbstractTemplateValueEditor<any, SearchableValueEditorOptions<MODEL>> {
     private static readonly TEMPLATE_URL = require('./searchable.value-editor.tpl.pug');
+
     public searching: boolean = false;
     public editing: boolean = false;
-    private templateName: string = TEMPLATE_NAME_PREFIX;
-    private uuid: string;
 
     /*@ngInject*/
     constructor(searchableValueEditorConfigurationService: SearchableValueEditorConfigurationService<MODEL>,
                 searchableValueEditorLocalizationsService: SearchableValueEditorLocalizationsService,
-                private $interpolate: IInterpolateService,
-                private $templateCache: ITemplateCacheService,
+                $interpolate: IInterpolateService,
+                $templateCache: ITemplateCacheService,
                 public loadingSpinnerTemplateUrl: string,
                 private $timeout: ITimeoutService,
                 private $injector: IInjectorService) {
-        super(searchableValueEditorConfigurationService, searchableValueEditorLocalizationsService);
-
-        this.uuid = generateUuid();
-    }
-
-    public $onInit(): void {
-        super.$onInit();
-
-        this.updateTemplate();
+        super(
+            SearchableValueEditorComponentController.TEMPLATE_URL,
+            TEMPLATE_NAME_PREFIX,
+            $interpolate,
+            $templateCache,
+            searchableValueEditorConfigurationService,
+            searchableValueEditorLocalizationsService
+        );
     }
 
     public get hasEditModelFunction(): boolean {
@@ -74,19 +72,14 @@ export class SearchableValueEditorComponentController<MODEL = any> extends Abstr
         }
     }
 
-    private updateTemplate() {
-        this.$templateCache.remove(this.templateName);
-        const newTemplateName = `${TEMPLATE_NAME_PREFIX}_${this.uuid}_${new Date().valueOf()}`;
-        const template = this.$templateCache.get<string>(SearchableValueEditorComponentController.TEMPLATE_URL);
-        const interpolated = this.$interpolate(template)({
+    protected getTemplateModel(): {} {
+        return {
             modelTemplate: this.options.modelTemplate
-        });
-        this.$templateCache.put(newTemplateName, interpolated);
-        this.templateName = newTemplateName;
+        };
     }
 
     private asyncCall(func?: () => void) {
-        this.$timeout(func ? func.bind(this) : () => void 0, 0);
+        this.$timeout(func ? func.bind(this) : /* istanbul ignore next */ () => void 0, 0);
     }
 }
 
@@ -131,7 +124,7 @@ export default class SearchableValueEditorComponent {
         valueEditorController: `^${ValueEditorComponent.componentName}`
     };
 
-    public template = '<ng-include src="$ctrl.templateName"></ng-include>';
+    public template = AbstractTemplateValueEditor.COMPONENT_TEMPLATE;
 
     public controller = SearchableValueEditorComponentController;
 }

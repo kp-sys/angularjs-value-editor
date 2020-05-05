@@ -47,6 +47,7 @@ module.exports = (grunt) => {
                                 'https://unpkg.com/@kpsys/angularjs-date-parser@1.1.2/dist/angularjs-date-parser.js',
                                 'https://unpkg.com/@kpsys/angularjs-bootstrap-datetimepicker@2.1.1/dist/angularjs-bootstrap-datetimepicker.js',
                                 'https://unpkg.com/@kpsys/angular-ui-bootstrap@2.5.5/dist/ui-bootstrap-tpls.js',
+                                'https://unpkg.com/@kpsys/angularjs-histogram-slider@1.3.1/dist/slider.js',
                                 'https://unpkg.com/angular-sanitize@1.7.9/angular-sanitize.js',
                                 'https://unpkg.com/ui-select@0.19.8/dist/select.js',
                                 'https://unpkg.com/regenerator-runtime@0.13.5/runtime.js',
@@ -56,6 +57,7 @@ module.exports = (grunt) => {
                                 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
                                 'https://unpkg.com/@kpsys/angular-ui-bootstrap@2.5.5/dist/ui-bootstrap-csp.css',
                                 'https://unpkg.com/@kpsys/angularjs-bootstrap-datetimepicker@2.1.1/dist/angularjs-bootstrap-datetimepicker.css',
+                                'https://unpkg.com/@kpsys/angularjs-histogram-slider@1.3.1/dist/slider.css',
                                 'https://unpkg.com/ui-select@0.19.8/dist/select.css',
                                 `${process.env.EXAMPLES_SCRIPTS_URL_PREFIX || ''}/angularjs-value-editor.css`
                             ]

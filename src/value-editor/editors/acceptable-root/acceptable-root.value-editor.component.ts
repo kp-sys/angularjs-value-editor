@@ -1,6 +1,6 @@
 /* istanbul ignore file */ // neni cas... :-(
 
-import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
+import {OptionsChangeDetection} from '../abstract-value-editor';
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
 import {
     AcceptableRootValueEditorConfigurationService,
@@ -10,7 +10,7 @@ import {AcceptableRootValueEditorLocalizationsService} from './acceptable-root-v
 import {IInterpolateService, IOnInit, ITemplateCacheService} from 'angular';
 import {AngularTreeControlOptions} from './tree-control/angular-tree-control';
 import bind from 'bind-decorator';
-import {generateUuid} from '../../utils/uuid-generator';
+import AbstractTemplateValueEditor from '../abstract-template-value-editor';
 
 export interface Childrenable {
     children?: Childrenable[];
@@ -18,31 +18,32 @@ export interface Childrenable {
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.acceptableRootValueEditor';
 
-export class AcceptableRootValueEditorComponentController<VALUE extends Childrenable> extends AbstractValueEditor<{} | {}[], AcceptableRootValueEditorOptions<VALUE>> implements IOnInit {
+export class AcceptableRootValueEditorComponentController<VALUE extends Childrenable> extends AbstractTemplateValueEditor<{} | {}[], AcceptableRootValueEditorOptions<VALUE>> implements IOnInit {
     private static readonly TEMPLATE_URL = require('./acceptable-root.value-editor.tpl.pug');
-    private static readonly TREECONTROL_TEMPLATE_URL = require('./treecontrol-custom-template.tpl.html')
+    private static readonly TREECONTROL_TEMPLATE_URL = require('./treecontrol-custom-template.tpl.html');
 
     public expandedNodes: VALUE[];
     public internalAcceptableValues: [VALUE];
     private treeOptions: Partial<AngularTreeControlOptions<VALUE>>;
 
-    private templateName: string = TEMPLATE_NAME_PREFIX;
-    private uuid: string;
-
     /*@ngInject*/
     constructor(acceptableRootValueEditorConfigurationService: AcceptableRootValueEditorConfigurationService<VALUE>,
-                public acceptableRootValueEditorLocalizationsService: AcceptableRootValueEditorLocalizationsService,
-                private $interpolate: IInterpolateService,
-                private $templateCache: ITemplateCacheService) {
-        super(acceptableRootValueEditorConfigurationService, acceptableRootValueEditorLocalizationsService);
-
-        this.uuid = generateUuid();
+                acceptableRootValueEditorLocalizationsService: AcceptableRootValueEditorLocalizationsService,
+                $interpolate: IInterpolateService,
+                $templateCache: ITemplateCacheService) {
+        super(
+            AcceptableRootValueEditorComponentController.TEMPLATE_URL,
+            TEMPLATE_NAME_PREFIX,
+            $interpolate,
+            $templateCache,
+            acceptableRootValueEditorConfigurationService,
+            acceptableRootValueEditorLocalizationsService);
     }
 
     public $onInit(): void {
         super.$onInit();
 
-        if(this.options.multiselect && !Array.isArray(this.model)) {
+        if (this.options.multiselect && !Array.isArray(this.model)) {
             this.model = [];
         }
 
@@ -56,8 +57,6 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
         };
         // expanded is always first level
         this.expandedNodes = [this.options.acceptableValue];
-
-        this.updateTemplate();
     }
 
     @bind
@@ -71,15 +70,10 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
         }
     }
 
-    private updateTemplate() {
-        this.$templateCache.remove(this.templateName);
-        const newTemplateName = `${TEMPLATE_NAME_PREFIX}_${this.uuid}_${new Date().valueOf()}`;
-        const template = this.$templateCache.get<string>(AcceptableRootValueEditorComponentController.TEMPLATE_URL);
-        const interpolated = this.$interpolate(template)({
+    protected getTemplateModel(): {} {
+        return {
             optionsTemplate: this.options.optionsTemplate
-        });
-        this.$templateCache.put(newTemplateName, interpolated);
-        this.templateName = newTemplateName;
+        };
     }
 }
 

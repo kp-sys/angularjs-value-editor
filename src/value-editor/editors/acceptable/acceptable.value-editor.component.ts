@@ -1,31 +1,34 @@
 import './acceptable.value-editor.less';
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
-import {IFilterOrderByItem, IInterpolateService, IOnInit, ITemplateCacheService} from 'angular';
-import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
-import {generateUuid} from '../../utils/uuid-generator';
+import {IFilterOrderByItem, IInterpolateService, ITemplateCacheService} from 'angular';
+import {OptionsChangeDetection} from '../abstract-value-editor';
 import {AcceptableValueEditorLocalizationsService} from './acceptable-value-editor-localizations.provider';
 import {
     AcceptableValueEditorConfigurationService,
     AcceptableValueEditorOptions
 } from './acceptable-value-editor-configuration.provider';
+import AbstractTemplateValueEditor from '../abstract-template-value-editor';
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.acceptableValueEditor';
 
-export class AcceptableValueEditorComponentController<VALUE> extends AbstractValueEditor<VALUE[], AcceptableValueEditorOptions<VALUE>> implements IOnInit {
+export class AcceptableValueEditorComponentController<VALUE> extends AbstractTemplateValueEditor<VALUE[], AcceptableValueEditorOptions<VALUE>> {
     private static readonly SELECT_TEMPLATE_URL = require('./select.tpl.pug');
     private static readonly CHECKBOXES_TEMPLATE_URL = require('./checkboxes.tpl.pug');
 
-    private templateName: string = TEMPLATE_NAME_PREFIX;
-    private uuid: string;
-
     /*@ngInject*/
-    constructor(private $interpolate: IInterpolateService,
-                private $templateCache: ITemplateCacheService,
+    constructor($interpolate: IInterpolateService,
+                $templateCache: ITemplateCacheService,
                 public acceptableValueEditorLocalizationsService: AcceptableValueEditorLocalizationsService,
                 public acceptableValueEditorConfigurationService: AcceptableValueEditorConfigurationService<VALUE>) {
-        super(acceptableValueEditorConfigurationService);
+        super(
+            AcceptableValueEditorComponentController.SELECT_TEMPLATE_URL,
+            TEMPLATE_NAME_PREFIX,
+            $interpolate,
+            $templateCache,
+            acceptableValueEditorConfigurationService,
+            acceptableValueEditorLocalizationsService
+        );
 
-        this.uuid = generateUuid();
         this.uiSelectComparator = this.uiSelectComparator.bind(this);
     }
 
@@ -101,6 +104,9 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractVal
             whichOptionIsChanged.acceptableValues ||
             whichOptionIsChanged.switchToCheckboxesThreshold ||
             whichOptionIsChanged.selectedFirst) {
+
+            this.baseTemplateUrl = this.checkboxesMode() ? AcceptableValueEditorComponentController.CHECKBOXES_TEMPLATE_URL : AcceptableValueEditorComponentController.SELECT_TEMPLATE_URL;
+
             this.updateTemplate();
         }
 
@@ -112,6 +118,18 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractVal
             // trigger model sort by calling its setter and setting same value
             this.model = this.model;
         }
+    }
+
+    protected getTemplateModel(): {} {
+        return {
+            optionsTemplate: this.options.optionsTemplate,
+            singleSelectedValueTemplate: this.options.singleSelectedValueTemplate,
+            multiSelectedValueTemplate: this.options.multiSelectedValueTemplate,
+            searchable: this.options.searchable,
+            multiselectable: this.options.multiselectable,
+            uuid: this.uuid,
+            sort: !!this.options.sortComparator
+        };
     }
 
     private adjustToArrayIfNot(value: VALUE | VALUE[]): VALUE[] {
@@ -143,24 +161,6 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractVal
     private checkboxesMode(): boolean {
         return this.options.multiselectable && (this.options.switchToCheckboxesThreshold === 0 ||
             (!this.options.reorderable && this.options.acceptableValues.length > this.options.switchToCheckboxesThreshold));
-    }
-
-    private updateTemplate() {
-        this.$templateCache.remove(this.templateName);
-        const newTemplateName = `${TEMPLATE_NAME_PREFIX}_${this.uuid}_${new Date().valueOf()}`;
-        const templateUrl = this.checkboxesMode() ? AcceptableValueEditorComponentController.CHECKBOXES_TEMPLATE_URL : AcceptableValueEditorComponentController.SELECT_TEMPLATE_URL;
-        const template = this.$templateCache.get<string>(templateUrl);
-        const interpolated = this.$interpolate(template)({
-            optionsTemplate: this.options.optionsTemplate,
-            singleSelectedValueTemplate: this.options.singleSelectedValueTemplate,
-            multiSelectedValueTemplate: this.options.multiSelectedValueTemplate,
-            searchable: this.options.searchable,
-            multiselectable: this.options.multiselectable,
-            uuid: this.uuid,
-            sort: !!this.options.sortComparator
-        });
-        this.$templateCache.put(newTemplateName, interpolated);
-        this.templateName = newTemplateName;
     }
 
     private getIndexOfItemInModelUsingEqualityComparator(item: VALUE): number {
@@ -280,7 +280,7 @@ export default class AcceptableValueEditorComponent {
         valueEditorController: `^${ValueEditorComponent.componentName}`
     };
 
-    public templateUrl = require('./acceptable.value-editor.tpl.pug');
+    public template = AbstractTemplateValueEditor.COMPONENT_TEMPLATE;
 
     public controller = AcceptableValueEditorComponentController;
 }

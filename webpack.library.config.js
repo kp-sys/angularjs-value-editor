@@ -30,7 +30,8 @@ module.exports = (env, {mode}) => ({
         '@kpsys/angularjs-date-parser': '@kpsys/angularjs-date-parser',
         '@kpsys/angularjs-bootstrap-datetimepicker': '@kpsys/angularjs-bootstrap-datetimepicker',
         'angular-sanitize': 'angular-sanitize',
-        'ui-select': 'ui-select'
+        'ui-select': 'ui-select',
+        '@kpsys/angularjs-histogram-slider': '@kpsys/angularjs-histogram-slider'
     },
 
     module: {

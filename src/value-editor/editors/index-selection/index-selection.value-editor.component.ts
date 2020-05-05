@@ -1,12 +1,12 @@
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
-import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
+import {OptionsChangeDetection} from '../abstract-value-editor';
 import * as angular from 'angular';
 import {IInterpolateService, IOnInit, ITemplateCacheService} from 'angular';
 import {
     IndexSelectionValueEditorConfigurationService,
     IndexSelectionValueEditorOptions
 } from './index-selection-value-editor-configuration.provider';
-import {generateUuid} from '../../utils/uuid-generator';
+import AbstractTemplateValueEditor from '../abstract-template-value-editor';
 
 export interface Identified<ID = any> {
     id: ID;
@@ -16,20 +16,21 @@ export interface Identified<ID = any> {
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.indexSelectionValueEditor';
 
-export class IndexSelectionValueEditorComponentController<ID, VALUE extends Identified<ID>> extends AbstractValueEditor<[ID], IndexSelectionValueEditorOptions<ID, VALUE>> implements IOnInit {
+export class IndexSelectionValueEditorComponentController<ID, VALUE extends Identified<ID>> extends AbstractTemplateValueEditor<[ID], IndexSelectionValueEditorOptions<ID, VALUE>> implements IOnInit {
     private static readonly TEMPLATE_URL = require('./index-selection.value-editor.tpl.pug');
-
-    private uuid: string;
-    private templateName: string = TEMPLATE_NAME_PREFIX;
-    private template: string;
 
     /*@ngInject*/
     constructor(private indexSelectionValueEditorConfigurationService: IndexSelectionValueEditorConfigurationService<ID, VALUE>,
-                private $interpolate: IInterpolateService,
-                private $templateCache: ITemplateCacheService
+                $interpolate: IInterpolateService,
+                $templateCache: ITemplateCacheService
     ) {
-        super(indexSelectionValueEditorConfigurationService);
-        this.uuid = generateUuid();
+        super(
+            IndexSelectionValueEditorComponentController.TEMPLATE_URL,
+            TEMPLATE_NAME_PREFIX,
+            $interpolate,
+            $templateCache,
+            indexSelectionValueEditorConfigurationService
+        );
     }
 
     public $onInit(): void {
@@ -39,9 +40,6 @@ export class IndexSelectionValueEditorComponentController<ID, VALUE extends Iden
         if (this.model && !Array.isArray(this.model)) {
             this.model = [this.model];
         }
-
-        this.template = this.$templateCache.get<string>(IndexSelectionValueEditorComponentController.TEMPLATE_URL);
-        this.updateTemplate();
     }
 
     public isSelected(item: VALUE): boolean {
@@ -64,14 +62,10 @@ export class IndexSelectionValueEditorComponentController<ID, VALUE extends Iden
         }
     }
 
-    private updateTemplate() {
-        this.$templateCache.remove(this.templateName);
-        const newTemplateName = `${TEMPLATE_NAME_PREFIX}_${this.uuid}_${new Date().valueOf()}`;
-        const interpolated = this.$interpolate(this.template)({
+    protected getTemplateModel(): {} {
+        return {
             optionsTemplate: this.options.optionsTemplate
-        });
-        this.$templateCache.put(newTemplateName, interpolated);
-        this.templateName = newTemplateName;
+        };
     }
 }
 
@@ -133,7 +127,7 @@ export default class IndexSelectionValueEditorComponent {
         valueEditorController: `^${ValueEditorComponent.componentName}`
     };
 
-    public template = '<ng-include src="$ctrl.templateName"></ng-include>';
+    public template = AbstractTemplateValueEditor.COMPONENT_TEMPLATE;
 
     public controller = IndexSelectionValueEditorComponentController;
 }
