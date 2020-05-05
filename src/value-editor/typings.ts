@@ -76,7 +76,8 @@ export type TValueEditorType = TValueEditorTypeAliases |
     'acceptable-root' |
     'search-text' |
     'searchable' |
-    'range';
+    'range' |
+    'list';
 
 /**
  * Make all properties required except properties of ValueEditorOptions

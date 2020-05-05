@@ -16,28 +16,18 @@ html
                         ng-model="$ctrl.model"
                         editor-id="'editor'"
                         editor-name="'editor'"
-                        type="'range'"
+                        type="'list'"
                         disabled="disabled"
                         placeholder="''"
                         options="{" +
-                            "min: 0," +
-                            "max: 100," +
-                            "extremesAsNull: true," +
                         "}"
                         validations="{" +
+                            "required: true" +
                         "}"
                     )
 
 
             button(type="button" ng-click="$ctrl.model = undefined") Reset
-
-            div
-                label From
-                input(type="number" ng-model="value.from")
-
-            div
-                label To
-                input(type="number" ng-model="value.to")
 
             div
                 label Disabled:
@@ -52,3 +42,6 @@ html
                 ul
                     li(ng-repeat="(errorName, errorValue) in $ctrl.form.editor.$error") {{errorName}}
 
+            button(type="button" ng-click="$ctrl.clear()") Clear
+
+            pre {{$ctrl.form | json}}

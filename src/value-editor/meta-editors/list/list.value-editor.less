@@ -1,0 +1,22 @@
+@import '~bootstrap-less/bootstrap/mixins';
+@import '~bootstrap-less/bootstrap/variables';
+
+list-value-editor {
+    .panel-footer {
+        padding: 0;
+
+        .btn {
+            border: 0;
+            .border-top-radius(0);
+        }
+
+        &.empty-list-correction {
+            border-top: 0;
+            border-radius: (@panel-border-radius - 1);
+
+            .btn {
+                .border-top-radius(@border-radius-base - 1);
+            }
+        }
+    }
+}

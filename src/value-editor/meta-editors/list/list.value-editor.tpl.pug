@@ -1,0 +1,59 @@
+.panel.panel-default(
+    id="\{\{$ctrl.valueEditorController.editorId\}\}"
+
+    ng-class="$ctrl.options.cssClasses"
+
+    ng-form="{{name}}"
+)
+    list-required-validation(
+        name="{{name}}_required_validation_helper"
+
+        ng-model="$ctrl.model.length"
+        ng-model-options="{ getterSetter: true }"
+
+        enabled="$ctrl.valueEditorController.validations.required"
+    )
+
+    .panel-body
+        .row.list-item(
+            ng-repeat-start="itemModel in $ctrl.model track by $index"
+        )
+            .col-lg-10(ng-class="{'has-error': $ctrl.form['{{name}}_' + $index].$invalid}")
+                kp-value-editor(
+                    editor-id="$index"
+                    editor-name="'{{name}}_' + $index"
+                    placeholder="$ctrl.valueEditorController.placeholder"
+
+                    ng-model="$ctrl.model[$index]"
+                    ng-model-options="{ getterSetter: true }"
+
+                    type="$ctrl.options.subEditorType"
+                    disabled="$ctrl.valueEditorController.disabled"
+                    visible="$ctrl.valueEditorController.visible"
+
+                    validations="$ctrl.options.subEditorValidations"
+                    options="$ctrl.options.subEditorOptions"
+                )
+
+            .col-lg-2
+                button.btn.btn-default.remove(
+                    type="button"
+                    ng-disabled="$ctrl.valueEditorController.disabled"
+                    ng-show="$ctrl.canRemoveItems()"
+                    ng-click="$ctrl.removeItem($index)"
+                )
+                    i.glyphicon.glyphicon-minus
+                    span(ng-bind="$ctrl.localize('remove')")
+
+        hr(ng-repeat-end ng-if="!$last")
+
+    .panel-footer
+        button.btn.btn-default.btn-block.btn-xs.add(
+            type="button"
+            ng-disabled="$ctrl.valueEditorController.disabled"
+            ng-click="$ctrl.addItem()"
+        )
+            i.glyphicon.glyphicon-plus
+            span(ng-bind="$ctrl.localize('add')")
+
+| \{\{$ctrl.form = {{name}}; ''\}\}

@@ -13,6 +13,7 @@ function camelCaseToKebabCase(name){
 export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = ValueEditorBindings> {
     private compiledElement: JQLite;
     private customTemplate: string = null;
+    private postConstructHook: () => void;
 
     constructor(private $compile: ICompileService, private $scope: ScopeWithBindings<any, BINDINGS>) {
     }
@@ -38,9 +39,21 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
         this.compiledElement = this.$compile(element)(this.$scope);
         this.$scope.$apply();
 
-        const editorReference = this.compiledElement[0].querySelector('kp-value-editor');
+        if (this.postConstructHook && typeof this.postConstructHook === 'function') {
+            this.postConstructHook();
+        }
+
+        const editorReference = this.getCompiledElement().querySelector('kp-value-editor');
 
         return angular.element(editorReference) as JQLite;
+    }
+
+    /**
+     * Returns compiled HTML element
+     * @returns {HTMLElement}
+     */
+    public getCompiledElement(): HTMLElement {
+        return this.compiledElement[0];
     }
 
     /**
@@ -48,7 +61,7 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
      * @returns {HTMLElement} Input element.
      */
     public getInputElement<T extends HTMLElement = HTMLInputElement>(): T {
-        return this.compiledElement[0].querySelector('[data-main-input]');
+        return this.getCompiledElement().querySelector('[data-main-input]');
     }
 
     /**
@@ -65,6 +78,10 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
      */
     public detachElementFromDocument() {
         angular.element(this.compiledElement).remove();
+    }
+
+    public setPostConstructHook(postConstructHook: () => void) {
+        this.postConstructHook = postConstructHook;
     }
 
     public setCustomTemplate(template: string) {

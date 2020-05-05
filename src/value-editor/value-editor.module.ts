@@ -24,6 +24,7 @@ import searchTextValueEditorModule from './editors/search-text/search-text.value
 import searchableValueEditorModule from './editors/searchable/searchable.value-editor.module';
 import velocityTemplateValueEditorModule from './editors/velocity-template/velocity-template.value-editor.module';
 import rangeValueEditorModule from './editors/range/range.value-editor.module';
+import listValueEditorModule from './meta-editors/list/list.value-editor.module';
 
 import ValueEditorComponent from './value-editor.component';
 import {EmptyConfigurationService} from './common/abstract-value-editor';
@@ -70,7 +71,8 @@ export default register('angularjs-value-editor', [
     searchTextValueEditorModule,
     searchableValueEditorModule,
     velocityTemplateValueEditorModule,
-    rangeValueEditorModule
+    rangeValueEditorModule,
+    listValueEditorModule
 ])
     .constant('loadingSpinnerTemplateUrl', LOADING_SPINNER_TPL_URL)
     .provider(EmptyConfigurationService.serviceName, EmptyConfigurationService)
