@@ -1,4 +1,7 @@
-import AbstractValueEditor, {EmptyConfigurationService, OptionsChangeDetection} from '../abstract-value-editor';
+import AbstractValueEditor, {
+    EmptyConfigurationService,
+    OptionsChangeDetection
+} from '../../common/abstract-value-editor';
 import ValueEditorComponent, {ValueEditorBindings} from '../../value-editor.component';
 import {SearchTextValueEditorLocalizationsService} from './search-text-value-editor-localization.provider';
 import {IOnInit} from 'angular';

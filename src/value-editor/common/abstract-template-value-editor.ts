@@ -1,8 +1,8 @@
 import AbstractValueEditor from './abstract-value-editor';
 import {ValueEditorOptions} from '../value-editor.component';
 import {IInterpolateService, IOnInit, ITemplateCacheService} from 'angular';
-import {AbstractValueEditorConfigurationService} from '../common/abstract-value-editor-configuration.provider';
-import {AbstractValueEditorLocalizationService} from '../common/abstract-value-editor-localization.provider';
+import {AbstractValueEditorConfigurationService} from './abstract-value-editor-configuration.provider';
+import {AbstractValueEditorLocalizationService} from './abstract-value-editor-localization.provider';
 import {generateUuid} from '../utils/uuid-generator';
 
 /**

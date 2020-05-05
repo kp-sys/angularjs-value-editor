@@ -6,7 +6,7 @@ import ValueEditorComponent, {
 } from '../../value-editor.component';
 import * as angular from 'angular';
 import {IOnInit} from 'angular';
-import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
+import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import {
     DateValueEditorConfigurationService,
     DateValueEditorOptions,

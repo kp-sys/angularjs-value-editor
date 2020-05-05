@@ -1,5 +1,5 @@
 import ValueEditorComponent, {ValueEditorBindings} from '../../value-editor.component';
-import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
+import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 import {IOnInit} from 'angular';
 import {

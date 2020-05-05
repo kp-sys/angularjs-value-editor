@@ -1,4 +1,4 @@
-import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
+import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
 import {
     CardNumberValueEditorConfigurationService,

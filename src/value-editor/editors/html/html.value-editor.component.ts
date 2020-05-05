@@ -1,6 +1,6 @@
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
 import {IDoCheck, IOnDestroy, IPostLink, ITimeoutService} from 'angular';
-import AbstractValueEditor from '../abstract-value-editor';
+import AbstractValueEditor from '../../common/abstract-value-editor';
 import {HtmlValueEditorConfigurationService, HtmlValueEditorOptions} from './html-value-editor-configuration.provider';
 import bind from 'bind-decorator';
 

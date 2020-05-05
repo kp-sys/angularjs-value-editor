@@ -1,7 +1,7 @@
 import './number.value-editor.less';
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
 import * as angular from 'angular';
-import AbstractValueEditor from '../abstract-value-editor';
+import AbstractValueEditor from '../../common/abstract-value-editor';
 import {
     NumberValueEditorConfigurationService,
     NumberValueEditorOptions

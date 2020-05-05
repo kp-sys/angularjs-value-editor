@@ -1,5 +1,5 @@
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
-import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
+import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import {DateTime} from 'luxon';
 import * as angular from 'angular';
 

@@ -26,7 +26,7 @@ import velocityTemplateValueEditorModule from './editors/velocity-template/veloc
 import rangeValueEditorModule from './editors/range/range.value-editor.module';
 
 import ValueEditorComponent from './value-editor.component';
-import {EmptyConfigurationService} from './editors/abstract-value-editor';
+import {EmptyConfigurationService} from './common/abstract-value-editor';
 
 /**
  * @ngdoc constant

@@ -1,6 +1,6 @@
 /* istanbul ignore file */ // neni cas... :-(
 
-import {OptionsChangeDetection} from '../abstract-value-editor';
+import {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
 import {
     AcceptableRootValueEditorConfigurationService,
@@ -10,7 +10,7 @@ import {AcceptableRootValueEditorLocalizationsService} from './acceptable-root-v
 import {IInterpolateService, IOnInit, ITemplateCacheService} from 'angular';
 import {AngularTreeControlOptions} from './tree-control/angular-tree-control';
 import bind from 'bind-decorator';
-import AbstractTemplateValueEditor from '../abstract-template-value-editor';
+import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
 
 export interface Childrenable {
     children?: Childrenable[];

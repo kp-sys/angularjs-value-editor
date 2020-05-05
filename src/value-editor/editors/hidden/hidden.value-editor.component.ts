@@ -1,5 +1,5 @@
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorOptions} from '../../value-editor.component';
-import AbstractValueEditor from '../abstract-value-editor';
+import AbstractValueEditor from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 
 export class HiddenValueEditorComponentController extends AbstractValueEditor<any, ValueEditorOptions> {

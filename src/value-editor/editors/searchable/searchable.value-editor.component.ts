@@ -1,5 +1,5 @@
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
-import {OptionsChangeDetection} from '../abstract-value-editor';
+import {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 import {IInterpolateService, ITemplateCacheService, ITimeoutService} from 'angular';
 import {
@@ -7,7 +7,7 @@ import {
     SearchableValueEditorOptions
 } from './searchable-value-editor-configuration.provider';
 import {SearchableValueEditorLocalizationsService} from './searchable-value-editor-localization.provider';
-import AbstractTemplateValueEditor from '../abstract-template-value-editor';
+import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
 import IInjectorService = angular.auto.IInjectorService;
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.searchableValueEditor';

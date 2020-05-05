@@ -3,7 +3,7 @@ import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from 
 import * as angular from 'angular';
 import {IDoCheck} from 'angular';
 import {Ace} from 'ace-builds';
-import AbstractValueEditor, {OptionsChangeDetection} from '../abstract-value-editor';
+import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import {TextValueEditorConfigurationService, TextValueEditorOptions} from './text-value-editor-configuration.provider';
 
 export class TextValueEditorComponentController extends AbstractValueEditor<string, TextValueEditorOptions> implements IDoCheck {

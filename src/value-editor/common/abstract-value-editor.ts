@@ -3,8 +3,8 @@ import * as angular from 'angular';
 import {IOnInit, IPostLink} from 'angular';
 import {ValueEditorComponentController, ValueEditorOptions} from '../value-editor.component';
 import customEquals from '../utils/equals';
-import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../common/abstract-value-editor-configuration.provider';
-import {AbstractValueEditorLocalizationService} from '../common/abstract-value-editor-localization.provider';
+import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from './abstract-value-editor-configuration.provider';
+import {AbstractValueEditorLocalizationService} from './abstract-value-editor-localization.provider';
 import {AliasesServiceProvider, DEFAULT_ALIAS} from '../aliases/aliases.service';
 
 /**

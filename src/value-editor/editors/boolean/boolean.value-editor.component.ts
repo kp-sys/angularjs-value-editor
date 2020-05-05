@@ -2,7 +2,7 @@ import './boolean.value-editor.scss';
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
 import * as angular from 'angular';
 import {INgModelController, IPostLink} from 'angular';
-import AbstractValueEditor from '../abstract-value-editor';
+import AbstractValueEditor from '../../common/abstract-value-editor';
 import {
     BooleanValueEditorConfigurationService,
     BooleanValueEditorOptions

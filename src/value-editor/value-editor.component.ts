@@ -1,9 +1,9 @@
 import * as angular from 'angular';
 import {IDoCheck, IFormController, IOnInit} from 'angular';
-import NgModelConnector from './editors/ng-model-connector';
+import NgModelConnector from './common/ng-model-connector';
 import {generateUuid} from './utils/uuid-generator';
 import customEquals from './utils/equals';
-import AbstractValueEditor from './editors/abstract-value-editor';
+import AbstractValueEditor from './common/abstract-value-editor';
 import {TValueEditorType} from './typings';
 import AliasesService, {CustomValueEditorType} from './aliases/aliases.service';
 

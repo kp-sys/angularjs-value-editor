@@ -1,12 +1,12 @@
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
-import {OptionsChangeDetection} from '../abstract-value-editor';
+import {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 import {IInterpolateService, IOnInit, ITemplateCacheService} from 'angular';
 import {
     IndexSelectionValueEditorConfigurationService,
     IndexSelectionValueEditorOptions
 } from './index-selection-value-editor-configuration.provider';
-import AbstractTemplateValueEditor from '../abstract-template-value-editor';
+import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
 
 export interface Identified<ID = any> {
     id: ID;

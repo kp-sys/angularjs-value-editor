@@ -1,13 +1,13 @@
 import './acceptable.value-editor.less';
 import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
 import {IFilterOrderByItem, IInterpolateService, ITemplateCacheService} from 'angular';
-import {OptionsChangeDetection} from '../abstract-value-editor';
+import {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import {AcceptableValueEditorLocalizationsService} from './acceptable-value-editor-localizations.provider';
 import {
     AcceptableValueEditorConfigurationService,
     AcceptableValueEditorOptions
 } from './acceptable-value-editor-configuration.provider';
-import AbstractTemplateValueEditor from '../abstract-template-value-editor';
+import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.acceptableValueEditor';
 
