@@ -56,7 +56,7 @@ describe('searchable-value-editor', () => {
         $scope.model = INITIAL_MODEL_VALUE;
 
         valueEditorMocker.create('searchable', {
-            name: 'searchable'
+            editorName: 'searchable'
         });
 
         expect(getViewValue()).toBe(INITIAL_MODEL_VALUE);
@@ -78,7 +78,7 @@ describe('searchable-value-editor', () => {
 
     it('should change model if edit button is pressed', (done) => {
         valueEditorMocker.create('searchable', {
-            name: 'searchable'
+            editorName: 'searchable'
         });
 
         valueEditorMocker.getInputElement<HTMLInputElement>().parentElement.querySelector<HTMLButtonElement>('.edit-button').click();
@@ -109,7 +109,7 @@ describe('searchable-value-editor', () => {
     });
 
     it('should has working required validation', (done) => {
-        valueEditorMocker.create('searchable', {name: 'searchable', validations: {required: true}});
+        valueEditorMocker.create('searchable', {editorName: 'searchable', validations: {required: true}});
 
         expect($scope.form.searchable.$error).toEqual({required: true});
 

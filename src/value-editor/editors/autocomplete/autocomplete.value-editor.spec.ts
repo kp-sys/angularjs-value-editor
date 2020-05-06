@@ -56,7 +56,7 @@ describe('autocomplete-value-editor', () => {
 
     it('should has working required validation', () => {
         valueEditorMocker.create('autocomplete', {
-            name: 'autocomplete',
+            editorName: 'autocomplete',
             validations: {required: true}
         });
 

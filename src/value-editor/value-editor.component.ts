@@ -13,7 +13,7 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
 
     /* Bindings */
     public editorId: string;
-    public name: string;
+    public editorName: string;
     public type: TValueEditorType;
     public placeholder: string;
     public disabled: boolean;
@@ -35,8 +35,8 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
 
         this.previousOptions = angular.copy(this.options);
 
-        if (!this.name) {
-            this.name = this.generateEditorName();
+        if (!this.editorName) {
+            this.editorName = this.generateEditorName();
         }
     }
 
@@ -70,9 +70,9 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
  *
  * @requires ng.type.ngModel.NgModelController
  *
- * @param {string} editorId Input id.
- * @param {string} name Input name.
- * @param {string} placeholder Placeholder.
+ * @param {string} editorId Input id. <.
+ * @param {string} editorName Input name. <.
+ * @param {string} placeholder Placeholder. <.
  * @param {string} type ValueEditor type. <.
  * @param {boolean} disabled If input is disabled. <.
  * @param {boolean} visible If input is visible. <.
@@ -94,10 +94,10 @@ export default class ValueEditorComponent {
     };
 
     public bindings = {
-        editorId: '@?',
-        name: '@?',
-        placeholder: '@?',
         type: '<',
+        editorId: '<?',
+        editorName: '<?',
+        placeholder: '<?',
         disabled: '<?',
         visible: '<?',
         validations: '<?',
@@ -132,9 +132,9 @@ export interface ValueEditorOptions {
 }
 
 export interface ValueEditorBindings<EDITOROPTS extends ValueEditorOptions = ValueEditorOptions, EDITORVALIDATIONS extends ValueEditorValidations = ValueEditorValidations> {
-    editorId?: string;
-    name?: string;
     type?: TValueEditorType;
+    editorId?: string;
+    editorName?: string;
     placeholder?: string;
     disabled?: boolean;
     visible?: boolean;

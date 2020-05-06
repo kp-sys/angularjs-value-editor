@@ -74,7 +74,7 @@ describe('date-value-editor', () => {
     });
 
     it('should has working required validation', () => {
-        valueEditorMocker.create('date', {name: 'date', validations: {required: true}});
+        valueEditorMocker.create('date', {editorName: 'date', validations: {required: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
         valueEditorMocker.triggerHandlerOnInput('input');

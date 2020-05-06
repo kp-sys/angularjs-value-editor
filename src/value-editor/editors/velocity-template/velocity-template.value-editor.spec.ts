@@ -18,7 +18,7 @@ describe('velocity-template-value-editor', () => {
     });
 
     it('should be ace editor', () => {
-        valueEditorMocker.create('velocity-template', {name: 'velocity'});
+        valueEditorMocker.create('velocity-template', {editorName: 'velocity'});
         const inputElement = valueEditorMocker.getInputElement<HTMLTextAreaElement>();
 
         expect(inputElement.tagName.toLowerCase()).toBe('div');

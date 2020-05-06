@@ -76,7 +76,7 @@ describe('boolean-value-editor', () => {
     });
 
     it('should has working required validation', () => {
-        valueEditorMocker.create('boolean', {name: 'bool', options: {nullAsIndeterminate: true}, validations: {required: true}});
+        valueEditorMocker.create('boolean', {editorName: 'bool', options: {nullAsIndeterminate: true}, validations: {required: true}});
 
         $scope.model = null;
         $scope.$apply();

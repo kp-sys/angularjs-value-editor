@@ -58,7 +58,7 @@ describe('signature-value-editor', () => {
 
     it('should has working required validation', () => {
         valueEditorMocker.create('signature', {
-            name: 'signature',
+            editorName: 'signature',
             validations: {required: true}
         });
 
@@ -85,7 +85,7 @@ describe('signature-value-editor', () => {
     });
 
     it('should has working required validation', () => {
-        valueEditorMocker.create('signature', {name: 'signature', validations: {required: true}});
+        valueEditorMocker.create('signature', {editorName: 'signature', validations: {required: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -101,7 +101,7 @@ describe('signature-value-editor', () => {
     });
 
     it('should has working minlength validation', () => {
-        valueEditorMocker.create('signature', {name: 'signature', validations: {minlength: 3}});
+        valueEditorMocker.create('signature', {editorName: 'signature', validations: {minlength: 3}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'h';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -117,7 +117,7 @@ describe('signature-value-editor', () => {
     });
 
     it('should has working maxlength validation', () => {
-        valueEditorMocker.create('signature', {name: 'signature', validations: {maxlength: 3}});
+        valueEditorMocker.create('signature', {editorName: 'signature', validations: {maxlength: 3}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -133,7 +133,7 @@ describe('signature-value-editor', () => {
     });
 
     it('should has working pattern validation', () => {
-        valueEditorMocker.create('signature', {name: 'signature', validations: {pattern: '[0-9]*'}});
+        valueEditorMocker.create('signature', {editorName: 'signature', validations: {pattern: '[0-9]*'}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -154,7 +154,7 @@ describe('signature-value-editor', () => {
         $scope.model = MODEL;
         $scope.$apply();
 
-        valueEditorMocker.create('signature', {name: 'signature', options: {canDoAction: true, dataSource: annotatedDataSourceSpy}});
+        valueEditorMocker.create('signature', {editorName: 'signature', options: {canDoAction: true, dataSource: annotatedDataSourceSpy}});
 
         _$timeout.flush();
 

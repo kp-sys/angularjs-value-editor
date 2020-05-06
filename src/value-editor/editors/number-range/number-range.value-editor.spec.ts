@@ -71,7 +71,7 @@ describe('number-range-value-editor', () => {
 
     it('should has working required validation', () => {
         valueEditorMocker.create('number-range', {
-            name: 'numberRange',
+            editorName: 'numberRange',
             validations: {required: true}
         });
 
@@ -91,7 +91,7 @@ describe('number-range-value-editor', () => {
     });
 
     it('should has working min validation', () => {
-        valueEditorMocker.create('number-range', {name: 'numberRange', validations: {min: 3}});
+        valueEditorMocker.create('number-range', {editorName: 'numberRange', validations: {min: 3}});
 
         getFrom().value = '8';
         getTo().value = '1';
@@ -107,7 +107,7 @@ describe('number-range-value-editor', () => {
     });
 
     it('should has working max validation', () => {
-        valueEditorMocker.create('number-range', {name: 'numberRange', validations: {max: 10}});
+        valueEditorMocker.create('number-range', {editorName: 'numberRange', validations: {max: 10}});
 
         getFrom().value = '18';
         getTo().value = '10';
@@ -122,7 +122,7 @@ describe('number-range-value-editor', () => {
     });
 
     it('should has working fromBiggerThanTo validation', () => {
-        valueEditorMocker.create('number-range', {name: 'numberRange', validations: {fromBiggerThanTo: true}});
+        valueEditorMocker.create('number-range', {editorName: 'numberRange', validations: {fromBiggerThanTo: true}});
 
         getFrom().value = '10';
         getTo().value = '18';
@@ -137,7 +137,7 @@ describe('number-range-value-editor', () => {
     });
 
     it('should has working toBiggerThanFrom validation', () => {
-        valueEditorMocker.create('number-range', {name: 'numberRange', validations: {toBiggerThanFrom: true}});
+        valueEditorMocker.create('number-range', {editorName: 'numberRange', validations: {toBiggerThanFrom: true}});
 
         getFrom().value = '18';
         getTo().value = '10';
@@ -152,7 +152,7 @@ describe('number-range-value-editor', () => {
     });
 
     it('should has working implicit number validation', () => {
-        valueEditorMocker.create('number-range', {name: 'numberRange'}, true);
+        valueEditorMocker.create('number-range', {editorName: 'numberRange'}, true);
 
         // allow insert invalid number
         getFrom().type = 'text';

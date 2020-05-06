@@ -8,27 +8,28 @@ html
 
     body(ng-app="app" ng-strict-di)
         h1 Value Editor Demo
-        main(ng-controller="demoController as dc" ng-init="disabled = false; value = {from: 22, to: 55}")
-            form.form-horizontal(name="dc.form")
+        main(ng-controller="demoController as $ctrl" ng-init="disabled = false")
+            form.form-horizontal(name="$ctrl.form")
                 .form-group
                     label.control-label.col-lg-2(for="editor") Label
                     kp-value-editor.col-lg-10(
-                        ng-model="value"
-                        editor-id="editor"
-                        name="editor"
+                        ng-model="$ctrl.model"
+                        editor-id="'editor'"
+                        editor-name="'editor'"
                         type="'range'"
                         disabled="disabled"
-                        placeholder="Password"
+                        placeholder="''"
                         options="{" +
                             "min: 0," +
                             "max: 100," +
                             "extremesAsNull: true," +
                         "}"
-                        validations="{}"
+                        validations="{" +
+                        "}"
                     )
 
 
-            button(type="button" ng-click="value = undefined") Reset
+            button(type="button" ng-click="$ctrl.model = undefined") Reset
 
             div
                 label From
@@ -43,11 +44,11 @@ html
                     input(type="checkbox" ng-model="disabled")
 
             div Value:
-                input(ng-model="value")
+                input(ng-model="$ctrl.model")
 
-            div Model: {{value | json}}
+            div Model: {{$ctrl.model | json}}
 
             div Errors
                 ul
-                    li(ng-repeat="(errorName, errorValue) in dc.form.editor.$error") {{errorName}}
+                    li(ng-repeat="(errorName, errorValue) in $ctrl.form.editor.$error") {{errorName}}
 

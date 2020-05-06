@@ -37,7 +37,7 @@ describe('year-value-editor', () => {
     });
 
     it('should has working required validation', () => {
-        valueEditorMocker.create('year', {name: 'year', validations: {required: true}});
+        valueEditorMocker.create('year', {editorName: 'year', validations: {required: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -53,7 +53,7 @@ describe('year-value-editor', () => {
     });
 
     it('should has working minDate validation', () => {
-        valueEditorMocker.create('year', {name: 'year', validations: {minDate: 2010}});
+        valueEditorMocker.create('year', {editorName: 'year', validations: {minDate: 2010}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '2000';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -69,7 +69,7 @@ describe('year-value-editor', () => {
     });
 
     it('should has working maxDate validation', () => {
-        valueEditorMocker.create('year', {name: 'year', validations: {maxDate: 2020}});
+        valueEditorMocker.create('year', {editorName: 'year', validations: {maxDate: 2020}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '2030';
         valueEditorMocker.triggerHandlerOnInput('input');

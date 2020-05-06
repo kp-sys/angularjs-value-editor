@@ -62,7 +62,7 @@ describe('password-value-editor', () => {
 
         it('should has working required validation', () => {
             valueEditorMocker.create('password', {
-                name: 'password',
+                editorName: 'password',
                 validations: {required: true}
             });
 
@@ -89,7 +89,7 @@ describe('password-value-editor', () => {
         });
 
         it('should has working required validation', () => {
-            valueEditorMocker.create('password', {name: 'password', validations: {required: true}});
+            valueEditorMocker.create('password', {editorName: 'password', validations: {required: true}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
             valueEditorMocker.triggerHandlerOnInput('input');
@@ -105,7 +105,7 @@ describe('password-value-editor', () => {
         });
 
         it('should has working minlength validation', () => {
-            valueEditorMocker.create('password', {name: 'password', validations: {minlength: 3}});
+            valueEditorMocker.create('password', {editorName: 'password', validations: {minlength: 3}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'h';
             valueEditorMocker.triggerHandlerOnInput('input');
@@ -121,7 +121,7 @@ describe('password-value-editor', () => {
         });
 
         it('should has working maxlength validation', () => {
-            valueEditorMocker.create('password', {name: 'password', validations: {maxlength: 3}});
+            valueEditorMocker.create('password', {editorName: 'password', validations: {maxlength: 3}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
             valueEditorMocker.triggerHandlerOnInput('input');
@@ -137,7 +137,7 @@ describe('password-value-editor', () => {
         });
 
         it('should has working pattern validation', () => {
-            valueEditorMocker.create('password', {name: 'password', validations: {pattern: '[0-9]*'}});
+            valueEditorMocker.create('password', {editorName: 'password', validations: {pattern: '[0-9]*'}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
             valueEditorMocker.triggerHandlerOnInput('input');
@@ -186,7 +186,7 @@ describe('password-value-editor', () => {
 
         it('should has working required validation', () => {
             valueEditorMocker.create('password', {
-                name: 'password',
+                editorName: 'password',
                 options: {withConfirmation: true},
                 validations: {required: true}
             });
@@ -218,7 +218,7 @@ describe('password-value-editor', () => {
 
         it('should has working minlength validation', () => {
             valueEditorMocker.create('password', {
-                name: 'password',
+                editorName: 'password',
                 options: {withConfirmation: true},
                 validations: {minlength: 3}
             }, true);
@@ -234,7 +234,7 @@ describe('password-value-editor', () => {
 
         it('should has working maxlength validation', () => {
             valueEditorMocker.create('password', {
-                name: 'password',
+                editorName: 'password',
                 options: {withConfirmation: true},
                 validations: {maxlength: 3}
             });
@@ -250,7 +250,7 @@ describe('password-value-editor', () => {
 
         it('should has working pattern validation', () => {
             valueEditorMocker.create('password', {
-                name: 'password',
+                editorName: 'password',
                 options: {withConfirmation: true},
                 validations: {pattern: '[0-9]*'}
             });

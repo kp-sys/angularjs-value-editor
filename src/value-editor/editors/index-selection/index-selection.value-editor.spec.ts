@@ -61,7 +61,7 @@ describe('index-selection-value-editor', () => {
     });
 
     it('should has working required validation', () => {
-        valueEditorMocker.create('index-selection', {options: {items: ITEMS}, name: 'idx', validations: {required: true}});
+        valueEditorMocker.create('index-selection', {options: {items: ITEMS}, editorName: 'idx', validations: {required: true}});
 
         $scope.$apply();
 

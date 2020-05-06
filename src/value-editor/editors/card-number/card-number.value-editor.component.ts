@@ -31,7 +31,7 @@ export class CardNumberValueEditorComponentController extends AbstractValueEdito
 
             try {
                 value = await this.options.requestFunction(this.options.requestParameters, {
-                    inputName: this.valueEditorController.name,
+                    inputName: this.valueEditorController.editorName,
                     currentValue: this.model
                 });
             } catch (e) {

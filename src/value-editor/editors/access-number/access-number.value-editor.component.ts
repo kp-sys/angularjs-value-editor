@@ -48,7 +48,7 @@ export class AccessNumberValueEditorComponentController extends AbstractValueEdi
 
                 this.items = await this.$injector.invoke<Promise<string[]>>(this.options.dataSource, this, {
                     $model: this.model,
-                    $name: this.valueEditorController.name,
+                    $name: this.valueEditorController.editorName,
                     $formModel
                 });
             } catch (e) {

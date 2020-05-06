@@ -57,7 +57,7 @@ describe('search-text-value-editor', () => {
     });
 
     it('should has working required validation', () => {
-        valueEditorMocker.create('search-text', {name: 'search-text', validations: {required: true}});
+        valueEditorMocker.create('search-text', {editorName: 'search-text', validations: {required: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -73,7 +73,7 @@ describe('search-text-value-editor', () => {
     });
 
     it('should has working minlength validation', () => {
-        valueEditorMocker.create('search-text', {name: 'searchText', validations: {minlength: 3}});
+        valueEditorMocker.create('search-text', {editorName: 'searchText', validations: {minlength: 3}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'h';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -89,7 +89,7 @@ describe('search-text-value-editor', () => {
     });
 
     it('should has working maxlength validation', () => {
-        valueEditorMocker.create('search-text', {name: 'searchText', validations: {maxlength: 3}});
+        valueEditorMocker.create('search-text', {editorName: 'searchText', validations: {maxlength: 3}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -105,7 +105,7 @@ describe('search-text-value-editor', () => {
     });
 
     it('should has working pattern validation', () => {
-        valueEditorMocker.create('search-text', {name: 'searchText', validations: {pattern: '[0-9]*'}});
+        valueEditorMocker.create('search-text', {editorName: 'searchText', validations: {pattern: '[0-9]*'}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -121,7 +121,7 @@ describe('search-text-value-editor', () => {
     });
 
     it('should has working input disabling', () => {
-        valueEditorMocker.create('search-text', {name: 'searchText', disabled: true});
+        valueEditorMocker.create('search-text', {editorName: 'searchText', disabled: true});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
         valueEditorMocker.triggerHandlerOnInput('input');

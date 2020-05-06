@@ -43,7 +43,7 @@ describe('range-value-editor', () => {
     // nothing to require
     xit('should has working required validation', () => {
         valueEditorMocker.create('range', {
-            name: 'range',
+            editorName: 'range',
             validations: {required: true}
         });
 

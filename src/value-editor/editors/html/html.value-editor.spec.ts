@@ -78,7 +78,7 @@ describe('html-value-editor', () => {
     });
 
     it('should has working required validation', (done) => {
-        valueEditorMocker.create('html', {name: 'html', validations: {required: true}});
+        valueEditorMocker.create('html', {editorName: 'html', validations: {required: true}});
         $_timeout.flush();
         $scope.$apply();
 

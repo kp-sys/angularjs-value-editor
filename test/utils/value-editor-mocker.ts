@@ -3,6 +3,10 @@ import * as angular from 'angular';
 import {IAugmentedJQuery, ICompileService, IFormController, IScope} from 'angular';
 import {TValueEditorType} from '../../src/value-editor/typings';
 
+function camelCaseToKebabCase(name){
+    return name.replace(/([A-Z])/g, ($1) => `-${$1.toLowerCase()}`);
+}
+
 /**
  * Helper for easy mocking of value-editor component
  */
@@ -78,19 +82,13 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
      * @returns {string} HTML template.
      */
     private getTemplate(type: TValueEditorType, bindings: BINDINGS): string {
-        let template = `<kp-value-editor type="'${type}'" ng-model="model" status="status" `;
-
-        const nonExpressionFields = ['editorId', 'name', 'placeholder'];
+        let template = `<kp-value-editor type="'${type}'" ng-model="model" `;
 
         if (bindings) {
             const bindingsTemplates = [];
             for (const key in bindings) {
                 if (Object.prototype.hasOwnProperty.call(bindings, key)) {
-                    if (nonExpressionFields.includes(key)) {
-                        bindingsTemplates.push(`${key}="${bindings[key]}"`);
-                    } else {
-                        bindingsTemplates.push(`${key}="${key}"`);
-                    }
+                    bindingsTemplates.push(`${camelCaseToKebabCase(key)}="${key}"`);
                     // @ts-ignore
                     this.$scope[key] = bindings[key];
                 }

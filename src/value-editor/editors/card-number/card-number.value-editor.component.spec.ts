@@ -37,7 +37,7 @@ describe('card-number-value-editor', () => {
     });
 
     it('should has working required validation', () => {
-        valueEditorMocker.create('card-number', {name: 'card-number', validations: {required: true}});
+        valueEditorMocker.create('card-number', {editorName: 'card-number', validations: {required: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
         valueEditorMocker.triggerHandlerOnInput('input');

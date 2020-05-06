@@ -1,9 +1,9 @@
 // TEXT
-input(  ng-if="$ctrl.options.type === 'text'"
+input.form-control(  ng-if="$ctrl.options.type === 'text'"
         type="{{$ctrl.options.type}}"
 
         id="{{$ctrl.valueEditorController.editorId}}"
-        name="{{$ctrl.valueEditorController.name}}"
+        name="{{$ctrl.valueEditorController.editorName}}"
         placeholder="{{$ctrl.valueEditorController.placeholder}}"
         ng-class="$ctrl.options.cssClasses"
 
@@ -21,11 +21,11 @@ input(  ng-if="$ctrl.options.type === 'text'"
     )
 
 // TEXTAREA
-textarea(
+textarea.form-control(
         ng-if="$ctrl.options.type === 'textarea'"
 
         id="{{$ctrl.valueEditorController.editorId}}"
-        name="{{$ctrl.valueEditorController.name}}"
+        name="{{$ctrl.valueEditorController.editorName}}"
         placeholder="{{$ctrl.valueEditorController.placeholder}}"
         rows="{{$ctrl.getNumberOfRows()}}"
         ng-class="$ctrl.options.cssClasses"
@@ -49,7 +49,7 @@ div.ace-editor(
         ng-if="$ctrl.options.type === 'rich-textarea'"
 
         id="{{$ctrl.valueEditorController.editorId}}"
-        name="{{$ctrl.valueEditorController.name}}"
+        name="{{$ctrl.valueEditorController.editorName}}"
         ng-class="$ctrl.options.cssClasses"
 
         ui-ace="$ctrl.options.aceOptions"

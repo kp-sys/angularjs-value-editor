@@ -37,7 +37,7 @@ describe('number-value-editor', () => {
     });
 
     it('should has working required validation', () => {
-        valueEditorMocker.create('number', {name: 'number', validations: {required: true}});
+        valueEditorMocker.create('number', {editorName: 'number', validations: {required: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -53,7 +53,7 @@ describe('number-value-editor', () => {
     });
 
     it('should has working minlength validation', () => {
-        valueEditorMocker.create('number', {name: 'number', validations: {minlength: 3}});
+        valueEditorMocker.create('number', {editorName: 'number', validations: {minlength: 3}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '1';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -69,7 +69,7 @@ describe('number-value-editor', () => {
     });
 
     it('should has working maxlength validation', () => {
-        valueEditorMocker.create('number', {name: 'number', validations: {maxlength: 3}});
+        valueEditorMocker.create('number', {editorName: 'number', validations: {maxlength: 3}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '12345';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -109,7 +109,7 @@ describe('number-value-editor', () => {
 
     // working only in Firefox
     xit('should has implicit number validation', () => {
-        valueEditorMocker.create('number', {name: 'number'});
+        valueEditorMocker.create('number', {editorName: 'number'});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -118,7 +118,7 @@ describe('number-value-editor', () => {
     });
 
     it('should has implicit step validation', () => {
-        valueEditorMocker.create('number', {name: 'number', options: {step: 0.01}});
+        valueEditorMocker.create('number', {editorName: 'number', options: {step: 0.01}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '43.364';
         valueEditorMocker.triggerHandlerOnInput('input');

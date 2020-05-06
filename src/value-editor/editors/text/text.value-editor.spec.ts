@@ -40,7 +40,7 @@ describe('text-value-editor', () => {
         });
 
         it('should has working required validation', () => {
-            valueEditorMocker.create('text', {name: 'text', validations: {required: true}});
+            valueEditorMocker.create('text', {editorName: 'text', validations: {required: true}}, true);
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
             valueEditorMocker.triggerHandlerOnInput('input');
@@ -56,7 +56,7 @@ describe('text-value-editor', () => {
         });
 
         it('should has working minlength validation', () => {
-            valueEditorMocker.create('text', {name: 'text', validations: {minlength: 3}});
+            valueEditorMocker.create('text', {editorName: 'text', validations: {minlength: 3}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'h';
             valueEditorMocker.triggerHandlerOnInput('input');
@@ -72,7 +72,7 @@ describe('text-value-editor', () => {
         });
 
         it('should has working maxlength validation', () => {
-            valueEditorMocker.create('text', {name: 'text', validations: {maxlength: 3}});
+            valueEditorMocker.create('text', {editorName: 'text', validations: {maxlength: 3}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
             valueEditorMocker.triggerHandlerOnInput('input');
@@ -88,7 +88,7 @@ describe('text-value-editor', () => {
         });
 
         it('should has working pattern validation', () => {
-            valueEditorMocker.create('text', {name: 'text', validations: {pattern: '[0-9]*'}});
+            valueEditorMocker.create('text', {editorName: 'text', validations: {pattern: '[0-9]*'}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
             valueEditorMocker.triggerHandlerOnInput('input');
@@ -104,13 +104,13 @@ describe('text-value-editor', () => {
         });
 
         it('should add additional classes to input element', () => {
-            valueEditorMocker.create('text', {name: 'text', options: {cssClasses: ['clazz']}});
+            valueEditorMocker.create('text', {editorName: 'text', options: {cssClasses: ['clazz']}});
 
             expect(valueEditorMocker.getInputElement().classList).toContain('clazz');
         });
 
         it('should has working input disabling', () => {
-            valueEditorMocker.create('text', {name: 'text', disabled: true});
+            valueEditorMocker.create('text', {editorName: 'text', disabled: true});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
             valueEditorMocker.triggerHandlerOnInput('input');
@@ -131,14 +131,14 @@ describe('text-value-editor', () => {
         });
 
         it('should be textarea input', () => {
-            valueEditorMocker.create('text', {name: 'text', options: {type: 'textarea'}});
+            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'textarea'}});
             const inputElement = valueEditorMocker.getInputElement<HTMLTextAreaElement>();
 
             expect(inputElement.tagName.toLowerCase()).toBe('textarea');
         });
 
         it('should change model on input', () => {
-            valueEditorMocker.create('text', {name: 'text', options: {type: 'textarea'}});
+            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'textarea'}});
             valueEditorMocker.getInputElement<HTMLTextAreaElement>().value = 'hello';
             valueEditorMocker.triggerHandlerOnInput('input');
 
@@ -158,7 +158,7 @@ describe('text-value-editor', () => {
 
         it('should has working required validation', () => {
             valueEditorMocker.create('text', {
-                name: 'text',
+                editorName: 'text',
                 options: {type: 'textarea'},
                 validations: {required: true}
             });
@@ -177,7 +177,11 @@ describe('text-value-editor', () => {
         });
 
         it('should has working minlength validation', () => {
-            valueEditorMocker.create('text', {name: 'text', options: {type: 'textarea'}, validations: {minlength: 3}});
+            valueEditorMocker.create('text', {
+                editorName: 'text',
+                options: {type: 'textarea'},
+                validations: {minlength: 3}
+            });
 
             valueEditorMocker.getInputElement<HTMLTextAreaElement>().value = 'h';
             valueEditorMocker.triggerHandlerOnInput('input');
@@ -193,7 +197,11 @@ describe('text-value-editor', () => {
         });
 
         it('should has working maxlength validation', () => {
-            valueEditorMocker.create('text', {name: 'text', options: {type: 'textarea'}, validations: {maxlength: 3}});
+            valueEditorMocker.create('text', {
+                editorName: 'text',
+                options: {type: 'textarea'},
+                validations: {maxlength: 3}
+            });
 
             valueEditorMocker.getInputElement<HTMLTextAreaElement>().value = 'hello';
             valueEditorMocker.triggerHandlerOnInput('input');
@@ -210,7 +218,7 @@ describe('text-value-editor', () => {
 
         it('should has working pattern validation', () => {
             valueEditorMocker.create('text', {
-                name: 'text',
+                editorName: 'text',
                 options: {type: 'textarea'},
                 validations: {pattern: '[0-9]*'}
             });
@@ -229,13 +237,13 @@ describe('text-value-editor', () => {
         });
 
         it('should add additional classes to input element', () => {
-            valueEditorMocker.create('text', {name: 'text', options: {type: 'textarea', cssClasses: ['clazz']}});
+            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'textarea', cssClasses: ['clazz']}});
 
             expect(valueEditorMocker.getInputElement().classList).toContain('clazz');
         });
 
         it('should has working input disabling', () => {
-            valueEditorMocker.create('text', {name: 'text', options: {type: 'textarea'}, disabled: true});
+            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'textarea'}, disabled: true});
 
             valueEditorMocker.getInputElement<HTMLTextAreaElement>().value = 'hello';
             valueEditorMocker.triggerHandlerOnInput('input');
@@ -244,7 +252,7 @@ describe('text-value-editor', () => {
         });
 
         it('should has working rows calculation', () => {
-            valueEditorMocker.create('text', {name: 'text', options: {type: 'textarea'}});
+            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'textarea'}});
             const inputElement = valueEditorMocker.getInputElement<HTMLTextAreaElement>();
 
             inputElement.value = 'There\nare\nsome\nrows';
@@ -266,7 +274,7 @@ describe('text-value-editor', () => {
         });
 
         it('should be div with ace editor', () => {
-            valueEditorMocker.create('text', {name: 'text', options: {type: 'rich-textarea'}});
+            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'rich-textarea'}});
             const inputElement = valueEditorMocker.getInputElement<HTMLTextAreaElement>();
 
             expect(inputElement.tagName.toLowerCase()).toBe('div');
@@ -274,7 +282,7 @@ describe('text-value-editor', () => {
         });
 
         it('should change model on input', () => {
-            valueEditorMocker.create('text', {name: 'text', options: {type: 'rich-textarea'}});
+            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'rich-textarea'}});
 
             (window as any).ace.edit(valueEditorMocker.getInputElement()).setValue('hello');
 
@@ -296,7 +304,7 @@ describe('text-value-editor', () => {
 
         it('should has working required validation', () => {
             valueEditorMocker.create('text', {
-                name: 'text',
+                editorName: 'text',
                 options: {type: 'rich-textarea'},
                 validations: {required: true}
             });
@@ -311,7 +319,7 @@ describe('text-value-editor', () => {
 
         it('should has working minlength validation', () => {
             valueEditorMocker.create('text', {
-                name: 'text',
+                editorName: 'text',
                 options: {type: 'rich-textarea'},
                 validations: {minlength: 3}
             });
@@ -329,7 +337,7 @@ describe('text-value-editor', () => {
 
         it('should has working maxlength validation', () => {
             valueEditorMocker.create('text', {
-                name: 'text',
+                editorName: 'text',
                 options: {type: 'rich-textarea'},
                 validations: {maxlength: 3}
             });
@@ -347,7 +355,7 @@ describe('text-value-editor', () => {
 
         it('should has working pattern validation', () => {
             valueEditorMocker.create('text', {
-                name: 'text',
+                editorName: 'text',
                 options: {type: 'rich-textarea'},
                 validations: {pattern: '[0-9]*'}
             });
@@ -364,13 +372,13 @@ describe('text-value-editor', () => {
         });
 
         it('should add additional classes to input element', () => {
-            valueEditorMocker.create('text', {name: 'text', options: {type: 'textarea', cssClasses: ['clazz']}});
+            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'textarea', cssClasses: ['clazz']}});
 
             expect(valueEditorMocker.getInputElement().classList).toContain('clazz');
         });
 
         it('should has working input disabling', () => {
-            valueEditorMocker.create('text', {name: 'text', options: {type: 'rich-textarea'}, disabled: true});
+            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'rich-textarea'}, disabled: true});
 
             const aceEditorTextarea = valueEditorMocker.getInputElement<HTMLDivElement>().querySelector('textarea');
 
@@ -383,7 +391,7 @@ describe('text-value-editor', () => {
         });
 
         it('should has working touched state', () => {
-            valueEditorMocker.create('text', {name: 'text', options: {type: 'rich-textarea'}});
+            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'rich-textarea'}});
 
             const focusEvent = document.createEvent('HTMLEvents');
             focusEvent.initEvent('focus', true, false);
@@ -412,7 +420,7 @@ describe('text-value-editor', () => {
         });
 
         it('should keep disabled state', () => {
-            valueEditorMocker.create('text', {name: 'text', disabled: true, options: {type: 'text'}});
+            valueEditorMocker.create('text', {editorName: 'text', disabled: true, options: {type: 'text'}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
             valueEditorMocker.triggerHandlerOnInput('input');

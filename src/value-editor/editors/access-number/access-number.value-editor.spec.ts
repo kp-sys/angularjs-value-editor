@@ -58,7 +58,7 @@ describe('access-number-value-editor', () => {
 
     it('should has working required validation', () => {
         valueEditorMocker.create('access-number', {
-            name: 'accessNumber',
+            editorName: 'accessNumber',
             validations: {required: true}
         });
 
@@ -85,7 +85,7 @@ describe('access-number-value-editor', () => {
     });
 
     it('should has working required validation', () => {
-        valueEditorMocker.create('access-number', {name: 'accessNumber', validations: {required: true}});
+        valueEditorMocker.create('access-number', {editorName: 'accessNumber', validations: {required: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -107,7 +107,7 @@ describe('access-number-value-editor', () => {
         // @ts-ignore
         $scope.issue = 'issue';
 
-        valueEditorMocker.create('access-number', {name: 'accessNumber', validations: {required: true}});
+        valueEditorMocker.create('access-number', {editorName: 'accessNumber', validations: {required: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -116,7 +116,7 @@ describe('access-number-value-editor', () => {
     });
 
     it('should has working minlength validation', () => {
-        valueEditorMocker.create('access-number', {name: 'accessNumber', validations: {minlength: 3}});
+        valueEditorMocker.create('access-number', {editorName: 'accessNumber', validations: {minlength: 3}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'h';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -132,7 +132,7 @@ describe('access-number-value-editor', () => {
     });
 
     it('should has working maxlength validation', () => {
-        valueEditorMocker.create('access-number', {name: 'accessNumber', validations: {maxlength: 3}});
+        valueEditorMocker.create('access-number', {editorName: 'accessNumber', validations: {maxlength: 3}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -148,7 +148,7 @@ describe('access-number-value-editor', () => {
     });
 
     it('should has working pattern validation', () => {
-        valueEditorMocker.create('access-number', {name: 'accessNumber', validations: {pattern: '[0-9]*'}});
+        valueEditorMocker.create('access-number', {editorName: 'accessNumber', validations: {pattern: '[0-9]*'}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -169,7 +169,7 @@ describe('access-number-value-editor', () => {
         $scope.model = MODEL;
         $scope.$apply();
 
-        valueEditorMocker.create('access-number', {name: 'accessNumber', options: {canDoAction: true, dataSource: annotatedDataSourceSpy}});
+        valueEditorMocker.create('access-number', {editorName: 'accessNumber', options: {canDoAction: true, dataSource: annotatedDataSourceSpy}});
 
         _$timeout.flush();
 
