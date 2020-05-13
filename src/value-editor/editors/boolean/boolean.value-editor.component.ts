@@ -1,5 +1,8 @@
 import './boolean.value-editor.scss';
-import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
+import KpValueEditorComponent, {
+    ValueEditorBindings,
+    ValueEditorValidations
+} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {INgModelController, IPostLink} from 'angular';
 import AbstractValueEditor from '../../common/abstract-value-editor';
@@ -100,7 +103,7 @@ export default class BooleanValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public templateUrl = require('./boolean.value-editor.tpl.pug');

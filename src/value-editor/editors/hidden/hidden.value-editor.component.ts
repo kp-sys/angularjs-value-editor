@@ -1,4 +1,7 @@
-import ValueEditorComponent, {ValueEditorBindings, ValueEditorOptions} from '../../value-editor.component';
+import KpValueEditorComponent, {
+    ValueEditorBindings,
+    ValueEditorOptions
+} from '../../kp-value-editor/kp-value-editor.component';
 import AbstractValueEditor from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 
@@ -43,7 +46,7 @@ export default class HiddenValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public templateUrl = require('./hidden.value-editor.tpl.pug');

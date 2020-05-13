@@ -1,5 +1,8 @@
 import './acceptable.value-editor.less';
-import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
+import KpValueEditorComponent, {
+    ValueEditorBindings,
+    ValueEditorValidations
+} from '../../kp-value-editor/kp-value-editor.component';
 import {IFilterOrderByItem, IInterpolateService, ITemplateCacheService} from 'angular';
 import {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import {AcceptableValueEditorLocalizationsService} from './acceptable-value-editor-localizations.provider';
@@ -277,7 +280,7 @@ export default class AcceptableValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public template = AbstractTemplateValueEditor.COMPONENT_TEMPLATE;

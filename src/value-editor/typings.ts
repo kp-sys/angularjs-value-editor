@@ -1,4 +1,4 @@
-import {ValueEditorOptions} from './value-editor.component';
+import {ValueEditorOptions} from './kp-value-editor/kp-value-editor.component';
 
 /**
  * @ngdoc type

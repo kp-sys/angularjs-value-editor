@@ -1,4 +1,7 @@
-import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
+import KpValueEditorComponent, {
+    ValueEditorBindings,
+    ValueEditorValidations
+} from '../../kp-value-editor/kp-value-editor.component';
 import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 import {IAugmentedJQuery, ILogService, INgModelController, IPostLink, ITimeoutService} from 'angular';
@@ -147,7 +150,7 @@ export default class AutocompleteValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public templateUrl = require('./autocomplete.value-editor.tpl.pug');

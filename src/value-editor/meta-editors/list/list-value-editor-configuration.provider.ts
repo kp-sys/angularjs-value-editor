@@ -1,6 +1,6 @@
 import {DefaultOptions} from '../../typings';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../common/abstract-value-editor-configuration.provider';
-import {ValueEditorOptions, ValueEditorValidations} from '../../value-editor.component';
+import {ValueEditorOptions, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
 import {CustomValueEditorType} from '../../aliases/aliases.service';
 import {TextValueEditorOptions} from '../../editors/text/text-value-editor-configuration.provider';
 import {TextValueEditorValidations} from '../../editors/text/text.value-editor.component';

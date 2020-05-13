@@ -1,4 +1,4 @@
-import {ValueEditorBindings} from '../../src/value-editor/value-editor.component';
+import {ValueEditorBindings} from '../../src/value-editor/kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {IAugmentedJQuery, ICompileService, IFormController, IScope} from 'angular';
 import {TValueEditorType} from '../../src/value-editor/typings';

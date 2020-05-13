@@ -1,5 +1,5 @@
 import {DefaultOptions} from '../../typings';
-import {ValueEditorOptions} from '../../value-editor.component';
+import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../common/abstract-value-editor-configuration.provider';
 
 /**

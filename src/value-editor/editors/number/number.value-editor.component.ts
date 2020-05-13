@@ -1,5 +1,8 @@
 import './number.value-editor.less';
-import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
+import KpValueEditorComponent, {
+    ValueEditorBindings,
+    ValueEditorValidations
+} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import AbstractValueEditor from '../../common/abstract-value-editor';
 import {
@@ -52,7 +55,7 @@ export default class NumberValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public templateUrl = require('./number.value-editor.tpl.pug');

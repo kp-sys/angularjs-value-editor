@@ -1,9 +1,9 @@
 import './date.value-editor.less';
-import ValueEditorComponent, {
+import KpValueEditorComponent, {
     ValueEditorBindings,
     ValueEditorComponentController,
     ValueEditorValidations
-} from '../../value-editor.component';
+} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {IOnInit} from 'angular';
 import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
@@ -91,7 +91,7 @@ export default class DateValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public templateUrl = require('./date.value-editor.tpl.pug');

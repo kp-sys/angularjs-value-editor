@@ -10,7 +10,7 @@
  * Default options: {@link ValueEditorConfigurationService}
  */
 
-export default class ValueEditorConfigurationProvider {
+export default class KpValueEditorConfigurationProvider {
     public static readonly providerName = 'valueEditorConfigurationService';
 
     #debugMode: boolean = false;

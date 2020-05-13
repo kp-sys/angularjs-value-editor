@@ -1,7 +1,7 @@
 import NgModelConnector from './ng-model-connector';
 import * as angular from 'angular';
 import {IOnInit, IPostLink} from 'angular';
-import {ValueEditorComponentController, ValueEditorOptions} from '../value-editor.component';
+import {ValueEditorComponentController, ValueEditorOptions} from '../kp-value-editor/kp-value-editor.component';
 import customEquals from '../utils/equals';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from './abstract-value-editor-configuration.provider';
 import {AbstractValueEditorLocalizationService} from './abstract-value-editor-localization.provider';

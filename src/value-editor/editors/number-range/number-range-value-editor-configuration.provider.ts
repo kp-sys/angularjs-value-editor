@@ -1,6 +1,6 @@
 import {DefaultOptions} from '../../typings';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../common/abstract-value-editor-configuration.provider';
-import {ValueEditorOptions} from '../../value-editor.component';
+import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
 
 /**
  * @ngdoc type
@@ -12,6 +12,7 @@ import {ValueEditorOptions} from '../../value-editor.component';
  *
  * Default value: {@link numberRangeValueEditorDefaultOptions}
  */
+// tslint:disable-next-line:no-empty-interface
 export interface NumberRangeValueEditorOptions extends ValueEditorOptions {
 }
 

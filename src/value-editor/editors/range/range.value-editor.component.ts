@@ -1,6 +1,6 @@
 /* istanbul ignore file */ // neni moc co testovat... viz. testy
 
-import ValueEditorComponent, {ValueEditorBindings} from '../../value-editor.component';
+import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 import {IDoCheck, IInterpolateService, ITemplateCacheService} from 'angular';
@@ -91,7 +91,7 @@ export default class RangeValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public template = AbstractTemplateValueEditor.COMPONENT_TEMPLATE;

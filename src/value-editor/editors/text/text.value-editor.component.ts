@@ -1,5 +1,8 @@
 import './text.value-editor.less';
-import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
+import KpValueEditorComponent, {
+    ValueEditorBindings,
+    ValueEditorValidations
+} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {IDoCheck} from 'angular';
 import {Ace} from 'ace-builds';
@@ -115,7 +118,7 @@ export default class TextValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public templateUrl = require('./text.value-editor.tpl.pug');

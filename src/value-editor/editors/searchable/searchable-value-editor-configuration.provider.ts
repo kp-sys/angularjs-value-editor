@@ -2,7 +2,7 @@
 
 import {DefaultOptions} from '../../typings';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../common/abstract-value-editor-configuration.provider';
-import {ValueEditorOptions} from '../../value-editor.component';
+import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
 import {Injectable} from 'angular';
 
 /**

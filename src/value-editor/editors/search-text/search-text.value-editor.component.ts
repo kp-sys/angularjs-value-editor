@@ -2,7 +2,7 @@ import AbstractValueEditor, {
     EmptyConfigurationService,
     OptionsChangeDetection
 } from '../../common/abstract-value-editor';
-import ValueEditorComponent, {ValueEditorBindings} from '../../value-editor.component';
+import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import {SearchTextValueEditorLocalizationsService} from './search-text-value-editor-localization.provider';
 import {IOnInit} from 'angular';
 import {TextValueEditorValidations} from '../text/text.value-editor.component';
@@ -131,7 +131,7 @@ export default class SearchTextValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public templateUrl = require('./search-text.value-editor.tpl.pug');

@@ -1,5 +1,5 @@
 import AbstractValueEditor from './abstract-value-editor';
-import {ValueEditorOptions} from '../value-editor.component';
+import {ValueEditorOptions} from '../kp-value-editor/kp-value-editor.component';
 import {IInterpolateService, IOnInit, ITemplateCacheService} from 'angular';
 import {AbstractValueEditorConfigurationService} from './abstract-value-editor-configuration.provider';
 import {AbstractValueEditorLocalizationService} from './abstract-value-editor-localization.provider';

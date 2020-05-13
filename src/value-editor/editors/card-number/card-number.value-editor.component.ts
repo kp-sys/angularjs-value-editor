@@ -1,5 +1,8 @@
 import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
-import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
+import KpValueEditorComponent, {
+    ValueEditorBindings,
+    ValueEditorValidations
+} from '../../kp-value-editor/kp-value-editor.component';
 import {
     CardNumberValueEditorConfigurationService,
     CardNumberValueEditorOptions
@@ -103,7 +106,7 @@ export default class CardNumberValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public templateUrl = require('./card-number.value-editor.tpl.pug');

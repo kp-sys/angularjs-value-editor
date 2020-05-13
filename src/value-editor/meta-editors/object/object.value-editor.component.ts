@@ -1,11 +1,10 @@
-import ValueEditorComponent, {ValueEditorBindings} from '../../value-editor.component';
+import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {IInterpolateService, ITemplateCacheService} from 'angular';
 import {
     ObjectValueEditorConfigurationService,
     ObjectValueEditorOptions
 } from './object-value-editor-configuration.provider';
-import {ObjectValueEditorLocalizationsService} from './object-value-editor-localization.provider';
 import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
 import {AbstractMetaValueEditorComponentController} from '../abstract-meta-value-editor.component';
 import {OptionsChangeDetection} from '../../common/abstract-value-editor';
@@ -21,15 +20,13 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
         $interpolate: IInterpolateService,
         $templateCache: ITemplateCacheService,
         objectValueEditorConfigurationService: ObjectValueEditorConfigurationService,
-        objectValueEditorLocalizationsService: ObjectValueEditorLocalizationsService
     ) {
         super(
             ObjectValueEditorComponentController.TEMPLATE_URL,
             TEMPLATE_NAME_PREFIX,
             $interpolate,
             $templateCache,
-            objectValueEditorConfigurationService,
-            objectValueEditorLocalizationsService);
+            objectValueEditorConfigurationService);
     }
 
     public transformField(field: ValueEditorBindings): ValueEditorBindings {
@@ -119,7 +116,7 @@ export default class ObjectValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public template = AbstractTemplateValueEditor.COMPONENT_TEMPLATE;

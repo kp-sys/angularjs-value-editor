@@ -1,4 +1,7 @@
-import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
+import KpValueEditorComponent, {
+    ValueEditorBindings,
+    ValueEditorValidations
+} from '../../kp-value-editor/kp-value-editor.component';
 import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import {DateTime} from 'luxon';
 import * as angular from 'angular';
@@ -76,7 +79,7 @@ export default class YearValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public templateUrl = require('./year.value-editor.tpl.pug');

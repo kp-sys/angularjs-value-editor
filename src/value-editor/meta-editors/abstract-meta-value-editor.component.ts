@@ -1,7 +1,7 @@
 import {IFormController} from 'angular';
 import {OptionsChangeDetection} from '../common/abstract-value-editor';
 import AbstractTemplateValueEditor from '../common/abstract-template-value-editor';
-import {ValueEditorOptions} from '../value-editor.component';
+import {ValueEditorOptions} from '../kp-value-editor/kp-value-editor.component';
 
 export abstract class AbstractMetaValueEditorComponentController<MODEL, OPTIONS extends ValueEditorOptions> extends AbstractTemplateValueEditor<MODEL, OPTIONS> {
 

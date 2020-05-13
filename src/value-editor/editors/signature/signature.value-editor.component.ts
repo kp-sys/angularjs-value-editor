@@ -1,4 +1,4 @@
-import ValueEditorComponent, {ValueEditorBindings} from '../../value-editor.component';
+import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 import {ILogService, IOnInit, ITimeoutService} from 'angular';
@@ -92,7 +92,7 @@ export default class SignatureValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public templateUrl = require('./signature.value-editor.tpl.pug');

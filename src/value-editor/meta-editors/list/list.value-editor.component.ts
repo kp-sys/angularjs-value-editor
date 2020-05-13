@@ -1,8 +1,8 @@
-import ValueEditorComponent, {
+import KpValueEditorComponent, {
     ValueEditorBindings,
     ValueEditorOptions,
     ValueEditorValidations
-} from '../../value-editor.component';
+} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {IFormController, IInterpolateService, IOnInit, ITemplateCacheService, ITimeoutService} from 'angular';
 import {ListValueEditorConfigurationService, ListValueEditorOptions} from './list-value-editor-configuration.provider';
@@ -105,7 +105,7 @@ export default class ListValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public template = AbstractTemplateValueEditor.COMPONENT_TEMPLATE;

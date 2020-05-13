@@ -1,4 +1,7 @@
-import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
+import KpValueEditorComponent, {
+    ValueEditorBindings,
+    ValueEditorValidations
+} from '../../kp-value-editor/kp-value-editor.component';
 import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 import {IAugmentedJQuery, IDoCheck, IOnInit} from 'angular';
@@ -117,7 +120,7 @@ export default class NumberRangeValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public templateUrl = require('./number-range.value-editor.tpl.pug');

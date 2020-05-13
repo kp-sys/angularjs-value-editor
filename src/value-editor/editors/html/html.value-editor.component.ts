@@ -1,4 +1,7 @@
-import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
+import KpValueEditorComponent, {
+    ValueEditorBindings,
+    ValueEditorValidations
+} from '../../kp-value-editor/kp-value-editor.component';
 import {IDoCheck, IOnDestroy, IPostLink, ITimeoutService} from 'angular';
 import AbstractValueEditor from '../../common/abstract-value-editor';
 import {HtmlValueEditorConfigurationService, HtmlValueEditorOptions} from './html-value-editor-configuration.provider';
@@ -108,7 +111,7 @@ export default class HtmlValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public templateUrl = require('./html.value-editor.tpl.pug');

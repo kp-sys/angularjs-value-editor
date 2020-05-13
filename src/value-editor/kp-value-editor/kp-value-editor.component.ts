@@ -1,12 +1,12 @@
 import * as angular from 'angular';
 import {IDoCheck, IFormController, IOnInit} from 'angular';
-import NgModelConnector from './common/ng-model-connector';
-import {generateUuid} from './utils/uuid-generator';
-import customEquals from './utils/equals';
-import AbstractValueEditor from './common/abstract-value-editor';
-import {TValueEditorType} from './typings';
-import AliasesService, {CustomValueEditorType} from './aliases/aliases.service';
-import {ValueEditorConfigurationService} from './value-editor/value-editor-configuration-provider';
+import NgModelConnector from '../common/ng-model-connector';
+import {generateUuid} from '../utils/uuid-generator';
+import customEquals from '../utils/equals';
+import AbstractValueEditor from '../common/abstract-value-editor';
+import {TValueEditorType} from '../typings';
+import AliasesService, {CustomValueEditorType} from '../aliases/aliases.service';
+import {ValueEditorConfigurationService} from './kp-value-editor-configuration-provider';
 
 export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS extends ValueEditorOptions = ValueEditorOptions, EDITORVALIDATIONS extends ValueEditorValidations = ValueEditorValidations>
     extends NgModelConnector<MODEL>
@@ -88,7 +88,7 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
  * - `text`, `textarea`, `rich-textarea`: {@link component:textValueEditor}
  * - `number`: {@link component:numberValueEditor}
  */
-export default class ValueEditorComponent {
+export default class KpValueEditorComponent {
     public static componentName = 'kpValueEditor';
 
     public require = {
@@ -109,7 +109,7 @@ export default class ValueEditorComponent {
 
     public controller = ValueEditorComponentController;
 
-    public templateUrl = require('./value-editor.tpl.pug');
+    public templateUrl = require('./kp-value-editor.tpl.pug');
 }
 
 /**

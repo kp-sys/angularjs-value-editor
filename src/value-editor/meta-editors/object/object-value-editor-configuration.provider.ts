@@ -1,6 +1,6 @@
 import {DefaultOptions} from '../../typings';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../common/abstract-value-editor-configuration.provider';
-import {ValueEditorBindings, ValueEditorOptions} from '../../value-editor.component';
+import {ValueEditorBindings, ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
 
 /**
  * @ngdoc type

@@ -1,7 +1,7 @@
 import * as angular from 'angular';
 import aliasesModule from '../aliases/aliases.module';
 import AliasesService, {AliasesServiceProvider} from './aliases.service';
-import {ValueEditorOptions} from '../value-editor.component';
+import {ValueEditorOptions} from '../kp-value-editor/kp-value-editor.component';
 
 const ALIAS_NAME = 'some-editor';
 

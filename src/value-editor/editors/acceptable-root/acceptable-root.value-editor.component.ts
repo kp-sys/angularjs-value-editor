@@ -1,7 +1,10 @@
 /* istanbul ignore file */ // neni cas... :-(
 
 import {OptionsChangeDetection} from '../../common/abstract-value-editor';
-import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
+import KpValueEditorComponent, {
+    ValueEditorBindings,
+    ValueEditorValidations
+} from '../../kp-value-editor/kp-value-editor.component';
 import {
     AcceptableRootValueEditorConfigurationService,
     AcceptableRootValueEditorOptions
@@ -136,7 +139,7 @@ export default class AcceptableRootValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public template = `

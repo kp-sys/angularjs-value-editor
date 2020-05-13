@@ -1,4 +1,7 @@
-import ValueEditorComponent, {ValueEditorBindings, ValueEditorValidations} from '../../value-editor.component';
+import KpValueEditorComponent, {
+    ValueEditorBindings,
+    ValueEditorValidations
+} from '../../kp-value-editor/kp-value-editor.component';
 import {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 import {IInterpolateService, ITemplateCacheService, ITimeoutService} from 'angular';
@@ -121,7 +124,7 @@ export default class SearchableValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${ValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
     public template = AbstractTemplateValueEditor.COMPONENT_TEMPLATE;
