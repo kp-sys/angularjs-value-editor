@@ -1,0 +1,19 @@
+form(name="{{name}}" ng-submit="$ctrl.submitFunction({$event: $event})" novalidate)
+    p.text-info.text-info-up(ng-if="$ctrl.formSettings.header" ng-bind-html="$ctrl.formSettings.header")
+
+    kp-value-editor(
+        type="'object'"
+
+        ng-model="$ctrl.model"
+        ng-model-options="{getterSetter: true}"
+
+        options="{fields: $ctrl.formSettings.fields, __withoutNgForm: true, labelsWidth: $ctrl.labelsWidth}"
+    )
+
+    p.text-info.text-info-bottom(ng-if="$ctrl.formSettings.footer" ng-bind-html="$ctrl.formSettings.footer")
+
+    // invisible submit button - due to html specification, form doesn't submit by enter when submit button is missing
+    // see https://github.com/angular/angular.js/issues/6017#issuecomment-50808489
+    button(type="submit" style="display: none;") ok
+
+| \{\{ $ctrl.internalFormController = {{name}}; '' \}\}

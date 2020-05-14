@@ -9,24 +9,17 @@ html
     body(ng-app="app" ng-strict-di)
         h1 Value Editor Demo
         main.container(ng-controller="demoController as $ctrl" ng-init="disabled = false")
-            form.form-horizontal(name="$ctrl.form")
-                .form-group
-                    label.control-label.col-lg-2(for="editor") Label
-                    kp-value-editor.col-lg-10(
-                        ng-model="$ctrl.model"
-                        editor-id="'editor'"
-                        editor-name="'editor'"
-                        type="'object'"
-                        disabled="disabled"
-                        placeholder="''"
-                        options="{" +
-                            "fields: $ctrl.fields" +
-                        "}"
-                        validations="{" +
-                            "required: false" +
-                        "}"
-                    )
+            kp-universal-form(
+                name="myForm.dwer"
+                form-settings="{fields: $ctrl.fields}"
+                form-controller="formController = $formController"
+                submit-function="$ctrl.submit()"
+                labels-width="2"
 
+                ng-model="$ctrl.model"
+            )
+
+            pre(ng-bind="formController | json")
 
             button(type="button" ng-click="$ctrl.model = undefined") Reset
 

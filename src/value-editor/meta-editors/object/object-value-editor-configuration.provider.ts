@@ -4,7 +4,7 @@ import {ValueEditorBindings, ValueEditorOptions} from '../../kp-value-editor/kp-
 
 /**
  * @ngdoc type
- * @name ObjectValueEditorFieldsSettings
+ * @name ObjectValueEditorFieldSettings
  * @module angularjs-value-editor.object
  *
  * @requires ValueEditorBindings
@@ -13,10 +13,10 @@ import {ValueEditorBindings, ValueEditorOptions} from '../../kp-value-editor/kp-
  * Definition of {@link objectValueEditor} fields.
  *
  * ```
- *      type ObjectValueEditorFieldsSettings = ValueEditorBindings & {label: string};
+ *      type ObjectValueEditorFieldSettings = ValueEditorBindings & {label: string};
  * ```
  */
-export type ObjectValueEditorFieldsSettings = ValueEditorBindings & {label: string};
+export type ObjectValueEditorFieldSettings = ValueEditorBindings & {label: string};
 
 /**
  * @ngdoc type
@@ -38,7 +38,7 @@ export type ObjectValueEditorLabelsWidth = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 1
  * @name ObjectValueEditorOptions
  * @module angularjs-value-editor.object
  *
- * @property {ObjectValueEditorFieldsSettings} fields Definition of editor fields
+ * @property {ObjectValueEditorFieldSettings} fields Definition of editor fields
  * @property {function(ValueEditorBindings): ValueEditorBindings} attributesTransformation Function that transforms ValueEditorBindings.
  * It is useful for situation when You have `name` from backend and You want to have `id` of value editor to be same as `name`.
  *
@@ -55,7 +55,7 @@ export type ObjectValueEditorLabelsWidth = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 1
  * Default value: {@link objectValueEditorDefaultOptions}
  */
 export interface ObjectValueEditorOptions extends ValueEditorOptions {
-    fields?: ObjectValueEditorFieldsSettings[];
+    fields?: ObjectValueEditorFieldSettings[];
     attributesTransformation?: (attributes: ValueEditorBindings) => ValueEditorBindings;
     labelsWidth?: ObjectValueEditorLabelsWidth;
 }
@@ -76,10 +76,11 @@ export interface ObjectValueEditorOptions extends ValueEditorOptions {
  * }
  * ```
  */
-export const OBJECT_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<ObjectValueEditorOptions> = {
+export const OBJECT_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<ObjectValueEditorOptions & UndocumentedInternalOptions> = {
     fields: [],
     attributesTransformation: undefined,
-    labelsWidth: 2
+    labelsWidth: 2,
+    __withoutNgForm: false
 };
 
 /**
@@ -114,4 +115,9 @@ export default class ObjectValueEditorConfigurationProvider extends AbstractValu
  * Default options: {@link objectValueEditorDefaultOptions}
  */
 export interface ObjectValueEditorConfigurationService extends AbstractValueEditorConfigurationService<ObjectValueEditorOptions> {
+}
+
+export interface UndocumentedInternalOptions {
+    // if true, it does not render ng-form around nested fields. This functionality use kp-universal-form.
+    __withoutNgForm: boolean;
 }

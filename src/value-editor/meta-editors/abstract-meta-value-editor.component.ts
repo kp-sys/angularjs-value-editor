@@ -15,7 +15,7 @@ export abstract class AbstractMetaValueEditorComponentController<MODEL, OPTIONS 
         return value;
     }
 
-    public showError(fieldName: string): boolean {
+    public showValidationError(fieldName: string): boolean {
         if (this.form[fieldName]) {
             const {$invalid, $touched = true} = this.form[fieldName];
 

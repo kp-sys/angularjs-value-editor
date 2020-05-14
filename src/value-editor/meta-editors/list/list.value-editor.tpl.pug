@@ -18,7 +18,7 @@
         .row.list-item(
             ng-repeat-start="itemModel in $ctrl.model track by $index"
         )
-            .col-lg-10(ng-class="{'has-error': $ctrl.showError('{{name}}_' + $index), 'has-not-error': !$ctrl.showError('{{name}}_' + $index)}")
+            .col-lg-10(ng-class="{'has-error': $ctrl.showValidationError('{{name}}_' + $index), 'has-not-error': !$ctrl.showValidationError('{{name}}_' + $index)}")
                 kp-value-editor(
                     editor-id="$index"
                     editor-name="'{{name}}_' + $index"

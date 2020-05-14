@@ -1,9 +1,10 @@
 import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
-import {IInterpolateService, ITemplateCacheService} from 'angular';
+import {IFormController, IInterpolateService, IOnInit, ITemplateCacheService} from 'angular';
 import {
     ObjectValueEditorConfigurationService,
-    ObjectValueEditorOptions
+    ObjectValueEditorOptions,
+    UndocumentedInternalOptions
 } from './object-value-editor-configuration.provider';
 import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
 import {AbstractMetaValueEditorComponentController} from '../abstract-meta-value-editor.component';
@@ -12,14 +13,16 @@ import {generateUuid} from '../../utils/uuid-generator';
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.objectValueEditor';
 
-export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaValueEditorComponentController<MODEL, ObjectValueEditorOptions> {
+export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaValueEditorComponentController<MODEL, ObjectValueEditorOptions> implements IOnInit {
     public static readonly TEMPLATE_URL = require('./object.value-editor.tpl.pug');
+
+    private formController: IFormController | undefined;
 
     /*@ngInject*/
     constructor(
         $interpolate: IInterpolateService,
         $templateCache: ITemplateCacheService,
-        objectValueEditorConfigurationService: ObjectValueEditorConfigurationService,
+        objectValueEditorConfigurationService: ObjectValueEditorConfigurationService
     ) {
         super(
             ObjectValueEditorComponentController.TEMPLATE_URL,
@@ -27,6 +30,20 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
             $interpolate,
             $templateCache,
             objectValueEditorConfigurationService);
+    }
+
+    public $onInit() {
+        super.$onInit();
+
+        if ((this.options as UndocumentedInternalOptions).__withoutNgForm) {
+
+            if (this.formController) {
+                this.form = this.formController;
+            } else {
+                // @ts-ignore Init form with anything
+                this.form = {};
+            }
+        }
     }
 
     public transformField(field: ValueEditorBindings): ValueEditorBindings {
@@ -52,7 +69,8 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
     protected getTemplateModel(): {} {
         return Object.assign({
             labelsWidth: this.options.labelsWidth,
-            inputsWidth: 12 - this.options.labelsWidth
+            inputsWidth: 12 - this.options.labelsWidth,
+            withoutNgForm: (this.options as UndocumentedInternalOptions).__withoutNgForm
         }, super.getTemplateModel());
     }
 }
@@ -116,7 +134,8 @@ export default class ObjectValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
+        valueEditorController: `^${KpValueEditorComponent.componentName}`,
+        formController: '^^?form'
     };
 
     public template = AbstractTemplateValueEditor.COMPONENT_TEMPLATE;

@@ -1,11 +1,11 @@
-import {ObjectValueEditorFieldsSettings} from '../src/value-editor/meta-editors/object/object-value-editor-configuration.provider';
 import {ListValueEditorOptions} from '../src/value-editor/meta-editors/list/list-value-editor-configuration.provider';
+import {ObjectValueEditorFieldSettings} from '../src/value-editor/meta-editors/object/object-value-editor-configuration.provider';
 
 export default class DemoController {
 
     public model = {};
 
-    public fields: ObjectValueEditorFieldsSettings[] = [
+    public fields: ObjectValueEditorFieldSettings[] = [
         {
             label: 'Text',
             type: 'text',
@@ -27,12 +27,16 @@ export default class DemoController {
                 subEditorType: 'date',
                 newItemPrototype: '',
                 subEditorValidations: {
-                    required: true
+                    required: false
                 }
             } as ListValueEditorOptions,
             validations: {
-                required: true
+                required: false
             }
         }
     ];
+
+    public submit() {
+        console.log('Submit');
+    }
 }

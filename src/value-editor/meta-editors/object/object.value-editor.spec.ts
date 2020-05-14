@@ -3,14 +3,18 @@ import * as angular from 'angular';
 import {ITimeoutService} from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {ObjectValueEditorBindings} from './object.value-editor.component';
-import {ObjectValueEditorFieldsSettings} from './object-value-editor-configuration.provider';
+import {
+    ObjectValueEditorFieldSettings,
+    ObjectValueEditorOptions,
+    UndocumentedInternalOptions
+} from './object-value-editor-configuration.provider';
 import {ListValueEditorOptions} from '../list/list-value-editor-configuration.provider';
 import {TextValueEditorValidations} from '../../editors/text/text.value-editor.component';
 import {NumberValueEditorValidations} from '../../editors/number/number.value-editor.component';
 import objectContaining = jasmine.objectContaining;
 import anything = jasmine.anything;
 
-const FIELDS: ObjectValueEditorFieldsSettings[] = [
+const FIELDS: ObjectValueEditorFieldSettings[] = [
     {
         label: 'Text',
         type: 'text',
@@ -169,5 +173,17 @@ describe('object-value-editor', () => {
         $scope.$apply();
 
         expect($scope.form.object.$error).toEqual({});
+    });
+
+    it('should not render ng-form wrapper', () => {
+        const element = valueEditorMocker.create('object', {
+            editorName: 'object',
+            options: {
+                fields: FIELDS,
+                __withoutNgForm: true
+            } as ObjectValueEditorOptions & UndocumentedInternalOptions
+        });
+
+        expect(element[0].querySelector('fieldset[ng-form]')).toBe(null);
     });
 });

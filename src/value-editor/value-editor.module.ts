@@ -30,6 +30,7 @@ import objectValueEditorModule from './meta-editors/object/object.value-editor.m
 import KpValueEditorComponent from './kp-value-editor/kp-value-editor.component';
 import {EmptyConfigurationService} from './common/abstract-value-editor';
 import KpValueEditorConfigurationProvider from './kp-value-editor/kp-value-editor-configuration-provider';
+import KpUniversalFormComponent from './kp-universal-form/kp-universal-form.component';
 
 /**
  * @ngdoc constant
@@ -81,6 +82,7 @@ export default register('angularjs-value-editor', [
     .provider(EmptyConfigurationService.serviceName, EmptyConfigurationService)
     .provider(KpValueEditorConfigurationProvider.providerName, KpValueEditorConfigurationProvider)
     .component(KpValueEditorComponent.componentName, KpValueEditorComponent)
+    .component(KpUniversalFormComponent.componentName, KpUniversalFormComponent)
     .name();
 
 /**

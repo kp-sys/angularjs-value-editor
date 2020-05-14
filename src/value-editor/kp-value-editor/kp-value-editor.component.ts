@@ -80,13 +80,13 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
  * @param {boolean} disabled If input is disabled. <.
  * @param {boolean} visible If input is visible. <.
  * @param {ValueEditorValidations} validations ValueEditor validations. <.
- * @param {ValueEditorOptions} options ValueEditor options. Type depends on ValueEditor type.
+ * @param {ValueEditorOptions} options ValueEditor options. Type depends on ValueEditor type. <.
  *
  * @description
  * Generic value editor depends on type:
  *
- * - `text`, `textarea`, `rich-textarea`: {@link component:textValueEditor}
- * - `number`: {@link component:numberValueEditor}
+ * - `text`: {@link textValueEditor}
+ * - `number`: {@link numberValueEditor}
  */
 export default class KpValueEditorComponent {
     public static componentName = 'kpValueEditor';

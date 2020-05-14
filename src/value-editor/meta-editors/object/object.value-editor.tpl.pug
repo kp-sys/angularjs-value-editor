@@ -1,7 +1,7 @@
-fieldset.form-horizontal(ng-form="{{name}}")
+fieldset.form-horizontal("{{withoutNgForm ? '' : 'ng-form'}}"="{{withoutNgForm ? '' : name}}")
     .form-group(
         class="\\{\\{transformedField.editorName\\}\\}"
-        ng-class="{'has-error': $ctrl.showError(transformedField.editorName)}"
+        ng-class="{'has-error': $ctrl.showValidationError(transformedField.editorName)}"
         ng-repeat="field in $ctrl.options.fields"
         ng-init="showDebugInfo = true; transformedField = $ctrl.transformField(field)"
         ng-show="$ctrl.trueIfUndefined(transformedField.visible)"
@@ -39,4 +39,4 @@ fieldset.form-horizontal(ng-form="{{name}}")
 
             pre(ng-bind="$ctrl.form[transformedField.editorName] | json" ng-if="$ctrl.valueEditorController.configuration.debugMode" uib-collapse="showDebugInfo")
 
-| \{\{$ctrl.form = {{name}}; ''\}\}
+| {{withoutNgForm ? '' : '{' + '{$ctrl.form = ' + name + '}' + '}'}}
