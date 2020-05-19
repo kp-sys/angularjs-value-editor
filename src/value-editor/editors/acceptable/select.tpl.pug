@@ -9,7 +9,7 @@ ui-select(
     close-on-select="{{!multiselectable}}"
     sortable="$ctrl.options.reorderable"
 
-    ng-disabled!="$ctrl.valueEditorController.disabled || $ctrl.options.acceptableValues.length === 1 && $ctrl.valueEditorController.validations.required"
+    ng-disabled!="$ctrl.valueEditorController.isDisabled || $ctrl.options.acceptableValues.length === 1 && $ctrl.valueEditorController.validations.required"
 
     ng-required="$ctrl.valueEditorController.validations.required"
 

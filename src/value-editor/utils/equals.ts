@@ -3,7 +3,11 @@
 import * as angular from 'angular';
 
 function isRegExp(value) {
-    return toString.call(value) === '[object RegExp]';
+    try {
+        return toString.call(value) === '[object RegExp]';
+    } catch (e) {
+        console.log(value);
+    }
 }
 
 function isScope(obj) {
@@ -53,12 +57,12 @@ export default function customEquals(o1, o2): boolean {
         } else if (angular.isDate(o1)) {
             if (!angular.isDate(o2)) return false;
             return simpleCompare(o1.getTime(), o2.getTime());
-        } else if (isRegExp(o1)) {
+        } /*else if (isRegExp(o1)) {
             if (!isRegExp(o2)) return false;
             return o1.toString() === o2.toString();
-        } else {
+        } */else {
             if (isScope(o1) || isScope(o2) || isWindow(o1) || isWindow(o2) ||
-                angular.isArray(o2) || angular.isDate(o2) || isRegExp(o2)) return false;
+                angular.isArray(o2) || angular.isDate(o2)/* || isRegExp(o2)*/) return false;
             keySet = createMap();
 
             for (key in o1) {

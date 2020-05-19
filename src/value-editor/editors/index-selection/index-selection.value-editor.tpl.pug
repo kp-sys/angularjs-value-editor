@@ -5,9 +5,9 @@
 )
     button.list-group-item(
         type="button"
-        ng-disabled="$ctrl.valueEditorController.disabled"
+        ng-disabled="$ctrl.valueEditorController.isDisabled"
         ng-repeat="$item in $ctrl.options.items"
-        ng-class="{'active': $ctrl.isSelected($item), 'disabled': $ctrl.valueEditorController.disabled}"
+        ng-class="{'active': $ctrl.isSelected($item), 'isDisabled': $ctrl.valueEditorController.isDisabled}"
         ng-click="$ctrl.selectItem($item)"
     ) {{optionsTemplate}}
 

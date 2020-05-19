@@ -35,7 +35,7 @@ describe('hidden-value-editor', () => {
     });
 
     it('should has working input disabling', () => {
-        valueEditorMocker.create('number', {disabled: true});
+        valueEditorMocker.create('number', {isDisabled: true});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '123';
         valueEditorMocker.triggerHandlerOnInput('input');

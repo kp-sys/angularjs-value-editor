@@ -73,12 +73,12 @@ describe('access-number-value-editor', () => {
     });
 
     it('should be disabled', () => {
-        valueEditorMocker.create('access-number', {disabled: false});
+        valueEditorMocker.create('access-number', {isDisabled: false});
         const input = valueEditorMocker.getInputElement<HTMLInputElement>();
 
         expect(input.disabled).toBe(false);
 
-        $scope.disabled = true;
+        $scope.isDisabled = true;
         $scope.$apply();
 
         expect(input.disabled).toBe(true);

@@ -17,8 +17,8 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
     public editorName: string;
     public type: TValueEditorType;
     public placeholder: string;
-    public disabled: boolean;
-    public visible: boolean = true;
+    public isDisabled: boolean;
+    public isVisible: boolean = true;
     public validations: EDITORVALIDATIONS;
     public options: EDITOROPTS;
     public formController: IFormController;
@@ -77,8 +77,8 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
  * @param {string} editorName Input name. <.
  * @param {string} placeholder Placeholder. <.
  * @param {string} type ValueEditor type. <.
- * @param {boolean} disabled If input is disabled. <.
- * @param {boolean} visible If input is visible. <.
+ * @param {boolean} isDisabled If input is disabled. <.
+ * @param {boolean} isVisible If input is visible. <.
  * @param {ValueEditorValidations} validations ValueEditor validations. <.
  * @param {ValueEditorOptions} options ValueEditor options. Type depends on ValueEditor type. <.
  *
@@ -101,8 +101,8 @@ export default class KpValueEditorComponent {
         editorId: '<?',
         editorName: '<?',
         placeholder: '<?',
-        disabled: '<?',
-        visible: '<?',
+        isDisabled: '<?',
+        isVisible: '<?',
         validations: '<?',
         options: '<?'
     };
@@ -156,8 +156,8 @@ export interface ValueEditorBindings<EDITOROPTS extends ValueEditorOptions = Val
     editorId?: string;
     editorName?: string;
     placeholder?: string;
-    disabled?: boolean;
-    visible?: boolean;
+    isDisabled?: boolean;
+    isVisible?: boolean;
     validations?: EDITORVALIDATIONS;
     options?: EDITOROPTS;
 }

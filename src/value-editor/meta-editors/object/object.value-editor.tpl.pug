@@ -4,7 +4,7 @@ fieldset.form-horizontal("{{withoutNgForm ? '' : 'ng-form'}}"="{{withoutNgForm ?
         ng-class="{'has-error': $ctrl.showValidationError(transformedField.editorName)}"
         ng-repeat="field in $ctrl.options.fields"
         ng-init="showDebugInfo = true; transformedField = $ctrl.transformField(field)"
-        ng-show="$ctrl.trueIfUndefined(transformedField.visible)"
+        ng-show="$ctrl.trueIfUndefined(transformedField.isVisible)"
     )
         label.control-label(
             class="col-sm-{{labelsWidth}}"
@@ -23,8 +23,8 @@ fieldset.form-horizontal("{{withoutNgForm ? '' : 'ng-form'}}"="{{withoutNgForm ?
                 ng-model-options="{ getterSetter: true }"
 
                 type="transformedField.type"
-                disabled="transformedField.disabled || $ctrl.valueEditorController.disabled"
-                visible="$ctrl.trueIfUndefined($ctrl.valueEditorController.visible)"
+                is-disabled="transformedField.disabled || $ctrl.valueEditorController.isDisabled"
+                is-visible="$ctrl.trueIfUndefined($ctrl.valueEditorController.isVisible)"
 
                 validations="transformedField.validations"
                 options="transformedField.options"

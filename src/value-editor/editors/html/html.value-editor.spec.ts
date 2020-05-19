@@ -64,7 +64,7 @@ describe('html-value-editor', () => {
     });
 
     it('should has working input disabling', (done) => {
-        valueEditorMocker.create('html', {disabled: true});
+        valueEditorMocker.create('html', {isDisabled: true});
         $_timeout.flush();
         $scope.$apply();
 

@@ -107,7 +107,7 @@ describe('object-value-editor', () => {
         $scope.model = {};
 
         valueEditorMocker.create('object', {
-            disabled: false, options: {
+            isDisabled: false, options: {
                 fields: FIELDS
             }
         });
@@ -116,7 +116,7 @@ describe('object-value-editor', () => {
 
         expect(inputs).toEqual([false, false]);
 
-        $scope.disabled = true;
+        $scope.isDisabled = true;
         $scope.$apply();
 
         inputs = [valueEditorMocker.getInputElement('text-value-editor').disabled, valueEditorMocker.getInputElement('number-value-editor').disabled];
@@ -127,7 +127,7 @@ describe('object-value-editor', () => {
         $scope.model = {};
 
         valueEditorMocker.create('object', {
-            disabled: false, options: {
+            isDisabled: false, options: {
                 fields: FIELDS,
                 attributesTransformation: (attrs) => {
                     attrs.editorId = attrs.editorName;

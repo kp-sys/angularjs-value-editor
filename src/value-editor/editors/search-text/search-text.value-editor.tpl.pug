@@ -6,7 +6,7 @@
 
             search-enabled="false"
 
-            ng-disabled="$ctrl.valueEditorController.disabled"
+            ng-disabled="$ctrl.valueEditorController.isDisabled"
 
             tagging
         )
@@ -25,7 +25,7 @@
         ng-model="$ctrl.model.row"
         ng-model-options="{ getterSetter: true}"
 
-        ng-disabled="$ctrl.valueEditorController.disabled"
+        ng-disabled="$ctrl.valueEditorController.isDisabled"
 
         ng-required="$ctrl.valueEditorController.validations.required"
         ng-minlength="$ctrl.valueEditorController.validations.minlength"

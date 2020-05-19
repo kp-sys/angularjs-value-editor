@@ -174,12 +174,12 @@ describe('list-value-editor', () => {
     it('should be disabled', () => {
         $scope.model = ['hello'];
 
-        valueEditorMocker.create('list', {disabled: false});
+        valueEditorMocker.create('list', {isDisabled: false});
         const input = valueEditorMocker.getInputElement<HTMLInputElement>();
 
         expect(input.disabled).toBe(false);
 
-        $scope.disabled = true;
+        $scope.isDisabled = true;
         $scope.$apply();
 
         expect(input.disabled).toBe(true);

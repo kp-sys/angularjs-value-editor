@@ -19,8 +19,8 @@ export class TextValueEditorComponentController extends AbstractValueEditor<stri
     }
 
     $doCheck(): void {
-        if (this.options.type === 'rich-textarea' && this.valueEditorController.disabled !== this.isDisabled && this.aceEditor) {
-            this.isDisabled = this.valueEditorController.disabled;
+        if (this.options.type === 'rich-textarea' && this.valueEditorController.isDisabled !== this.isDisabled && this.aceEditor) {
+            this.isDisabled = this.valueEditorController.isDisabled;
             this.aceEditor.setReadOnly(this.isDisabled);
         }
     }
@@ -69,7 +69,7 @@ export class TextValueEditorComponentController extends AbstractValueEditor<stri
         });
 
         // Propagate disabled -> set Ace to readonly
-        this.aceEditor.setReadOnly(this.valueEditorController.disabled);
+        this.aceEditor.setReadOnly(this.valueEditorController.isDisabled);
     }
 }
 

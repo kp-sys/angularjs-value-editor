@@ -57,12 +57,12 @@ describe('number-range-value-editor', () => {
     });
 
     it('should be disabled', () => {
-        valueEditorMocker.create('number-range', {disabled: false});
+        valueEditorMocker.create('number-range', {isDisabled: false});
 
         expect(getFrom().disabled).toBe(false);
         expect(getTo().disabled).toBe(false);
 
-        $scope.disabled = true;
+        $scope.isDisabled = true;
         $scope.$apply();
 
         expect(getFrom().disabled).toBe(true);

@@ -13,7 +13,7 @@ div.kp-autocomplete.input-group
         typeahead-is-open="$ctrl.isOpen"
         typeahead-min-length="$ctrl.minLength"
 
-        ng-disabled="$ctrl.valueEditorController.disabled"
+        ng-disabled="$ctrl.valueEditorController.isDisabled"
 
         ng-required="$ctrl.valueEditorController.validations.required"
 
@@ -24,7 +24,7 @@ div.kp-autocomplete.input-group
         button.btn.btn-default(
             type="button"
 
-            ng-disabled="$ctrl.valueEditorController.disabled"
+            ng-disabled="$ctrl.valueEditorController.isDisabled"
 
             ng-click="$ctrl.open()"
 

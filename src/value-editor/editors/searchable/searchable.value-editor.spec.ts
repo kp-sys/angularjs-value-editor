@@ -97,12 +97,12 @@ describe('searchable-value-editor', () => {
     });
 
     it('should be disabled', () => {
-        valueEditorMocker.create('searchable', {disabled: false});
+        valueEditorMocker.create('searchable', {isDisabled: false});
         const input = valueEditorMocker.getInputElement<HTMLInputElement>();
 
         expect(input.disabled).toBe(false);
 
-        $scope.disabled = true;
+        $scope.isDisabled = true;
         $scope.$apply();
 
         expect(input.disabled).toBe(true);

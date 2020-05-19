@@ -1,4 +1,4 @@
-div(ng-switch="$ctrl.resolveAlias()" ng-show="$ctrl.visible")
+div(ng-switch="$ctrl.resolveAlias()" ng-show="$ctrl.isVisible")
     text-value-editor(ng-switch-when="text" ng-model="$ctrl.model" ng-model-options="{ getterSetter: true }")
     number-value-editor(ng-switch-when="number" ng-model="$ctrl.model" ng-model-options="{ getterSetter: true }")
     boolean-value-editor(ng-switch-when="boolean" ng-model="$ctrl.model" ng-model-options="{ getterSetter: true }")

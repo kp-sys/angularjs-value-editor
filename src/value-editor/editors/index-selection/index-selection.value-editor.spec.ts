@@ -105,13 +105,13 @@ describe('index-selection-value-editor', () => {
     });
 
     it('should be disabled', () => {
-        valueEditorMocker.create('index-selection', {options: {items: ITEMS}, disabled: false});
+        valueEditorMocker.create('index-selection', {options: {items: ITEMS}, isDisabled: false});
 
         let buttonTri = getButton(2);
 
         expect(buttonTri.disabled).toBe(false);
 
-        $scope.disabled = true;
+        $scope.isDisabled = true;
         $scope.$apply();
 
         buttonTri = getButton(2);

@@ -28,8 +28,8 @@
                     ng-model-options="{ getterSetter: true }"
 
                     type="$ctrl.options.subEditorType"
-                    disabled="$ctrl.valueEditorController.disabled"
-                    visible="$ctrl.valueEditorController.visible"
+                    is-disabled="$ctrl.valueEditorController.isDisabled"
+                    is-visible="$ctrl.trueIfUndefined($ctrl.valueEditorController.isVisible)"
 
                     validations="$ctrl.options.subEditorValidations"
                     options="$ctrl.options.subEditorOptions"
@@ -38,7 +38,7 @@
             .col-lg-2
                 button.btn.btn-default.remove(
                     type="button"
-                    ng-disabled="$ctrl.valueEditorController.disabled"
+                    ng-disabled="$ctrl.valueEditorController.isDisabled"
                     ng-show="$ctrl.canRemoveItems()"
                     ng-click="$ctrl.removeItem($index)"
                 )
@@ -50,7 +50,7 @@
     .panel-footer
         button.btn.btn-default.btn-block.btn-xs.add(
             type="button"
-            ng-disabled="$ctrl.valueEditorController.disabled"
+            ng-disabled="$ctrl.valueEditorController.isDisabled"
             ng-click="$ctrl.addItem()"
         )
             i.glyphicon.glyphicon-plus

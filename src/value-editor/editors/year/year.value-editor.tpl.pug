@@ -9,7 +9,7 @@ kp-value-editor(
     ng-model="$ctrl.model"
     ng-model-options="{ getterSetter: true}"
 
-    disabled="$ctrl.valueEditorController.disabled"
+    is-disabled="$ctrl.valueEditorController.isDisabled"
 
     options="{viewFormat: 'y', maximumGranularity: 'year'}"
     validations="{" +

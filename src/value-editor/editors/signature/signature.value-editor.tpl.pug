@@ -4,7 +4,7 @@
             ng-model="$ctrl.model"
             ng-model-options="{getterSetter: true}"
             search-enabled="false"
-            ng-disabled="$ctrl.valueEditorController.disabled"
+            ng-disabled="$ctrl.valueEditorController.isDisabled"
             tagging
         )
             ui-select-match(placeholder="{{$ctrl.localize('select')}}") {{($ctrl.items | filter: $select.selected)[0]}}
@@ -20,7 +20,7 @@
         ng-model="$ctrl.model"
         ng-model-options="{ getterSetter: true}"
 
-        ng-disabled="$ctrl.valueEditorController.disabled"
+        ng-disabled="$ctrl.valueEditorController.isDisabled"
 
         ng-required="$ctrl.valueEditorController.validations.required"
         ng-minlength="$ctrl.valueEditorController.validations.minlength"
@@ -44,7 +44,7 @@ input.form-control(
     ng-model="$ctrl.model"
     ng-model-options="{ getterSetter: true}"
 
-    ng-disabled="$ctrl.valueEditorController.disabled"
+    ng-disabled="$ctrl.valueEditorController.isDisabled"
 
     ng-required="$ctrl.valueEditorController.validations.required"
     ng-minlength="$ctrl.valueEditorController.validations.minlength"

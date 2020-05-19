@@ -96,7 +96,7 @@ describe('date-value-editor', () => {
     });
 
     it('should has working input disabling', () => {
-        valueEditorMocker.create('date', {disabled: true}, true);
+        valueEditorMocker.create('date', {isDisabled: true}, true);
 
         const inputElement = valueEditorMocker.getInputElement<HTMLInputElement>();
 

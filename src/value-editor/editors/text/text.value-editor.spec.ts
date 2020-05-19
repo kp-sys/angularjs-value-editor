@@ -110,7 +110,7 @@ describe('text-value-editor', () => {
         });
 
         it('should has working input disabling', () => {
-            valueEditorMocker.create('text', {editorName: 'text', disabled: true});
+            valueEditorMocker.create('text', {editorName: 'text', isDisabled: true});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
             valueEditorMocker.triggerHandlerOnInput('input');
@@ -243,7 +243,7 @@ describe('text-value-editor', () => {
         });
 
         it('should has working input disabling', () => {
-            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'textarea'}, disabled: true});
+            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'textarea'}, isDisabled: true});
 
             valueEditorMocker.getInputElement<HTMLTextAreaElement>().value = 'hello';
             valueEditorMocker.triggerHandlerOnInput('input');
@@ -378,13 +378,13 @@ describe('text-value-editor', () => {
         });
 
         it('should has working input disabling', () => {
-            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'rich-textarea'}, disabled: true});
+            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'rich-textarea'}, isDisabled: true});
 
             const aceEditorTextarea = valueEditorMocker.getInputElement<HTMLDivElement>().querySelector('textarea');
 
             expect(aceEditorTextarea.attributes.getNamedItem('readonly')).not.toBe(null);
 
-            $scope.disabled = false;
+            $scope.isDisabled = false;
             $scope.$apply();
 
             expect(aceEditorTextarea.attributes.getNamedItem('readonly')).toBe(null);
@@ -420,7 +420,7 @@ describe('text-value-editor', () => {
         });
 
         it('should keep disabled state', () => {
-            valueEditorMocker.create('text', {editorName: 'text', disabled: true, options: {type: 'text'}});
+            valueEditorMocker.create('text', {editorName: 'text', isDisabled: true, options: {type: 'text'}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
             valueEditorMocker.triggerHandlerOnInput('input');

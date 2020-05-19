@@ -9,7 +9,7 @@ kp-value-editor(
     ng-model="$ctrl.model"
     ng-model-options="{ getterSetter: true}"
 
-    disabled="$ctrl.valueEditorController.disabled"
+    disabled="$ctrl.valueEditorController.isDisabled"
 
     options="{type: 'rich-textarea', aceOptions: {useWrapMode: false, showGutter: true, mode: 'velocity'}}"
     validations="{" +

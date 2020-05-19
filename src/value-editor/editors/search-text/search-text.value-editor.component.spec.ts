@@ -121,7 +121,7 @@ describe('search-text-value-editor', () => {
     });
 
     it('should has working input disabling', () => {
-        valueEditorMocker.create('search-text', {editorName: 'searchText', disabled: true});
+        valueEditorMocker.create('search-text', {editorName: 'searchText', isDisabled: true});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
         valueEditorMocker.triggerHandlerOnInput('input');

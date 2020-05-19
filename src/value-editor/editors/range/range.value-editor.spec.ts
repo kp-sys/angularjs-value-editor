@@ -59,12 +59,12 @@ describe('range-value-editor', () => {
 
     // component does not support disabling for this time
     xit('should be disabled', () => {
-        valueEditorMocker.create('range', {disabled: false});
+        valueEditorMocker.create('range', {isDisabled: false});
         const input = valueEditorMocker.getInputElement<HTMLInputElement>();
 
         expect(input.disabled).toBe(false);
 
-        $scope.disabled = true;
+        $scope.isDisabled = true;
         $scope.$apply();
 
         expect(input.disabled).toBe(true);

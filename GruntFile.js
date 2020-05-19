@@ -39,6 +39,7 @@ module.exports = (grunt) => {
                     examples: {
                         commonFiles: {
                             scripts: [
+                                'https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.8.7/polyfill.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.7/angular.js',
                                 'https://unpkg.com/@kpsys/angularjs-register@1.1.4/dist/register.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js',

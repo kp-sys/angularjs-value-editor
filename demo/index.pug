@@ -3,12 +3,14 @@ doctype html
 html
     head
         title Value Editor Demo
+        meta(http-equiv="x-ua-compatible" content="IE=edge")
         link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.8.7/polyfill.min.js")
         script(src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous")
 
     body(ng-app="app" ng-strict-di)
         h1 Value Editor Demo
-        main.container(ng-controller="demoController as $ctrl" ng-init="disabled = false")
+        main.container(ng-controller="demoController as $ctrl" ng-init="isDisabled = false")
             kp-universal-form(
                 name="myForm.dwer"
                 form-settings="{fields: $ctrl.fields}"
@@ -19,13 +21,11 @@ html
                 ng-model="$ctrl.model"
             )
 
-            pre(ng-bind="formController | json")
-
             button(type="button" ng-click="$ctrl.model = undefined") Reset
 
             div
                 label Disabled:
-                    input(type="checkbox" ng-model="disabled")
+                    input(type="checkbox" ng-model="isDisabled")
 
             div Value:
                 input(ng-model="$ctrl.model")
@@ -38,4 +38,4 @@ html
 
             button(type="button" ng-click="$ctrl.clear()") Clear
 
-            pre {{$ctrl.form | json}}
+            pre(ng-bind="formController | json")

@@ -11,7 +11,7 @@
         ng-model="$ctrl.model"
         ng-model-options="{ getterSetter: true}"
 
-        ng-disabled="$ctrl.valueEditorController.disabled"
+        ng-disabled="$ctrl.valueEditorController.isDisabled"
 
         ng-required="$ctrl.valueEditorController.validations.required"
 
@@ -39,5 +39,5 @@
         )
 
     span.input-group-btn
-        button.btn.btn-default(type='button' ng-disabled="$ctrl.valueEditorController.disabled" uib-dropdown-toggle='')
+        button.btn.btn-default(type='button' ng-disabled="$ctrl.valueEditorController.isDisabled" uib-dropdown-toggle='')
             span.glyphicon.glyphicon-calendar

@@ -51,7 +51,7 @@ describe('boolean-value-editor', () => {
     });
 
     it('should has working input disabling', () => {
-        valueEditorMocker.create('boolean', {disabled: true});
+        valueEditorMocker.create('boolean', {isDisabled: true});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().checked = true;
         valueEditorMocker.triggerHandlerOnInput('change');

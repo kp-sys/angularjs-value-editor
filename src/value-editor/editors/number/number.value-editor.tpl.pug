@@ -14,7 +14,7 @@ input.form-control(  type="number"
         ng-model="$ctrl.model"
         ng-model-options="{ getterSetter: true}"
 
-        ng-disabled="$ctrl.valueEditorController.disabled"
+        ng-disabled="$ctrl.valueEditorController.isDisabled"
 
         ng-required="$ctrl.valueEditorController.validations.required"
         ng-minlength="$ctrl.valueEditorController.validations.minlength"

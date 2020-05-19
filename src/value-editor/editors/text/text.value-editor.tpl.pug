@@ -10,7 +10,7 @@ input.form-control(  ng-if="$ctrl.options.type === 'text'"
         ng-model="$ctrl.model"
         ng-model-options="{ getterSetter: true}"
 
-        ng-disabled="$ctrl.valueEditorController.disabled"
+        ng-disabled="$ctrl.valueEditorController.isDisabled"
 
         ng-required="$ctrl.valueEditorController.validations.required"
         ng-minlength="$ctrl.valueEditorController.validations.minlength"
@@ -34,7 +34,7 @@ textarea.form-control(
         ng-model-options="{ getterSetter: true}"
         ng-trim="false"
 
-        ng-disabled="$ctrl.valueEditorController.disabled"
+        ng-disabled="$ctrl.valueEditorController.isDisabled"
 
         ng-required="$ctrl.valueEditorController.validations.required"
         ng-minlength="$ctrl.valueEditorController.validations.minlength"
@@ -57,7 +57,7 @@ div.ace-editor(
         ng-model="$ctrl.model"
         ng-model-options="{ getterSetter: true}"
 
-        ng-disabled="$ctrl.valueEditorController.disabled"
+        ng-disabled="$ctrl.valueEditorController.isDisabled"
 
         ng-required="$ctrl.valueEditorController.validations.required"
         ng-minlength="$ctrl.valueEditorController.validations.minlength"

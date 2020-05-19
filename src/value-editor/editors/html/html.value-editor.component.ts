@@ -23,8 +23,8 @@ export class HtmlValueEditorComponentController extends AbstractValueEditor<stri
     }
 
     $doCheck(): void {
-        if (this.valueEditorController.disabled !== this.isDisabled && this.container?.trumbowyg) {
-            this.isDisabled = this.valueEditorController.disabled;
+        if (this.valueEditorController.isDisabled !== this.isDisabled && this.container?.trumbowyg) {
+            this.isDisabled = this.valueEditorController.isDisabled;
             this.container.trumbowyg(this.isDisabled ? 'disable' : 'enable');
         }
     }
@@ -40,7 +40,7 @@ export class HtmlValueEditorComponentController extends AbstractValueEditor<stri
 
     @bind
     private initTrumbowyg() {
-        const options = {...this.options.editorOptions, disabled: this.valueEditorController.disabled};
+        const options = {...this.options.editorOptions, disabled: this.valueEditorController.isDisabled};
 
         this.container.trumbowyg(options);
 

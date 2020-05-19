@@ -77,12 +77,12 @@ describe('password-value-editor', () => {
         });
 
         it('should be disabled', () => {
-            valueEditorMocker.create('password', {disabled: false});
+            valueEditorMocker.create('password', {isDisabled: false});
             const input = valueEditorMocker.getInputElement<HTMLInputElement>();
 
             expect(input.disabled).toBe(false);
 
-            $scope.disabled = true;
+            $scope.isDisabled = true;
             $scope.$apply();
 
             expect(input.disabled).toBe(true);
@@ -203,14 +203,14 @@ describe('password-value-editor', () => {
 
         it('should be disabled', () => {
             valueEditorMocker.create('password', {
-                disabled: false,
+                isDisabled: false,
                 options: {withConfirmation: true}
             });
             const input = valueEditorMocker.getInputElement<HTMLInputElement>();
 
             expect(input.disabled).toBe(false);
 
-            $scope.disabled = true;
+            $scope.isDisabled = true;
             $scope.$apply();
 
             expect(input.disabled).toBe(true);
