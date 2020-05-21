@@ -6,8 +6,9 @@ import KpValueEditorComponent, {
 import * as angular from 'angular';
 import {IDoCheck} from 'angular';
 import {Ace} from 'ace-builds';
-import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
+import AbstractValueEditor from '../../common/abstract-value-editor';
 import {TextValueEditorConfigurationService, TextValueEditorOptions} from './text-value-editor-configuration.provider';
+import {PropertyChangeDetection} from '../../utils/equals';
 
 export class TextValueEditorComponentController extends AbstractValueEditor<string, TextValueEditorOptions> implements IDoCheck {
     private aceEditor: Ace.Editor;
@@ -36,7 +37,7 @@ export class TextValueEditorComponentController extends AbstractValueEditor<stri
         return minRows;
     }
 
-    protected onOptionsChange(newOptions: TextValueEditorOptions, oldOptions, whatChanged: OptionsChangeDetection<TextValueEditorOptions>) {
+    protected onOptionsChange(newOptions: TextValueEditorOptions, oldOptions, whatChanged: PropertyChangeDetection<TextValueEditorOptions>) {
         if (whatChanged.type && this.options.type === 'rich-textarea') {
             if (!this.options.aceOptions) {
                 this.options.aceOptions = this.textValueEditorConfigurationService.forAlias(this.valueEditorController.type).getConfiguration().aceOptions;

@@ -1,11 +1,9 @@
-import AbstractValueEditor, {
-    EmptyConfigurationService,
-    OptionsChangeDetection
-} from '../../common/abstract-value-editor';
+import AbstractValueEditor, {EmptyConfigurationService} from '../../common/abstract-value-editor';
 import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import {SearchTextValueEditorLocalizationsService} from './search-text-value-editor-localization.provider';
 import {IOnInit} from 'angular';
 import {TextValueEditorValidations} from '../text/text.value-editor.component';
+import {PropertyChangeDetection} from '../../utils/equals';
 
 /**
  * @ngdoc type
@@ -64,7 +62,7 @@ export class SearchTextValueEditorComponentController extends AbstractValueEdito
     }
 
     /* istanbul ignore next */
-    protected onOptionsChange(newOptions: never, oldOptions, whatChanged: OptionsChangeDetection<never>) {
+    protected onOptionsChange(newOptions: never, oldOptions, whatChanged: PropertyChangeDetection<never>) {
         //
     }
 

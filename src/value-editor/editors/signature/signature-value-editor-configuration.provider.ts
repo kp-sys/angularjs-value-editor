@@ -24,8 +24,8 @@ import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.componen
  * Default value: {@link signatureValueEditorDefaultOptions}
  */
 export interface SignatureValueEditorOptions extends ValueEditorOptions {
-    canDoAction: boolean;
-    dataSource: ($model: string, $name: string, $formModel: {}, ...args) => PromiseLike<string[]>;
+    dataSource: ($model?: string, $name?: string, $formModel?: {}, ...args) => PromiseLike<string[]>;
+    canDoAction?: boolean;
 }
 
 /**
@@ -44,8 +44,8 @@ export interface SignatureValueEditorOptions extends ValueEditorOptions {
  * ```
  */
 export const SIGNATURE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<SignatureValueEditorOptions> = {
-    canDoAction: false,
-    dataSource: /* istanbul ignore next */ () => Promise.resolve([])
+    dataSource: /* istanbul ignore next */ () => Promise.resolve([]),
+    canDoAction: false
 };
 
 /**

@@ -1,5 +1,5 @@
 import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
-import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
+import AbstractValueEditor from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 import {IOnInit} from 'angular';
 import {
@@ -8,6 +8,7 @@ import {
 } from './password-value-editor-configuration.provider';
 import {PasswordValueEditorLocalizationsService} from './password-value-editor-localization.provider';
 import {TextValueEditorValidations} from '../text/text.value-editor.component';
+import {PropertyChangeDetection} from '../../utils/equals';
 
 export class PasswordValueEditorComponentController extends AbstractValueEditor<string, PasswordValueEditorOptions> implements IOnInit {
     public passwordRepetition: string;
@@ -29,7 +30,7 @@ export class PasswordValueEditorComponentController extends AbstractValueEditor<
         };
     }
 
-    protected onOptionsChange(newOptions: PasswordValueEditorOptions, oldOptions, whatChanged: OptionsChangeDetection<PasswordValueEditorOptions>) {
+    protected onOptionsChange(newOptions: PasswordValueEditorOptions, oldOptions, whatChanged: PropertyChangeDetection<PasswordValueEditorOptions>) {
         //
     }
 

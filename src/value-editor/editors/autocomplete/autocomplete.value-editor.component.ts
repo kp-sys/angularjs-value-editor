@@ -2,13 +2,14 @@ import KpValueEditorComponent, {
     ValueEditorBindings,
     ValueEditorValidations
 } from '../../kp-value-editor/kp-value-editor.component';
-import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
+import AbstractValueEditor from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 import {IAugmentedJQuery, ILogService, INgModelController, IPostLink, ITimeoutService} from 'angular';
 import {
     AutocompleteValueEditorConfigurationService,
     AutocompleteValueEditorOptions
 } from './autocomplete-value-editor-configuration.provider';
+import {PropertyChangeDetection} from '../../utils/equals';
 
 /**
  * @ngdoc type
@@ -72,7 +73,7 @@ export class AutocompleteValueEditorComponentController extends AbstractValueEdi
         this.asyncCall(() => this.minLength = this.options.minLength);
     }
 
-    protected onOptionsChange(newOptions: AutocompleteValueEditorOptions, oldOptions, whatChanged: OptionsChangeDetection<AutocompleteValueEditorOptions>) {
+    protected onOptionsChange(newOptions: AutocompleteValueEditorOptions, oldOptions, whatChanged: PropertyChangeDetection<AutocompleteValueEditorOptions>) {
         //
     }
 

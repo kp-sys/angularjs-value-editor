@@ -1,4 +1,4 @@
-import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
+import AbstractValueEditor from '../../common/abstract-value-editor';
 import KpValueEditorComponent, {
     ValueEditorBindings,
     ValueEditorValidations
@@ -9,6 +9,7 @@ import {
 } from './card-number-value-editor-configuration.provider';
 import {IAugmentedJQuery, ITimeoutService} from 'angular';
 import {CardNumberValueEditorLocalizationsService} from './card-number-value-editor-localization.provider';
+import {PropertyChangeDetection} from '../../utils/equals';
 
 export class CardNumberValueEditorComponentController extends AbstractValueEditor<string, CardNumberValueEditorOptions> {
     public generationButton: IAugmentedJQuery;
@@ -59,7 +60,7 @@ export class CardNumberValueEditorComponentController extends AbstractValueEdito
         }
     }
 
-    protected onOptionsChange(newOptions: CardNumberValueEditorOptions, oldOptions, whatChanged: OptionsChangeDetection<CardNumberValueEditorOptions>) {
+    protected onOptionsChange(newOptions: CardNumberValueEditorOptions, oldOptions, whatChanged: PropertyChangeDetection<CardNumberValueEditorOptions>) {
         //
     }
 }

@@ -258,7 +258,9 @@ export default angular.module('treeControl', [])
                                 $middle: transcludedScope.$middle,
                                 $last: transcludedScope.$last,
                                 $odd: transcludedScope.$odd,
-                                $even: transcludedScope.$even
+                                $even: transcludedScope.$even,
+                                selectedNode: $scope.selectedNode,
+                                selectedNodes: $scope.selectedNodes
                             });
                         }
                     }
@@ -368,6 +370,13 @@ export default angular.module('treeControl', [])
                                 $scope.deselectAllChildren(node);
                             } else {
                                 $scope.selectAllChildren(node);
+                            }
+
+                            if ($scope.onSelection) {
+                                $scope.onSelection({
+                                    selectedNode: $scope.selectedNode,
+                                    selectedNodes: $scope.selectedNodes
+                                });
                             }
                         }
                     } else {

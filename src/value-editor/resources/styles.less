@@ -1,17 +1,36 @@
-.input-group-select {
-    padding: 0;
-    border: none;
+@import '~bootstrap-less/bootstrap/variables';
 
-    .ui-select-toggle,
-    .ui-select-search {
-        border-right: 0;
+kp-value-editor {
+    .input-group-select {
+        padding: 0;
+        border: none;
 
-        border-top-left-radius: 4px !important;
-        border-bottom-left-radius: 4px !important;
+        .ui-select-toggle,
+        .ui-select-search {
+            border-right: 0;
+
+            border-top-left-radius: 4px !important;
+            border-bottom-left-radius: 4px !important;
+        }
+
+        .ui-select-placeholder,
+        .ui-select-match-text {
+            padding-right: 10px;
+        }
     }
 
-    .ui-select-placeholder,
-    .ui-select-match-text {
-        padding-right: 10px;
+    .has-error .input-group .btn-default {
+        border-color: @state-danger-text;
+        transition: border-color 0.15s ease-in-out;
+    }
+
+    .validation-helper {
+        width: 0;
+        height: 0;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        opacity: 0;
+        position: absolute;
     }
 }

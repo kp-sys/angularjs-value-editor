@@ -1,6 +1,6 @@
 .checkboxes-mode(ng-class="{'with-more': $ctrl.hasMore()}" data-main-input)
     ul(ng-ref="ulElement")
-        li.av-item(ng-repeat="$item in $ctrl.getAcceptableValues() track by $index")
+        li.av-item(ng-repeat="$item in $ctrl.getAcceptableValues() track by $index" ng-init="index = $index")
             include checkbox-template.tpl.pug
 
         li.more-container(class="{{uuid}}" ng-if="$ctrl.hasMore()")
@@ -16,9 +16,23 @@
                 span(ng-hide="expanded" ng-bind="$ctrl.localize('more') + ' (' + $ctrl.getMoreCount() + ')'")
 
             ul
-                li.av-item(ng-repeat="$item in $ctrl.getAcceptableValues($ctrl.options.showFirstCount, 9007199254740990) track by $index")
+                li.av-item(ng-repeat="$item in $ctrl.getAcceptableValues($ctrl.options.showFirstCount, 9007199254740990) track by $index" ng-init="index = $index + $ctrl.options.showFirstCount")
                     include checkbox-template.tpl.pug
 
     .btn-group
         button.btn.btn-default.btn-xs.select-all(type="button" ng-disabled="$ctrl.model.length === $ctrl.options.acceptableValues.length" ng-click="$ctrl.model = $ctrl.options.acceptableValues.slice()" ng-bind="$ctrl.localize('selectAll')")
         button.btn.btn-default.btn-xs.deselect-all(type="button" ng-disabled="$ctrl.model.length === 0" ng-click="$ctrl.model = []" ng-bind="$ctrl.localize('deselectAll')")
+
+    input.validation-helper(
+        type="text"
+        id="\\{\\{$ctrl.valueEditorController.editorId\\}\\}"
+        name="\\{\\{$ctrl.valueEditorController.editorName\\}\\}"
+
+        ng-model="$ctrl.model"
+        ng-model-options="{getterSetter: true}"
+
+        error-messages
+        error-messages-custom-class="acceptable-checkboxes standalone"
+
+        checkboxes-validations
+    )

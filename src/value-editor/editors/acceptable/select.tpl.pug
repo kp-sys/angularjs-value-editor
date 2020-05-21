@@ -1,6 +1,6 @@
 ui-select(
     input-id="\\{\\{$ctrl.valueEditorController.editorId\\}\\}"
-    name="\\{\\{$ctrl.valueEditorController.name\\}\\}"
+    name="{{name}}"
 
     ng-model="$ctrl.model"
     ng-model-options="{getterSetter: true}"
@@ -12,6 +12,9 @@ ui-select(
     ng-disabled!="$ctrl.valueEditorController.isDisabled || $ctrl.options.acceptableValues.length === 1 && $ctrl.valueEditorController.validations.required"
 
     ng-required="$ctrl.valueEditorController.validations.required"
+
+    error-messages
+    error-messages-custom-class="acceptable-select"
 
     data-main-input
 )

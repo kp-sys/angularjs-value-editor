@@ -1,0 +1,30 @@
+@import '~bootstrap-less/bootstrap/variables';
+
+kp-value-editor ~ .error-message {
+    &:hover {
+        z-index: 20;
+    }
+
+    display: inline-block;
+    text-align: center;
+    color: @state-danger-text;
+    border-color: @state-danger-text;
+    border-style: solid;
+    border-width: 0 1px 1px 1px;
+    border-radius: 0 0 @border-radius-base @border-radius-base;
+    background-color: #eeeeee;
+    position: absolute;
+    padding: 0 5px;
+    min-width: 20%;
+    max-width: 85%;
+    z-index: 10;
+    right: 10%;
+
+    box-shadow: 0 2px 6px -2px lighten(@state-danger-text, 20%);
+
+    &.standalone {
+        border-radius: @border-radius-base;
+        border: 1px solid @state-danger-text;
+        box-shadow: 0 0 2px lighten(@state-danger-text, 20%);
+    }
+}

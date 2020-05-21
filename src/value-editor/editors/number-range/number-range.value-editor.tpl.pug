@@ -1,8 +1,9 @@
 .form-control.multi-input-group
     .input-group.from
-        label.input-group-addon(for="{{$ctrl.uuid}}_from") {{$ctrl.localize('from')}}
+        label.input-group-addon(for="{{$ctrl.valueEditorController.editorId}}") {{$ctrl.localize('from')}}
         input.form-control(
-            id="{{$ctrl.uuid}}_from"
+            id="{{$ctrl.valueEditorController.editorId}}"
+
             type="number"
 
             ng-model="$ctrl.modelFrom"
@@ -11,12 +12,14 @@
             ng-ref="$ctrl.fromRef"
 
             ng-disabled="$ctrl.valueEditorController.isDisabled"
+
+            ng-blur="$ctrl.setTouched()"
         )
 
     .input-group.to
-        label.input-group-addon(for="{{$ctrl.uuid}}_to") {{$ctrl.localize('to')}}
+        label.input-group-addon(for="{{$ctrl.valueEditorController.editorId}}_to") {{$ctrl.localize('to')}}
         input.form-control(
-            id="{{$ctrl.uuid}}_to"
+            id="{{$ctrl.valueEditorController.editorId}}_to"
             type="number"
 
             ng-model="$ctrl.modelTo"
@@ -25,17 +28,20 @@
             ng-ref="$ctrl.toRef"
 
             ng-disabled="$ctrl.valueEditorController.isDisabled"
+
+            ng-blur="$ctrl.setTouched()"
         )
 
-input(
-    type="hidden"
-    id="{{$ctrl.valueEditorController.editorId}}"
+input.validation-helper(
+    type="text"
     name="{{$ctrl.valueEditorController.editorName}}"
 
     ng-model="$ctrl.model"
     ng-model-options="{ getterSetter: true}"
 
     number-range-validations="$ctrl.validNumber"
+
+    error-messages
 
     data-main-input
 )

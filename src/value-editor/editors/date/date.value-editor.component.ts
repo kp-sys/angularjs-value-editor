@@ -1,4 +1,3 @@
-import './date.value-editor.less';
 import KpValueEditorComponent, {
     ValueEditorBindings,
     ValueEditorComponentController,
@@ -6,13 +5,14 @@ import KpValueEditorComponent, {
 } from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {IOnInit} from 'angular';
-import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
+import AbstractValueEditor from '../../common/abstract-value-editor';
 import {
     DateValueEditorConfigurationService,
     DateValueEditorOptions,
     TDateValueEditorGranularity
 } from './date-value-editor-configuration.provider';
 import {DateTime} from 'luxon';
+import {PropertyChangeDetection} from '../../utils/equals';
 
 export class DateValueEditorComponentController extends AbstractValueEditor<string, DateValueEditorOptions> implements IOnInit {
     public startView: TDateValueEditorGranularity;
@@ -46,7 +46,7 @@ export class DateValueEditorComponentController extends AbstractValueEditor<stri
         }
     }
 
-    protected onOptionsChange(newOptions: DateValueEditorOptions, oldOptions: DateValueEditorOptions, whichOptionChanged: OptionsChangeDetection<DateValueEditorOptions>) {
+    protected onOptionsChange(newOptions: DateValueEditorOptions, oldOptions: DateValueEditorOptions, whichOptionChanged: PropertyChangeDetection<DateValueEditorOptions>) {
         if (whichOptionChanged.maximumGranularity) {
             if (newOptions.maximumGranularity === 'minute') {
                 this.startView = 'day';

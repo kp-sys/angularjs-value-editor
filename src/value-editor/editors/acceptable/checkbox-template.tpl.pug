@@ -1,7 +1,7 @@
 .pretty.p-icon.p-smooth.p-curve
     input(
         type="checkbox"
-        name!="\\{\\{$ctrl.valueEditorController.editorName\\}\\}"
+        name!="\\{\\{$ctrl.valueEditorController.editorName + '_' + index\\}\\}"
 
         ng-model="$ctrl.checkboxModel($item)"
         ng-model-options="{getterSetter: true}"

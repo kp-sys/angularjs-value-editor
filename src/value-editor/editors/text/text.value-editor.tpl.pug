@@ -1,68 +1,74 @@
 // TEXT
 input.form-control(  ng-if="$ctrl.options.type === 'text'"
-        type="{{$ctrl.options.type}}"
+    type="{{$ctrl.options.type}}"
 
-        id="{{$ctrl.valueEditorController.editorId}}"
-        name="{{$ctrl.valueEditorController.editorName}}"
-        placeholder="{{$ctrl.valueEditorController.placeholder}}"
-        ng-class="$ctrl.options.cssClasses"
+    id="{{$ctrl.valueEditorController.editorId}}"
+    name="{{$ctrl.valueEditorController.editorName}}"
+    placeholder="{{$ctrl.valueEditorController.placeholder}}"
+    ng-class="$ctrl.options.cssClasses"
 
-        ng-model="$ctrl.model"
-        ng-model-options="{ getterSetter: true}"
+    ng-model="$ctrl.model"
+    ng-model-options="{ getterSetter: true}"
 
-        ng-disabled="$ctrl.valueEditorController.isDisabled"
+    ng-disabled="$ctrl.valueEditorController.isDisabled"
 
-        ng-required="$ctrl.valueEditorController.validations.required"
-        ng-minlength="$ctrl.valueEditorController.validations.minlength"
-        ng-maxlength="$ctrl.valueEditorController.validations.maxlength"
-        ng-pattern="$ctrl.valueEditorController.validations.pattern"
+    ng-required="$ctrl.valueEditorController.validations.required"
+    ng-minlength="$ctrl.valueEditorController.validations.minlength"
+    ng-maxlength="$ctrl.valueEditorController.validations.maxlength"
+    ng-pattern="$ctrl.valueEditorController.validations.pattern"
 
-        data-main-input
-    )
+    error-messages
+
+    data-main-input
+)
 
 // TEXTAREA
 textarea.form-control(
-        ng-if="$ctrl.options.type === 'textarea'"
+    ng-if="$ctrl.options.type === 'textarea'"
 
-        id="{{$ctrl.valueEditorController.editorId}}"
-        name="{{$ctrl.valueEditorController.editorName}}"
-        placeholder="{{$ctrl.valueEditorController.placeholder}}"
-        rows="{{$ctrl.getNumberOfRows()}}"
-        ng-class="$ctrl.options.cssClasses"
+    id="{{$ctrl.valueEditorController.editorId}}"
+    name="{{$ctrl.valueEditorController.editorName}}"
+    placeholder="{{$ctrl.valueEditorController.placeholder}}"
+    rows="{{$ctrl.getNumberOfRows()}}"
+    ng-class="$ctrl.options.cssClasses"
 
-        ng-model="$ctrl.model"
-        ng-model-options="{ getterSetter: true}"
-        ng-trim="false"
+    ng-model="$ctrl.model"
+    ng-model-options="{ getterSetter: true}"
+    ng-trim="false"
 
-        ng-disabled="$ctrl.valueEditorController.isDisabled"
+    ng-disabled="$ctrl.valueEditorController.isDisabled"
 
-        ng-required="$ctrl.valueEditorController.validations.required"
-        ng-minlength="$ctrl.valueEditorController.validations.minlength"
-        ng-maxlength="$ctrl.valueEditorController.validations.maxlength"
-        ng-pattern="$ctrl.valueEditorController.validations.pattern"
+    ng-required="$ctrl.valueEditorController.validations.required"
+    ng-minlength="$ctrl.valueEditorController.validations.minlength"
+    ng-maxlength="$ctrl.valueEditorController.validations.maxlength"
+    ng-pattern="$ctrl.valueEditorController.validations.pattern"
 
-        data-main-input
+    error-messages
+
+    data-main-input
 )
 
 // ACE EDITOR
-div.ace-editor(
-        ng-if="$ctrl.options.type === 'rich-textarea'"
+.form-control.ace-editor(
+    ng-if="$ctrl.options.type === 'rich-textarea'"
 
-        id="{{$ctrl.valueEditorController.editorId}}"
-        name="{{$ctrl.valueEditorController.editorName}}"
-        ng-class="$ctrl.options.cssClasses"
+    id="{{$ctrl.valueEditorController.editorId}}"
+    name="{{$ctrl.valueEditorController.editorName}}"
+    ng-class="$ctrl.options.cssClasses"
 
-        ui-ace="$ctrl.options.aceOptions"
+    ui-ace="$ctrl.options.aceOptions"
 
-        ng-model="$ctrl.model"
-        ng-model-options="{ getterSetter: true}"
+    ng-model="$ctrl.model"
+    ng-model-options="{ getterSetter: true}"
 
-        ng-disabled="$ctrl.valueEditorController.isDisabled"
+    ng-disabled="$ctrl.valueEditorController.isDisabled"
 
-        ng-required="$ctrl.valueEditorController.validations.required"
-        ng-minlength="$ctrl.valueEditorController.validations.minlength"
-        ng-maxlength="$ctrl.valueEditorController.validations.maxlength"
-        ng-pattern="$ctrl.valueEditorController.validations.pattern"
+    ng-required="$ctrl.valueEditorController.validations.required"
+    ng-minlength="$ctrl.valueEditorController.validations.minlength"
+    ng-maxlength="$ctrl.valueEditorController.validations.maxlength"
+    ng-pattern="$ctrl.valueEditorController.validations.pattern"
 
-        data-main-input
+    error-messages
+
+    data-main-input
 )

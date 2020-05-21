@@ -1,24 +1,29 @@
 span.pretty.p-icon.p-smooth.p-curve(class="{{$ctrl.options.cssClasses.join(' ')}}" ng-class="{'p-has-indeterminate': $ctrl.options.nullAsIndeterminate}")
-        input(  type="checkbox"
+    input(  type="checkbox"
 
-                id="{{$ctrl.valueEditorController.editorId}}"
-                name="{{$ctrl.valueEditorController.editorName}}"
+        id="{{$ctrl.valueEditorController.editorId}}"
+        name="{{$ctrl.valueEditorController.editorName}}"
 
-                ng-ref="$ctrl.inputElementModelController"
-                ng-ref-read="ngModel"
+        ng-ref="$ctrl.inputElementModelController"
+        ng-ref-read="ngModel"
 
-                ng-model="$ctrl.model"
-                ng-model-options="{ getterSetter: true}"
+        ng-model="$ctrl.model"
+        ng-model-options="{ getterSetter: true}"
 
-                ng-disabled="$ctrl.valueEditorController.isDisabled"
+        ng-disabled="$ctrl.valueEditorController.isDisabled"
 
-                data-main-input
-        )
+        ng-required="$ctrl.valueEditorController.validations.required"
 
-        .state
-            i.icon.glyphicon.glyphicon-ok
-            label
+        error-messages
+        error-messages-custom-class="boolean-checkbox standalone"
 
-        .state.p-is-indeterminate
-            i.icon.glyphicon.glyphicon-minus
-            label
+        data-main-input
+    )
+
+    .state
+        i.icon.glyphicon.glyphicon-ok
+        label
+
+    .state.p-is-indeterminate
+        i.icon.glyphicon.glyphicon-minus
+        label

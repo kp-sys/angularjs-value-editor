@@ -184,6 +184,6 @@ describe('object-value-editor', () => {
             } as ObjectValueEditorOptions & UndocumentedInternalOptions
         });
 
-        expect(element[0].querySelector('fieldset[ng-form]')).toBe(null);
+        expect(element.querySelector('fieldset[ng-form]')).toBe(null);
     });
 });

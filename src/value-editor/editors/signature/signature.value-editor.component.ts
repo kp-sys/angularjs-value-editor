@@ -1,5 +1,5 @@
 import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
-import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
+import AbstractValueEditor from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 import {ILogService, IOnInit, ITimeoutService} from 'angular';
 import {
@@ -9,6 +9,7 @@ import {
 import {SignatureValueEditorLocalizationsService} from './signature-value-editor-localization.provider';
 import {TextValueEditorValidations} from '../text/text.value-editor.component';
 import {getFormModel} from '../../utils/forms';
+import {PropertyChangeDetection} from '../../utils/equals';
 
 export class SignatureValueEditorComponentController extends AbstractValueEditor<string, SignatureValueEditorOptions> implements IOnInit {
     public items: string[] = [];
@@ -31,7 +32,7 @@ export class SignatureValueEditorComponentController extends AbstractValueEditor
         }
     }
 
-    protected onOptionsChange(newOptions: SignatureValueEditorOptions, oldOptions, whatChanged: OptionsChangeDetection<SignatureValueEditorOptions>) {
+    protected onOptionsChange(newOptions: SignatureValueEditorOptions, oldOptions, whatChanged: PropertyChangeDetection<SignatureValueEditorOptions>) {
         if (newOptions.canDoAction) {
             this.loadItems();
         }

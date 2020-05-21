@@ -8,6 +8,7 @@ import uiSelectDecorator from './uiSelect.decorator';
 import AcceptableValueEditorLocalizationsProvider, {ACCEPTABLE_VALUE_EDITOR_DEFAULT_LOCALIZATIONS} from './acceptable-value-editor-localizations.provider';
 import AcceptableValueEditorComponent from './acceptable.value-editor.component';
 import AcceptableValueEditorConfigurationProvider, {ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS} from './acceptable-value-editor-configuration.provider';
+import CheckboxesValidationsDirective from './checkboxes-validations-directive';
 
 /**
  * @ngdoc module
@@ -24,5 +25,6 @@ export default register('angularjs-value-editor.acceptable', [aliasesModule, 'ng
     .constant('acceptableValueEditorDefaultLocalizations', ACCEPTABLE_VALUE_EDITOR_DEFAULT_LOCALIZATIONS)
     .provider(AcceptableValueEditorConfigurationProvider.providerName, AcceptableValueEditorConfigurationProvider)
     .provider(AcceptableValueEditorLocalizationsProvider.providerName, AcceptableValueEditorLocalizationsProvider)
+    .directive(CheckboxesValidationsDirective.directiveName, CheckboxesValidationsDirective)
     .component(AcceptableValueEditorComponent.componentName, AcceptableValueEditorComponent)
     .name();

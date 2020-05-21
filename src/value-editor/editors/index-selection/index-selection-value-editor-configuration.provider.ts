@@ -21,7 +21,7 @@ import {Identified} from './index-selection.value-editor.component';
  *
  * Default value: {@link indexSelectionValueEditorDefaultOptions}
  */
-export interface IndexSelectionValueEditorOptions<ID, VALUE extends Identified<ID>> extends ValueEditorOptions {
+export interface IndexSelectionValueEditorOptions<ID, VALUE extends Identified<ID> = Identified<ID>> extends ValueEditorOptions {
     items: VALUE[];
     optionsTemplate?: string;
     equalityComparator?: (model: [ID], item: VALUE) => boolean;

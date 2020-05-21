@@ -1,3 +1,4 @@
+import './index-selection.value-editor.less';
 import register from '@kpsys/angularjs-register';
 import IndexSelectionValueEditorComponent from './index-selection.value-editor.component';
 import IndexSelectionValueEditorConfigurationProvider, {INDEX_SELECTION_VALUE_EDITOR_DEFAULT_OPTIONS} from './index-selection-value-editor-configuration.provider';

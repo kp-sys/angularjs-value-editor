@@ -34,6 +34,7 @@ export default class NumberRangeValidationsDirective {
         ngModelController.$validators.fromBiggerThanTo = fromBiggerThanToValidationFactory(numberRangeValueEditorController);
         ngModelController.$validators.toBiggerThanFrom = toBiggerThanFromValidationFactory(numberRangeValueEditorController);
         ngModelController.$validators.number = numberValidationFactory($scope, this.$parse, $attrs);
+        ngModelController.$formatters.push((value) => JSON.stringify(value));
     }
 }
 

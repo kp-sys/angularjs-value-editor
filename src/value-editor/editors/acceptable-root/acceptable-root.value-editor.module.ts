@@ -5,6 +5,7 @@ import AcceptableRootValueEditorConfigurationProvider, {ACCEPTABLE_ROOT_VALUE_ED
 import AcceptableRootValueEditorLocalizationsProvider, {ACCEPTABLE_ROOT_VALUE_EDITOR_DEFAULT_LOCALIZATIONS} from './acceptable-root-value-editor-localization.provider';
 import AcceptableRootValueEditorComponent from './acceptable-root.value-editor.component';
 import {acceptableRootValueEditorConfig} from './acceptable-root.value-editor';
+import AcceptableRootRequiredValidationsDirective from './acceptable-root-required-validations-directive';
 
 /**
  * @ngdoc module
@@ -21,5 +22,6 @@ export default register('angularjs-value-editor.acceptable-root', [treeControlMo
     .constant('acceptableRootValueEditorDefaultLocalizations', ACCEPTABLE_ROOT_VALUE_EDITOR_DEFAULT_LOCALIZATIONS)
     .provider(AcceptableRootValueEditorConfigurationProvider.providerName, AcceptableRootValueEditorConfigurationProvider)
     .provider(AcceptableRootValueEditorLocalizationsProvider.providerName, AcceptableRootValueEditorLocalizationsProvider)
+    .directive(AcceptableRootRequiredValidationsDirective.directiveName, AcceptableRootRequiredValidationsDirective)
     .component(AcceptableRootValueEditorComponent.componentName, AcceptableRootValueEditorComponent)
     .name();

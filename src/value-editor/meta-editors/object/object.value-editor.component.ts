@@ -8,8 +8,8 @@ import {
 } from './object-value-editor-configuration.provider';
 import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
 import {AbstractMetaValueEditorComponentController} from '../abstract-meta-value-editor.component';
-import {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import {generateUuid} from '../../utils/uuid-generator';
+import {PropertyChangeDetection} from '../../utils/equals';
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.objectValueEditor';
 
@@ -58,7 +58,7 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
         return field;
     }
 
-    protected onOptionsChange(newOptions: ObjectValueEditorOptions, oldOptions: ObjectValueEditorOptions | undefined, optionsChangeDetection: OptionsChangeDetection<ObjectValueEditorOptions> | undefined) {
+    protected onOptionsChange(newOptions: ObjectValueEditorOptions, oldOptions: ObjectValueEditorOptions | undefined, optionsChangeDetection: PropertyChangeDetection<ObjectValueEditorOptions> | undefined) {
         super.onOptionsChange(newOptions, oldOptions, optionsChangeDetection);
 
         if (optionsChangeDetection.labelsWidth) {

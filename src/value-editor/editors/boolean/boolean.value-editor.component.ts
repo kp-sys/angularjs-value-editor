@@ -1,4 +1,3 @@
-import './boolean.value-editor.scss';
 import KpValueEditorComponent, {
     ValueEditorBindings,
     ValueEditorValidations

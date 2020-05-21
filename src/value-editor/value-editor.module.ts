@@ -31,6 +31,7 @@ import KpValueEditorComponent from './kp-value-editor/kp-value-editor.component'
 import {EmptyConfigurationService} from './common/abstract-value-editor';
 import KpValueEditorConfigurationProvider from './kp-value-editor/kp-value-editor-configuration-provider';
 import KpUniversalFormComponent from './kp-universal-form/kp-universal-form.component';
+import errorMessagesModule from './error-messages/error-messages.module';
 
 /**
  * @ngdoc constant
@@ -76,7 +77,8 @@ export default register('angularjs-value-editor', [
     velocityTemplateValueEditorModule,
     rangeValueEditorModule,
     listValueEditorModule,
-    objectValueEditorModule
+    objectValueEditorModule,
+    errorMessagesModule
 ])
     .constant('loadingSpinnerTemplateUrl', LOADING_SPINNER_TPL_URL)
     .provider(EmptyConfigurationService.serviceName, EmptyConfigurationService)

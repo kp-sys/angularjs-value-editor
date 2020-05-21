@@ -2,7 +2,6 @@ import KpValueEditorComponent, {
     ValueEditorBindings,
     ValueEditorValidations
 } from '../../kp-value-editor/kp-value-editor.component';
-import {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 import {IInterpolateService, ITemplateCacheService, ITimeoutService} from 'angular';
 import {
@@ -11,6 +10,7 @@ import {
 } from './searchable-value-editor-configuration.provider';
 import {SearchableValueEditorLocalizationsService} from './searchable-value-editor-localization.provider';
 import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
+import {PropertyChangeDetection} from '../../utils/equals';
 import IInjectorService = angular.auto.IInjectorService;
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.searchableValueEditor';
@@ -69,7 +69,7 @@ export class SearchableValueEditorComponentController<MODEL = any> extends Abstr
         }
     }
 
-    protected onOptionsChange(newOptions: SearchableValueEditorOptions<MODEL>, oldOptions, whatChanged: OptionsChangeDetection<SearchableValueEditorOptions<MODEL>>) {
+    protected onOptionsChange(newOptions: SearchableValueEditorOptions<MODEL>, oldOptions, whatChanged: PropertyChangeDetection<SearchableValueEditorOptions<MODEL>>) {
         if (whatChanged.modelTemplate) {
             this.updateTemplate();
         }

@@ -118,7 +118,8 @@ class CheckboxesController {
     }
 
     public getOptionsCount(): number {
-        return this.element.querySelectorAll<HTMLDivElement>('[name^="acceptable_"]').length;
+        // -1 because validation helper also pass selector test
+        return this.element.querySelectorAll<HTMLDivElement>('[name^="acceptable_"]').length - 1;
     }
 
     public getOptionsText(): string[] {
@@ -241,6 +242,28 @@ describe('acceptable-value-editor', () => {
 
             optionsCount = uiSelectController.openUiSelect().setSearchPhrase('f').getOptionsCount();
             expect(optionsCount).toBe(ACCEPTABLE_VALUES.length);
+        });
+
+        it('should has working required validation', () => {
+            valueEditorMocker.create('acceptable', {
+                editorName: 'acceptable',
+                options: {
+                    acceptableValues: ACCEPTABLE_VALUES
+                },
+                validations: {
+                    required: true
+                }
+            });
+
+            expect($scope.form.acceptable.$error).toEqual({required: true});
+
+            const uiSelect = valueEditorMocker.getInputElement<HTMLElement>();
+            const controller = new UISelectController(uiSelect);
+
+            controller.openAndSelectNthOption(3);
+
+            expect($scope.model).toEqual({value: 'd'});
+            expect($scope.form.acceptable.$error).toEqual({});
         });
     });
 
@@ -431,6 +454,29 @@ describe('acceptable-value-editor', () => {
             new UISelectController(valueEditorMocker.getInputElement()).openAndSelectNthOption(0).selectNthOption(3).selectNthOption(1);
             expect($scope.model).toEqual([{value: 'h'}, {value: 'f'}, {value: 'd'}]);
         });
+
+        it('should has working required validation', () => {
+            valueEditorMocker.create('acceptable', {
+                editorName: 'multiacceptable',
+                options: {
+                    acceptableValues: ACCEPTABLE_VALUES
+                },
+                validations: {
+                    required: true
+                }
+            });
+
+            expect($scope.form.multiacceptable.$error).toEqual({required: true});
+
+            const uiSelect = valueEditorMocker.getInputElement<HTMLElement>();
+            const controller = new UISelectController(uiSelect);
+
+            controller.openAndSelectNthOption(3);
+
+            expect($scope.model).toEqual({value: 'd'});
+            expect($scope.form.multiacceptable.$error).toEqual({});
+        });
+
     });
 
     describe('multi selectable checkboxes', () => {
@@ -665,6 +711,29 @@ describe('acceptable-value-editor', () => {
 
             valueEditorMocker.getInputElement().querySelector<HTMLButtonElement>('.btn-group .deselect-all').click();
             expect($scope.model).toEqual([]);
+        });
+
+        it('should has working required validation', () => {
+            valueEditorMocker.create('acceptable', {
+                editorName: 'acceptable',
+                options: {
+                    acceptableValues: ACCEPTABLE_VALUES.slice(),
+                    multiselectable: true,
+                    switchToCheckboxesThreshold: 5
+                },
+                validations: {
+                    required: true
+                }
+            });
+
+            expect($scope.form.acceptable.$error).toEqual({required: true});
+
+            const controller = new CheckboxesController(valueEditorMocker.getInputElement<HTMLDivElement>());
+
+            controller.selectNthOption(3);
+
+            expect($scope.model).toEqual([{value: 'd'}]);
+            expect($scope.form.acceptable.$error).toEqual({});
         });
     });
 

@@ -2,10 +2,10 @@ import NgModelConnector from './ng-model-connector';
 import * as angular from 'angular';
 import {IOnInit, IPostLink} from 'angular';
 import {ValueEditorComponentController, ValueEditorOptions} from '../kp-value-editor/kp-value-editor.component';
-import customEquals from '../utils/equals';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from './abstract-value-editor-configuration.provider';
 import {AbstractValueEditorLocalizationService} from './abstract-value-editor-localization.provider';
 import {AliasesServiceProvider, DEFAULT_ALIAS} from '../aliases/aliases.service';
+import {customEquals, PropertyChangeDetection, whichPropertiesAreNotEqual} from '../utils/equals';
 
 /**
  * Abstract base class for general value-editor features.
@@ -15,7 +15,7 @@ import {AliasesServiceProvider, DEFAULT_ALIAS} from '../aliases/aliases.service'
 export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEditorOptions> extends NgModelConnector<MODEL> implements IPostLink, IOnInit {
     private static $inject = ['emptyConfigurationService'];
 
-    protected options: OPTIONS;
+    public options: OPTIONS;
     protected valueEditorController: ValueEditorComponentController<MODEL, OPTIONS>;
 
     constructor(protected configurationService: AbstractValueEditorConfigurationService<OPTIONS>, protected localizationService?: AbstractValueEditorLocalizationService<any>) {
@@ -32,7 +32,7 @@ export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEd
     public $postLink(): void {
         // If initial options are not defaults, trigger options change.
         if (!customEquals(this.options, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration())) {
-            this.onOptionsChange(this.options, undefined, this.whichPropertiesIsNotEqual(this.options, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration() as unknown as OPTIONS));
+            this.onOptionsChange(this.options, undefined, whichPropertiesAreNotEqual(this.options, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration() as unknown as OPTIONS));
         }
     }
 
@@ -40,10 +40,11 @@ export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEd
      * This method changes options.
      * @param {OPTIONS} newOptions
      * @param {OPTIONS} oldOptions
+     * @param {PropertyChangeDetection} whatChanged
      */
-    public changeOptions(newOptions: OPTIONS, oldOptions: OPTIONS) {
+    public changeOptions(newOptions: OPTIONS, oldOptions: OPTIONS, whatChanged: PropertyChangeDetection<OPTIONS>) {
         this.options = newOptions;
-        this.onOptionsChange(newOptions, oldOptions, this.whichPropertiesIsNotEqual(newOptions, oldOptions));
+        this.onOptionsChange(newOptions, oldOptions, whatChanged);
     }
 
     /**
@@ -64,31 +65,9 @@ export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEd
      * This method is called always, when value editor options is changed with old and new options object merged with default options.
      * @param {OPTIONS} newOptions New options.
      * @param {OPTIONS} oldOptions Old options.
-     * @param {OptionsChangeDetection<OPTIONS>} optionsChangeDetection Object whose keys are name of changed properties and value is boolean status of change.
+     * @param {PropertyChangeDetection<OPTIONS>} optionsChangeDetection Object whose keys are name of changed properties and value is boolean status of change.
      */
-    protected abstract onOptionsChange(newOptions: OPTIONS, oldOptions?: OPTIONS, optionsChangeDetection?: OptionsChangeDetection<OPTIONS>);
-
-    private whichPropertiesIsNotEqual(options1: OPTIONS, options2: OPTIONS): OptionsChangeDetection<OPTIONS> {
-        const changeObject: OptionsChangeDetection<OPTIONS> = {};
-        const keys: Set<string> = new Set<string>();
-
-        // tslint:disable-next-line:no-unused-expression
-        options1 && Object.keys(options1).forEach(keys.add.bind(keys));
-        // tslint:disable-next-line:no-unused-expression
-        options2 && Object.keys(options2).forEach(keys.add.bind(keys));
-
-        Array.from(keys).forEach((key) => changeObject[key] =
-            !(Object.prototype.hasOwnProperty.call(options1, key) &&
-                Object.prototype.hasOwnProperty.call(options2, key) &&
-                options1[key] === options2[key])
-        );
-
-        return changeObject;
-    }
-}
-
-export type OptionsChangeDetection<T> = {
-    readonly [name in keyof T]?: boolean;
+    protected abstract onOptionsChange(newOptions: OPTIONS, oldOptions?: OPTIONS, optionsChangeDetection?: PropertyChangeDetection<OPTIONS>);
 }
 
 export class EmptyConfigurationService extends AbstractValueEditorConfigurationProvider<never> {

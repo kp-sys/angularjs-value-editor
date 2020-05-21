@@ -1,10 +1,30 @@
 treecontrol.tree-boot(
     tree-model="$ctrl.internalAcceptableValues"
     options="$ctrl.treeOptions"
-    selected-node="$ctrl.model"
-    selected-nodes="$ctrl.model"
+
+    "{{multiselect ? 'selected-nodes' : 'selected-node'}}"="$ctrl.selectedNodes"
+
+    on-selection="$ctrl.select(selectedNode, selectedNodes)"
+
     expanded-nodes="$ctrl.expandedNodes"
 )
 
     span(ng-class="{'text-muted': !$ctrl.isSelectable(node)}") {{optionsTemplate}}
     span(class="text-muted" ng-if="!$ctrl.isSelectable(node)") (\{\{$ctrl.localize('cannotSelect')\}\})
+
+input.validation-helper(
+    type="text"
+
+    id="\\{\\{$ctrl.valueEditorController.editorId\\}\\}"
+    name="\\{\\{$ctrl.valueEditorController.editorName\\}\\}"
+
+    ng-model="$ctrl.model"
+    ng-model-options="{ getterSetter: true }"
+
+    acceptable-root-required-validations
+
+    error-messages
+    error-messages-custom-class="acceptable-root standalone"
+
+    data-main-input
+)

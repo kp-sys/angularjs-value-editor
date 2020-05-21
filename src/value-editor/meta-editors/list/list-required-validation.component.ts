@@ -1,5 +1,9 @@
 import {INgModelController, IOnInit} from 'angular';
 
+export interface ListRequiredValidationHelper {
+    'list-required': boolean;
+}
+
 export class ListRequiredValidationComponentController implements IOnInit {
     public ngModelController: INgModelController;
     public enabled: boolean;

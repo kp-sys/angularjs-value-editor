@@ -2,7 +2,6 @@ import KpValueEditorComponent, {
     ValueEditorBindings,
     ValueEditorValidations
 } from '../../kp-value-editor/kp-value-editor.component';
-import {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 import {IInterpolateService, IOnInit, ITemplateCacheService} from 'angular';
 import {
@@ -10,6 +9,7 @@ import {
     IndexSelectionValueEditorOptions
 } from './index-selection-value-editor-configuration.provider';
 import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
+import {PropertyChangeDetection} from '../../utils/equals';
 
 export interface Identified<ID = any> {
     id: ID;
@@ -59,7 +59,7 @@ export class IndexSelectionValueEditorComponentController<ID, VALUE extends Iden
         this.model = [item.id];
     }
 
-    protected onOptionsChange(newOptions: IndexSelectionValueEditorOptions<ID, VALUE>, oldOptions, whatChanged: OptionsChangeDetection<IndexSelectionValueEditorOptions<ID, VALUE>>) {
+    protected onOptionsChange(newOptions: IndexSelectionValueEditorOptions<ID, VALUE>, oldOptions, whatChanged: PropertyChangeDetection<IndexSelectionValueEditorOptions<ID, VALUE>>) {
         if (whatChanged.optionsTemplate) {
             this.updateTemplate();
         }

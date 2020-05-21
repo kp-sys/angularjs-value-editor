@@ -1,5 +1,5 @@
 import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
-import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
+import AbstractValueEditor from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 import {ILogService, IOnInit, ITimeoutService} from 'angular';
 import {
@@ -9,6 +9,7 @@ import {
 import {AccessNumberValueEditorLocalizationsService} from './access-number-value-editor-localization.provider';
 import {TextValueEditorValidations} from '../text/text.value-editor.component';
 import {getFormModel} from '../../utils/forms';
+import {PropertyChangeDetection} from '../../utils/equals';
 
 export class AccessNumberValueEditorComponentController extends AbstractValueEditor<string, AccessNumberValueEditorOptions> implements IOnInit {
     public items: string[] = [];
@@ -32,10 +33,10 @@ export class AccessNumberValueEditorComponentController extends AbstractValueEdi
     }
 
     public get required() {
-        return getFormModel(this.valueEditorController.formController).issue ? false : this.valueEditorController?.validations?.required ?? false;
+        return getFormModel(this.valueEditorController.formController).issue ? false : this.valueEditorController.validations?.required ?? false;
     }
 
-    protected onOptionsChange(newOptions: AccessNumberValueEditorOptions, oldOptions, whatChanged: OptionsChangeDetection<AccessNumberValueEditorOptions>) {
+    protected onOptionsChange(newOptions: AccessNumberValueEditorOptions, oldOptions, whatChanged: PropertyChangeDetection<AccessNumberValueEditorOptions>) {
         if (newOptions.canDoAction) {
             this.loadItems();
         }

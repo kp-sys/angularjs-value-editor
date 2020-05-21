@@ -1,0 +1,6 @@
+@ngdoc overview
+@name Demo
+@area docs
+@description
+
+<iframe width="100%" height="100%" src="demo.html" frameborder="0"></iframe>

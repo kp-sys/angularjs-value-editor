@@ -1,7 +1,6 @@
 /* istanbul ignore file */ // neni moc co testovat... viz. testy
 
 import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
-import {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 import {IDoCheck, IInterpolateService, ITemplateCacheService} from 'angular';
 import {
@@ -9,6 +8,7 @@ import {
     RangeValueEditorOptions
 } from './range-value-editor-configuration.provider';
 import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
+import {PropertyChangeDetection} from '../../utils/equals';
 
 export interface RangeValueEditorModel {
     from: number;
@@ -19,6 +19,7 @@ const TEMPLATE_NAME_PREFIX = 'value-editor.rangeValueEditor';
 
 export class RangeValueEditorComponentController extends AbstractTemplateValueEditor<RangeValueEditorModel, RangeValueEditorOptions> implements IDoCheck {
     private static TEMPLATE_URL = require('./range.value-editor.tpl.pug');
+
     #internalModel: RangeValueEditorModel;
 
     /*@ngInject*/
@@ -39,6 +40,7 @@ export class RangeValueEditorComponentController extends AbstractTemplateValueEd
         }
     }
 
+
     public get internalModel(): RangeValueEditorModel {
         return this.#internalModel;
     }
@@ -47,7 +49,7 @@ export class RangeValueEditorComponentController extends AbstractTemplateValueEd
         this.model = value;
     }
 
-    protected onOptionsChange(newOptions: RangeValueEditorOptions, oldOptions, whatChanged: OptionsChangeDetection<RangeValueEditorOptions>) {
+    protected onOptionsChange(newOptions: RangeValueEditorOptions, oldOptions, whatChanged: PropertyChangeDetection<RangeValueEditorOptions>) {
         //
     }
 

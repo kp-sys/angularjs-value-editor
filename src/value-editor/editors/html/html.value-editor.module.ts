@@ -1,3 +1,4 @@
+import './html.value-editor.less';
 import register from '@kpsys/angularjs-register';
 import HtmlValueEditorComponent from './html.value-editor.component';
 import HtmlValueEditorConfigurationProvider, {HTML_VALUE_EDITOR_DEFAULT_OPTIONS} from './html-value-editor-configuration.provider';

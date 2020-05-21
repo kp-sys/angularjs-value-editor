@@ -11,7 +11,7 @@ describe('password-value-editor', () => {
 
     function fillBothInputs(text: string) {
         const inputElement = valueEditorMocker.getInputElement<HTMLInputElement>();
-        const confirmationInputElement = inputElement.closest('.with-confirmation').querySelector<HTMLInputElement>('input[type="password"]');
+        const confirmationInputElement = inputElement.closest('.with-confirmation').querySelector<HTMLInputElement>('input.confirmation[type="password"]');
 
         inputElement.value = confirmationInputElement.value = text;
 

@@ -25,7 +25,7 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
      * @param {boolean=} attachToBody If `true`, element wil be attached to `body` element before compilation.
      * @returns {JQLite} Compiled element
      */
-    public create(type: TValueEditorType, bindings?: BINDINGS, attachToBody?: boolean): JQLite {
+    public create(type: TValueEditorType, bindings?: BINDINGS, attachToBody?: boolean): HTMLElement {
         this.customTemplate = this.customTemplate || '';
 
         const template = this.getTemplate(type, bindings);
@@ -43,9 +43,7 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
             this.postConstructHook();
         }
 
-        const editorReference = this.getCompiledElement().querySelector('kp-value-editor');
-
-        return angular.element(editorReference) as JQLite;
+        return this.getCompiledElement().querySelector<HTMLElement>('kp-value-editor');
     }
 
     /**

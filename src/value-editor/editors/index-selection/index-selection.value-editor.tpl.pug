@@ -1,5 +1,4 @@
 .list-group(
-    id!="\\{\\{$ctrl.valueEditorController.editorId\\}\\}"
     ng-class="$ctrl.options.cssClasses"
     data-main-input
 )
@@ -11,12 +10,16 @@
         ng-click="$ctrl.selectItem($item)"
     ) {{optionsTemplate}}
 
-input(
-    type="hidden"
+input.validation-helper(
+    type="text"
+
+    id!="\\{\\{$ctrl.valueEditorController.editorId\\}\\}"
     name="\\{\\{$ctrl.valueEditorController.editorName\\}\\}"
 
     ng-model="$ctrl.model"
     ng-model-options="{ getterSetter: true}"
 
     ng-required="$ctrl.valueEditorController.validations.required"
+
+    error-messages
 )

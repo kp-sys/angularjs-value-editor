@@ -1,6 +1,5 @@
 /* istanbul ignore file */ // neni cas... :-(
 
-import {OptionsChangeDetection} from '../../common/abstract-value-editor';
 import KpValueEditorComponent, {
     ValueEditorBindings,
     ValueEditorValidations
@@ -14,6 +13,7 @@ import {IInterpolateService, IOnInit, ITemplateCacheService} from 'angular';
 import {AngularTreeControlOptions} from './tree-control/angular-tree-control';
 import bind from 'bind-decorator';
 import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
+import {PropertyChangeDetection} from '../../utils/equals';
 
 export interface Childrenable {
     children?: Childrenable[];
@@ -21,12 +21,14 @@ export interface Childrenable {
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.acceptableRootValueEditor';
 
-export class AcceptableRootValueEditorComponentController<VALUE extends Childrenable> extends AbstractTemplateValueEditor<{} | {}[], AcceptableRootValueEditorOptions<VALUE>> implements IOnInit {
+export class AcceptableRootValueEditorComponentController<VALUE extends Childrenable> extends AbstractTemplateValueEditor<VALUE | VALUE[], AcceptableRootValueEditorOptions<VALUE>> implements IOnInit {
     private static readonly TEMPLATE_URL = require('./acceptable-root.value-editor.tpl.pug');
     private static readonly TREECONTROL_TEMPLATE_URL = require('./treecontrol-custom-template.tpl.html');
 
     public expandedNodes: VALUE[];
     public internalAcceptableValues: [VALUE];
+    public selectedNodes: VALUE | VALUE[];
+
     private treeOptions: Partial<AngularTreeControlOptions<VALUE>>;
 
     /*@ngInject*/
@@ -60,6 +62,26 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
         };
         // expanded is always first level
         this.expandedNodes = [this.options.acceptableValue];
+
+        const originalRender = this.ngModelController.$render;
+        this.ngModelController.$render = () => {
+            originalRender();
+
+            if (this.options.multiselect) {
+                this.selectedNodes = this.model ?? [];
+            } else {
+                this.selectedNodes = this.model;
+            }
+        };
+    };
+
+
+    public select(selectedNode: VALUE, selectedNodes: VALUE[]) {
+        if (this.options.multiselect) {
+            this.model = (selectedNodes as []).slice();
+        } else {
+            this.model = selectedNode;
+        }
     }
 
     @bind
@@ -67,15 +89,18 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
         return !this.options.disabledItems.some((disabledItem) => this.options.equalityComparator(disabledItem, node));
     }
 
-    protected onOptionsChange(newOptions: AcceptableRootValueEditorOptions<VALUE>, oldOptions, whatChanged: OptionsChangeDetection<AcceptableRootValueEditorOptions<VALUE>>) {
-        if (whatChanged.optionsTemplate) {
+    protected onOptionsChange(newOptions: AcceptableRootValueEditorOptions<VALUE>, oldOptions, whatChanged: PropertyChangeDetection<AcceptableRootValueEditorOptions<VALUE>>) {
+        if (whatChanged.optionsTemplate ||
+            whatChanged.multiselect
+        ) {
             this.updateTemplate();
         }
     }
 
     protected getTemplateModel(): {} {
         return {
-            optionsTemplate: this.options.optionsTemplate
+            optionsTemplate: this.options.optionsTemplate,
+            multiselect: this.options.multiselect
         };
     }
 }
@@ -142,9 +167,7 @@ export default class AcceptableRootValueEditorComponent {
         valueEditorController: `^${KpValueEditorComponent.componentName}`
     };
 
-    public template = `
-        <ng-include src="$ctrl.templateName"></ng-include>
-    `;
+    public template = AbstractTemplateValueEditor.COMPONENT_TEMPLATE;
 
     public controller = AcceptableRootValueEditorComponentController;
 }

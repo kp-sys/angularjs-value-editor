@@ -1,0 +1,20 @@
+@import '~bootstrap-less/bootstrap/variables';
+
+index-selection-value-editor {
+    .list-group {
+        margin-bottom: 0;
+    }
+}
+
+.has-error index-selection-value-editor .list-group .list-group-item {
+    &:first-child {
+        border-top-color: @state-danger-text;
+    }
+
+    &:last-child {
+        border-bottom-color: @state-danger-text;
+    }
+
+    border-left-color: @state-danger-text;
+    border-right-color: @state-danger-text;
+}

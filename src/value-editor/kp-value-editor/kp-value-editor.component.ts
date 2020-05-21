@@ -1,16 +1,16 @@
 import * as angular from 'angular';
-import {IDoCheck, IFormController, IOnInit} from 'angular';
+import {IAugmentedJQuery, IDoCheck, IFormController, IOnDestroy, IOnInit} from 'angular';
 import NgModelConnector from '../common/ng-model-connector';
 import {generateUuid} from '../utils/uuid-generator';
-import customEquals from '../utils/equals';
-import AbstractValueEditor from '../common/abstract-value-editor';
 import {TValueEditorType} from '../typings';
 import AliasesService, {CustomValueEditorType} from '../aliases/aliases.service';
 import {ValueEditorConfigurationService} from './kp-value-editor-configuration-provider';
+import AbstractValueEditor from '../common/abstract-value-editor';
+import {customEquals, PropertyChangeDetection, whichPropertiesAreNotEqual} from '../utils/equals';
 
 export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS extends ValueEditorOptions = ValueEditorOptions, EDITORVALIDATIONS extends ValueEditorValidations = ValueEditorValidations>
     extends NgModelConnector<MODEL>
-    implements ValueEditorBindings<EDITOROPTS, EDITORVALIDATIONS>, IOnInit, IDoCheck {
+    implements ValueEditorBindings<EDITOROPTS, EDITORVALIDATIONS>, IOnInit, IDoCheck, IOnDestroy {
 
     /* Bindings */
     public editorId: string;
@@ -23,14 +23,19 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
     public options: EDITOROPTS;
     public formController: IFormController;
     public configuration: ValueEditorConfigurationService;
+    public valueEditorInstance: AbstractValueEditor<MODEL, EDITOROPTS>;
     /* Internal */
     private previousOptions: EDITOROPTS;
-    private valueEditorInstance: AbstractValueEditor<MODEL, EDITOROPTS>;
+    private optionChangeListeners: Array<(newOptions?: EDITOROPTS, oldOptions?: EDITOROPTS, whatChanged?: PropertyChangeDetection<EDITOROPTS>) => void> = [];
 
     /*@ngInject*/
-    constructor(private aliasesService: AliasesService, valueEditorConfigurationService: ValueEditorConfigurationService) {
+    constructor(private aliasesService: AliasesService, valueEditorConfigurationService: ValueEditorConfigurationService, public $element: IAugmentedJQuery) {
         super();
         this.configuration = valueEditorConfigurationService;
+    }
+
+    public $onDestroy(): void {
+        this.optionChangeListeners = undefined;
     }
 
     public $onInit(): void {
@@ -48,7 +53,11 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
      */
     public $doCheck(): void {
         if (!customEquals(this.options, this.previousOptions)) {
-            this.valueEditorInstance.changeOptions(this.options, this.previousOptions);
+            const whatChanged = whichPropertiesAreNotEqual(this.options, this.previousOptions);
+
+            this.valueEditorInstance.changeOptions(this.options, this.previousOptions, whatChanged);
+            this.optionChangeListeners.forEach((listener) => listener(this.options, this.previousOptions, whatChanged));
+
             this.previousOptions = angular.copy(this.options);
         }
     }
@@ -59,6 +68,10 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
 
     public resolveAlias(): CustomValueEditorType {
         return this.aliasesService.isAlias(this.type) ? this.aliasesService.getAlias(this.type) : this.type;
+    }
+
+    public addOptionsChangeListener(listener: (newOptions?: EDITOROPTS, oldOptions?: EDITOROPTS) => void) {
+        this.optionChangeListeners.push(listener);
     }
 
     private generateEditorName(): string {

@@ -127,4 +127,32 @@ describe('abstract-value-editor-configuration-provider', () => {
 
         expect(testService.forAlias(ALIAS).getConfiguration()).toEqual(objectContaining({opt1: 'blablabla'}));
     });
+
+    it('alias should have all configuration inherited from default configuration', () => {
+        let testService: TestingService;
+        const ALIAS = 'custom-test';
+
+        angular.mock.module(testingModule, /*@ngInject*/(testingServiceProvider: TestingProvider, aliasesServiceProvider: AliasesServiceProvider) => {
+            aliasesServiceProvider.addAlias(ALIAS, 'test');
+
+            testingServiceProvider
+                .forAlias(ALIAS)
+                .setConfiguration({opt1: 'blablabla'});
+        });
+
+        inject(/*@ngInject*/ (testingService: TestingService) => {
+            testService = testingService;
+        });
+
+        expect(testService.getDefaults()).toEqual(TESTING_OPTIONS);
+        expect(testService.getConfiguration()).toEqual(TESTING_OPTIONS);
+
+        expect(testService.forAlias(ALIAS).getConfiguration()).toEqual({
+            opt1: 'blablabla',
+            opt2: 2,
+            opt3: {
+                opt3opt1: TESTING_OPTIONS.opt3.opt3opt1
+            }
+        });
+    });
 });

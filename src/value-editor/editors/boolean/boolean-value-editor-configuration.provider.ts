@@ -10,7 +10,7 @@ import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.componen
  * @description
  * Possible values are: `'checkbox' | 'switch'`.
  */
-export type TBooleanValueEditorType = 'checkbox' | 'switch';
+export type TBooleanValueEditorType = 'checkbox'; // | 'switch'; // TODO: Implement switch option
 
 /**
  * @ngdoc type

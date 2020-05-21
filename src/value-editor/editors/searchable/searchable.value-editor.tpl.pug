@@ -15,8 +15,9 @@ button.edit-button.btn.btn-default(type="button" ng-disabled="$ctrl.valueEditorC
     span(ng-if="$ctrl.model" ng-bind="$ctrl.localize('editValue')")
     span(ng-if="!$ctrl.model" ng-bind="$ctrl.localize('createNew')")
 
-input(
-    type="hidden"
+input.validation-helper(
+    type="text"
+
     id="\\{\\{$ctrl.valueEditorController.editorId\\}\\}"
     name="\\{\\{$ctrl.valueEditorController.editorName\\}\\}"
 
@@ -26,6 +27,9 @@ input(
     ng-disabled="$ctrl.valueEditorController.isDisabled"
 
     ng-required="$ctrl.valueEditorController.validations.required"
+
+    error-messages
+    error-messages-custom-class="searchable standalone"
 
     data-main-input
 )

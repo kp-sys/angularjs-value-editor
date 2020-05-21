@@ -2,9 +2,10 @@ import KpValueEditorComponent, {
     ValueEditorBindings,
     ValueEditorValidations
 } from '../../kp-value-editor/kp-value-editor.component';
-import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
+import AbstractValueEditor from '../../common/abstract-value-editor';
 import {DateTime} from 'luxon';
 import * as angular from 'angular';
+import {PropertyChangeDetection} from '../../utils/equals';
 
 export class YearValueEditorComponentController extends AbstractValueEditor<number, never> {
 
@@ -14,13 +15,13 @@ export class YearValueEditorComponentController extends AbstractValueEditor<numb
         this.ngModelController.$formatters.push(this.modelParser);
     }
 
-    /* istanbul ignore next */
-    protected onOptionsChange(newOptions: never, oldOptions, whatChanged: OptionsChangeDetection<never>) {
-        //
-    }
-
     public convertYearToISO(year: number): string {
         return year ? DateTime.fromFormat(String(year), 'y').toISODate() : undefined;
+    }
+
+    /* istanbul ignore next */
+    protected onOptionsChange(newOptions: never, oldOptions, whatChanged: PropertyChangeDetection<never>) {
+        //
     }
 
     private convertISOToYear(date: string): number {

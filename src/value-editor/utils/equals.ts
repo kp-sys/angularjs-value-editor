@@ -6,7 +6,7 @@ function isRegExp(value) {
     try {
         return toString.call(value) === '[object RegExp]';
     } catch (e) {
-        console.log(value);
+        // console.log(value);
     }
 }
 
@@ -34,7 +34,7 @@ function createMap() {
  *
  * @returns {boolean}
  */
-export default function customEquals(o1, o2): boolean {
+export function customEquals(o1, o2): boolean {
     if (o1 === o2) return true;
     if (o1 === null || o2 === null) return false;
     // eslint-disable-next-line no-self-compare
@@ -60,7 +60,7 @@ export default function customEquals(o1, o2): boolean {
         } /*else if (isRegExp(o1)) {
             if (!isRegExp(o2)) return false;
             return o1.toString() === o2.toString();
-        } */else {
+        } */ else {
             if (isScope(o1) || isScope(o2) || isWindow(o1) || isWindow(o2) ||
                 angular.isArray(o2) || angular.isDate(o2)/* || isRegExp(o2)*/) return false;
             keySet = createMap();
@@ -81,4 +81,26 @@ export default function customEquals(o1, o2): boolean {
         }
     }
     return false;
+}
+
+export type PropertyChangeDetection<T> = {
+    readonly [name in keyof T]?: boolean;
+}
+
+export function whichPropertiesAreNotEqual<OBJECT = {}>(object1: OBJECT, object2: OBJECT): PropertyChangeDetection<OBJECT> {
+    const changeObject: PropertyChangeDetection<OBJECT> = {};
+    const keys: Set<string> = new Set<string>();
+
+    // tslint:disable-next-line:no-unused-expression
+    object1 && Object.keys(object1).forEach(keys.add.bind(keys));
+    // tslint:disable-next-line:no-unused-expression
+    object2 && Object.keys(object2).forEach(keys.add.bind(keys));
+
+    Array.from(keys).forEach((key) => changeObject[key] =
+        !(Object.prototype.hasOwnProperty.call(object1, key) &&
+            Object.prototype.hasOwnProperty.call(object2, key) &&
+            object1[key] === object2[key])
+    );
+
+    return changeObject;
 }

@@ -100,7 +100,7 @@ export default abstract class AbstractValueEditorConfigurationProvider<CONFIGURA
     }
 
     private getAliasedConfiguration(alias: CustomValueEditorType): DefaultOptions<CONFIGURATION> {
-        return Object.assign({}, this.currentConfiguration.get(alias));
+        return Object.assign({}, this.getDefaults(), this.currentConfiguration.get(alias));
     }
 }
 

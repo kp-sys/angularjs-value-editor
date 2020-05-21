@@ -46,6 +46,20 @@ export class HtmlValueEditorComponentController extends AbstractValueEditor<stri
 
         this.container.on('tbwchange tbwpaste', () => this.container.triggerHandler('input'));
 
+        const setTouchedHandler = () => {
+            this.container.controller('ngModel').$setTouched();
+            this.container.triggerHandler('input');
+            this.container.off('tbwchange tbwpaste tbwblur', setTouchedHandler);
+        };
+        this.container.on('tbwchange tbwpaste tbwblur', setTouchedHandler);
+
+        if (this.container[0].closest) { // IE does not support closest function on DOM
+            this.container.on('tbwinit', () => {
+                this.container[0].closest<HTMLDivElement>('.trumbowyg-box').classList.add('form-control');
+                this.container.off('tbwinit');
+            });
+        }
+
         const originalRender = this.ngModelController.$render;
         this.ngModelController.$render = () => {
             originalRender();

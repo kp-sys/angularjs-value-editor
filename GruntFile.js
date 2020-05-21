@@ -1,15 +1,21 @@
 module.exports = (grunt) => {
-    const pkg = grunt.file.readJSON("package.json");
+    const pkg = grunt.file.readJSON('package.json');
 
     grunt.initConfig({
         'extract-comments': {
             'docs/comments.js': ['src/**/*.ts']
         },
         copy: {
-            files: {
+            source: {
                 expand: true,
                 cwd: 'dist',
                 src: ['angularjs-value-editor.js', 'angularjs-value-editor.css'],
+                dest: 'docs'
+            },
+            demo: {
+                expand: true,
+                cwd: 'src/docs',
+                src: ['demo.html'],
                 dest: 'docs'
             }
         },
@@ -52,7 +58,7 @@ module.exports = (grunt) => {
                                 'https://unpkg.com/angular-sanitize@1.7.9/angular-sanitize.js',
                                 'https://unpkg.com/ui-select@0.19.8/dist/select.js',
                                 'https://unpkg.com/regenerator-runtime@0.13.5/runtime.js',
-	                            `${process.env.EXAMPLES_SCRIPTS_URL_PREFIX || ''}/angularjs-value-editor.js`
+                                `${process.env.EXAMPLES_SCRIPTS_URL_PREFIX || ''}/angularjs-value-editor.js`
                             ],
                             stylesheets: [
                                 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',

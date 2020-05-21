@@ -45,7 +45,7 @@ describe('boolean-value-editor', () => {
     it('should add additional classes to input element', () => {
         const element = valueEditorMocker.create('boolean', {options: {cssClasses: ['clazz']}});
 
-        const pseudoInputElement = element[0].querySelector('span.pretty');
+        const pseudoInputElement = element.querySelector('span.pretty');
 
         expect(pseudoInputElement.classList).toContain('clazz');
     });

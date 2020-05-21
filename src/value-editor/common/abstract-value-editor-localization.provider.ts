@@ -56,8 +56,8 @@ export default abstract class AbstractValueEditorLocalizationProvider<LOC extend
      * @description
      * Returns specific localization message.
      */
-    public getLocalization<KEY extends keyof LOC>(code: KEY): LOC[KEY] {
-        return this.localizations[code];
+    public getLocalization<KEY extends keyof LOC>(code: KEY): LOC[KEY] | KEY {
+        return this.localizations[code] ?? code;
     }
 
     /**

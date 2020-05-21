@@ -77,6 +77,7 @@ export default class NumberValueEditorComponent {
  * Extends {@link type:ValueEditorValidations}
  */
 export interface NumberValueEditorValidations extends ValueEditorValidations {
+    number?: never;
     minlength?: number;
     maxlength?: number;
     min?: number;

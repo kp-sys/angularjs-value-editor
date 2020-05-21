@@ -2,7 +2,7 @@ import KpValueEditorComponent, {
     ValueEditorBindings,
     ValueEditorValidations
 } from '../../kp-value-editor/kp-value-editor.component';
-import AbstractValueEditor, {OptionsChangeDetection} from '../../common/abstract-value-editor';
+import AbstractValueEditor from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 import {IAugmentedJQuery, IDoCheck, IOnInit} from 'angular';
 import {
@@ -10,7 +10,7 @@ import {
     NumberRangeValueEditorOptions
 } from './number-range-value-editor-configuration.provider';
 import {NumberRangeValueEditorLocalizationsService} from './number-range-value-editor-localization.provider';
-import {generateUuid} from '../../utils/uuid-generator';
+import {PropertyChangeDetection} from '../../utils/equals';
 
 /**
  * @ngdoc type
@@ -33,18 +33,19 @@ export interface NumberRangeValueEditorModel {
 }
 
 export class NumberRangeValueEditorComponentController extends AbstractValueEditor<NumberRangeValueEditorModel, NumberRangeValueEditorOptions> implements IOnInit, IDoCheck {
-    public uuid: string;
     public modelFrom: number;
     public modelTo: number;
     public fromRef: IAugmentedJQuery;
     public toRef: IAugmentedJQuery;
     public validNumber: boolean;
 
+    private touched: boolean;
+
     /*@ngInject*/
     constructor(numberRangeValueEditorConfigurationService: NumberRangeValueEditorConfigurationService,
-                numberRangeValueEditorLocalizationsService: NumberRangeValueEditorLocalizationsService) {
+                numberRangeValueEditorLocalizationsService: NumberRangeValueEditorLocalizationsService,
+                private $element: IAugmentedJQuery) {
         super(numberRangeValueEditorConfigurationService, numberRangeValueEditorLocalizationsService);
-        this.uuid = generateUuid();
     }
 
     public $onInit(): void {
@@ -58,6 +59,7 @@ export class NumberRangeValueEditorComponentController extends AbstractValueEdit
             this.modelFrom = this.model?.from ?? null;
             this.modelTo = this.model?.to ?? null;
         };
+
     }
 
     public $doCheck() {
@@ -78,8 +80,15 @@ export class NumberRangeValueEditorComponentController extends AbstractValueEdit
         };
     }
 
+    public setTouched() {
+        if (!this.touched) {
+            angular.element(this.$element[0].querySelector('input.validation-helper')).controller('ngModel').$setTouched();
+            this.touched = true;
+        }
+    }
+
     /* istanbul ignore next */
-    protected onOptionsChange(newOptions: NumberRangeValueEditorOptions, oldOptions, whatChanged: OptionsChangeDetection<NumberRangeValueEditorOptions>) {
+    protected onOptionsChange(newOptions: NumberRangeValueEditorOptions, oldOptions, whatChanged: PropertyChangeDetection<NumberRangeValueEditorOptions>) {
         //
     }
 }

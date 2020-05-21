@@ -90,4 +90,18 @@ describe('abstract-value-editor-localizations-provider', () => {
         expect(testService.getAll()).toEqual(CUSTOM_ALL_LOC_ORIGINAL);
     });
 
+    it('should return message key if message is not present', () => {
+        let testService: TestingService;
+
+        angular.mock.module(testingModule);
+
+        inject(/*@ngInject*/ (testingService: TestingService) => {
+            testService = testingService;
+        });
+
+        testService.getAll().loc1 = 'blablabla';
+
+        expect(testService.getLocalization('mlabla')).toBe('mlabla');
+    });
+
 });

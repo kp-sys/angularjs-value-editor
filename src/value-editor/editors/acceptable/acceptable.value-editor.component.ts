@@ -3,14 +3,15 @@ import KpValueEditorComponent, {
     ValueEditorBindings,
     ValueEditorValidations
 } from '../../kp-value-editor/kp-value-editor.component';
-import {IFilterOrderByItem, IInterpolateService, ITemplateCacheService} from 'angular';
-import {OptionsChangeDetection} from '../../common/abstract-value-editor';
+import * as angular from 'angular';
+import {IAugmentedJQuery, IFilterOrderByItem, IInterpolateService, ITemplateCacheService} from 'angular';
 import {AcceptableValueEditorLocalizationsService} from './acceptable-value-editor-localizations.provider';
 import {
     AcceptableValueEditorConfigurationService,
     AcceptableValueEditorOptions
 } from './acceptable-value-editor-configuration.provider';
 import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
+import {PropertyChangeDetection} from '../../utils/equals';
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.acceptableValueEditor';
 
@@ -18,11 +19,14 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
     private static readonly SELECT_TEMPLATE_URL = require('./select.tpl.pug');
     private static readonly CHECKBOXES_TEMPLATE_URL = require('./checkboxes.tpl.pug');
 
+    private touched: boolean = false;
+
     /*@ngInject*/
     constructor($interpolate: IInterpolateService,
                 $templateCache: ITemplateCacheService,
                 public acceptableValueEditorLocalizationsService: AcceptableValueEditorLocalizationsService,
-                public acceptableValueEditorConfigurationService: AcceptableValueEditorConfigurationService<VALUE>) {
+                public acceptableValueEditorConfigurationService: AcceptableValueEditorConfigurationService<VALUE>,
+                private $element: IAugmentedJQuery) {
         super(
             AcceptableValueEditorComponentController.SELECT_TEMPLATE_URL,
             TEMPLATE_NAME_PREFIX,
@@ -40,6 +44,8 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
     }
 
     public set model(value: VALUE[]) {
+        this.setValidationHelperTouched();
+
         if (this.options.multiselectable && this.options.sortModel) {
             super.model = value.sort(this.options.sortComparator);
         } else {
@@ -65,7 +71,9 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
 
             values = selected.concat(unSelected);
         } else {
-            values.sort(this.options.sortComparator);
+            if (this.options.sortComparator) {
+                values.sort(this.options.sortComparator);
+            }
         }
 
         if (count) {
@@ -96,7 +104,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
         return this.options.sortComparator ? this.options.sortComparator(e1.value, e2.value) : 0;
     }
 
-    protected onOptionsChange(newOptions: AcceptableValueEditorOptions<VALUE>, oldOptions: AcceptableValueEditorOptions<VALUE>, whichOptionIsChanged: OptionsChangeDetection<AcceptableValueEditorOptions<VALUE>>) {
+    protected onOptionsChange(newOptions: AcceptableValueEditorOptions<VALUE>, oldOptions: AcceptableValueEditorOptions<VALUE>, whichOptionIsChanged: PropertyChangeDetection<AcceptableValueEditorOptions<VALUE>>) {
         if (whichOptionIsChanged.optionsTemplate ||
             whichOptionIsChanged.singleSelectedValueTemplate ||
             whichOptionIsChanged.multiSelectedValueTemplate ||
@@ -131,8 +139,16 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
             searchable: this.options.searchable,
             multiselectable: this.options.multiselectable,
             uuid: this.uuid,
-            sort: !!this.options.sortComparator
+            sort: !!this.options.sortComparator,
+            name: this.valueEditorController.editorName
         };
+    }
+
+    private setValidationHelperTouched() {
+        if (!this.touched) {
+            angular.element(this.$element[0].querySelector('.checkboxes-validation-helper')).controller('ngModel')?.$setTouched();
+            this.touched = true;
+        }
     }
 
     private adjustToArrayIfNot(value: VALUE | VALUE[]): VALUE[] {
