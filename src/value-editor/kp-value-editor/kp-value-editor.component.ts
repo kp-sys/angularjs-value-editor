@@ -1,16 +1,17 @@
 import * as angular from 'angular';
-import {IAugmentedJQuery, IDoCheck, IFormController, IOnDestroy, IOnInit} from 'angular';
+import {IAugmentedJQuery, IDoCheck, IFormController, IOnChanges, IOnDestroy, IOnInit} from 'angular';
 import NgModelConnector from '../common/ng-model-connector';
 import {generateUuid} from '../utils/uuid-generator';
 import {TValueEditorType} from '../typings';
 import AliasesService, {CustomValueEditorType} from '../aliases/aliases.service';
-import {ValueEditorConfigurationService} from './kp-value-editor-configuration-provider';
+import {KpValueEditorConfigurationService} from './kp-value-editor-configuration-provider';
 import AbstractValueEditor from '../common/abstract-value-editor';
 import {customEquals, PropertyChangeDetection, whichPropertiesAreNotEqual} from '../utils/equals';
+import {KpUniversalFormComponentController} from '../kp-universal-form/kp-universal-form.component';
 
 export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS extends ValueEditorOptions = ValueEditorOptions, EDITORVALIDATIONS extends ValueEditorValidations = ValueEditorValidations>
     extends NgModelConnector<MODEL>
-    implements ValueEditorBindings<EDITOROPTS, EDITORVALIDATIONS>, IOnInit, IDoCheck, IOnDestroy {
+    implements ValueEditorBindings<EDITOROPTS, EDITORVALIDATIONS>, IOnInit, IDoCheck, IOnDestroy, IOnChanges {
 
     /* Bindings */
     public editorId: string;
@@ -22,44 +23,48 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
     public validations: EDITORVALIDATIONS;
     public options: EDITOROPTS;
     public formController: IFormController;
-    public configuration: ValueEditorConfigurationService;
+    public configuration: KpValueEditorConfigurationService;
     public valueEditorInstance: AbstractValueEditor<MODEL, EDITOROPTS>;
     /* Internal */
+    private universalFormController: KpUniversalFormComponentController;
     private previousOptions: EDITOROPTS;
     private optionChangeListeners: Array<(newOptions?: EDITOROPTS, oldOptions?: EDITOROPTS, whatChanged?: PropertyChangeDetection<EDITOROPTS>) => void> = [];
 
     /*@ngInject*/
-    constructor(private aliasesService: AliasesService, valueEditorConfigurationService: ValueEditorConfigurationService, public $element: IAugmentedJQuery) {
+    constructor(private aliasesService: AliasesService, kpValueEditorConfigurationService: KpValueEditorConfigurationService, public $element: IAugmentedJQuery) {
         super();
-        this.configuration = valueEditorConfigurationService;
-    }
-
-    public $onDestroy(): void {
-        this.optionChangeListeners = undefined;
+        this.configuration = kpValueEditorConfigurationService;
     }
 
     public $onInit(): void {
         super.$onInit();
 
+        if (this.universalFormController?.options?.preciseWatchForOptionsChanges ?? this.configuration.preciseWatchForOptionsChanges) {
+            this.$doCheck = this.processOptionsChange;
+        } else {
+            this.$onChanges = this.processOptionsChange;
+        }
+
         this.previousOptions = angular.copy(this.options);
 
         if (!this.editorName) {
-            this.editorName = this.generateEditorName();
+            this.editorName = this.editorId || this.generateEditorName();
         }
+    }
+
+    public $onChanges(onChangesObj: angular.IOnChangesObject): void {
+        // initialization in $onInit section
     }
 
     /**
      * Manually check options update. $onChanges is not applicable, because we need deep equals, which $onChanges does not perform.
      */
     public $doCheck(): void {
-        if (!customEquals(this.options, this.previousOptions)) {
-            const whatChanged = whichPropertiesAreNotEqual(this.options, this.previousOptions);
+        // initialization in $onInit section
+    }
 
-            this.valueEditorInstance.changeOptions(this.options, this.previousOptions, whatChanged);
-            this.optionChangeListeners.forEach((listener) => listener(this.options, this.previousOptions, whatChanged));
-
-            this.previousOptions = angular.copy(this.options);
-        }
+    public $onDestroy(): void {
+        this.optionChangeListeners = undefined;
     }
 
     public registerValueEditor<CONTROLLER extends AbstractValueEditor<MODEL, EDITOROPTS>>(editorController: CONTROLLER) {
@@ -76,6 +81,17 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
 
     private generateEditorName(): string {
         return this.editorId || `${this.type}_${generateUuid()}`;
+    }
+
+    private processOptionsChange() {
+        if (this.valueEditorInstance && !customEquals(this.options, this.previousOptions)) {
+            const whatChanged = whichPropertiesAreNotEqual(this.options, this.previousOptions);
+
+            this.valueEditorInstance.changeOptions(this.options, this.previousOptions, whatChanged);
+            this.optionChangeListeners.forEach((listener) => listener(this.options, this.previousOptions, whatChanged));
+
+            this.previousOptions = angular.copy(this.options);
+        }
     }
 }
 
@@ -106,7 +122,8 @@ export default class KpValueEditorComponent {
 
     public require = {
         ngModelController: 'ngModel',
-        formController: '?^^form'
+        formController: '?^^form',
+        universalFormController: '?^^kpUniversalForm'
     };
 
     public bindings = {
@@ -141,10 +158,10 @@ export interface ValueEditorValidations {
  * @name ValueEditorOptions
  * @module angularjs-value-editor
  *
- * @property {string[]} [cssClasses] Optional additional CSS classes
+ * @property {boolean=} forceShowErrors Force show validations error messages.
  */
 export interface ValueEditorOptions {
-    cssClasses?: string[];
+    forceShowErrors?: boolean;
 }
 
 /**

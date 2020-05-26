@@ -19,8 +19,12 @@ kp-value-editor ~ .error-message {
     max-width: 85%;
     z-index: 10;
     right: 10%;
-
     box-shadow: 0 2px 6px -2px lighten(@state-danger-text, 20%);
+    transition: opacity 0.15s ease-in-out;
+
+    &.not-visible {
+        opacity: 0;
+    }
 
     &.standalone {
         border-radius: @border-radius-base;

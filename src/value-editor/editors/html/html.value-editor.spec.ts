@@ -53,16 +53,6 @@ describe('html-value-editor', () => {
         }, 0);
     });
 
-    it('should add additional classes to input element', (done) => {
-        valueEditorMocker.create('html', {options: {cssClasses: ['clazz']}});
-        $scope.$apply();
-
-        setTimeout(() => {
-            expect(valueEditorMocker.getInputElement().classList).toContain('clazz');
-            done();
-        }, 0);
-    });
-
     it('should has working input disabling', (done) => {
         valueEditorMocker.create('html', {isDisabled: true});
         $_timeout.flush();

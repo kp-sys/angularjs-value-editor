@@ -11,12 +11,15 @@ html
     body(ng-app="app" ng-strict-di)
         h1 Value Editor Demo
         main.container(ng-controller="demoController as $ctrl" ng-init="isDisabled = false")
+            button.btn.btn-default(ng-click="$ctrl.forceShowErrors()") Show errors
+            span {{$ctrl.showErrors | json}}
             kp-universal-form(
-                name="myForm.dwer"
-                form-settings="{fields: $ctrl.fields}"
+                name="myForm"
+                form-settings="::{fields: $ctrl.fields}"
                 form-controller="formController = $formController"
                 submit-function="$ctrl.submit()"
                 labels-width="2"
+                force-show-errors="$ctrl.showErrors"
 
                 ng-model="$ctrl.model"
             )
@@ -32,10 +35,8 @@ html
 
             div Model: {{$ctrl.model | json}}
 
-            div Errors
-                ul
-                    li(ng-repeat="(errorName, errorValue) in $ctrl.form.editor.$error") {{errorName}}
-
             button(type="button" ng-click="$ctrl.clear()") Clear
 
             pre(ng-bind="formController | json")
+
+            pre(ng-bind="$ctrl.fields | json")

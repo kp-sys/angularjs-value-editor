@@ -84,12 +84,6 @@ describe('number-value-editor', () => {
         expect($scope.form.number.$error).toEqual({});
     });
 
-    it('should add additional classes to input element', () => {
-        valueEditorMocker.create('number', {options: {cssClasses: ['clazz']}});
-
-        expect(valueEditorMocker.getInputElement().classList).toContain('clazz');
-    });
-
     it('should has working input disabling', () => {
         valueEditorMocker.create('number', {isDisabled: true});
 

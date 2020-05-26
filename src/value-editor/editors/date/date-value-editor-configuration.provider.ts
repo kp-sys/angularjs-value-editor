@@ -54,7 +54,6 @@ export interface DateValueEditorOptions extends ValueEditorOptions {
  * ```
  */
 export const DATE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<DateValueEditorOptions> = {
-    cssClasses: ['form-control'],
     maximumGranularity: 'day',
     viewFormat: 'd.L.y'
 };

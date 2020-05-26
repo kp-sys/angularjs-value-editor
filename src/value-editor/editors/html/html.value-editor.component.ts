@@ -30,8 +30,10 @@ export class HtmlValueEditorComponentController extends AbstractValueEditor<stri
     }
 
     public $onDestroy(): void {
-        this.container.trumbowyg('destroy');
-        this.container.off('tbwchange tbwpaste');
+        if (this.container) {
+            this.container.trumbowyg('destroy');
+            this.container.off('tbwchange tbwpaste');
+        }
     }
 
     protected onOptionsChange(newOptions: HtmlValueEditorOptions, oldOptions: HtmlValueEditorOptions) {

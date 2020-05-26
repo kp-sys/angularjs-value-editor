@@ -42,14 +42,6 @@ describe('boolean-value-editor', () => {
         expect(valueEditorMocker.getInputElement<HTMLInputElement>().checked).toBe(false);
     });
 
-    it('should add additional classes to input element', () => {
-        const element = valueEditorMocker.create('boolean', {options: {cssClasses: ['clazz']}});
-
-        const pseudoInputElement = element.querySelector('span.pretty');
-
-        expect(pseudoInputElement.classList).toContain('clazz');
-    });
-
     it('should has working input disabling', () => {
         valueEditorMocker.create('boolean', {isDisabled: true});
 

@@ -10,10 +10,22 @@ import {
 import {ObjectValueEditorFieldSettings} from '../meta-editors/object/object-value-editor-configuration.provider';
 import {generateUuid} from '../utils/uuid-generator';
 
+/**
+ * @ngdoc type
+ * @name KpUniversalFormComponentSettings
+ * @module angularjs-value-editor
+ *
+ * @property {ObjectValueEditorFieldSettings[]} fields Fields definition.
+ * @property {string=} header Form header
+ * @property {string=} footer Form footer
+ *
+ * @description
+ *
+ */
 export interface KpUniversalFormComponentSettings {
     fields: ObjectValueEditorFieldSettings[];
-    header: string;
-    footer: string;
+    header?: string;
+    footer?: string;
 }
 
 const TEMPLATE_PREFIX = 'valueEditor.universal-form';
@@ -26,6 +38,8 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
     public internalFormController: IFormController;
     public name: string;
     public labelsWidth: number;
+    public forceShowErrors: boolean;
+    public options: KpUniversalFormComponentOptions;
 
     private uuid: string;
 
@@ -86,6 +100,8 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
  * @param {function(Event)=} submitFunction Function called on submit form.
  * @param {Event=} submitFunction.$event Submit event.
  * @param {ObjectValueEditorLabelsWidth=} labelsWidth See {@link ObjectValueEditorOptions}. Default value is `2`.
+ * @param {boolean=} forceShowErrors If `true` it displays all validation error messages.
+ * @param {KpUniversalFormComponentOptions=} options Specific options for universal form.
  *
  * @description
  * Component for generating forms by definition passed via `formSettings` attribute.
@@ -155,7 +171,9 @@ export default class KpUniversalFormComponent {
         name: '@?',
         formController: '&?',
         submitFunction: '&?',
-        labelsWidth: '@?'
+        labelsWidth: '@?',
+        forceShowErrors: '<?',
+        options: '<?'
     };
 
     public controller = KpUniversalFormComponentController;
@@ -163,10 +181,27 @@ export default class KpUniversalFormComponent {
     public template = '<ng-include src="$ctrl.templateUrl"></ng-include>';
 }
 
+/**
+ * @ngdoc type
+ * @name KpUniversalFormComponentOptions
+ * @module angularjs-value-editor
+ *
+ * @property {boolean} preciseWatchForOptionsChanges {@link kpValueEditorConfigurationServiceProvider}
+ *
+ * @description
+ * Options for {@link kpUniversalForm}
+ *
+ */
+export interface KpUniversalFormComponentOptions {
+    preciseWatchForOptionsChanges?: boolean;
+}
+
 export interface KpUniversalFormComponentBindings {
     formSettings: KpUniversalFormComponentSettings;
     name?: string;
     labelsWidth?: number;
+    forceShowErrors?: boolean;
+    options?: KpUniversalFormComponentOptions;
 
     formController(locals: { $formController: IFormController });
 

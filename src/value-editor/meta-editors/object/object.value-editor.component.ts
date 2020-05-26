@@ -55,6 +55,14 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
             field.editorId = generateUuid();
         }
 
+        if (this.options.forceShowErrors) {
+            if (!field.options) {
+                field.options = {};
+            }
+
+            field.options.forceShowErrors = true;
+        }
+
         return field;
     }
 

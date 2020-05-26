@@ -97,9 +97,9 @@ export function whichPropertiesAreNotEqual<OBJECT = {}>(object1: OBJECT, object2
     object2 && Object.keys(object2).forEach(keys.add.bind(keys));
 
     Array.from(keys).forEach((key) => changeObject[key] =
-        !(Object.prototype.hasOwnProperty.call(object1, key) &&
-            Object.prototype.hasOwnProperty.call(object2, key) &&
-            object1[key] === object2[key])
+        !(Object.prototype.hasOwnProperty.call(object1 ?? {}, key) &&
+            Object.prototype.hasOwnProperty.call(object2 ?? {}, key) &&
+            customEquals(object1[key], object2[key]))
     );
 
     return changeObject;

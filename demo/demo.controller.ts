@@ -13,6 +13,7 @@ import {ITimeoutService} from 'angular';
 export default class DemoController {
 
     public model = {};
+    public showErrors: boolean;
 
     public fields: ObjectValueEditorFieldSettings[] = [
         {
@@ -286,7 +287,10 @@ export default class DemoController {
             validations: {
                 required: true
             }
-        },
-
+        }
     ];
+
+    public forceShowErrors() {
+        this.showErrors = !this.showErrors;
+    }
 }

@@ -3,7 +3,8 @@ import KpValueEditorConfigurationProvider
 
 /*@ngInject*/
 export default function config(
-    valueEditorConfigurationServiceProvider: KpValueEditorConfigurationProvider
+    kpValueEditorConfigurationServiceProvider: KpValueEditorConfigurationProvider
 ) {
-    valueEditorConfigurationServiceProvider.setDebugMode(true);
+    kpValueEditorConfigurationServiceProvider.setDebugMode(true);
+    kpValueEditorConfigurationServiceProvider.setPreciseWatchForOptionsChanges(false);
 }

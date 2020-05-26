@@ -7,7 +7,12 @@ form(name="{{name}}" ng-submit="$ctrl.submitFunction({$event: $event})" novalida
         ng-model="$ctrl.model"
         ng-model-options="{getterSetter: true}"
 
-        options="{fields: $ctrl.formSettings.fields, __withoutNgForm: true, labelsWidth: $ctrl.labelsWidth}"
+        options="{" +
+            "fields: $ctrl.formSettings.fields, " +
+            "__withoutNgForm: true, " +
+            "labelsWidth: $ctrl.labelsWidth, " +
+            "forceShowErrors: $ctrl.forceShowErrors " +
+        "}"
     )
 
     p.text-info.text-info-bottom(ng-if="$ctrl.formSettings.footer" ng-bind-html="$ctrl.formSettings.footer")

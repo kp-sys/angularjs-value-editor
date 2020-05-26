@@ -103,12 +103,6 @@ describe('text-value-editor', () => {
             expect($scope.form.text.$error).toEqual({});
         });
 
-        it('should add additional classes to input element', () => {
-            valueEditorMocker.create('text', {editorName: 'text', options: {cssClasses: ['clazz']}});
-
-            expect(valueEditorMocker.getInputElement().classList).toContain('clazz');
-        });
-
         it('should has working input disabling', () => {
             valueEditorMocker.create('text', {editorName: 'text', isDisabled: true});
 
@@ -234,12 +228,6 @@ describe('text-value-editor', () => {
             valueEditorMocker.triggerHandlerOnInput('input');
 
             expect($scope.form.text.$error).toEqual({});
-        });
-
-        it('should add additional classes to input element', () => {
-            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'textarea', cssClasses: ['clazz']}});
-
-            expect(valueEditorMocker.getInputElement().classList).toContain('clazz');
         });
 
         it('should has working input disabling', () => {
@@ -369,12 +357,6 @@ describe('text-value-editor', () => {
             $scope.$apply();
 
             expect($scope.form.text.$error).toEqual({});
-        });
-
-        it('should add additional classes to input element', () => {
-            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'textarea', cssClasses: ['clazz']}});
-
-            expect(valueEditorMocker.getInputElement().classList).toContain('clazz');
         });
 
         it('should has working input disabling', () => {

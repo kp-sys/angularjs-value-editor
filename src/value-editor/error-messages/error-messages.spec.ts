@@ -1,5 +1,7 @@
+/* tslint:disable:variable-name */
 import valueEditorModule from '../value-editor.module';
 import * as angular from 'angular';
+import {ITimeoutService} from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../test/utils/value-editor-mocker';
 import {TextValueEditorBindings} from '../editors/text/text.value-editor.component';
 import objectContaining = jasmine.objectContaining;
@@ -10,13 +12,15 @@ describe('error-messages', () => {
 
     let valueEditorMocker: ValueEditorMocker<TextValueEditorBindings>;
     let $scope: ScopeWithBindings<string, TextValueEditorBindings>;
+    let $_timeout: ITimeoutService;
 
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
-        inject(/*@ngInject*/ ($compile, $rootScope) => {
+        inject(/*@ngInject*/ ($compile, $rootScope, $timeout) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
+            $_timeout = $timeout;
         });
     });
 
@@ -33,8 +37,14 @@ describe('error-messages', () => {
         expect(element.parentElement.querySelectorAll(ERROR_MESSAGES_SELECTOR).length).toBe(0);
     });
 
-    it('should display validation error message', () => {
-        const element = valueEditorMocker.create('text', {editorName: 'text', validations: {required: true}}, true);
+    it('should display validation error message with force option enabled', () => {
+        const element = valueEditorMocker.create('text', {
+            editorName: 'text',
+            options: {forceShowErrors: true},
+            validations: {required: true}
+        }, true);
+
+        $_timeout.flush();
 
         expect($scope.form.text.$error).toEqual(objectContaining({
             required: true
@@ -42,11 +52,28 @@ describe('error-messages', () => {
         expect(element.parentElement.querySelectorAll(ERROR_MESSAGES_SELECTOR).length).toBe(1);
     });
 
-    it('should multiple validation messages', () => {
+    it('should not display validation error message with force option disabled', () => {
+        const element = valueEditorMocker.create('text', {
+            editorName: 'text',
+            validations: {required: true}
+        }, true);
+
+        $_timeout.flush();
+
+        expect($scope.form.text.$error).toEqual(objectContaining({
+            required: true
+        }));
+        expect(element.parentElement.querySelectorAll(ERROR_MESSAGES_SELECTOR).length).toBe(0);
+    });
+
+    it('should multiple validation messages', (done) => {
         $scope.model = 'ugh';
 
         const element = valueEditorMocker.create('text', {
             editorName: 'text',
+            options: {
+                forceShowErrors: true
+            },
             validations: {minlength: 5, pattern: 'abc'}
         });
 
@@ -59,9 +86,14 @@ describe('error-messages', () => {
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'uhguhg';
         valueEditorMocker.triggerHandlerOnInput('input');
 
-        expect($scope.form.text.$error).toEqual({
-            pattern: true
-        });
-        expect(element.parentElement.querySelectorAll(ERROR_MESSAGES_SELECTOR).length).toBe(1);
+        $_timeout.flush();
+
+        setTimeout(() => {
+            expect($scope.form.text.$error).toEqual({
+                pattern: true
+            });
+            expect(element.parentElement.querySelectorAll(ERROR_MESSAGES_SELECTOR).length).toBe(1);
+            done();
+        }, 155);
     });
 });

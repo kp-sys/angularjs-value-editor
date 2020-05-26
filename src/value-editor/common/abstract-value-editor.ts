@@ -43,7 +43,7 @@ export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEd
      * @param {PropertyChangeDetection} whatChanged
      */
     public changeOptions(newOptions: OPTIONS, oldOptions: OPTIONS, whatChanged: PropertyChangeDetection<OPTIONS>) {
-        this.options = newOptions;
+        this.options = angular.copy(newOptions);
         this.onOptionsChange(newOptions, oldOptions, whatChanged);
     }
 

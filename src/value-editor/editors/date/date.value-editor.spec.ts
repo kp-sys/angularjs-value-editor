@@ -89,12 +89,6 @@ describe('date-value-editor', () => {
         expect($scope.form.date.$error).toEqual({});
     });
 
-    it('should add additional classes to input element', () => {
-        valueEditorMocker.create('date', {options: {cssClasses: ['clazz']}});
-
-        expect(valueEditorMocker.getInputElement().classList).toContain('clazz');
-    });
-
     it('should has working input disabling', () => {
         valueEditorMocker.create('date', {isDisabled: true}, true);
 

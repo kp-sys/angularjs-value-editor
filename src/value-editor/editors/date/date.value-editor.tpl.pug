@@ -1,12 +1,10 @@
 .input-group(uib-dropdown='' dropdown-append-to-body='' is-open='datePickerOpen')
-    input(
+    input.form-control(
         type='text'
 
         ng-attr-id="{{$ctrl.valueEditorController.editorId}}"
         ng-attr-name="{{$ctrl.valueEditorController.editorName}}"
         ng-attr-placeholder="{{$ctrl.valueEditorController.placeholder}}"
-
-        ng-class="$ctrl.options.cssClasses"
 
         ng-model="$ctrl.model"
         ng-model-options="{ getterSetter: true}"

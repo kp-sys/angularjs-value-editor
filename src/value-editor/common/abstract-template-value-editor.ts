@@ -21,6 +21,8 @@ export default abstract class AbstractTemplateValueEditor<MODEL, OPTIONS extends
     protected templateUrl: string;
     protected uuid: string;
 
+    #templateUpdated: boolean = false;
+
     constructor(
         protected baseTemplateUrl: string,
         private templatePrefix: string,
@@ -36,8 +38,14 @@ export default abstract class AbstractTemplateValueEditor<MODEL, OPTIONS extends
 
     public $onInit(): void {
         super.$onInit();
+    }
 
-        this.updateTemplate();
+    public $postLink() {
+        super.$postLink();
+
+        if (!this.#templateUpdated) {
+            this.updateTemplate();
+        }
     }
 
     /**
@@ -50,6 +58,8 @@ export default abstract class AbstractTemplateValueEditor<MODEL, OPTIONS extends
      * Updates template
      */
     protected updateTemplate() {
+        this.#templateUpdated = true;
+
         this.$templateCache.remove(this.templateUrl);
         const newTemplateName = `${this.templatePrefix}_${this.uuid}_${new Date().valueOf()}`;
         const template = this.$templateCache.get<string>(this.baseTemplateUrl);

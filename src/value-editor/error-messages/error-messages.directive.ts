@@ -1,6 +1,6 @@
 import './error-messages.less';
 import * as angular from 'angular';
-import {IAttributes, IAugmentedJQuery, INgModelController, IScope} from 'angular';
+import {IAttributes, IAugmentedJQuery, INgModelController, IScope, ITimeoutService} from 'angular';
 import {ValueEditorComponentController} from '../kp-value-editor/kp-value-editor.component';
 import {
     ValueEditorErrorMessagesLocalizations,
@@ -9,12 +9,11 @@ import {
 import {AbstractValueEditorLocalizationService} from '../common/abstract-value-editor-localization.provider';
 
 interface ErrorMessagesDirectiveScope extends IScope {
-    appendedElements: IAugmentedJQuery[];
-    lastErrors: string;
+    appendedElements: { [errorName: string]: HTMLElement };
 }
 
 function template(strings, customClass: string, rightPosition: number, message: string) {
-    return `<div class="error-message ${customClass}" style="right: calc(10% + ${rightPosition}px)">${message}</div>`;
+    return `<div class="error-message not-visible ${customClass}" style="right: calc(10% + ${rightPosition}px)">${message}</div>`;
 }
 
 /**
@@ -37,51 +36,78 @@ export default class ErrorMessagesDirective {
     private localize: AbstractValueEditorLocalizationService<ValueEditorErrorMessagesLocalizations>['getLocalization'];
 
     /*@ngInject*/
-    constructor(valueEditorErrorMessagesLocalizationsService: ValueEditorErrorMessagesLocalizationsService) {
+    constructor(valueEditorErrorMessagesLocalizationsService: ValueEditorErrorMessagesLocalizationsService, private $timeout: ITimeoutService) {
         this.localize = valueEditorErrorMessagesLocalizationsService.getLocalization.bind(valueEditorErrorMessagesLocalizationsService);
     }
 
     public link($scope: ErrorMessagesDirectiveScope, $element: IAugmentedJQuery, $attrs: IAttributes, [ngModelController, kpValueEditorController]: [INgModelController, ValueEditorComponentController]) {
-        $scope.lastErrors = '';
-        $scope.appendedElements = [];
+        $scope.appendedElements = {};
 
         // <editor-fold defaultstate="collapsed" desc=" Functions... ">
-        function getErrorMessage(index: number): string {
-            return Object.keys(ngModelController.$error)?.[index];
+        function getErrorType(index: number, errorsObject: {}): string {
+            return Object.keys(errorsObject)?.[index];
         }
 
-        function getErrorsCount(): number {
-            return Object.keys(ngModelController.$error).length;
+        function getErrorsCount(errorsObject: {}): number {
+            return Object.keys(errorsObject).length;
         }
 
-        function getSerializedErrors(): string {
+        function getSerializedErrors(errorsObject: {}): string {
             const errors: string[] = [];
-            for (let i = 0; i < getErrorsCount(); i++) {
-                errors.push(getErrorMessage(i));
+            for (let i = 0; i < getErrorsCount(errorsObject); i++) {
+                errors.push(getErrorType(i, errorsObject));
             }
 
             return errors.sort().reduce(((previousValue, currentValue) => previousValue + currentValue), '');
         }
 
+        function arraySubtraction<T>(from: T[], what: T[]): T[] {
+            return (from || [])
+                .slice()
+                .reduce((acc, element) => {
+                    if (!what.includes(element)) {
+                        acc.push(element);
+                    }
+
+                    return acc;
+                }, []);
+        }
         // </editor-fold>
 
-        ngModelController.$validators.__validationMessageListener = () => {
-            const serializedErrors = getSerializedErrors();
+        const processErrors = () => {
+            if (ngModelController.$touched || (kpValueEditorController.valueEditorInstance.options.forceShowErrors ?? false)) {
 
-            if (serializedErrors !== $scope.lastErrors) {
-                $scope.appendedElements.forEach((elem) => elem.remove());
-                $scope.appendedElements = [];
+                if (getSerializedErrors(ngModelController.$error) !== getSerializedErrors($scope.appendedElements)) {
+                    const errorsToRemove = arraySubtraction(Object.keys($scope.appendedElements), Object.keys(ngModelController.$error));
+                    const errorsToAdd = arraySubtraction(Object.keys(ngModelController.$error), Object.keys($scope.appendedElements));
 
-                for (let i = 0; i < getErrorsCount(); i++) {
-                    const element = angular.element(template`custom class: ${$attrs.errorMessagesCustomClass ?? ''}, right position: ${20 * i}, message: ${this.localize(getErrorMessage(i))}`);
-                    $scope.appendedElements.push(element);
-                    kpValueEditorController.$element.after(element);
+                    errorsToRemove.forEach((error) => {
+                        $scope.appendedElements[error].classList.add('not-visible');
+                        this.$timeout(() => {
+                            $scope.appendedElements[error].remove();
+                            delete $scope.appendedElements[error];
+                        }, 150);
+                    });
+
+                    errorsToAdd.forEach((error, index) => {
+                        const element = angular.element(template`custom class: ${$attrs.errorMessagesCustomClass ?? ''}, right position: ${20 * index}, message: ${this.localize(error)}`);
+                        $scope.appendedElements[error] = element[0];
+                        kpValueEditorController.$element.after(element);
+                        this.$timeout(() => element.removeClass('not-visible'));
+                    });
                 }
-
-                $scope.lastErrors = serializedErrors;
             }
 
             return true;
         };
+
+        const removeWatcher = $scope.$watch(() => ngModelController.$touched, (isTouched) => {
+            if (isTouched) {
+                processErrors();
+                removeWatcher();
+            }
+        });
+
+        ngModelController.$validators.__validationMessageListener = processErrors;
     }
 }

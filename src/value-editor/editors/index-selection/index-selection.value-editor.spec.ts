@@ -2,6 +2,7 @@ import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {Identified, IndexSelectionValueEditorBindings} from './index-selection.value-editor.component';
+import KpValueEditorConfigurationProvider from '../../kp-value-editor/kp-value-editor-configuration-provider';
 
 const ITEMS: Identified<number>[] = [
     {
@@ -32,7 +33,9 @@ describe('index-selection-value-editor', () => {
     }
 
     beforeEach(() => {
-        angular.mock.module(valueEditorModule);
+        angular.mock.module(valueEditorModule, /*@ngInject*/ (kpValueEditorConfigurationServiceProvider: KpValueEditorConfigurationProvider) => {
+            kpValueEditorConfigurationServiceProvider.setPreciseWatchForOptionsChanges(true);
+        });
 
         inject(/*@ngInject*/ ($compile, $rootScope) => {
             $scope = $rootScope.$new();

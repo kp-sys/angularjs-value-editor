@@ -2,6 +2,7 @@ import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {CardNumberValueEditorBindings} from './card-number.value-editor.component';
+import KpValueEditorConfigurationProvider from '../../kp-value-editor/kp-value-editor-configuration-provider';
 
 describe('card-number-value-editor', () => {
 
@@ -9,7 +10,9 @@ describe('card-number-value-editor', () => {
     let $scope: ScopeWithBindings<string, CardNumberValueEditorBindings>;
 
     beforeEach(() => {
-        angular.mock.module(valueEditorModule);
+        angular.mock.module(valueEditorModule, /*@ngInject*/ (kpValueEditorConfigurationServiceProvider: KpValueEditorConfigurationProvider) => {
+            kpValueEditorConfigurationServiceProvider.setPreciseWatchForOptionsChanges(true);
+        });
 
         inject(/*@ngInject*/ ($compile, $rootScope) => {
             $scope = $rootScope.$new();

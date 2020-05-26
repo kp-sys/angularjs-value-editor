@@ -73,7 +73,6 @@ export interface AcceptableValueEditorOptions<VALUE> extends ValueEditorOptions 
  * ```
  */
 export const ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<AcceptableValueEditorOptions<null>> = {
-    cssClasses: ['form-control'],
     acceptableValues: [],
     multiselectable: false,
     searchable: true,
