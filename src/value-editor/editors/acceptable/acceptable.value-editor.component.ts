@@ -1,8 +1,5 @@
 import './acceptable.value-editor.less';
-import KpValueEditorComponent, {
-    ValueEditorBindings,
-    ValueEditorValidations
-} from '../../kp-value-editor/kp-value-editor.component';
+import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {IAugmentedJQuery, IFilterOrderByItem, IInterpolateService, ITemplateCacheService} from 'angular';
 import {AcceptableValueEditorLocalizationsService} from './acceptable-value-editor-localizations.provider';
@@ -304,17 +301,5 @@ export default class AcceptableValueEditorComponent {
     public controller = AcceptableValueEditorComponentController;
 }
 
-/**
- * @ngdoc type
- * @name AcceptableValueEditorValidations
- * @module angularjs-value-editor.acceptable
- *
- * @description
- * Extends {@link type:ValueEditorValidations}
- */
-// tslint:disable-next-line:no-empty-interface
-export interface AcceptableValueEditorValidations extends ValueEditorValidations {
-}
-
-export interface AcceptableValueEditorBindings<VALUE> extends ValueEditorBindings<AcceptableValueEditorOptions<VALUE>, AcceptableValueEditorValidations> {
+export interface AcceptableValueEditorBindings<VALUE> extends ValueEditorBindings<AcceptableValueEditorOptions<VALUE>> {
 }

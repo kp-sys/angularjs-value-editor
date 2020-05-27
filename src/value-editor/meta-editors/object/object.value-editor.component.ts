@@ -46,24 +46,28 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
         }
     }
 
-    public transformField(field: ValueEditorBindings): ValueEditorBindings {
+    public transformFieldEditor(fieldEditor: ValueEditorBindings, fieldName: string): ValueEditorBindings {
         if (typeof this.options.attributesTransformation === 'function') {
-            field = this.options.attributesTransformation(field);
+            fieldEditor = this.options.attributesTransformation(fieldEditor);
         }
 
-        if (!field.editorId) {
-            field.editorId = generateUuid();
+        if (!fieldEditor.editorId) {
+            fieldEditor.editorId = generateUuid();
+        }
+
+        if (!fieldEditor.editorName && fieldName) {
+            fieldEditor.editorName = fieldName;
         }
 
         if (this.options.forceShowErrors) {
-            if (!field.options) {
-                field.options = {};
+            if (!fieldEditor.options) {
+                fieldEditor.options = {};
             }
 
-            field.options.forceShowErrors = true;
+            fieldEditor.options.forceShowErrors = true;
         }
 
-        return field;
+        return fieldEditor;
     }
 
     protected onOptionsChange(newOptions: ObjectValueEditorOptions, oldOptions: ObjectValueEditorOptions | undefined, optionsChangeDetection: PropertyChangeDetection<ObjectValueEditorOptions> | undefined) {
@@ -114,21 +118,29 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
  *                  fields: [
  *                      {
  *                          label: 'Text',
- *                          type: 'text',
- *                          editorName: 'text'
+ *                          fieldName: 'text',
+ *                          editor: {
+ *                              type: 'text',
+ *                              editorName: 'texttext'
+ *                          }
  *                      },
  *                      {
  *                          label: 'Number',
- *                          type: 'number',
- *                          editorName: 'number'
+ *                          fieldName: 'number',
+ *                          editor: {
+ *                              type: 'number',
+ *                          }
  *                      },
  *                      {
  *                          label: 'Data',
- *                          type: 'list',
- *                          editorName: 'dates',
- *                          options: {
- *                              subEditorType: 'date',
- *                              newItemPrototype: ''
+ *                          fieldName: 'dates',
+ *                          editor: {
+ *                              type: 'list',
+ *                              editorName: 'dates',
+ *                              options: {
+ *                                  subEditorType: 'date',
+ *                                  newItemPrototype: ''
+ *                              }
  *                          }
  *                      }
  *                  ]

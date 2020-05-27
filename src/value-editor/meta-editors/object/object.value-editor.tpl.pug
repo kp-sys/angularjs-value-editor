@@ -1,33 +1,33 @@
 fieldset.form-horizontal("{{withoutNgForm ? '' : 'ng-form'}}"="{{withoutNgForm ? '' : name}}")
     .form-group(
-        class="\\{\\{transformedField.editorName\\}\\}"
-        ng-class="{'has-error': $ctrl.showValidationError(transformedField.editorName)}"
+        class="\\{\\{transformedFieldEditor.editorName\\}\\}"
+        ng-class="{'has-error': $ctrl.showValidationError(transformedFieldEditor.editorName)}"
         ng-repeat="field in $ctrl.options.fields"
-        ng-init="showDebugInfo = true; transformedField = $ctrl.transformField(field)"
-        ng-show="$ctrl.trueIfUndefined(transformedField.isVisible)"
+        ng-init="showDebugInfo = true; transformedFieldEditor = $ctrl.transformFieldEditor(field.editor, field.fieldName)"
+        ng-show="$ctrl.trueIfUndefined(transformedFieldEditor.isVisible)"
     )
         label.control-label(
             class="col-sm-{{labelsWidth}}"
-            ng-class="{'required': transformedField.validations.required}"
-            ng-attr-for="\\{\\{transformedField.editorId\\}\\}"
-            ng-bind="transformedField.label"
+            ng-class="{'required': transformedFieldEditor.validations.required}"
+            ng-attr-for="\\{\\{transformedFieldEditor.editorId\\}\\}"
+            ng-bind="field.label"
         )
 
         div(class="col-sm-{{inputsWidth}}")
             kp-value-editor(
-                editor-id="transformedField.editorId"
-                editor-name="transformedField.editorName"
-                placeholder="transformedField.placeholder"
+                editor-id="transformedFieldEditor.editorId"
+                editor-name="transformedFieldEditor.editorName"
+                placeholder="transformedFieldEditor.placeholder"
 
-                ng-model="$ctrl.model[transformedField.editorName]"
+                ng-model="$ctrl.model[field.fieldName]"
                 ng-model-options="{ getterSetter: true }"
 
-                type="transformedField.type"
-                is-disabled="transformedField.disabled || $ctrl.valueEditorController.isDisabled"
+                type="transformedFieldEditor.type"
+                is-disabled="transformedFieldEditor.disabled || $ctrl.valueEditorController.isDisabled"
                 is-visible="$ctrl.trueIfUndefined($ctrl.valueEditorController.isVisible)"
 
-                validations="transformedField.validations"
-                options="transformedField.options"
+                validations="transformedFieldEditor.validations"
+                options="transformedFieldEditor.options"
             )
             button.debug-info(
                 type="button"
@@ -37,6 +37,6 @@ fieldset.form-horizontal("{{withoutNgForm ? '' : 'ng-form'}}"="{{withoutNgForm ?
             )
                 i.glyphicon.glyphicon-cog
 
-            pre(ng-bind="$ctrl.form[transformedField.editorName] | json" ng-if="$ctrl.valueEditorController.configuration.debugMode" uib-collapse="showDebugInfo")
+            pre(ng-bind="$ctrl.form[transformedFieldEditor.editorName] | json" ng-if="$ctrl.valueEditorController.configuration.debugMode" uib-collapse="showDebugInfo")
 
-| {{withoutNgForm ? '' : '{' + '{$ctrl.form = ' + name + '}' + '}'}}
+| {{withoutNgForm ? '' : '{' + '{$ctrl.form = ' + name + '; \'\'}' + '}'}}

@@ -4,19 +4,24 @@ import {ValueEditorBindings, ValueEditorOptions} from '../../kp-value-editor/kp-
 
 /**
  * @ngdoc type
- * @name ObjectValueEditorFieldSettings
+ * @name ObjectValueEditorField
  * @module angularjs-value-editor.object
  *
  * @requires ValueEditorBindings
  *
+ * @property {string} label Field label.
+ * @property {string} fieldName Name of field in model.
+ * @property {ValueEditorBindings} editor Value editor definition.
+ *
  * @description
  * Definition of {@link objectValueEditor} fields.
  *
- * ```
- *      type ObjectValueEditorFieldSettings = ValueEditorBindings & {label: string};
- * ```
  */
-export type ObjectValueEditorFieldSettings = ValueEditorBindings & {label: string};
+export interface ObjectValueEditorField {
+    label: string;
+    fieldName: string;
+    editor: ValueEditorBindings;
+}
 
 /**
  * @ngdoc type
@@ -38,7 +43,7 @@ export type ObjectValueEditorLabelsWidth = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 1
  * @name ObjectValueEditorOptions
  * @module angularjs-value-editor.object
  *
- * @property {ObjectValueEditorFieldSettings} fields Definition of editor fields
+ * @property {ObjectValueEditorField} fields Definition of editor fields
  * @property {function(ValueEditorBindings): ValueEditorBindings} attributesTransformation Function that transforms ValueEditorBindings.
  * It is useful for situation when You have `name` from backend and You want to have `id` of value editor to be same as `name`.
  *
@@ -55,7 +60,7 @@ export type ObjectValueEditorLabelsWidth = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 1
  * Default value: {@link objectValueEditorDefaultOptions}
  */
 export interface ObjectValueEditorOptions extends ValueEditorOptions {
-    fields?: ObjectValueEditorFieldSettings[];
+    fields?: ObjectValueEditorField[];
     attributesTransformation?: (attributes: ValueEditorBindings) => ValueEditorBindings;
     labelsWidth?: ObjectValueEditorLabelsWidth;
 }

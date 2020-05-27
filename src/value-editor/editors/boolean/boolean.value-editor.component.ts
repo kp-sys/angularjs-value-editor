@@ -1,7 +1,4 @@
-import KpValueEditorComponent, {
-    ValueEditorBindings,
-    ValueEditorValidations
-} from '../../kp-value-editor/kp-value-editor.component';
+import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {INgModelController, IPostLink} from 'angular';
 import AbstractValueEditor from '../../common/abstract-value-editor';
@@ -110,5 +107,5 @@ export default class BooleanValueEditorComponent {
     public controller = BooleanValueEditorComponentController;
 }
 
-export interface BooleanValueEditorBindings extends ValueEditorBindings<BooleanValueEditorOptions, ValueEditorValidations> {
+export interface BooleanValueEditorBindings extends ValueEditorBindings<BooleanValueEditorOptions> {
 }

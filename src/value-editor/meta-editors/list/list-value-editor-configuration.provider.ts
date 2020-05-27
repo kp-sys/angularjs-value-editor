@@ -10,6 +10,14 @@ import {TextValueEditorValidations} from '../../editors/text/text.value-editor.c
  * @name ListValueEditorOptions
  * @module angularjs-value-editor.list
  *
+ * @template MODEL
+ * @template OPTIONS
+ * @template VALIDATIONS
+ *
+ * @property {CustomValueEditorType} subEditorType
+ * @property {MODEL} newItemPrototype
+ * @property {OPTIONS=} subEditorOptions
+ * @property {VALIDATIONS=} subEditorValidations
  *
  * @description
  * Extends {@link type:ValueEditorOptions}
@@ -33,6 +41,10 @@ export interface ListValueEditorOptions<MODEL = any, OPTIONS extends ValueEditor
  *
  * ```javascript
  * {
+ *      subEditorType: 'text',
+ *      newItemPrototype: '',
+ *      subEditorOptions: undefined,
+ *      subEditorValidations: undefined
  * }
  * ```
  */

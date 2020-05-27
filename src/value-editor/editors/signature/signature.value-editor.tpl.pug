@@ -15,7 +15,6 @@
         id="{{$ctrl.valueEditorController.editorId}}"
         name="{{$ctrl.valueEditorController.editorName}}"
         placeholder="{{$ctrl.localize('orType')}}"
-        ng-class="$ctrl.options.cssClasses"
 
         ng-model="$ctrl.model"
         ng-model-options="{ getterSetter: true}"
@@ -39,7 +38,6 @@ input.form-control(
     id="{{$ctrl.valueEditorController.editorId}}"
     name="{{$ctrl.valueEditorController.editorName}}"
     placeholder="{{$ctrl.valueEditorController.placeholder}}"
-    ng-class="$ctrl.options.cssClasses"
 
     ng-if="!$ctrl.showSelect"
 

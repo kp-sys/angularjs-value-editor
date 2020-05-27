@@ -36,6 +36,9 @@ export interface ListValueEditorLocalizationsService extends AbstractValueEditor
  * @name ListValueEditorLocalizations
  * @module angularjs-value-editor.list
  *
+ * @property {string} add
+ * @property {string} remove
+ *
  * @description
  * Default localizations: {@link listValueEditorDefaultLocalizations}
  */
@@ -52,6 +55,8 @@ export interface ListValueEditorLocalizations extends ValueEditorLocalizations {
  * @description
  * ```
  * {
+ *     add: 'Add',
+ *     remove: 'Remove'
  * }
  * ```
  */

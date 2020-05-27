@@ -7,7 +7,7 @@ import {
     ITemplateCacheService,
     ITimeoutService
 } from 'angular';
-import {ObjectValueEditorFieldSettings} from '../meta-editors/object/object-value-editor-configuration.provider';
+import {ObjectValueEditorField} from '../meta-editors/object/object-value-editor-configuration.provider';
 import {generateUuid} from '../utils/uuid-generator';
 
 /**
@@ -15,7 +15,7 @@ import {generateUuid} from '../utils/uuid-generator';
  * @name KpUniversalFormComponentSettings
  * @module angularjs-value-editor
  *
- * @property {ObjectValueEditorFieldSettings[]} fields Fields definition.
+ * @property {ObjectValueEditorField[]} fields Fields definition.
  * @property {string=} header Form header
  * @property {string=} footer Form footer
  *
@@ -23,7 +23,7 @@ import {generateUuid} from '../utils/uuid-generator';
  *
  */
 export interface KpUniversalFormComponentSettings {
-    fields: ObjectValueEditorFieldSettings[];
+    fields: ObjectValueEditorField[];
     header?: string;
     footer?: string;
 }

@@ -6,7 +6,6 @@ import {ValueEditorValidations} from '../kp-value-editor/kp-value-editor.compone
 import {TextValueEditorValidations} from '../editors/text/text.value-editor.component';
 import {NumberValueEditorValidations} from '../editors/number/number.value-editor.component';
 import {NumberRangeValueEditorValidations} from '../editors/number-range/number-range.value-editor.component';
-import {AcceptableValueEditorValidations} from '../editors/acceptable/acceptable.value-editor.component';
 import {DateValueEditorValidations} from '../editors/date/date.value-editor.component';
 import {YearValueEditorValidations} from '../editors/year/year.value-editor.component';
 import {ListRequiredValidationHelper} from '../meta-editors/list/list-required-validation.component';
@@ -70,7 +69,6 @@ export interface ValueEditorErrorMessagesLocalizations extends ValueEditorLocali
     ValidationsToLocalizations<TextValueEditorValidations>,
     ValidationsToLocalizations<NumberValueEditorValidations>,
     ValidationsToLocalizations<NumberRangeValueEditorValidations>,
-    ValidationsToLocalizations<AcceptableValueEditorValidations>,
     ValidationsToLocalizations<DateValueEditorValidations>,
     ValidationsToLocalizations<YearValueEditorValidations>,
     ValidationsToLocalizations<ListRequiredValidationHelper>,

@@ -4,7 +4,7 @@ import {ITimeoutService} from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {ObjectValueEditorBindings} from './object.value-editor.component';
 import {
-    ObjectValueEditorFieldSettings,
+    ObjectValueEditorField,
     ObjectValueEditorOptions,
     UndocumentedInternalOptions
 } from './object-value-editor-configuration.provider';
@@ -14,25 +14,32 @@ import {NumberValueEditorValidations} from '../../editors/number/number.value-ed
 import objectContaining = jasmine.objectContaining;
 import anything = jasmine.anything;
 
-const FIELDS: ObjectValueEditorFieldSettings[] = [
+const FIELDS: ObjectValueEditorField[] = [
     {
         label: 'Text',
-        type: 'text',
-        editorName: 'text'
+        fieldName: 'text',
+        editor: {
+            type: 'text',
+            editorName: 'texttext'
+        }
     },
     {
         label: 'Number',
-        type: 'number',
-        editorName: 'number'
+        fieldName: 'number',
+        editor: {
+            type: 'number',
+        }
     },
     {
         label: 'Data',
-        type: 'list',
-        editorName: 'dates',
-        options: {
-            subEditorType: 'date',
-            newItemPrototype: ''
-        } as ListValueEditorOptions
+        fieldName: 'dates',
+        editor: {
+            type: 'list',
+            options: {
+                subEditorType: 'date',
+                newItemPrototype: ''
+            } as ListValueEditorOptions
+        }
     }
 ];
 
@@ -126,9 +133,12 @@ describe('object-value-editor', () => {
     it('should has working attributes transformation', () => {
         $scope.model = {};
 
+        const editedFields = angular.copy(FIELDS);
+        editedFields[1].editor.editorName = 'number';
+
         valueEditorMocker.create('object', {
             isDisabled: false, options: {
-                fields: FIELDS,
+                fields: editedFields,
                 attributesTransformation: (attrs) => {
                     attrs.editorId = attrs.editorName;
 
@@ -139,7 +149,7 @@ describe('object-value-editor', () => {
 
         const inputIds = [valueEditorMocker.getInputElement('text-value-editor').id, valueEditorMocker.getInputElement('number-value-editor').id];
 
-        expect(inputIds).toEqual([FIELDS[0].editorName, FIELDS[1].editorName]);
+        expect(inputIds).toEqual([editedFields[0].editor.editorName, editedFields[1].editor.editorName]);
     });
 
     it('should aggregate validation status', () => {
@@ -151,8 +161,8 @@ describe('object-value-editor', () => {
 
         const modifiedFields = FIELDS.slice();
 
-        modifiedFields[0].validations = {required: true} as TextValueEditorValidations;
-        modifiedFields[1].validations = {min: 50} as NumberValueEditorValidations;
+        modifiedFields[0].editor.validations = {required: true} as TextValueEditorValidations;
+        modifiedFields[1].editor.validations = {min: 50} as NumberValueEditorValidations;
 
         valueEditorMocker.create('object', {
             editorName: 'object',
@@ -185,5 +195,27 @@ describe('object-value-editor', () => {
         });
 
         expect(element.querySelector('fieldset[ng-form]')).toBe(null);
+    });
+
+    it('should has working editorName generation base on fieldName', () => {
+        $scope.model = {
+            number: 10
+        };
+
+        const valueEditorElement = valueEditorMocker.create('object', {
+            options: {
+                fields: FIELDS
+            }
+        });
+
+        expect($scope.model).toEqual({number: 10, dates: []});
+
+        const textValueEditorName = valueEditorMocker.getInputElement<HTMLInputElement>('text-value-editor').name;
+        const numberValueEditorName = valueEditorMocker.getInputElement<HTMLInputElement>('number-value-editor').name;
+        const listValueEditorName = valueEditorElement.querySelector<HTMLDivElement>('list-value-editor [ng-form]').attributes.getNamedItem('ng-form').value;
+
+        expect(textValueEditorName).toBe('texttext');
+        expect(numberValueEditorName).toBe('number');
+        expect(listValueEditorName).toBe('dates');
     });
 });

@@ -21,22 +21,31 @@ const FORM_SETTINGS: KpUniversalFormComponentSettings = {
     fields: [
         {
             label: 'Text',
-            type: 'text',
-            editorName: 'text'
+            fieldName: 'text',
+            editor: {
+                type: 'text',
+                editorName: 'text'
+            }
         },
         {
             label: 'Number',
-            type: 'number',
-            editorName: 'number'
+            fieldName: 'number',
+            editor: {
+                type: 'number',
+                editorName: 'number'
+            }
         },
         {
             label: 'Data',
-            type: 'list',
-            editorName: 'dates',
-            options: {
-                subEditorType: 'date',
-                newItemPrototype: ''
-            } as ListValueEditorOptions
+            fieldName: 'dates',
+            editor: {
+                type: 'list',
+                editorName: 'dates',
+                options: {
+                    subEditorType: 'date',
+                    newItemPrototype: ''
+                } as ListValueEditorOptions
+            }
         }]
 };
 
@@ -145,7 +154,7 @@ describe('kp-universal-form', () => {
 
     it('should correctly set validity', () => {
         const customizedSettings = Object.assign({}, FORM_SETTINGS);
-        customizedSettings.fields[0].validations = {required: true};
+        customizedSettings.fields[0].editor.validations = {required: true};
         $scope.formSettings = customizedSettings;
 
         const element = compileTemplate();
@@ -177,7 +186,7 @@ describe('kp-universal-form', () => {
 
         expect($scope.formController.$submitted).toBe(false);
 
-        const submitEvent = new CustomEvent('submit', {'bubbles':true, 'cancelable': true});
+        const submitEvent = new CustomEvent('submit', {'bubbles': true, 'cancelable': true});
         element.querySelector<HTMLFormElement>('form').dispatchEvent(submitEvent);
         $scope.$apply();
 
