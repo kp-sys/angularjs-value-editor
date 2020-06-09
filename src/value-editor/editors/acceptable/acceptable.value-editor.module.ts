@@ -9,6 +9,7 @@ import AcceptableValueEditorLocalizationsProvider, {ACCEPTABLE_VALUE_EDITOR_DEFA
 import AcceptableValueEditorComponent from './acceptable.value-editor.component';
 import AcceptableValueEditorConfigurationProvider, {ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS} from './acceptable-value-editor-configuration.provider';
 import CheckboxesValidationsDirective from './checkboxes-validations-directive';
+import nullAwareFilter from './null-aware-filter.filter';
 
 /**
  * @ngdoc module
@@ -23,6 +24,7 @@ export default register('angularjs-value-editor.acceptable', [aliasesModule, 'ng
     .decorator(uiSelectDecorator.decoratorName, uiSelectDecorator)
     .constant('acceptableValueEditorDefaultOptions', ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS)
     .constant('acceptableValueEditorDefaultLocalizations', ACCEPTABLE_VALUE_EDITOR_DEFAULT_LOCALIZATIONS)
+    .filter(nullAwareFilter.filterName, nullAwareFilter)
     .provider(AcceptableValueEditorConfigurationProvider.providerName, AcceptableValueEditorConfigurationProvider)
     .provider(AcceptableValueEditorLocalizationsProvider.providerName, AcceptableValueEditorLocalizationsProvider)
     .directive(CheckboxesValidationsDirective.directiveName, CheckboxesValidationsDirective)

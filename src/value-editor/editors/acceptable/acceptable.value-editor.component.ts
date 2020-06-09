@@ -1,7 +1,13 @@
 import './acceptable.value-editor.less';
 import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
-import {IAugmentedJQuery, IFilterOrderByItem, IInterpolateService, ITemplateCacheService} from 'angular';
+import {
+    IAugmentedJQuery,
+    IFilterOrderByItem,
+    IFilterService,
+    IInterpolateService,
+    ITemplateCacheService
+} from 'angular';
 import {AcceptableValueEditorLocalizationsService} from './acceptable-value-editor-localizations.provider';
 import {
     AcceptableValueEditorConfigurationService,
@@ -23,7 +29,8 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
                 $templateCache: ITemplateCacheService,
                 public acceptableValueEditorLocalizationsService: AcceptableValueEditorLocalizationsService,
                 public acceptableValueEditorConfigurationService: AcceptableValueEditorConfigurationService<VALUE>,
-                private $element: IAugmentedJQuery) {
+                private $element: IAugmentedJQuery,
+                private $filter: IFilterService) {
         super(
             AcceptableValueEditorComponentController.SELECT_TEMPLATE_URL,
             TEMPLATE_NAME_PREFIX,
@@ -54,7 +61,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
         return this.options.showFirstCount && this.getMoreCount() > 0;
     }
 
-    public getAcceptableValues(from = 0, count = this.options.showFirstCount) {
+    public getAcceptableValuesForCheckboxes(from = 0, count = this.options.showFirstCount): VALUE[] {
         let values = this.options.acceptableValues;
 
         if (this.options.selectedFirst) {
@@ -80,6 +87,17 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
         return values;
     }
 
+    public getAcceptableValuesForUiSelect(): VALUE[] {
+        if (!this.options.multiselectable && !this.valueEditorController.validations?.required) {
+            const adjustedAcceptableValues = this.options.acceptableValues.slice();
+            adjustedAcceptableValues.unshift(null);
+
+            return adjustedAcceptableValues;
+        }
+
+        return this.options.acceptableValues;
+    }
+
     public checkboxModel(item: VALUE): () => boolean {
         return () => this.isChecked(item);
     }
@@ -98,7 +116,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
     }
 
     public uiSelectComparator(e1: IFilterOrderByItem, e2: IFilterOrderByItem): number {
-        return this.options.sortComparator ? this.options.sortComparator(e1.value, e2.value) : 0;
+        return (this.options.sortComparator && e1 !== null && e2 !== null) ? this.options.sortComparator(e1.value, e2.value) : 0;
     }
 
     protected onOptionsChange(newOptions: AcceptableValueEditorOptions<VALUE>, oldOptions: AcceptableValueEditorOptions<VALUE>, whichOptionIsChanged: PropertyChangeDetection<AcceptableValueEditorOptions<VALUE>>) {

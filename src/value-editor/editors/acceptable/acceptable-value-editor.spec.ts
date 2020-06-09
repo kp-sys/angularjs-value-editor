@@ -158,7 +158,7 @@ describe('acceptable-value-editor', () => {
             const uiSelect = valueEditorMocker.getInputElement<HTMLElement>();
             const controller = new UISelectController(uiSelect);
 
-            controller.openAndSelectNthOption(3);
+            controller.openAndSelectNthOption(4);
 
             expect($scope.model).toEqual({value: 'd'});
         });
@@ -181,7 +181,8 @@ describe('acceptable-value-editor', () => {
 
             let count = new UISelectController(valueEditorMocker.getInputElement()).openUiSelect().getOptionsCount();
 
-            expect(count).toBe(ACCEPTABLE_VALUES.length);
+            // + 1 for null selection
+            expect(count).toBe(ACCEPTABLE_VALUES.length + 1);
 
             const newAcceptableValues = ACCEPTABLE_VALUES.slice(0, 6);
             $scope.options.acceptableValues = newAcceptableValues;
@@ -189,20 +190,21 @@ describe('acceptable-value-editor', () => {
 
             count = new UISelectController(valueEditorMocker.getInputElement()).openUiSelect().getOptionsCount();
 
-            expect(count).toBe(newAcceptableValues.length);
+            // + 1 for null selection
+            expect(count).toBe(newAcceptableValues.length + 1);
         });
 
         it('should change options template', () => {
             valueEditorMocker.create('acceptable', {options: {acceptableValues: ACCEPTABLE_VALUES}});
 
-            let option3 = new UISelectController(valueEditorMocker.getInputElement()).openUiSelect().getOptionsText()[3];
+            let option3 = new UISelectController(valueEditorMocker.getInputElement()).openUiSelect().getOptionsText()[4];
 
             expect(option3).toBe('{"value":"d"}');
 
             $scope.options.optionsTemplate = '{{$item.value}}';
             $scope.$apply();
 
-            option3 = new UISelectController(valueEditorMocker.getInputElement()).openUiSelect().getOptionsText()[3];
+            option3 = new UISelectController(valueEditorMocker.getInputElement()).openUiSelect().getOptionsText()[4];
 
             expect(option3).toBe('d');
         });
@@ -231,7 +233,7 @@ describe('acceptable-value-editor', () => {
             let uiSelectController = new UISelectController(valueEditorMocker.getInputElement());
 
             let optionsCount = uiSelectController.openUiSelect().getOptionsCount();
-            expect(optionsCount).toBe(ACCEPTABLE_VALUES.length);
+            expect(optionsCount).toBe(ACCEPTABLE_VALUES.length + 1);
 
             optionsCount = uiSelectController.openUiSelect().setSearchPhrase('f').getOptionsCount();
             expect(optionsCount).toBe(1);
@@ -241,10 +243,10 @@ describe('acceptable-value-editor', () => {
             uiSelectController = new UISelectController(valueEditorMocker.getInputElement());
 
             optionsCount = uiSelectController.openUiSelect().getOptionsCount();
-            expect(optionsCount).toBe(ACCEPTABLE_VALUES.length);
+            expect(optionsCount).toBe(ACCEPTABLE_VALUES.length + 1);
 
             optionsCount = uiSelectController.openUiSelect().setSearchPhrase('f').getOptionsCount();
-            expect(optionsCount).toBe(ACCEPTABLE_VALUES.length);
+            expect(optionsCount).toBe(ACCEPTABLE_VALUES.length + 1);
         });
 
         it('should has working required validation', () => {
@@ -267,6 +269,38 @@ describe('acceptable-value-editor', () => {
 
             expect($scope.model).toEqual({value: 'd'});
             expect($scope.form.acceptable.$error).toEqual({});
+        });
+
+        it('should has null option if component is singleselect and not required', () => {
+            valueEditorMocker.create('acceptable', {options: {acceptableValues: ACCEPTABLE_VALUES}});
+
+            const count = new UISelectController(valueEditorMocker.getInputElement()).openUiSelect().getOptionsCount();
+
+            // + 1 for null selection
+            expect(count).toBe(ACCEPTABLE_VALUES.length + 1);
+        });
+
+        it('should not has null option if component is singleselect and not required', () => {
+            valueEditorMocker.create('acceptable', {options: {acceptableValues: ACCEPTABLE_VALUES}, validations: {required: true}});
+
+            const count = new UISelectController(valueEditorMocker.getInputElement()).openUiSelect().getOptionsCount();
+
+            expect(count).toBe(ACCEPTABLE_VALUES.length);
+        });
+
+        it('should select null', () => {
+            valueEditorMocker.create('acceptable', {options: {acceptableValues: ACCEPTABLE_VALUES}});
+            const uiSelect = valueEditorMocker.getInputElement<HTMLElement>();
+            const controller = new UISelectController(uiSelect);
+
+            controller.openAndSelectNthOption(4);
+
+            expect($scope.model).toEqual({value: 'd'});
+
+            controller.openAndSelectNthOption(0);
+
+            expect($scope.model).toEqual(null);
+
         });
     });
 

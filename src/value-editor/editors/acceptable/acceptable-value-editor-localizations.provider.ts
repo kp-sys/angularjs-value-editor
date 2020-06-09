@@ -75,5 +75,6 @@ export const ACCEPTABLE_VALUE_EDITOR_DEFAULT_LOCALIZATIONS: Readonly<AcceptableV
     more: 'More',
     less: 'Less',
     selectAll: 'Select all',
-    deselectAll: 'Deselect all'
+    deselectAll: 'Deselect all',
+    noItemSelected: 'No item selected'
 });
