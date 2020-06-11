@@ -1,13 +1,7 @@
 import './acceptable.value-editor.less';
 import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
-import {
-    IAugmentedJQuery,
-    IFilterOrderByItem,
-    IFilterService,
-    IInterpolateService,
-    ITemplateCacheService
-} from 'angular';
+import {IAugmentedJQuery, IFilterOrderByItem, IInterpolateService, ITemplateCacheService} from 'angular';
 import {AcceptableValueEditorLocalizationsService} from './acceptable-value-editor-localizations.provider';
 import {
     AcceptableValueEditorConfigurationService,
@@ -29,8 +23,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
                 $templateCache: ITemplateCacheService,
                 public acceptableValueEditorLocalizationsService: AcceptableValueEditorLocalizationsService,
                 public acceptableValueEditorConfigurationService: AcceptableValueEditorConfigurationService<VALUE>,
-                private $element: IAugmentedJQuery,
-                private $filter: IFilterService) {
+                private $element: IAugmentedJQuery) {
         super(
             AcceptableValueEditorComponentController.SELECT_TEMPLATE_URL,
             TEMPLATE_NAME_PREFIX,
@@ -50,7 +43,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
     public set model(value: VALUE[]) {
         this.setValidationHelperTouched();
 
-        if (this.options.multiselectable && this.options.sortModel) {
+        if (this.options.multiselectable && this.options.sortModel && Array.isArray(value)) {
             super.model = value.sort(this.options.sortComparator);
         } else {
             super.model = value;
@@ -116,7 +109,11 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
     }
 
     public uiSelectComparator(e1: IFilterOrderByItem, e2: IFilterOrderByItem): number {
-        return (this.options.sortComparator && e1 !== null && e2 !== null) ? this.options.sortComparator(e1.value, e2.value) : 0;
+        try {
+            return (this.options.sortComparator && e1 !== null && e2 !== null) ? this.options.sortComparator(e1.value, e2.value) : 0;
+        } catch (e) {
+            throw new Error(`Error in custom sortComparator: ${e}`);
+        }
     }
 
     protected onOptionsChange(newOptions: AcceptableValueEditorOptions<VALUE>, oldOptions: AcceptableValueEditorOptions<VALUE>, whichOptionIsChanged: PropertyChangeDetection<AcceptableValueEditorOptions<VALUE>>) {
@@ -279,7 +276,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
  *              selectedFirst;
  *              sortModel;
  *              switchToCheckboxesThreshold;
- *              sortComparatorString = '(e1, e2) => e1.x.localeCompare(e2.x)*-1';
+ *              sortComparatorString = `(e1, e2) => ((e1 || {x: ''}).x || '').localeCompare((e2 || {x: ''}).x) * -1`;
  *              equalityComparatorString = '(e1, e2) => e1.x === e2.x';
  *
  *              constructor(acceptableValueEditorDefaultOptions) {

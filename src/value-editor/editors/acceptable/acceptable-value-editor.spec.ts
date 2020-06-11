@@ -514,6 +514,19 @@ describe('acceptable-value-editor', () => {
             expect($scope.form.multiacceptable.$error).toEqual({});
         });
 
+        it('should not throws exception if model is empty and sortModel is set to true', () => {
+            expect(() => {
+                valueEditorMocker.create('acceptable', {
+                    options: {
+                        acceptableValues: ACCEPTABLE_VALUES,
+                        multiselectable: true,
+                        sortModel: true
+                    }
+                });
+            }).not.toThrow();
+
+        });
+
     });
 
     describe('multi selectable checkboxes', () => {
