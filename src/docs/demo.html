@@ -37,8 +37,8 @@
         luxon.Settings.defaultLocale = luxon.DateTime.local().resolvedLocaleOpts().locale;
 
         angular.module('app', ['angularjs-value-editor'])
-            .config(['valueEditorConfigurationServiceProvider', function(valueEditorConfigurationServiceProvider) {
-                valueEditorConfigurationServiceProvider.setDebugMode(true)
+            .config(['kpValueEditorConfigurationServiceProvider', function(kpValueEditorConfigurationServiceProvider) {
+                kpValueEditorConfigurationServiceProvider.setDebugMode(true)
             }])
             .controller('demoController', function() {
                 this.model = {};
@@ -46,285 +46,381 @@
                 this.fields = [
                     {
                         label: 'text:text',
-                        type: 'text',
-                        editorName: 'text-text',
-                        validations: {
-                            required: true,
-                            pattern: 'abc',
-                            minlength: 5
+                        fieldName: 'text-text',
+                        editor: {
+                            type: 'text',
+                            editorName: 'text-text',
+
+                            validations: {
+                                required: true,
+                                pattern: 'abc',
+                                minlength: 5
+                            }
                         }
                     },
                     {
                         label: 'text:textarea',
-                        type: 'text',
-                        editorName: 'textarea',
-                        options: {
-                            type: 'textarea'
-                        },
-                        validations: {
-                            required: true
+                        fieldName: 'textarea',
+                        editor: {
+                            type: 'text',
+                            editorName: 'textarea',
+
+                            options: {
+                                type: 'textarea'
+                            },
+                            validations: {
+                                required: true
+                            }
                         }
                     },
                     {
                         label: 'text:rich-textarea',
-                        type: 'text',
-                        editorName: 'richtextarea',
-                        options: {
-                            type: 'rich-textarea'
-                        },
-                        validations: {
-                            required: true
+                        fieldName: 'richtextarea',
+                        editor: {
+                            type: 'text',
+                            editorName: 'richtextarea',
+
+                            options: {
+                                type: 'rich-textarea'
+                            },
+                            validations: {
+                                required: true
+                            }
                         }
                     },
                     {
                         label: 'number',
-                        type: 'number',
-                        editorName: 'number',
-                        validations: {
-                            required: true
+                        fieldName: 'number',
+                        editor: {
+                            type: 'number',
+                            editorName: 'number',
+
+                            validations: {
+                                required: true
+                            }
                         }
                     },
                     {
                         label: 'boolean',
-                        type: 'boolean',
-                        editorName: 'boolean',
-                        validations: {
-                            required: true
+                        fieldName: 'boolean',
+                        editor: {
+                            type: 'boolean',
+                            editorName: 'boolean',
+
+                            validations: {
+                                required: true
+                            }
                         }
                     },
                     {
                         label: 'html',
-                        type: 'html',
-                        editorName: 'html',
-                        validations: {
-                            required: true
+                        fieldName: 'html',
+                        editor: {
+                            type: 'html',
+                            editorName: 'html',
+
+                            validations: {
+                                required: true
+                            }
                         }
                     },
                     {
                         label: 'date',
-                        type: 'date',
-                        editorName: 'date',
-                        validations: {
-                            required: true
+                        fieldName: 'date',
+                        editor: {
+                            type: 'date',
+                            editorName: 'date',
+
+                            validations: {
+                                required: true
+                            }
                         }
                     },
                     {
                         label: 'acceptable:select',
-                        type: 'acceptable',
-                        editorName: 'acceptable-select',
-                        validations: {
-                            required: true
-                        },
-                        options: {
-                            acceptableValues: [
-                                'one',
-                                'two',
-                                'three'
-                            ]
+                        fieldName: 'acceptable-select',
+                        editor: {
+                            type: 'acceptable',
+                            editorName: 'acceptable-select',
+
+                            validations: {
+                                required: true
+                            },
+                            options: {
+                                acceptableValues: [
+                                    'one',
+                                    'two',
+                                    'three'
+                                ]
+                            }
                         }
                     },
                     {
                         label: 'acceptable:checkboxes',
-                        type: 'acceptable',
-                        editorName: 'acceptableCheckboxes',
-                        validations: {
-                            required: true
-                        },
-                        options: {
-                            acceptableValues: [
-                                'one',
-                                'two',
-                                'three'
-                            ],
-                            switchToCheckboxesThreshold: 1,
-                            multiselectable: true,
-                            showFirstCount: 2
+                        fieldName: 'acceptableCheckboxes',
+                        editor: {
+                            type: 'acceptable',
+                            editorName: 'acceptableCheckboxes',
+
+                            validations: {
+                                required: true
+                            },
+                            options: {
+                                acceptableValues: [
+                                    'one',
+                                    'two',
+                                    'three'
+                                ],
+                                switchToCheckboxesThreshold: 1,
+                                multiselectable: true,
+                                showFirstCount: 2
+                            }
                         }
                     },
                     {
                         label: 'year',
-                        type: 'year',
-                        editorName: 'year',
-                        validations: {
-                            required: true
+                        fieldName: 'year',
+                        editor: {
+                            type: 'year',
+                            editorName: 'year',
+
+                            validations: {
+                                required: true
+                            }
                         }
                     },
                     {
                         label: 'card-number',
-                        type: 'card-number',
-                        editorName: 'card-number',
-                        validations: {
-                            required: true
+                        fieldName: 'card-number',
+                        editor: {
+                            type: 'card-number',
+                            editorName: 'card-number',
+
+                            validations: {
+                                required: true
+                            }
                         }
                     },
                     {
                         label: 'index-selection',
-                        type: 'index-selection',
-                        editorName: 'index-selection',
-                        options: {
-                            items: [
-                                {
-                                    id: 1
-                                },
-                                {
-                                    id: 2
-                                },
-                                {
-                                    id: 3
-                                }
-                            ]
-                        },
-                        validations: {
-                            required: true
+                        fieldName: 'index-selection',
+                        editor: {
+                            type: 'index-selection',
+                            editorName: 'index-selection',
+
+                            options: {
+                                items: [
+                                    {
+                                        id: 1
+                                    },
+                                    {
+                                        id: 2
+                                    },
+                                    {
+                                        id: 3
+                                    }
+                                ]
+                            },
+                            validations: {
+                                required: true
+                            }
                         }
                     },
                     {
                         label: 'autocomplete',
-                        type: 'autocomplete',
-                        editorName: 'autocomplete',
-                        validations: {
-                            required: true
+                        fieldName: 'autocomplete',
+                        editor: {
+                            type: 'autocomplete',
+                            editorName: 'autocomplete',
+
+                            validations: {
+                                required: true
+                            }
                         }
                     },
                     {
                         label: 'password',
-                        type: 'password',
-                        editorName: 'password',
-                        validations: {
-                            required: true
+                        fieldName: 'password',
+                        editor: {
+                            type: 'password',
+                            editorName: 'password',
+
+                            validations: {
+                                required: true
+                            }
                         }
                     },
                     {
                         label: 'password:confirmation',
-                        type: 'password',
-                        editorName: 'password:confirmation',
-                        validations: {
-                            required: true
-                        },
-                        options: {
-                            withConfirmation: true
+                        fieldName: 'password:confirmation',
+                        editor: {
+                            type: 'password',
+                            editorName: 'password:confirmation',
+
+                            validations: {
+                                required: true
+                            },
+                            options: {
+                                withConfirmation: true
+                            }
                         }
                     },
                     {
                         label: 'signature',
-                        type: 'signature',
-                        editorName: 'signature',
-                        validations: {
-                            required: true
-                        },
-                        options: {
-                            dataSource: () => Promise.resolve(['one', 'two', 'three']),
-                            canDoAction: true
+                        fieldName: 'signature',
+                        editor: {
+                            type: 'signature',
+                            editorName: 'signature',
+
+                            validations: {
+                                required: true
+                            },
+                            options: {
+                                dataSource: () => Promise.resolve(['one', 'two', 'three']),
+                                canDoAction: true
+                            }
                         }
                     },
                     {
                         label: 'access-number',
-                        type: 'access-number',
-                        editorName: 'access-number',
-                        validations: {
-                            required: true
-                        },
-                        options: {
-                            dataSource: () => Promise.resolve(['one', 'two', 'three']),
-                            canDoAction: true
+                        fieldName: 'access-number',
+                        editor: {
+                            type: 'access-number',
+                            editorName: 'access-number',
+
+                            validations: {
+                                required: true
+                            },
+                            options: {
+                                dataSource: () => Promise.resolve(['one', 'two', 'three']),
+                                canDoAction: true
+                            }
                         }
                     },
                     {
                         label: 'number-range',
-                        type: 'number-range',
-                        editorName: 'number-range',
-                        validations: {
-                            required: true
+                        fieldName: 'number-range',
+                        editor: {
+                            type: 'number-range',
+                            editorName: 'number-range',
+
+                            validations: {
+                                required: true
+                            }
                         }
                     },
                     {
                         label: 'acceptable-root',
-                        type: 'acceptable-root',
-                        editorName: 'acceptable-root',
-                        validations: {
-                            required: true
-                        },
-                        options: {
-                            optionsTemplate: '{{$node.text}}',
-                            acceptableValue: {
-                                text: '0',
-                                children: [
-                                    {
-                                        text: '1-1'
-                                    },
-                                    {
-                                        text: '1-2'
-                                    }
-                                ]
+                        fieldName: 'acceptable-root',
+                        editor: {
+                            type: 'acceptable-root',
+                            editorName: 'acceptable-root',
+
+                            validations: {
+                                required: true
+                            },
+                            options: {
+                                optionsTemplate: '{{$node.text}}',
+                                acceptableValue: {
+                                    text: '0',
+                                    children: [
+                                        {
+                                            text: '1-1'
+                                        },
+                                        {
+                                            text: '1-2'
+                                        }
+                                    ]
+                                }
                             }
                         }
                     },
                     {
                         label: 'multiple-acceptable-root',
-                        type: 'multiple-acceptable-root',
-                        editorName: 'multiple-acceptable-root',
-                        validations: {
-                            required: true
-                        },
-                        options: {
-                            optionsTemplate: '{{$node.text}}',
-                            acceptableValue: {
-                                text: '0',
-                                children: [
-                                    {
-                                        text: '1-1'
-                                    },
-                                    {
-                                        text: '1-2'
-                                    }
-                                ]
+                        fieldName: 'multiple-acceptable-root',
+                        editor: {
+                            type: 'multiple-acceptable-root',
+                            editorName: 'multiple-acceptable-root',
+
+                            validations: {
+                                required: true
+                            },
+                            options: {
+                                optionsTemplate: '{{$node.text}}',
+                                acceptableValue: {
+                                    text: '0',
+                                    children: [
+                                        {
+                                            text: '1-1'
+                                        },
+                                        {
+                                            text: '1-2'
+                                        }
+                                    ]
+                                }
                             }
                         }
                     },
                     {
                         label: 'search-text',
-                        type: 'search-text',
-                        editorName: 'search-text',
-                        validations: {
-                            required: true
+                        fieldName: 'search-text',
+                        editor: {
+                            type: 'search-text',
+                            editorName: 'search-text',
+
+                            validations: {
+                                required: true
+                            }
                         }
                     },
                     {
                         label: 'searchable',
-                        type: 'searchable',
-                        editorName: 'searchable',
-                        validations: {
-                            required: true
-                        },
-                        options: {
-                            searchModelFunction: ['$timeout', ($timeout) => new Promise<string>((resolve) => $timeout(() => resolve('value'), 1000))]
+                        fieldName: 'searchable',
+                        editor: {
+                            type: 'searchable',
+                            editorName: 'searchable',
+
+                            validations: {
+                                required: true
+                            },
+                            options: {
+                                searchModelFunction: ['$timeout', ($timeout) => new Promise((resolve) => $timeout(() => resolve('value'), 1000))]
+                            }
                         }
                     },
                     {
                         label: 'range',
-                        type: 'range',
-                        editorName: 'range',
-                        validations: {
-                            required: true
+                        fieldName: 'range',
+                        editor: {
+                            type: 'range',
+                            editorName: 'range',
+
+                            validations: {
+                                required: true
+                            }
                         }
                     },
                     {
                         label: 'exemplar-bar-code',
-                        type: 'exemplar-bar-code',
-                        editorName: 'exemplar-bar-code',
-                        validations: {
-                            required: true
-                        }
-                    },
+                        fieldName: 'exemplar-bar-code',
+                        editor: {
+                            type: 'exemplar-bar-code',
+                            editorName: 'exemplar-bar-code',
 
-                ]
+                            validations: {
+                                required: true
+                            }
+                        }
+                    }
+                ];
+
             });
     </script>
 </head>
 
 <body ng-app="app" ng-strict-di="ng-strict-di">
 <h1>Value Editor Demo</h1>
-<main class="container" ng-controller="demoController as $ctrl" ng-init="isDisabled = false">
+<main class="container" ng-controller="demoController as $ctrl">
     <kp-universal-form name="myForm" form-settings="{fields: $ctrl.fields}" form-controller="formController = $formController" submit-function="$ctrl.submit()" labels-width="2" ng-model="$ctrl.model"></kp-universal-form>
 </main>
 </body>
