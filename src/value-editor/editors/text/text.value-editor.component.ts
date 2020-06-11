@@ -4,19 +4,45 @@ import KpValueEditorComponent, {
     ValueEditorValidations
 } from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
-import {IDoCheck} from 'angular';
+import {IDoCheck, IOnInit} from 'angular';
 import {Ace} from 'ace-builds';
 import AbstractValueEditor from '../../common/abstract-value-editor';
-import {TextValueEditorConfigurationService, TextValueEditorOptions} from './text-value-editor-configuration.provider';
+import {
+    TextValueEditorConfigurationService,
+    TextValueEditorOptions,
+    TTextValueEditorType
+} from './text-value-editor-configuration.provider';
 import {PropertyChangeDetection} from '../../utils/equals';
 
-export class TextValueEditorComponentController extends AbstractValueEditor<string, TextValueEditorOptions> implements IDoCheck {
+const TEXT_INPUTS: TTextValueEditorType[] = [
+    'text',
+    'email',
+    'url',
+    'tel'
+];
+
+export class TextValueEditorComponentController extends AbstractValueEditor<string, TextValueEditorOptions> implements IOnInit, IDoCheck {
+    public isText: boolean;
     private aceEditor: Ace.Editor;
     private isDisabled: boolean;
 
     /*@ngInject*/
-    constructor(private textValueEditorConfigurationService: TextValueEditorConfigurationService) {
+    constructor(private textValueEditorConfigurationService: TextValueEditorConfigurationService, private emailRegex: string) {
         super(textValueEditorConfigurationService);
+    }
+
+    public $onInit() {
+        super.$onInit();
+
+        this.isText = TEXT_INPUTS.includes(this.options.type);
+
+        if (this.options.type === 'email' && !(this.valueEditorController.validations as TextValueEditorValidations ?? {}).pattern) {
+            if (!this.valueEditorController.validations) {
+                this.valueEditorController.validations = {};
+            }
+
+            (this.valueEditorController.validations as TextValueEditorValidations).pattern = this.emailRegex;
+        }
     }
 
     $doCheck(): void {
@@ -96,6 +122,10 @@ export class TextValueEditorComponentController extends AbstractValueEditor<stri
  * - `rich-textarea`.
  *
  *      [ACE editor](https://ace.c9.io).
+ *
+ * - `email`
+ *
+ *      Email input. If pattern validation is not given, default is used.
  *
  * Supported options: {@link type:TextValueEditorOptions}
  *

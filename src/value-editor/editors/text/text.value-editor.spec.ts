@@ -3,6 +3,7 @@ import * as angular from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {TextValueEditorBindings} from './text.value-editor.component';
 import 'ace-builds';
+import objectContaining = jasmine.objectContaining;
 
 describe('text-value-editor', () => {
 
@@ -421,6 +422,80 @@ describe('text-value-editor', () => {
             expect(valueEditorMocker.getInputElement().tagName.toLowerCase()).toBe('div');
             const aceEditorTextarea = valueEditorMocker.getInputElement<HTMLDivElement>().querySelector('textarea');
             expect(aceEditorTextarea.attributes.getNamedItem('readonly')).not.toBe(null);
+        });
+
+    });
+
+    describe('type: email', () => {
+        beforeEach(() => {
+            angular.mock.module(valueEditorModule);
+
+            inject(/*@ngInject*/ ($compile, $rootScope) => {
+                $scope = $rootScope.$new();
+                valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
+            });
+        });
+
+        it('should be email input', () => {
+            valueEditorMocker.create('text', {options: {type: 'email'}});
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().type = 'email';
+
+        });
+
+        it('should have implicit email validation', () => {
+            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'email'}});
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.text.$error).toEqual(objectContaining({pattern: true}));
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = 'a@b.c';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.text.$error).toEqual({});
+        });
+
+        it('should can override implicit email validation', () => {
+            valueEditorMocker.create('text', {
+                editorName: 'text',
+                options: {type: 'email'},
+                validations: {pattern: 'abc'}
+            });
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.text.$error).toEqual(objectContaining({pattern: true}));
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = 'abc';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.text.$error).not.toEqual(objectContaining({pattern: true}));
+        });
+    });
+
+    describe('other types', () => {
+        beforeEach(() => {
+            angular.mock.module(valueEditorModule);
+
+            inject(/*@ngInject*/ ($compile, $rootScope) => {
+                $scope = $rootScope.$new();
+                valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
+            });
+        });
+
+        it('should be tel input', () => {
+            valueEditorMocker.create('text', {options: {type: 'tel'}});
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().type = 'tel';
+        });
+
+        it('should be url input', () => {
+            valueEditorMocker.create('text', {options: {type: 'url'}});
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().type = 'url';
         });
 
     });

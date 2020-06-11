@@ -14,10 +14,10 @@ import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.componen
  * - `textarea`: Classic HTML textarea element.
  * - `rich-textarea`: ACE editor with some syntax highlight.
  *
- * Possible values are: `'text' | 'textarea' | 'rich-textarea'`.
+ * Possible values are: `'text' | 'textarea' | 'rich-textarea' | 'email'`.
  *
  */
-export type TTextValueEditorType = 'text' | 'textarea' | 'rich-textarea';
+export type TTextValueEditorType = 'text' | 'textarea' | 'rich-textarea' | 'email' | 'url' | 'tel';
 
 /**
  * @ngdoc type
