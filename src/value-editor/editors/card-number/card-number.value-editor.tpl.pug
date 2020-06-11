@@ -13,7 +13,7 @@
             popover-is-open="$ctrl.openPopover"
             popover-trigger="'none'"
 
-        ) {{$ctrl.cardNumberValueEditorLocalizationsService.getLocalization('generate')}}
+        ) {{$ctrl.localize('generate')}}
 
     input.form-control(
         type="text"
@@ -28,6 +28,9 @@
         ng-disabled="$ctrl.valueEditorController.isDisabled"
 
         ng-required="$ctrl.valueEditorController.validations.required"
+        ng-minlength="$ctrl.valueEditorController.validations.minlength"
+        ng-maxlength="$ctrl.valueEditorController.validations.maxlength"
+        ng-pattern="$ctrl.valueEditorController.validations.pattern"
 
         error-messages
 

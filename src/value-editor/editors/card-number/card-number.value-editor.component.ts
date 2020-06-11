@@ -1,8 +1,5 @@
 import AbstractValueEditor from '../../common/abstract-value-editor';
-import KpValueEditorComponent, {
-    ValueEditorBindings,
-    ValueEditorValidations
-} from '../../kp-value-editor/kp-value-editor.component';
+import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import {
     CardNumberValueEditorConfigurationService,
     CardNumberValueEditorOptions
@@ -10,6 +7,7 @@ import {
 import {IAugmentedJQuery, ITimeoutService} from 'angular';
 import {CardNumberValueEditorLocalizationsService} from './card-number-value-editor-localization.provider';
 import {PropertyChangeDetection} from '../../utils/equals';
+import {TextValueEditorValidations} from '../text/text.value-editor.component';
 
 export class CardNumberValueEditorComponentController extends AbstractValueEditor<string, CardNumberValueEditorOptions> {
     public generationButton: IAugmentedJQuery;
@@ -18,9 +16,9 @@ export class CardNumberValueEditorComponentController extends AbstractValueEdito
 
     /*@ngInject*/
     constructor(cardNumberValueEditorConfigurationService: CardNumberValueEditorConfigurationService,
-                public cardNumberValueEditorLocalizationsService: CardNumberValueEditorLocalizationsService,
+                cardNumberValueEditorLocalizationsService: CardNumberValueEditorLocalizationsService,
                 private $timeout: ITimeoutService) {
-        super(cardNumberValueEditorConfigurationService);
+        super(cardNumberValueEditorConfigurationService, cardNumberValueEditorLocalizationsService);
     }
 
     public async generate() {
@@ -78,7 +76,7 @@ export class CardNumberValueEditorComponentController extends AbstractValueEdito
  *
  * Supported options: {@link type:CardNumberValueEditorOptions}
  *
- * Supported validations: {@link type:ValueEditorValidations}
+ * Supported validations: {@link type:TextValueEditorValidations}
  *
  * @example
  * <example name="cardNumberValueEditorExample" module="cardNumberValueEditorExample" frame-no-resize="true">
@@ -115,5 +113,5 @@ export default class CardNumberValueEditorComponent {
     public controller = CardNumberValueEditorComponentController;
 }
 
-export interface CardNumberValueEditorBindings extends ValueEditorBindings<CardNumberValueEditorOptions, ValueEditorValidations> {
+export interface CardNumberValueEditorBindings extends ValueEditorBindings<CardNumberValueEditorOptions, TextValueEditorValidations> {
 }
