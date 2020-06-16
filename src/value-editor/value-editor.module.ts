@@ -32,6 +32,7 @@ import {EmptyConfigurationService} from './common/abstract-value-editor';
 import KpValueEditorConfigurationProvider from './kp-value-editor/kp-value-editor-configuration-provider';
 import KpUniversalFormComponent from './kp-universal-form/kp-universal-form.component';
 import errorMessagesModule from './error-messages/error-messages.module';
+import PatternDescriptionTooltipDirective from './pattern-description/pattern-description-tooltip.directive';
 
 /**
  * @ngdoc constant
@@ -83,6 +84,7 @@ export default register('angularjs-value-editor', [
     .constant('loadingSpinnerTemplateUrl', LOADING_SPINNER_TPL_URL)
     .provider(EmptyConfigurationService.serviceName, EmptyConfigurationService)
     .provider(KpValueEditorConfigurationProvider.providerName, KpValueEditorConfigurationProvider)
+    .directive(PatternDescriptionTooltipDirective.directiveName, PatternDescriptionTooltipDirective)
     .component(KpValueEditorComponent.componentName, KpValueEditorComponent)
     .component(KpUniversalFormComponent.componentName, KpUniversalFormComponent)
     .name();

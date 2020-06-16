@@ -2,6 +2,7 @@ import AbstractValueEditorLocalizationProvider, {
     AbstractValueEditorLocalizationService,
     ValueEditorLocalizations
 } from '../../common/abstract-value-editor-localization.provider';
+import {PatternDescriptionLocalization} from '../../pattern-description/pattern-description-tooltip.directive';
 
 /**
  * @ngdoc provider
@@ -36,19 +37,17 @@ export interface PasswordValueEditorLocalizationsService extends AbstractValueEd
  * @name PasswordValueEditorLocalizations
  * @module angularjs-value-editor.password
  *
- * @property {string} patternDescription Password pattern description.
+ * @property {string} patternDescription Password pattern description showing in tooltip.
  * @property {string} confirmPassword Label above confirmation input.
  * @property {string} noChangeIfEmpty Text next to password pattern, informing about possibility to leave both inputs blank.
- * @property {string} helpTextsSeparator Separator between pattern and leave blank messages.
  *
  * @description
  * Default localizations: {@link passwordValueEditorDefaultLocalizations}
  */
-export interface PasswordValueEditorLocalizations extends ValueEditorLocalizations {
+export interface PasswordValueEditorLocalizations extends ValueEditorLocalizations, PatternDescriptionLocalization {
     patternDescription;
     confirmPassword;
     noChangeIfEmpty;
-    helpTextsSeparator;
 }
 
 /**
@@ -61,14 +60,12 @@ export interface PasswordValueEditorLocalizations extends ValueEditorLocalizatio
  * {
  *      patternDescription: '',
  *      confirmPassword: 'Confirm password',
- *      noChangeIfEmpty: 'If You don\'t want to change password, leave blank.',
- *      helpTextsSeparator: ' | '
+ *      noChangeIfEmpty: 'If You don\'t want to change password, leave blank.'
  * }
  * ```
  */
 export const PASSWORD_VALUE_EDITOR_DEFAULT_LOCALIZATIONS: Readonly<PasswordValueEditorLocalizations> = Object.freeze({
     patternDescription: '',
     confirmPassword: 'Confirm password',
-    noChangeIfEmpty: 'If You don\'t want to change password, leave blank.',
-    helpTextsSeparator: ' | '
+    noChangeIfEmpty: 'If You don\'t want to change password, leave blank.'
 });

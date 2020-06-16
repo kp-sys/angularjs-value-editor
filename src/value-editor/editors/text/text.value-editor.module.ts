@@ -3,6 +3,7 @@ import 'angular-ui-ace';
 import register from '@kpsys/angularjs-register';
 import TextValueEditorComponent from './text.value-editor.component';
 import TextValueEditorConfigurationProvider, {TEXT_VALUE_EDITOR_DEFAULT_OPTIONS} from './text-value-editor-configuration.provider';
+import TextValueEditorLocalizationsProvider, {TEXT_VALUE_EDITOR_DEFAULT_LOCALIZATIONS} from './text-value-editor-localization.provider';
 
 /**
  * @ngdoc module
@@ -16,7 +17,9 @@ import TextValueEditorConfigurationProvider, {TEXT_VALUE_EDITOR_DEFAULT_OPTIONS}
 export default register('angularjs-value-editor.text', ['ui.ace'])
     .constant('emailRegex', '(?:[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])')
     .constant('textValueEditorDefaultOptions', TEXT_VALUE_EDITOR_DEFAULT_OPTIONS)
+    .constant('textValueEditorDefaultLocalizations', TEXT_VALUE_EDITOR_DEFAULT_LOCALIZATIONS)
     .provider(TextValueEditorConfigurationProvider.providerName, TextValueEditorConfigurationProvider)
+    .provider(TextValueEditorLocalizationsProvider.providerName, TextValueEditorLocalizationsProvider)
     .component(TextValueEditorComponent.componentName, TextValueEditorComponent)
     .name();
 

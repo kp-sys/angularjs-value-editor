@@ -2,6 +2,7 @@ import AbstractValueEditorLocalizationProvider, {
     AbstractValueEditorLocalizationService,
     ValueEditorLocalizations
 } from '../../common/abstract-value-editor-localization.provider';
+import {PatternDescriptionLocalization} from '../../pattern-description/pattern-description-tooltip.directive';
 
 /**
  * @ngdoc provider
@@ -38,13 +39,15 @@ export interface SignatureValueEditorLocalizationsService extends AbstractValueE
  *
  * @property {string} select Placeholder for select.
  * @property {string} orType Placeholder for input if select is visible.
+ * @property {string} patternDescription Pattern description showing in tooltip.
  *
  * @description
  * Default localizations: {@link signatureValueEditorDefaultLocalizations}
  */
-export interface SignatureValueEditorLocalizations extends ValueEditorLocalizations {
+export interface SignatureValueEditorLocalizations extends ValueEditorLocalizations, PatternDescriptionLocalization {
     select;
     orType;
+    patternDescription;
 }
 
 /**
@@ -62,5 +65,6 @@ export interface SignatureValueEditorLocalizations extends ValueEditorLocalizati
  */
 export const SIGNATURE_VALUE_EDITOR_DEFAULT_LOCALIZATIONS: Readonly<SignatureValueEditorLocalizations> = Object.freeze({
     select: 'Select...',
-    orType: 'or type...'
+    orType: 'or type...',
+    patternDescription: ''
 });

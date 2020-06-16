@@ -2,6 +2,7 @@ import AbstractValueEditorLocalizationProvider, {
     AbstractValueEditorLocalizationService,
     ValueEditorLocalizations
 } from '../../common/abstract-value-editor-localization.provider';
+import {PatternDescriptionLocalization} from '../../pattern-description/pattern-description-tooltip.directive';
 
 /**
  * @ngdoc provider
@@ -36,14 +37,17 @@ export interface SearchTextValueEditorLocalizationsService extends AbstractValue
  * @name SearchTextValueEditorLocalizations
  * @module angularjs-value-editor.search-text
  *
- * @property {string} generate
+ * @property {string} startsWith Item in combobox.
+ * @property {string} equals Item in combobox.
+ * @property {string} patternDescription Pattern description showing in tooltip.
  *
  * @description
  * Default localizations: {@link searchTextValueEditorDefaultLocalizations}
  */
-export interface SearchTextValueEditorLocalizations extends ValueEditorLocalizations {
+export interface SearchTextValueEditorLocalizations extends ValueEditorLocalizations, PatternDescriptionLocalization {
     startsWith: string;
     equals: string;
+    patternDescription;
 }
 
 /**
@@ -55,11 +59,13 @@ export interface SearchTextValueEditorLocalizations extends ValueEditorLocalizat
  * ```
  * {
  *      startsWith: 'Starts with',
- *      equals: 'Equals'
+ *      equals: 'Equals',
+ *      patternDescription: ''
  * }
  * ```
  */
 export const SEARCH_TEXT_VALUE_EDITOR_DEFAULT_LOCALIZATIONS: Readonly<SearchTextValueEditorLocalizations> = Object.freeze({
     startsWith: 'Starts with',
-    equals: 'Equals'
+    equals: 'Equals',
+    patternDescription: ''
 });

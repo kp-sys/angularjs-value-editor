@@ -1,5 +1,5 @@
 // TEXT
-input.form-control(  ng-if="$ctrl.isText"
+input.form-control(  ng-if="$ctrl.isText()"
     type="{{$ctrl.options.type}}"
 
     id="{{$ctrl.valueEditorController.editorId}}"
@@ -15,6 +15,8 @@ input.form-control(  ng-if="$ctrl.isText"
     ng-minlength="$ctrl.valueEditorController.validations.minlength"
     ng-maxlength="$ctrl.valueEditorController.validations.maxlength"
     ng-pattern="$ctrl.valueEditorController.validations.pattern"
+
+    pattern-description-tooltip
 
     error-messages
 

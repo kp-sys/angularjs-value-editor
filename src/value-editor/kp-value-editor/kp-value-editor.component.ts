@@ -8,6 +8,7 @@ import {KpValueEditorConfigurationService} from './kp-value-editor-configuration
 import AbstractValueEditor from '../common/abstract-value-editor';
 import {customEquals, PropertyChangeDetection, whichPropertiesAreNotEqual} from '../utils/equals';
 import {KpUniversalFormComponentController} from '../kp-universal-form/kp-universal-form.component';
+import {ValueEditorLocalizations} from '../common/abstract-value-editor-localization.provider';
 
 export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS extends ValueEditorOptions = ValueEditorOptions, EDITORVALIDATIONS extends ValueEditorValidations = ValueEditorValidations>
     extends NgModelConnector<MODEL>
@@ -22,6 +23,7 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
     public isVisible: boolean = true;
     public validations: EDITORVALIDATIONS;
     public options: EDITOROPTS;
+    public localizations: ValueEditorLocalizations;
     public formController: IFormController;
     public configuration: KpValueEditorConfigurationService;
     public valueEditorInstance: AbstractValueEditor<MODEL, EDITOROPTS>;
@@ -110,7 +112,7 @@ export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS ext
  * @param {boolean} isVisible If input is visible. <.
  * @param {ValueEditorValidations} validations ValueEditor validations. <.
  * @param {ValueEditorOptions} options ValueEditor options. Type depends on ValueEditor type. <.
- *
+ * @param {ValueEditorLocalizations} localizations Custom localizations overriding default ones.
  * @description
  * Generic value editor depends on type:
  *
@@ -134,7 +136,8 @@ export default class KpValueEditorComponent {
         isDisabled: '<?',
         isVisible: '<?',
         validations: '<?',
-        options: '<?'
+        options: '<?',
+        localizations: '<?'
     };
 
     public controller = ValueEditorComponentController;
@@ -177,6 +180,7 @@ export interface ValueEditorOptions {
  * @property {boolean} visible If input is visible.
  * @property {ValueEditorValidations} validations ValueEditor validations.
  * @property {ValueEditorOptions} options ValueEditor options. Type depends on ValueEditor type.
+ * @property {ValueEditorLocalizations} localizations Custom localizations overriding default ones.
  *
  * @description
  * {@link kpValueEditor} attributes definition.
@@ -190,4 +194,5 @@ export interface ValueEditorBindings<EDITOROPTS extends ValueEditorOptions = Val
     isVisible?: boolean;
     validations?: EDITORVALIDATIONS;
     options?: EDITOROPTS;
+    localizations?: ValueEditorLocalizations;
 }

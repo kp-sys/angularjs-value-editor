@@ -53,6 +53,10 @@ export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEd
      * @returns {string} Localized message.
      */
     public localize(code: string): string {
+        if (this.valueEditorController.localizations?.[code]) {
+            return this.valueEditorController.localizations[code];
+        }
+
         if (this.localizationService) {
             return (this.localizationService.getLocalization(code));
         } else {

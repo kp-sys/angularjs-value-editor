@@ -9,6 +9,8 @@ import {AccessNumberValueEditorOptions} from '../src/value-editor/editors/access
 import {AcceptableRootValueEditorOptions} from '../src/value-editor/editors/acceptable-root/acceptable-root-value-editor-configuration.provider';
 import {SearchableValueEditorOptions} from '../src/value-editor/editors/searchable/searchable-value-editor-configuration.provider';
 import {ITimeoutService} from 'angular';
+import {PasswordValueEditorLocalizations} from '../src/value-editor/editors/password/password-value-editor-localization.provider';
+import {TextValueEditorLocalizations} from '../src/value-editor/editors/text/text-value-editor-localization.provider';
 
 export default class DemoController {
 
@@ -27,7 +29,10 @@ export default class DemoController {
                     required: true,
                     pattern: 'abc',
                     minlength: 5
-                } as TextValueEditorValidations
+                } as TextValueEditorValidations,
+                localizations: {
+                    patternDescription: 'pattern'
+                } as TextValueEditorLocalizations
             }
         },
         {
@@ -234,7 +239,10 @@ export default class DemoController {
                 },
                 options: {
                     withConfirmation: true
-                } as PasswordValueEditorOptions
+                } as PasswordValueEditorOptions,
+                localizations: {
+                    patternDescription: 'Patern description'
+                } as PasswordValueEditorLocalizations
             }
         },
         {
