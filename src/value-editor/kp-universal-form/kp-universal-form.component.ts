@@ -59,12 +59,14 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
     }
 
     public $postLink() {
-        this.$timeout(() => this.formController({$formController: this.internalFormController}));
+        if (this.formController) {
+            this.$timeout(() => this.formController({$formController: this.internalFormController}));
+        }
     }
 
     public abstract formController(locals: { $formController: IFormController });
 
-    public abstract submitFunction(locals: { $event: Event });
+    public abstract onSubmit(locals: { $event: Event });
 
     private updateTemplate() {
         this.$templateCache.remove(this.templateUrl);
@@ -97,8 +99,8 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
  * @param {string=} name Name of the form. Due to internal reason, it must be in accordance with `^[a-zA-Z0-9._]*$` regexp.
  * @param {function(IFormController)=} formController Connecting to controller.
  * @param {function(IFormController)=} formController.$formController Exposed form controller.
- * @param {function(Event)=} submitFunction Function called on submit form.
- * @param {Event=} submitFunction.$event Submit event.
+ * @param {function(Event)=} onSubmit Function called on submit form.
+ * @param {Event=} onSubmit.$event Submit event.
  * @param {ObjectValueEditorLabelsWidth=} labelsWidth See {@link ObjectValueEditorOptions}. Default value is `2`.
  * @param {boolean=} forceShowErrors If `true` it displays all validation error messages.
  * @param {KpUniversalFormComponentOptions=} options Specific options for universal form.
@@ -170,7 +172,7 @@ export default class KpUniversalFormComponent {
         formSettings: '<',
         name: '@?',
         formController: '&?',
-        submitFunction: '&?',
+        onSubmit: '&?',
         labelsWidth: '@?',
         forceShowErrors: '<?',
         options: '<?'
@@ -205,5 +207,5 @@ export interface KpUniversalFormComponentBindings {
 
     formController(locals: { $formController: IFormController });
 
-    submitFunction(locals: { $event: Event });
+    onSubmit(locals: { $event: Event });
 }

@@ -12,7 +12,7 @@ interface UniversalFormScope extends IScope {
     formSettings: KpUniversalFormComponentSettings,
     name: string,
     formController: IFormController,
-    submitFunction: ($event: Event) => void
+    onSubmit: ($event: Event) => void
 }
 
 const FORM_SETTINGS: KpUniversalFormComponentSettings = {
@@ -55,7 +55,7 @@ const TEMPLATE = `
         form-settings="formSettings"
         name="{{name}}"
         form-controller="formController = $formController"
-        submit-function="submitFunction($event)"
+        on-submit="onSubmit($event)"
     ></kp-universal-form>
 `;
 
@@ -71,8 +71,8 @@ describe('kp-universal-form', () => {
     let _$compile: ICompileService;
     let _$timeout: ITimeoutService;
 
-    function compileTemplate(): HTMLElement {
-        const element = angular.element(TEMPLATE);
+    function compileTemplate(customTemplate?: string): HTMLElement {
+        const element = angular.element(customTemplate ?? TEMPLATE);
         const compiledElement = _$compile(element)($scope);
         $scope.$apply();
         _$timeout.flush();
@@ -170,9 +170,9 @@ describe('kp-universal-form', () => {
     });
 
     it('should call submit function on form submit', () => {
-        const submitFunction = jasmine.createSpy('submitFunction').and.callFake(() => null);
+        const onSubmit = jasmine.createSpy('onSubmit').and.callFake(() => null);
 
-        $scope.submitFunction = submitFunction;
+        $scope.onSubmit = onSubmit;
         $scope.name = 'formName';
         $scope.formSettings = FORM_SETTINGS;
 
@@ -191,6 +191,18 @@ describe('kp-universal-form', () => {
         $scope.$apply();
 
         expect($scope.formController.$submitted).toBe(true);
-        expect(submitFunction).toHaveBeenCalled();
+        expect(onSubmit).toHaveBeenCalled();
+    });
+
+    it('should not throw exception if attribute formController is not defined', () => {
+        $scope.formSettings = FORM_SETTINGS;
+
+        expect(() => compileTemplate(`
+            <kp-universal-form
+                ng-model="model"
+                form-settings="formSettings"
+                on-submit="onSubmit($event)"
+            ></kp-universal-form>
+        `)).not.toThrow();
     });
 });

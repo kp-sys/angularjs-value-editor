@@ -1,4 +1,4 @@
-form(name="{{name}}" ng-submit="$ctrl.submitFunction({$event: $event})" novalidate)
+form(name="{{name}}" ng-submit="$ctrl.onSubmit({$event: $event})" novalidate)
     p.text-info.text-info-up(ng-if="$ctrl.formSettings.header" ng-bind-html="$ctrl.formSettings.header")
 
     kp-value-editor(
