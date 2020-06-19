@@ -134,7 +134,7 @@ module.exports = (env, {mode}) => ({
             },
             {
                 test: /\.woff/,
-                loader: "url-loader?limit=10000&mimetype=application/font-woff"
+                loader: 'url-loader?limit=10000&mimetype=application/font-woff'
             }
         ]
     },
