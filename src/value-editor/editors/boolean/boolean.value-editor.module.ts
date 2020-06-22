@@ -1,7 +1,7 @@
 import './boolean.value-editor.scss';
 import './boolean.value-editor.less';
 import register from '@kpsys/angularjs-register';
-import BooleanValueEditorConfigurationProvider, {BOOLEAN_VALUE_EDITOR_DEFAULT_OPTIONS} from './boolean-value-editor-configuration.provider';
+import BooleanValueEditorConfigurationServiceProvider, {BOOLEAN_VALUE_EDITOR_DEFAULT_OPTIONS} from './boolean-value-editor-configuration.provider';
 import BooleanValueEditorComponent from './boolean.value-editor.component';
 
 /**
@@ -15,6 +15,6 @@ import BooleanValueEditorComponent from './boolean.value-editor.component';
 
 export default register('angularjs-value-editor.boolean')
     .constant('booleanValueEditorDefaultOptions', BOOLEAN_VALUE_EDITOR_DEFAULT_OPTIONS)
-    .provider(BooleanValueEditorConfigurationProvider.providerName, BooleanValueEditorConfigurationProvider)
+    .provider(BooleanValueEditorConfigurationServiceProvider.providerName, BooleanValueEditorConfigurationServiceProvider)
     .component(BooleanValueEditorComponent.componentName, BooleanValueEditorComponent)
     .name();

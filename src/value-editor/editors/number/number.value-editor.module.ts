@@ -1,6 +1,6 @@
 import register from '@kpsys/angularjs-register';
 import NumberValueEditorComponent from './number.value-editor.component';
-import NumberValueEditorConfigurationProvider, {NUMBER_VALUE_EDITOR_DEFAULT_OPTIONS} from './number-value-editor-configuration.provider';
+import NumberValueEditorConfigurationServiceProvider, {NUMBER_VALUE_EDITOR_DEFAULT_OPTIONS} from './number-value-editor-configuration.provider';
 
 /**
  * @ngdoc module
@@ -13,6 +13,6 @@ import NumberValueEditorConfigurationProvider, {NUMBER_VALUE_EDITOR_DEFAULT_OPTI
 
 export default register('angularjs-value-editor.number')
     .constant('numberValueEditorDefaultOptions', NUMBER_VALUE_EDITOR_DEFAULT_OPTIONS)
-    .provider(NumberValueEditorConfigurationProvider.providerName, NumberValueEditorConfigurationProvider)
+    .provider(NumberValueEditorConfigurationServiceProvider.providerName, NumberValueEditorConfigurationServiceProvider)
     .component(NumberValueEditorComponent.componentName, NumberValueEditorComponent)
     .name();

@@ -1,5 +1,5 @@
 import {DefaultOptions} from '../../typings';
-import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../common/abstract-value-editor-configuration.provider';
+import AbstractValueEditorConfigurationServiceProvider, {AbstractValueEditorConfigurationService} from '../../common/abstract-value-editor-configuration.provider';
 import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 
@@ -95,11 +95,11 @@ export const ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<AcceptableV
  *
  * @description
  *
- * See {@link AbstractValueEditorConfigurationProvider}
+ * See {@link AbstractValueEditorConfigurationServiceProvider}
  *
  * Default options: {@link acceptableValueEditorDefaultOptions}
  */
-export default class AcceptableValueEditorConfigurationProvider<VALUE> extends AbstractValueEditorConfigurationProvider<AcceptableValueEditorOptions<VALUE>> {
+export default class AcceptableValueEditorConfigurationServiceProvider<VALUE> extends AbstractValueEditorConfigurationServiceProvider<AcceptableValueEditorOptions<VALUE>> {
     public static readonly providerName = 'acceptableValueEditorConfigurationService';
 
     /*@ngInject*/
@@ -115,7 +115,7 @@ export default class AcceptableValueEditorConfigurationProvider<VALUE> extends A
  *
  * @description
  *
- * See {@link AbstractValueEditorConfigurationProvider}
+ * See {@link AbstractValueEditorConfigurationServiceProvider}
  *
  * Default options: {@link acceptableValueEditorDefaultOptions}
  */

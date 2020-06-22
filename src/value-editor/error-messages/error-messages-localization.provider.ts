@@ -19,7 +19,7 @@ import {PasswordEqualsValidation} from '../editors/password/model-equals.directi
  * @description
  * See {@link valueEditorErrorMessagesLocalizationsService}
  */
-export default class ValueEditorErrorMessagesLocalizationsProvider extends AbstractValueEditorLocalizationProvider<ValueEditorErrorMessagesLocalizations> {
+export default class ValueEditorErrorMessagesLocalizationsServiceProvider extends AbstractValueEditorLocalizationProvider<ValueEditorErrorMessagesLocalizations> {
     public static readonly providerName = 'valueEditorErrorMessagesLocalizationsService';
 
     /*@ngInject*/

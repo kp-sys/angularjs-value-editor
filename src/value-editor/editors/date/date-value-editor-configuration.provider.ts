@@ -69,7 +69,7 @@ export const DATE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<DateValueEditorOp
  *
  * Default options: {@link dateValueEditorDefaultOptions}
  */
-export default class DateValueEditorConfigurationProvider extends AbstractValueEditorConfigurationProvider<DateValueEditorOptions> {
+export default class DateValueEditorConfigurationServiceProvider extends AbstractValueEditorConfigurationProvider<DateValueEditorOptions> {
     public static readonly providerName = 'dateValueEditorConfigurationService';
 
     /*@ngInject*/

@@ -43,7 +43,7 @@ export const NUMBER_RANGE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<NumberRan
  *
  * Default options: {@link numberRangeValueEditorDefaultOptions}
  */
-export default class NumberRangeValueEditorConfigurationProvider extends AbstractValueEditorConfigurationProvider<NumberRangeValueEditorOptions> {
+export default class NumberRangeValueEditorConfigurationServiceProvider extends AbstractValueEditorConfigurationProvider<NumberRangeValueEditorOptions> {
     public static readonly providerName = 'numberRangeValueEditorConfigurationService';
 
     /*@ngInject*/

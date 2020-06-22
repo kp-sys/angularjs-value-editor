@@ -59,7 +59,7 @@ export const SIGNATURE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<SignatureVal
  *
  * Default options: {@link signatureValueEditorDefaultOptions}
  */
-export default class SignatureValueEditorConfigurationProvider extends AbstractValueEditorConfigurationProvider<SignatureValueEditorOptions> {
+export default class SignatureValueEditorConfigurationServiceProvider extends AbstractValueEditorConfigurationProvider<SignatureValueEditorOptions> {
     public static readonly providerName = 'signatureValueEditorConfigurationService';
 
     /*@ngInject*/

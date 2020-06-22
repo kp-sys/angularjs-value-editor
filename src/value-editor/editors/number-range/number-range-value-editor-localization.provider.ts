@@ -11,7 +11,7 @@ import AbstractValueEditorLocalizationProvider, {
  * @description
  * See {@link NumberRangeValueEditorLocalizationsService}
  */
-export default class NumberRangeValueEditorLocalizationsProvider extends AbstractValueEditorLocalizationProvider<NumberRangeValueEditorLocalizations> {
+export default class NumberRangeValueEditorLocalizationsServiceProvider extends AbstractValueEditorLocalizationProvider<NumberRangeValueEditorLocalizations> {
     public static readonly providerName = 'numberRangeValueEditorLocalizationsService';
 
     /*@ngInject*/

@@ -3,7 +3,7 @@ import dateTimePickerModule from '@kpsys/angularjs-bootstrap-datetimepicker';
 
 import register from '@kpsys/angularjs-register';
 import DateValueEditorComponent from './date.value-editor.component';
-import DateValueEditorConfigurationProvider, {DATE_VALUE_EDITOR_DEFAULT_OPTIONS} from './date-value-editor-configuration.provider';
+import DateValueEditorConfigurationServiceProvider, {DATE_VALUE_EDITOR_DEFAULT_OPTIONS} from './date-value-editor-configuration.provider';
 
 /**
  * @ngdoc module
@@ -16,6 +16,6 @@ import DateValueEditorConfigurationProvider, {DATE_VALUE_EDITOR_DEFAULT_OPTIONS}
 
 export default register('angularjs-value-editor.date', [dateParserModule, dateTimePickerModule])
     .constant('dateValueEditorDefaultOptions', DATE_VALUE_EDITOR_DEFAULT_OPTIONS)
-    .provider(DateValueEditorConfigurationProvider.providerName, DateValueEditorConfigurationProvider)
+    .provider(DateValueEditorConfigurationServiceProvider.providerName, DateValueEditorConfigurationServiceProvider)
     .component(DateValueEditorComponent.componentName, DateValueEditorComponent)
     .name();

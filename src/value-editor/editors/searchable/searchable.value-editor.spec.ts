@@ -3,7 +3,7 @@ import * as angular from 'angular';
 import {ITimeoutService} from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {SearchableValueEditorBindings} from './searchable.value-editor.component';
-import SearchableValueEditorConfigurationProvider from './searchable-value-editor-configuration.provider';
+import SearchableValueEditorConfigurationServiceProvider from './searchable-value-editor-configuration.provider';
 
 const ADDITIONAL_PARAMETERS = {
     param1: 'param1',
@@ -36,7 +36,7 @@ describe('searchable-value-editor', () => {
             return new Promise<string>((resolve) => timeout(() => resolve(MODEL + params.param1), 100));
         }).and.callThrough();
 
-        angular.mock.module(valueEditorModule, /*@ngInject*/ (searchableValueEditorConfigurationServiceProvider: SearchableValueEditorConfigurationProvider<string>) => {
+        angular.mock.module(valueEditorModule, /*@ngInject*/ (searchableValueEditorConfigurationServiceProvider: SearchableValueEditorConfigurationServiceProvider<string>) => {
             searchableValueEditorConfigurationServiceProvider.setConfiguration({
                 additionalParameters: ADDITIONAL_PARAMETERS,
                 searchModelFunction: /*@ngInject*/ ($model, $additionalParameters, $timeout) => searchFunction.bind(this, $model, $additionalParameters, $timeout),

@@ -1,7 +1,7 @@
 import './index-selection.value-editor.less';
 import register from '@kpsys/angularjs-register';
 import IndexSelectionValueEditorComponent from './index-selection.value-editor.component';
-import IndexSelectionValueEditorConfigurationProvider, {INDEX_SELECTION_VALUE_EDITOR_DEFAULT_OPTIONS} from './index-selection-value-editor-configuration.provider';
+import IndexSelectionValueEditorConfigurationServiceProvider, {INDEX_SELECTION_VALUE_EDITOR_DEFAULT_OPTIONS} from './index-selection-value-editor-configuration.provider';
 
 /**
  * @ngdoc module
@@ -14,6 +14,6 @@ import IndexSelectionValueEditorConfigurationProvider, {INDEX_SELECTION_VALUE_ED
 
 export default register('angularjs-value-editor.index-selection')
     .constant('indexSelectionValueEditorDefaultOptions', INDEX_SELECTION_VALUE_EDITOR_DEFAULT_OPTIONS)
-    .provider(IndexSelectionValueEditorConfigurationProvider.providerName, IndexSelectionValueEditorConfigurationProvider)
+    .provider(IndexSelectionValueEditorConfigurationServiceProvider.providerName, IndexSelectionValueEditorConfigurationServiceProvider)
     .component(IndexSelectionValueEditorComponent.componentName, IndexSelectionValueEditorComponent)
     .name();

@@ -11,7 +11,7 @@ import AbstractValueEditorLocalizationProvider, {
  * @description
  * See {@link acceptableRootValueEditorLocalizationsService}
  */
-export default class AcceptableRootValueEditorLocalizationsProvider extends AbstractValueEditorLocalizationProvider<AcceptableRootValueEditorLocalizations> {
+export default class AcceptableRootValueEditorLocalizationsServiceProvider extends AbstractValueEditorLocalizationProvider<AcceptableRootValueEditorLocalizations> {
     public static readonly providerName = 'acceptableRootValueEditorLocalizationsService';
 
     /*@ngInject*/

@@ -3,7 +3,7 @@ import * as angular from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {AcceptableValueEditorBindings} from './acceptable.value-editor.component';
 import {AcceptableValueEditorOptions} from './acceptable-value-editor-configuration.provider';
-import KpValueEditorConfigurationProvider from '../../kp-value-editor/kp-value-editor-configuration-provider';
+import KpValueEditorConfigurationServiceProvider from '../../kp-value-editor/kp-value-editor-configuration-provider';
 
 interface AcceptableValueEditorModel {
     value: string;
@@ -136,7 +136,7 @@ describe('acceptable-value-editor', () => {
     let defaultOptions: AcceptableValueEditorOptions<AcceptableValueEditorModel>;
 
     beforeEach(() => {
-        angular.mock.module(valueEditorModule, /*@ngInject*/ (kpValueEditorConfigurationServiceProvider: KpValueEditorConfigurationProvider) => {
+        angular.mock.module(valueEditorModule, /*@ngInject*/ (kpValueEditorConfigurationServiceProvider: KpValueEditorConfigurationServiceProvider) => {
             kpValueEditorConfigurationServiceProvider.setPreciseWatchForOptionsChanges(true);
         });
 

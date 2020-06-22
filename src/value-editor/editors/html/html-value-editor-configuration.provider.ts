@@ -73,7 +73,7 @@ export const HTML_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<HtmlValueEditorOp
  *
  * Default options: {@link htmlValueEditorDefaultOptions}
  */
-export default class HtmlValueEditorConfigurationProvider extends AbstractValueEditorConfigurationProvider<HtmlValueEditorOptions> {
+export default class HtmlValueEditorConfigurationServiceProvider extends AbstractValueEditorConfigurationProvider<HtmlValueEditorOptions> {
     public static readonly providerName = 'htmlValueEditorConfigurationService';
 
     /*@ngInject*/

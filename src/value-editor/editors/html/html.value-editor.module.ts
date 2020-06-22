@@ -1,7 +1,7 @@
 import './html.value-editor.less';
 import register from '@kpsys/angularjs-register';
 import HtmlValueEditorComponent from './html.value-editor.component';
-import HtmlValueEditorConfigurationProvider, {HTML_VALUE_EDITOR_DEFAULT_OPTIONS} from './html-value-editor-configuration.provider';
+import HtmlValueEditorConfigurationServiceProvider, {HTML_VALUE_EDITOR_DEFAULT_OPTIONS} from './html-value-editor-configuration.provider';
 
 /**
  * @ngdoc module
@@ -14,6 +14,6 @@ import HtmlValueEditorConfigurationProvider, {HTML_VALUE_EDITOR_DEFAULT_OPTIONS}
 
 export default register('angularjs-value-editor.html')
     .constant('htmlValueEditorDefaultOptions', HTML_VALUE_EDITOR_DEFAULT_OPTIONS)
-    .provider(HtmlValueEditorConfigurationProvider.providerName, HtmlValueEditorConfigurationProvider)
+    .provider(HtmlValueEditorConfigurationServiceProvider.providerName, HtmlValueEditorConfigurationServiceProvider)
     .component(HtmlValueEditorComponent.componentName, HtmlValueEditorComponent)
     .name();

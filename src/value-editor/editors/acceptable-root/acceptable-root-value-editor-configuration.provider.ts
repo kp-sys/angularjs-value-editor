@@ -67,7 +67,7 @@ export const ACCEPTABLE_ROOT_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<Accept
  *
  * Default options: {@link acceptableRootValueEditorDefaultOptions}
  */
-export default class AcceptableRootValueEditorConfigurationProvider<MODEL extends Childrenable> extends AbstractValueEditorConfigurationProvider<AcceptableRootValueEditorOptions<MODEL>> {
+export default class AcceptableRootValueEditorConfigurationServiceProvider<MODEL extends Childrenable> extends AbstractValueEditorConfigurationProvider<AcceptableRootValueEditorOptions<MODEL>> {
     public static readonly providerName = 'acceptableRootValueEditorConfigurationService';
 
     /*@ngInject*/

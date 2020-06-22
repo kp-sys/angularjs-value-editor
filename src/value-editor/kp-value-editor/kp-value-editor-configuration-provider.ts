@@ -20,7 +20,7 @@
  * Provider for {@link kpValueEditorConfigurationService}
  */
 
-export default class KpValueEditorConfigurationProvider {
+export default class KpValueEditorConfigurationServiceProvider {
     public static readonly providerName = 'kpValueEditorConfigurationService';
 
     #debugMode: boolean = false;

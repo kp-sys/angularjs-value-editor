@@ -69,7 +69,7 @@ export const AUTOCOMPLETE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<Autocompl
  *
  * Default options: {@link autocompleteValueEditorDefaultOptions}
  */
-export default class AutocompleteValueEditorConfigurationProvider<PARAMS> extends AbstractValueEditorConfigurationProvider<AutocompleteValueEditorOptions<PARAMS>> {
+export default class AutocompleteValueEditorConfigurationServiceProvider<PARAMS> extends AbstractValueEditorConfigurationProvider<AutocompleteValueEditorOptions<PARAMS>> {
     public static readonly providerName = 'autocompleteValueEditorConfigurationService';
 
     /*@ngInject*/

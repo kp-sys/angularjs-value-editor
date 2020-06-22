@@ -59,7 +59,7 @@ export const ACCESS_NUMBER_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<AccessNu
  *
  * Default options: {@link accessNumberValueEditorDefaultOptions}
  */
-export default class AccessNumberValueEditorConfigurationProvider extends AbstractValueEditorConfigurationProvider<AccessNumberValueEditorOptions> {
+export default class AccessNumberValueEditorConfigurationServiceProvider extends AbstractValueEditorConfigurationProvider<AccessNumberValueEditorOptions> {
     public static readonly providerName = 'accessNumberValueEditorConfigurationService';
 
     /*@ngInject*/

@@ -1,7 +1,7 @@
 import './autocomplete.value-editor.less';
 import register from '@kpsys/angularjs-register';
 import AutocompleteValueEditorComponent from './autocomplete.value-editor.component';
-import AutocompleteValueEditorConfigurationProvider, {AUTOCOMPLETE_VALUE_EDITOR_DEFAULT_OPTIONS} from './autocomplete-value-editor-configuration.provider';
+import AutocompleteValueEditorConfigurationServiceProvider, {AUTOCOMPLETE_VALUE_EDITOR_DEFAULT_OPTIONS} from './autocomplete-value-editor-configuration.provider';
 
 /**
  * @ngdoc module
@@ -14,6 +14,6 @@ import AutocompleteValueEditorConfigurationProvider, {AUTOCOMPLETE_VALUE_EDITOR_
 
 export default register('angularjs-value-editor.autocomplete')
     .constant('autocompleteValueEditorDefaultOptions', AUTOCOMPLETE_VALUE_EDITOR_DEFAULT_OPTIONS)
-    .provider(AutocompleteValueEditorConfigurationProvider.providerName, AutocompleteValueEditorConfigurationProvider)
+    .provider(AutocompleteValueEditorConfigurationServiceProvider.providerName, AutocompleteValueEditorConfigurationServiceProvider)
     .component(AutocompleteValueEditorComponent.componentName, AutocompleteValueEditorComponent)
     .name();

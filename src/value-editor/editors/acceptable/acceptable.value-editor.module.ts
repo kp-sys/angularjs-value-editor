@@ -5,9 +5,9 @@ import 'angular-sanitize';
 import 'ui-select';
 
 import uiSelectDecorator from './uiSelect.decorator';
-import AcceptableValueEditorLocalizationsProvider, {ACCEPTABLE_VALUE_EDITOR_DEFAULT_LOCALIZATIONS} from './acceptable-value-editor-localizations.provider';
+import AcceptableValueEditorLocalizationsServiceProvider, {ACCEPTABLE_VALUE_EDITOR_DEFAULT_LOCALIZATIONS} from './acceptable-value-editor-localizations.provider';
 import AcceptableValueEditorComponent from './acceptable.value-editor.component';
-import AcceptableValueEditorConfigurationProvider, {ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS} from './acceptable-value-editor-configuration.provider';
+import AcceptableValueEditorConfigurationServiceProvider, {ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS} from './acceptable-value-editor-configuration.provider';
 import CheckboxesValidationsDirective from './checkboxes-validations-directive';
 import nullAwareFilter from './null-aware-filter.filter';
 
@@ -25,8 +25,8 @@ export default register('angularjs-value-editor.acceptable', [aliasesModule, 'ng
     .constant('acceptableValueEditorDefaultOptions', ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS)
     .constant('acceptableValueEditorDefaultLocalizations', ACCEPTABLE_VALUE_EDITOR_DEFAULT_LOCALIZATIONS)
     .filter(nullAwareFilter.filterName, nullAwareFilter)
-    .provider(AcceptableValueEditorConfigurationProvider.providerName, AcceptableValueEditorConfigurationProvider)
-    .provider(AcceptableValueEditorLocalizationsProvider.providerName, AcceptableValueEditorLocalizationsProvider)
+    .provider(AcceptableValueEditorConfigurationServiceProvider.providerName, AcceptableValueEditorConfigurationServiceProvider)
+    .provider(AcceptableValueEditorLocalizationsServiceProvider.providerName, AcceptableValueEditorLocalizationsServiceProvider)
     .directive(CheckboxesValidationsDirective.directiveName, CheckboxesValidationsDirective)
     .component(AcceptableValueEditorComponent.componentName, AcceptableValueEditorComponent)
     .name();

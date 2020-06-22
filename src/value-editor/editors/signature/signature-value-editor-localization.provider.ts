@@ -12,7 +12,7 @@ import {PatternDescriptionLocalization} from '../../pattern-description/pattern-
  * @description
  * See {@link signatureValueEditorLocalizationsService}
  */
-export default class SignatureValueEditorLocalizationsProvider extends AbstractValueEditorLocalizationProvider<SignatureValueEditorLocalizations> {
+export default class SignatureValueEditorLocalizationsServiceProvider extends AbstractValueEditorLocalizationProvider<SignatureValueEditorLocalizations> {
     public static readonly providerName = 'signatureValueEditorLocalizationsService';
 
     /*@ngInject*/

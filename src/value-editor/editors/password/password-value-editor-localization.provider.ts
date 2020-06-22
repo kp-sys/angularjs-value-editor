@@ -12,7 +12,7 @@ import {PatternDescriptionLocalization} from '../../pattern-description/pattern-
  * @description
  * See {@link passwordValueEditorLocalizationsService}
  */
-export default class PasswordValueEditorLocalizationsProvider extends AbstractValueEditorLocalizationProvider<PasswordValueEditorLocalizations> {
+export default class PasswordValueEditorLocalizationsServiceProvider extends AbstractValueEditorLocalizationProvider<PasswordValueEditorLocalizations> {
     public static readonly providerName = 'passwordValueEditorLocalizationsService';
 
     /*@ngInject*/

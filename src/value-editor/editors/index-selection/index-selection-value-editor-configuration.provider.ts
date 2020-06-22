@@ -60,7 +60,7 @@ export const INDEX_SELECTION_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<IndexS
  *
  * Default options: {@link indexSelectionValueEditorDefaultOptions}
  */
-export default class IndexSelectionValueEditorConfigurationProvider<ID, VALUE extends Identified<ID>> extends AbstractValueEditorConfigurationProvider<IndexSelectionValueEditorOptions<ID, VALUE>> {
+export default class IndexSelectionValueEditorConfigurationServiceProvider<ID, VALUE extends Identified<ID>> extends AbstractValueEditorConfigurationProvider<IndexSelectionValueEditorOptions<ID, VALUE>> {
     public static readonly providerName = 'indexSelectionValueEditorConfigurationService';
 
     /*@ngInject*/

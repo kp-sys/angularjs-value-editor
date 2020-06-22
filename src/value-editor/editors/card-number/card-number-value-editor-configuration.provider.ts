@@ -78,7 +78,7 @@ export const CARD_NUMBER_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<CardNumber
  *
  * Default options: {@link cardNumberValueEditorDefaultOptions}
  */
-export default class CardNumberValueEditorConfigurationProvider extends AbstractValueEditorConfigurationProvider<CardNumberValueEditorOptions> {
+export default class CardNumberValueEditorConfigurationServiceProvider extends AbstractValueEditorConfigurationProvider<CardNumberValueEditorOptions> {
     public static readonly providerName = 'cardNumberValueEditorConfigurationService';
 
     /*@ngInject*/

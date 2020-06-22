@@ -12,7 +12,7 @@ import {PatternDescriptionLocalization} from '../../pattern-description/pattern-
  * @description
  * See {@link searchTextValueEditorLocalizationsService}
  */
-export default class SearchTextValueEditorLocalizationsProvider extends AbstractValueEditorLocalizationProvider<SearchTextValueEditorLocalizations> {
+export default class SearchTextValueEditorLocalizationsServiceProvider extends AbstractValueEditorLocalizationProvider<SearchTextValueEditorLocalizations> {
     public static readonly providerName = 'searchTextValueEditorLocalizationsService';
 
     /*@ngInject*/

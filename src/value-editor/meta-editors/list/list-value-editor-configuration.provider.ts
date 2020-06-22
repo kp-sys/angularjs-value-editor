@@ -66,7 +66,7 @@ export const LIST_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<ListValueEditorOp
  *
  * Default options: {@link listValueEditorDefaultOptions}
  */
-export default class ListValueEditorConfigurationProvider<MODEL = any, OPTIONS extends ValueEditorOptions = ValueEditorOptions, VALIDATIONS extends ValueEditorValidations = ValueEditorValidations> extends AbstractValueEditorConfigurationProvider<ListValueEditorOptions<MODEL, OPTIONS, VALIDATIONS>> {
+export default class ListValueEditorConfigurationServiceProvider<MODEL = any, OPTIONS extends ValueEditorOptions = ValueEditorOptions, VALIDATIONS extends ValueEditorValidations = ValueEditorValidations> extends AbstractValueEditorConfigurationProvider<ListValueEditorOptions<MODEL, OPTIONS, VALIDATIONS>> {
     public static readonly providerName = 'listValueEditorConfigurationService';
 
     /*@ngInject*/

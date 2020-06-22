@@ -99,7 +99,7 @@ export const OBJECT_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<ObjectValueEdit
  *
  * Default options: {@link objectValueEditorDefaultOptions}
  */
-export default class ObjectValueEditorConfigurationProvider extends AbstractValueEditorConfigurationProvider<ObjectValueEditorOptions> {
+export default class ObjectValueEditorConfigurationServiceProvider extends AbstractValueEditorConfigurationProvider<ObjectValueEditorOptions> {
     public static readonly providerName = 'objectValueEditorConfigurationService';
 
     /*@ngInject*/

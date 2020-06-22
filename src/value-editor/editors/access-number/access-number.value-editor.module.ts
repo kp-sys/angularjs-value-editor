@@ -1,7 +1,7 @@
 import register from '@kpsys/angularjs-register';
 import AccessNumberValueEditorComponent from './access-number.value-editor.component';
-import AccessNumberValueEditorConfigurationProvider, {ACCESS_NUMBER_VALUE_EDITOR_DEFAULT_OPTIONS} from './access-number-value-editor-configuration.provider';
-import AccessNumberValueEditorLocalizationsProvider, {ACCESS_NUMBER_VALUE_EDITOR_DEFAULT_LOCALIZATIONS} from './access-number-value-editor-localization.provider';
+import AccessNumberValueEditorConfigurationServiceProvider, {ACCESS_NUMBER_VALUE_EDITOR_DEFAULT_OPTIONS} from './access-number-value-editor-configuration.provider';
+import AccessNumberValueEditorLocalizationsServiceProvider, {ACCESS_NUMBER_VALUE_EDITOR_DEFAULT_LOCALIZATIONS} from './access-number-value-editor-localization.provider';
 
 /**
  * @ngdoc module
@@ -15,7 +15,7 @@ import AccessNumberValueEditorLocalizationsProvider, {ACCESS_NUMBER_VALUE_EDITOR
 export default register('angularjs-value-editor.access-number')
     .constant('accessNumberValueEditorDefaultOptions', ACCESS_NUMBER_VALUE_EDITOR_DEFAULT_OPTIONS)
     .constant('accessNumberValueEditorDefaultLocalizations', ACCESS_NUMBER_VALUE_EDITOR_DEFAULT_LOCALIZATIONS)
-    .provider(AccessNumberValueEditorConfigurationProvider.providerName, AccessNumberValueEditorConfigurationProvider)
-    .provider(AccessNumberValueEditorLocalizationsProvider.providerName, AccessNumberValueEditorLocalizationsProvider)
+    .provider(AccessNumberValueEditorConfigurationServiceProvider.providerName, AccessNumberValueEditorConfigurationServiceProvider)
+    .provider(AccessNumberValueEditorLocalizationsServiceProvider.providerName, AccessNumberValueEditorLocalizationsServiceProvider)
     .component(AccessNumberValueEditorComponent.componentName, AccessNumberValueEditorComponent)
     .name();

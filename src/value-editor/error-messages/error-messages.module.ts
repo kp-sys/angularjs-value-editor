@@ -1,5 +1,5 @@
 import register from '@kpsys/angularjs-register';
-import ValueEditorErrorMessagesLocalizationsProvider, {VALUE_EDITOR_ERROR_MESSAGES_DEFAULT_LOCALIZATIONS} from './error-messages-localization.provider';
+import ValueEditorErrorMessagesLocalizationsServiceProvider, {VALUE_EDITOR_ERROR_MESSAGES_DEFAULT_LOCALIZATIONS} from './error-messages-localization.provider';
 import ErrorMessagesDirective from './error-messages.directive';
 
 /**
@@ -13,6 +13,6 @@ import ErrorMessagesDirective from './error-messages.directive';
 
 export default register('angularjs-value-editor.error-messages')
     .constant('valueEditorErrorMessagesDefaultLocalizations', VALUE_EDITOR_ERROR_MESSAGES_DEFAULT_LOCALIZATIONS)
-    .provider(ValueEditorErrorMessagesLocalizationsProvider.providerName, ValueEditorErrorMessagesLocalizationsProvider)
+    .provider(ValueEditorErrorMessagesLocalizationsServiceProvider.providerName, ValueEditorErrorMessagesLocalizationsServiceProvider)
     .directive(ErrorMessagesDirective.directiveName, ErrorMessagesDirective)
     .name();

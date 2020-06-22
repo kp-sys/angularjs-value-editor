@@ -47,7 +47,7 @@ export const PASSWORD_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<PasswordValue
  *
  * Default options: {@link passwordValueEditorDefaultOptions}
  */
-export default class PasswordValueEditorConfigurationProvider extends AbstractValueEditorConfigurationProvider<PasswordValueEditorOptions> {
+export default class PasswordValueEditorConfigurationServiceProvider extends AbstractValueEditorConfigurationProvider<PasswordValueEditorOptions> {
     public static readonly providerName = 'passwordValueEditorConfigurationService';
 
     /*@ngInject*/

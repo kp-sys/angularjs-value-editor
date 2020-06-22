@@ -1,8 +1,8 @@
 import './acceptable-root.value-editor.less';
 import register from '@kpsys/angularjs-register';
 import treeControlModule from './tree-control/angular-tree-control';
-import AcceptableRootValueEditorConfigurationProvider, {ACCEPTABLE_ROOT_VALUE_EDITOR_DEFAULT_OPTIONS} from './acceptable-root-value-editor-configuration.provider';
-import AcceptableRootValueEditorLocalizationsProvider, {ACCEPTABLE_ROOT_VALUE_EDITOR_DEFAULT_LOCALIZATIONS} from './acceptable-root-value-editor-localization.provider';
+import AcceptableRootValueEditorConfigurationServiceProvider, {ACCEPTABLE_ROOT_VALUE_EDITOR_DEFAULT_OPTIONS} from './acceptable-root-value-editor-configuration.provider';
+import AcceptableRootValueEditorLocalizationsServiceProvider, {ACCEPTABLE_ROOT_VALUE_EDITOR_DEFAULT_LOCALIZATIONS} from './acceptable-root-value-editor-localization.provider';
 import AcceptableRootValueEditorComponent from './acceptable-root.value-editor.component';
 import {acceptableRootValueEditorConfig} from './acceptable-root.value-editor';
 import AcceptableRootRequiredValidationsDirective from './acceptable-root-required-validations-directive';
@@ -20,8 +20,8 @@ export default register('angularjs-value-editor.acceptable-root', [treeControlMo
     .config(acceptableRootValueEditorConfig)
     .constant('acceptableRootValueEditorDefaultOptions', ACCEPTABLE_ROOT_VALUE_EDITOR_DEFAULT_OPTIONS)
     .constant('acceptableRootValueEditorDefaultLocalizations', ACCEPTABLE_ROOT_VALUE_EDITOR_DEFAULT_LOCALIZATIONS)
-    .provider(AcceptableRootValueEditorConfigurationProvider.providerName, AcceptableRootValueEditorConfigurationProvider)
-    .provider(AcceptableRootValueEditorLocalizationsProvider.providerName, AcceptableRootValueEditorLocalizationsProvider)
+    .provider(AcceptableRootValueEditorConfigurationServiceProvider.providerName, AcceptableRootValueEditorConfigurationServiceProvider)
+    .provider(AcceptableRootValueEditorLocalizationsServiceProvider.providerName, AcceptableRootValueEditorLocalizationsServiceProvider)
     .directive(AcceptableRootRequiredValidationsDirective.directiveName, AcceptableRootRequiredValidationsDirective)
     .component(AcceptableRootValueEditorComponent.componentName, AcceptableRootValueEditorComponent)
     .name();

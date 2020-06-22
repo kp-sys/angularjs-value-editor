@@ -56,7 +56,7 @@ export const NUMBER_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<NumberValueEdit
  *
  * Default options: {@link numberValueEditorDefaultOptions}
  */
-export default class NumberValueEditorConfigurationProvider extends AbstractValueEditorConfigurationProvider<NumberValueEditorOptions> {
+export default class NumberValueEditorConfigurationServiceProvider extends AbstractValueEditorConfigurationProvider<NumberValueEditorOptions> {
     public static readonly providerName = 'numberValueEditorConfigurationService';
 
     /*@ngInject*/

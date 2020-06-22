@@ -81,7 +81,7 @@ export const SEARCHABLE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<SearchableV
  *
  * Default options: {@link searchableValueEditorDefaultOptions}
  */
-export default class SearchableValueEditorConfigurationProvider<MODEL> extends AbstractValueEditorConfigurationProvider<SearchableValueEditorOptions<MODEL>> {
+export default class SearchableValueEditorConfigurationServiceProvider<MODEL> extends AbstractValueEditorConfigurationProvider<SearchableValueEditorOptions<MODEL>> {
     public static readonly providerName = 'searchableValueEditorConfigurationService';
 
     /*@ngInject*/

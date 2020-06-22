@@ -2,7 +2,7 @@ import './range.value-editor.less';
 import register from '@kpsys/angularjs-register';
 import sliderModule from '@kpsys/angularjs-histogram-slider';
 import RangeValueEditorComponent from './range.value-editor.component';
-import RangeValueEditorConfigurationProvider, {RANGE_VALUE_EDITOR_DEFAULT_OPTIONS} from './range-value-editor-configuration.provider';
+import RangeValueEditorConfigurationServiceProvider, {RANGE_VALUE_EDITOR_DEFAULT_OPTIONS} from './range-value-editor-configuration.provider';
 import SliderModelTransformerDirective from './model-transformer.directive';
 
 /**
@@ -16,7 +16,7 @@ import SliderModelTransformerDirective from './model-transformer.directive';
 
 export default register('angularjs-value-editor.range', [sliderModule])
     .constant('rangeValueEditorDefaultOptions', RANGE_VALUE_EDITOR_DEFAULT_OPTIONS)
-    .provider(RangeValueEditorConfigurationProvider.providerName, RangeValueEditorConfigurationProvider)
+    .provider(RangeValueEditorConfigurationServiceProvider.providerName, RangeValueEditorConfigurationServiceProvider)
     .directive(SliderModelTransformerDirective.directiveName, SliderModelTransformerDirective)
     .component(RangeValueEditorComponent.componentName, RangeValueEditorComponent)
     .name();

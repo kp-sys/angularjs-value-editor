@@ -1,10 +1,10 @@
 import {AliasesServiceProvider} from '../../aliases/aliases.service';
-import TextValueEditorConfigurationProvider from '../text/text-value-editor-configuration.provider';
+import TextValueEditorConfigurationServiceProvider from '../text/text-value-editor-configuration.provider';
 
 const VELOCITY_TEMPLATE_ALIAS = 'velocity-template';
 
 /*@ngInject*/
-export default function velocityTemplateValueEditorConfig(aliasesServiceProvider: AliasesServiceProvider, textValueEditorConfigurationServiceProvider: TextValueEditorConfigurationProvider) {
+export default function velocityTemplateValueEditorConfig(aliasesServiceProvider: AliasesServiceProvider, textValueEditorConfigurationServiceProvider: TextValueEditorConfigurationServiceProvider) {
     aliasesServiceProvider
         .addAlias(VELOCITY_TEMPLATE_ALIAS, 'text');
 

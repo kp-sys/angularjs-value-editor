@@ -71,7 +71,7 @@ export const RANGE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<RangeValueEditor
  *
  * Default options: {@link rangeValueEditorDefaultOptions}
  */
-export default class RangeValueEditorConfigurationProvider extends AbstractValueEditorConfigurationProvider<RangeValueEditorOptions> {
+export default class RangeValueEditorConfigurationServiceProvider extends AbstractValueEditorConfigurationProvider<RangeValueEditorOptions> {
     public static readonly providerName = 'rangeValueEditorConfigurationService';
 
     /*@ngInject*/

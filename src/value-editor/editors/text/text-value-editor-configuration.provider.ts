@@ -74,7 +74,7 @@ export const TEXT_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<TextValueEditorOp
  *
  * Default options: {@link textValueEditorDefaultOptions}
  */
-export default class TextValueEditorConfigurationProvider extends AbstractValueEditorConfigurationProvider<TextValueEditorOptions> {
+export default class TextValueEditorConfigurationServiceProvider extends AbstractValueEditorConfigurationProvider<TextValueEditorOptions> {
     public static readonly providerName = 'textValueEditorConfigurationService';
 
     /*@ngInject*/

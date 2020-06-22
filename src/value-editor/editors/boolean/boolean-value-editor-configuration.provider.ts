@@ -69,7 +69,7 @@ export const BOOLEAN_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<BooleanValueEd
  *
  * Default options: {@link booleanValueEditorDefaultOptions}
  */
-export default class BooleanValueEditorConfigurationProvider extends AbstractValueEditorConfigurationProvider<BooleanValueEditorOptions> {
+export default class BooleanValueEditorConfigurationServiceProvider extends AbstractValueEditorConfigurationProvider<BooleanValueEditorOptions> {
     public static readonly providerName = 'booleanValueEditorConfigurationService';
 
     /*@ngInject*/
