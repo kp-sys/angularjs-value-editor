@@ -10,7 +10,7 @@ form(name="{{name}}" ng-submit="$ctrl.onSubmit({$event: $event})" novalidate)
         options="{" +
             "fields: $ctrl.formSettings.fields, " +
             "__withoutNgForm: true, " +
-            "labelsWidth: $ctrl.labelsWidth, " +
+            "{{labelsWidth ? 'labelsWidth: $ctrl.labelsWidth,' : ''}} " +
             "forceShowErrors: $ctrl.forceShowErrors " +
         "}"
     )

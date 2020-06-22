@@ -27,10 +27,12 @@ export interface CardNumberValueEditorAdditionalRequestParameters {
  * @property {Object} requestParameters Request parameters.
  * @property {function} requestFunction Function providing generation of card number.
  *  ```
- *  function (requestParameters?: {}, additionalParameters?: CardNumberValueEditorAdditionalRequestParameters): PromiseLike<string>;
+ *  function ($requestParameters?: {}, $additionalParameters?: CardNumberValueEditorAdditionalRequestParameters, ...args): PromiseLike<string>;
  *  ```
- *  - **requestParameters**: Parameters from {@link CardNumberValueEditorOptions}.requestParameters
- *  - **additionalParameters**: Some {@link CardNumberValueEditorAdditionalRequestParameters additional parameters}.
+ * Function is invoked via [$injector.invoke](https://docs.angularjs.org/api/auto/service/$injector#invoke) with following locals:
+ *
+ *  - `$requestParameters`: Parameters from {@link CardNumberValueEditorOptions}.requestParameters
+ *  - `$additionalParameters`: Some {@link CardNumberValueEditorAdditionalRequestParameters additional parameters}.
  *
  * @description
  * Extends {@link type:ValueEditorOptions}
@@ -40,7 +42,7 @@ export interface CardNumberValueEditorAdditionalRequestParameters {
 export interface CardNumberValueEditorOptions<PARAMS = {}> extends ValueEditorOptions {
     inputSize?: string;
     requestParameters?: PARAMS;
-    requestFunction?: (requestParameters?: PARAMS, additionalParameters?: CardNumberValueEditorAdditionalRequestParameters) => PromiseLike<string>;
+    requestFunction?: ($requestParameters?: PARAMS, $additionalParameters?: CardNumberValueEditorAdditionalRequestParameters, ...args) => PromiseLike<string>;
 }
 
 /**
@@ -55,14 +57,14 @@ export interface CardNumberValueEditorOptions<PARAMS = {}> extends ValueEditorOp
  *  {
  *      inputSize: 'sm',
  *      requestParameters: {},
- *      requestFunction: (requestParameters, additionalParameters) => Promise.resolve(additionalParameters.currentValue)
+ *      requestFunction: ($additionalParameters) => Promise.resolve($additionalParameters.currentValue)
  *  }
  * ```
  */
 export const CARD_NUMBER_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<CardNumberValueEditorOptions> = {
     inputSize: 'sm',
     requestParameters: {},
-    requestFunction: /* istanbul ignore next */ (requestParameters, additionalParameters) => Promise.resolve(additionalParameters.currentValue)
+    requestFunction: /* istanbul ignore next */ /*@ngInject*/ ($requestParameters, $additionalParameters) => Promise.resolve($additionalParameters.currentValue)
 };
 
 /**

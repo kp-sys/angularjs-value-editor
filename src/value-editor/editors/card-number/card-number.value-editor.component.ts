@@ -4,10 +4,11 @@ import {
     CardNumberValueEditorConfigurationService,
     CardNumberValueEditorOptions
 } from './card-number-value-editor-configuration.provider';
-import {IAugmentedJQuery, ITimeoutService} from 'angular';
+import {IAugmentedJQuery, ILogService, ITimeoutService} from 'angular';
 import {CardNumberValueEditorLocalizationsService} from './card-number-value-editor-localization.provider';
 import {PropertyChangeDetection} from '../../utils/equals';
 import {TextValueEditorValidations} from '../text/text.value-editor.component';
+import IInjectorService = angular.auto.IInjectorService;
 
 export class CardNumberValueEditorComponentController extends AbstractValueEditor<string, CardNumberValueEditorOptions> {
     public generationButton: IAugmentedJQuery;
@@ -17,12 +18,14 @@ export class CardNumberValueEditorComponentController extends AbstractValueEdito
     /*@ngInject*/
     constructor(cardNumberValueEditorConfigurationService: CardNumberValueEditorConfigurationService,
                 cardNumberValueEditorLocalizationsService: CardNumberValueEditorLocalizationsService,
-                private $timeout: ITimeoutService) {
+                private $timeout: ITimeoutService,
+                private $injector: IInjectorService,
+                private $log: ILogService) {
         super(cardNumberValueEditorConfigurationService, cardNumberValueEditorLocalizationsService);
     }
 
     public async generate() {
-        if (this.options && typeof this.options.requestFunction === 'function') {
+        if (this.options && this.options.requestFunction) {
 
             const originalButtonCursor = this.generationButton[0].style.cursor;
             (this.generationButton[0] as HTMLButtonElement).disabled = true;
@@ -32,14 +35,16 @@ export class CardNumberValueEditorComponentController extends AbstractValueEdito
             let value: string;
 
             try {
-                value = await this.options.requestFunction(this.options.requestParameters, {
-                    inputName: this.valueEditorController.editorName,
-                    currentValue: this.model
+                value = await this.$injector.invoke<PromiseLike<string>>(this.options.requestFunction, this, {
+                    $requestParameters: this.options.requestParameters,
+                    $additionalParameters: {
+                        inputName: this.valueEditorController.editorName,
+                        currentValue: this.model
+                    }
                 });
             } catch (e) {
                 this.$timeout(() => {
-                    this.openPopover = true;
-                    this.popoverError = e;
+                    this.$log.error(e);
                 });
             } finally {
                 (this.generationButton[0] as HTMLButtonElement).disabled = false;
@@ -87,16 +92,20 @@ export class CardNumberValueEditorComponentController extends AbstractValueEdito
  *         </main>
  *     </file>
  *     <file name="script.js">
+ *         function request($timeout) {
+ *             return new Promise((resolve) => {
+ *                  $timeout(() => {
+ *                      resolve('Generated')
+ *                  }, 1000);
+ *              })
+ *         }
+ *         request.$inject = ['$timeout'];
+ *
  *         angular.module('cardNumberValueEditorExample', ['angularjs-value-editor'])
- *          .controller('ctrl', class {
- *              requestFunction() {
- *                  return new Promise((resolve) => {
- *                      setTimeout(() => {
- *                          resolve('Generated')
- *                      }, 1000);
- *                  });
- *              }
+ *          .controller('ctrl', function() {
+ *              return {requestFunction: request}
  *          });
+ *
  *     </file>
  * </example>
  */

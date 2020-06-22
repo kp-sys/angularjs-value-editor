@@ -13,21 +13,23 @@ const ITEMS = Object.freeze([
 
 describe('autocomplete-value-editor', () => {
 
-    let valueEditorMocker: ValueEditorMocker<AutocompleteValueEditorBindings>;
-    let $scope: ScopeWithBindings<string, AutocompleteValueEditorBindings>;
+    let valueEditorMocker: ValueEditorMocker<AutocompleteValueEditorBindings<any>>;
+    let $scope: ScopeWithBindings<string, AutocompleteValueEditorBindings<any>>;
     let _$timeout: ITimeoutService;
     let dataSourceSpy;
+    let annotatedDataSourceSpy;
 
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
         inject(/*@ngInject*/ ($compile, $rootScope, $timeout) => {
             $scope = $rootScope.$new();
-            valueEditorMocker = new ValueEditorMocker<AutocompleteValueEditorBindings>($compile, $scope);
+            valueEditorMocker = new ValueEditorMocker<AutocompleteValueEditorBindings<any>>($compile, $scope);
             _$timeout = $timeout;
         });
 
         dataSourceSpy = jasmine.createSpy('dataSource').and.returnValue(Promise.resolve(ITEMS));
+        annotatedDataSourceSpy = ['$model', '$staticParams', dataSourceSpy];
 
     });
 
@@ -87,18 +89,18 @@ describe('autocomplete-value-editor', () => {
 
         $scope.model = MODEL;
 
-        valueEditorMocker.create('autocomplete', {options: {dataSource: dataSourceSpy, staticParams: {hello: 'world'}}});
+        valueEditorMocker.create('autocomplete', {options: {dataSource: annotatedDataSourceSpy, staticParams: {hello: 'world'}}});
         const input = valueEditorMocker.getInputElement<HTMLInputElement>();
 
         angular.element(input).triggerHandler('focus');
         _$timeout.flush();
 
-        expect(dataSourceSpy).toHaveBeenCalledWith({query: MODEL, hello: 'world'});
+        expect(dataSourceSpy).toHaveBeenCalledWith(MODEL, {hello: 'world'});
         done();
     });
 
     it('should fetch items and open dropdown on button click', (done) => {
-        valueEditorMocker.create('autocomplete', {options: {dataSource: dataSourceSpy}});
+        valueEditorMocker.create('autocomplete', {options: {dataSource: annotatedDataSourceSpy}});
 
         const parentElement = valueEditorMocker.getInputElement<HTMLInputElement>().parentElement;
         parentElement.querySelector<HTMLButtonElement>('button').click();

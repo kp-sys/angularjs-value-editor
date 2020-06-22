@@ -1,7 +1,4 @@
-import KpValueEditorComponent, {
-    ValueEditorBindings,
-    ValueEditorValidations
-} from '../../kp-value-editor/kp-value-editor.component';
+import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import AbstractValueEditor from '../../common/abstract-value-editor';
 import * as angular from 'angular';
 import {IAugmentedJQuery, ILogService, INgModelController, IPostLink, ITimeoutService} from 'angular';
@@ -10,6 +7,7 @@ import {
     AutocompleteValueEditorOptions
 } from './autocomplete-value-editor-configuration.provider';
 import {PropertyChangeDetection} from '../../utils/equals';
+import IInjectorService = angular.auto.IInjectorService;
 
 /**
  * @ngdoc type
@@ -27,18 +25,19 @@ export interface AutocompleteRequestParams {
     query: string;
 }
 
-export class AutocompleteValueEditorComponentController extends AbstractValueEditor<string, AutocompleteValueEditorOptions> implements IPostLink {
+export class AutocompleteValueEditorComponentController<PARAMS> extends AbstractValueEditor<string, AutocompleteValueEditorOptions<PARAMS>> implements IPostLink {
     private items: string[] = [];
     private loading: boolean;
     private inputNgModelController: INgModelController;
     private minLength: number;
 
     /*@ngInject*/
-    constructor(private autocompleteValueEditorConfigurationService: AutocompleteValueEditorConfigurationService,
+    constructor(private autocompleteValueEditorConfigurationService: AutocompleteValueEditorConfigurationService<PARAMS>,
                 private loadingSpinnerTemplateUrl: string,
                 private $log: ILogService,
                 private $timeout: ITimeoutService,
-                private $element: IAugmentedJQuery
+                private $element: IAugmentedJQuery,
+                private $injector: IInjectorService
     ) {
         super(autocompleteValueEditorConfigurationService);
     }
@@ -73,7 +72,7 @@ export class AutocompleteValueEditorComponentController extends AbstractValueEdi
         this.asyncCall(() => this.minLength = this.options.minLength);
     }
 
-    protected onOptionsChange(newOptions: AutocompleteValueEditorOptions, oldOptions, whatChanged: PropertyChangeDetection<AutocompleteValueEditorOptions>) {
+    protected onOptionsChange(newOptions: AutocompleteValueEditorOptions<PARAMS>, oldOptions, whatChanged: PropertyChangeDetection<AutocompleteValueEditorOptions<PARAMS>>) {
         //
     }
 
@@ -82,7 +81,11 @@ export class AutocompleteValueEditorComponentController extends AbstractValueEdi
 
         let items: string[];
         try {
-            items = await this.options.dataSource(Object.assign({}, {query: this.model}, this.options.staticParams));
+            items = await this.$injector.invoke<PromiseLike<string[]>>(this.options.dataSource, this, {
+                $model: this.model,
+                $staticParams: this.options.staticParams
+            });
+
             this.$log.debug('Loaded items: ', items);
         } catch (e) {
             this.$log.error('kp-autocomplete: Loading items failed, setting []: ', e);
@@ -159,5 +162,5 @@ export default class AutocompleteValueEditorComponent {
     public controller = AutocompleteValueEditorComponentController;
 }
 
-export interface AutocompleteValueEditorBindings extends ValueEditorBindings<AutocompleteValueEditorOptions, ValueEditorValidations> {
+export interface AutocompleteValueEditorBindings<PARAMS> extends ValueEditorBindings<AutocompleteValueEditorOptions<PARAMS>> {
 }

@@ -76,13 +76,13 @@ describe('card-number-value-editor', () => {
             some: 'parameter',
             andSomeNumber: 123
         };
-        const requestFunction = jasmine.createSpy('requestFunction',
-            (requestParameters, additionalRequestParameters) => new Promise<string>((resolve) => setTimeout(() => resolve(''), 500))
-        ).and.callThrough();
+
+        const requestFunction = jasmine.createSpy('requestFunction', ($requestParameters, $additionalRequestParameters) => new Promise<string>((resolve) => setTimeout(() => resolve(''), 500))).and.callThrough();
+        const annotatedRequestFunction: any = ['$requestParameters', '$additionalParameters', requestFunction];
 
         $scope.model = '12345';
 
-        valueEditorMocker.create('card-number', {options: {requestFunction}});
+        valueEditorMocker.create('card-number', {options: {requestFunction: annotatedRequestFunction}});
 
         $scope.$apply(() => {
             $scope.options.requestParameters = REQUEST_PARAMETERS;

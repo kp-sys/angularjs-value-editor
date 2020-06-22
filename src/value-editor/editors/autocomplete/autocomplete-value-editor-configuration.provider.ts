@@ -8,13 +8,18 @@ import {AutocompleteRequestParams} from './autocomplete.value-editor.component';
  * @name AutocompleteValueEditorOptions
  * @module angularjs-value-editor.autocomplete
  *
- * @property {function(AutocompleteRequestParams): Promise<string[]>} dataSource
+ * @template PARAMS
+ *
+ * @property {function(AutocompleteRequestParams): PromiseLike<string[]>} dataSource
  * ```
- * <PARAMS extends AutocompleteRequestParams> function(params?: PARAMS): Promise<string[]>
+ * function($query?: string, $staticParams?: PARAMS, ...args): PromiseLike<string[]>
  * ```
  * Function, which makes request and returns string array of values for autocomplete.
  *
- * Params are {@link AutocompleteRequestParams} merged with `staticParams` from options.
+ * Function is invoked via [$injector.invoke](https://docs.angularjs.org/api/auto/service/$injector#invoke) with following locals:
+ *
+ *  - `$model`: Actual model value
+ *  - `$staticParams`: Params passed from options
  *
  * @property {object} staticParams Any static params, which are passed to `dataSource` function.
  * @property {string} minLength Pull down popup input string length threshold.
@@ -25,10 +30,10 @@ import {AutocompleteRequestParams} from './autocomplete.value-editor.component';
  *
  * Default value: {@link autocompleteValueEditorDefaultOptions}
  */
-export interface AutocompleteValueEditorOptions extends ValueEditorOptions {
-    dataSource?: <PARAMS extends AutocompleteRequestParams>(params?: PARAMS) => Promise<string[]>;
+export interface AutocompleteValueEditorOptions<PARAMS> extends ValueEditorOptions {
+    dataSource?: ($model?: string, $staticParams?: PARAMS, ...args) => PromiseLike<string[]>;
     minLength?: number;
-    staticParams?: {};
+    staticParams?: PARAMS;
 }
 
 /**
@@ -47,7 +52,7 @@ export interface AutocompleteValueEditorOptions extends ValueEditorOptions {
  * }
  * ```
  */
-export const AUTOCOMPLETE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<AutocompleteValueEditorOptions> = {
+export const AUTOCOMPLETE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<AutocompleteValueEditorOptions<any>> = {
     dataSource: /* istanbul ignore next */ () => Promise.resolve([]),
     minLength: 1,
     staticParams: {}
@@ -64,11 +69,11 @@ export const AUTOCOMPLETE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<Autocompl
  *
  * Default options: {@link autocompleteValueEditorDefaultOptions}
  */
-export default class AutocompleteValueEditorConfigurationProvider extends AbstractValueEditorConfigurationProvider<AutocompleteValueEditorOptions> {
+export default class AutocompleteValueEditorConfigurationProvider<PARAMS> extends AbstractValueEditorConfigurationProvider<AutocompleteValueEditorOptions<PARAMS>> {
     public static readonly providerName = 'autocompleteValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, autocompleteValueEditorDefaultOptions: DefaultOptions<AutocompleteValueEditorOptions>) {
+    constructor(aliasesServiceProvider, autocompleteValueEditorDefaultOptions: DefaultOptions<AutocompleteValueEditorOptions<PARAMS>>) {
         super(aliasesServiceProvider, autocompleteValueEditorDefaultOptions);
     }
 }
@@ -84,5 +89,5 @@ export default class AutocompleteValueEditorConfigurationProvider extends Abstra
  *
  * Default options: {@link autocompleteValueEditorDefaultOptions}
  */
-export interface AutocompleteValueEditorConfigurationService extends AbstractValueEditorConfigurationService<AutocompleteValueEditorOptions> {
+export interface AutocompleteValueEditorConfigurationService<PARAMS> extends AbstractValueEditorConfigurationService<AutocompleteValueEditorOptions<PARAMS>> {
 }
