@@ -10,6 +10,7 @@ import AcceptableValueEditorComponent from './acceptable.value-editor.component'
 import AcceptableValueEditorConfigurationServiceProvider, {ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS} from './acceptable-value-editor-configuration.provider';
 import CheckboxesValidationsDirective from './checkboxes-validations-directive';
 import nullAwareFilter from './null-aware-filter.filter';
+import DisableNganimateDirective from './disable-nganimate.directive';
 
 /**
  * @ngdoc module
@@ -28,5 +29,6 @@ export default register('angularjs-value-editor.acceptable', [aliasesModule, 'ng
     .provider(AcceptableValueEditorConfigurationServiceProvider.providerName, AcceptableValueEditorConfigurationServiceProvider)
     .provider(AcceptableValueEditorLocalizationsServiceProvider.providerName, AcceptableValueEditorLocalizationsServiceProvider)
     .directive(CheckboxesValidationsDirective.directiveName, CheckboxesValidationsDirective)
+    .directive(DisableNganimateDirective.directiveName, DisableNganimateDirective)
     .component(AcceptableValueEditorComponent.componentName, AcceptableValueEditorComponent)
     .name();

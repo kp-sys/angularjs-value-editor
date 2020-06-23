@@ -6,13 +6,8 @@ os: linux
 addons:
   chrome: stable
 
-env:
-  global:
-    - NODE_VERSION=10
-
-before_install:
-  - nvm install $NODE_VERSION
-  - npm install -g npm@6 && node -v && npm -v
+node_js:
+  - "12.14.1"
 
 install:
   - npm ci
@@ -32,9 +27,8 @@ deploy:
     on:
       branch: master
 
-  - provider: npm
-    email: "tomas.dostal@kpsys.cz"
-    api_key: $NPM_TOKEN
+  - provider: script
     skip_cleanup: true
+    script: npx semantic-release
     on:
       branch: master

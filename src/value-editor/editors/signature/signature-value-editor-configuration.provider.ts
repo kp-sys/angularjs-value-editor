@@ -1,6 +1,7 @@
 import {DefaultOptions} from '../../typings';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../common/abstract-value-editor-configuration.provider';
 import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
+import {Injectable} from 'angular';
 
 /**
  * @ngdoc type
@@ -14,9 +15,11 @@ import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.componen
  * ```
  * Function invoked via [$injector.invoke](https://docs.angularjs.org/api/auto/service/$injector#invoke) with following locals:
  *
- * - `$model`: Actual model value
- * - `$name`: Input name
- * - `$formModel`: Actual form model if form is present (wrapping this value editor)
+ * | Injectable&nbsp;argument&nbsp;name | Description                        |
+ * |--------------------------|----------------------------------|
+ * | `$model`: `string`       | Actual model value  |
+ * | `$name`: `string`        | Input name |
+ * | `$formModel`: `{}`       | Actual form model if form is present (wrapping this value editor) |
  *
  * @description
  * Extends {@link type:ValueEditorOptions}
@@ -24,7 +27,8 @@ import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.componen
  * Default value: {@link signatureValueEditorDefaultOptions}
  */
 export interface SignatureValueEditorOptions extends ValueEditorOptions {
-    dataSource: ($model?: string, $name?: string, $formModel?: {}, ...args) => PromiseLike<string[]>;
+    // tslint:disable-next-line:ban-types
+    dataSource: Injectable<Function | ((...args: any[]) => PromiseLike<string[]>)>;
     canDoAction?: boolean;
 }
 

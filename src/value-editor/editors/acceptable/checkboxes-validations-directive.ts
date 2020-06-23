@@ -1,5 +1,5 @@
 import {IAttributes, IAugmentedJQuery, INgModelController, IScope} from 'angular';
-import {ValueEditorComponentController} from '../../kp-value-editor/kp-value-editor.component';
+import {KpValueEditorComponentController} from '../../kp-value-editor/kp-value-editor.component';
 
 /**
  * @ngdoc directive
@@ -18,11 +18,11 @@ export default class CheckboxesValidationsDirective<MODEL> {
 
     public require = ['ngModel', '^^kpValueEditor'];
 
-    public link($scope: IScope, $element: IAugmentedJQuery, $attrs: IAttributes, [ngModelController, valueEditorController]: [INgModelController, ValueEditorComponentController]) {
+    public link($scope: IScope, $element: IAugmentedJQuery, $attrs: IAttributes, [ngModelController, valueEditorController]: [INgModelController, KpValueEditorComponentController]) {
         ngModelController.$validators.required = this.requiredValidationFactory(valueEditorController);
     }
 
-    private requiredValidationFactory(valueEditorController: ValueEditorComponentController) {
+    private requiredValidationFactory(valueEditorController: KpValueEditorComponentController) {
         return (modelValue: MODEL[]): boolean => {
             return !valueEditorController.validations?.required || (Array.isArray(modelValue) && modelValue.length > 0);
         };

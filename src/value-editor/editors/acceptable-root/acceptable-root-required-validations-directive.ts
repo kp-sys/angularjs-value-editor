@@ -1,9 +1,9 @@
 import {IAttributes, IAugmentedJQuery, INgModelController, IScope} from 'angular';
-import {ValueEditorComponentController} from '../../kp-value-editor/kp-value-editor.component';
+import {KpValueEditorComponentController} from '../../kp-value-editor/kp-value-editor.component';
 import {AcceptableRootValueEditorOptions} from './acceptable-root-value-editor-configuration.provider';
 import {AcceptableRootValueEditorComponentController} from './acceptable-root.value-editor.component';
 
-type AcceptableRootValueEditorController = ValueEditorComponentController<any, AcceptableRootValueEditorOptions<any>>;
+type AcceptableRootValueEditorController = KpValueEditorComponentController<any, AcceptableRootValueEditorOptions<any>>;
 
 /**
  * @ngdoc directive

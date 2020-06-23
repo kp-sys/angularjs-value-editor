@@ -1,6 +1,6 @@
 import KpValueEditorComponent, {
+    KpValueEditorComponentController,
     ValueEditorBindings,
-    ValueEditorComponentController,
     ValueEditorValidations
 } from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
@@ -16,7 +16,7 @@ import {PropertyChangeDetection} from '../../utils/equals';
 
 export class DateValueEditorComponentController extends AbstractValueEditor<string, DateValueEditorOptions> implements IOnInit {
     public startView: TDateValueEditorGranularity;
-    protected valueEditorController: ValueEditorComponentController<string, DateValueEditorOptions, DateValueEditorValidations>;
+    protected valueEditorController: KpValueEditorComponentController<string, DateValueEditorOptions, DateValueEditorValidations>;
 
     /*@ngInject*/
     constructor(dateValueEditorConfigurationService: DateValueEditorConfigurationService) {

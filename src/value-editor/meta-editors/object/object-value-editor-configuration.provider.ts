@@ -81,7 +81,7 @@ export interface ObjectValueEditorOptions extends ValueEditorOptions {
  * }
  * ```
  */
-export const OBJECT_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<ObjectValueEditorOptions & UndocumentedInternalOptions> = {
+export const OBJECT_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<ObjectValueEditorOptions & UndocumentedObjectValueEditorInternalOptions> = {
     fields: [],
     attributesTransformation: undefined,
     labelsWidth: 2,
@@ -122,7 +122,7 @@ export default class ObjectValueEditorConfigurationServiceProvider extends Abstr
 export interface ObjectValueEditorConfigurationService extends AbstractValueEditorConfigurationService<ObjectValueEditorOptions> {
 }
 
-export interface UndocumentedInternalOptions {
+export interface UndocumentedObjectValueEditorInternalOptions {
     // if true, it does not render ng-form around nested fields. This functionality use kp-universal-form.
     __withoutNgForm: boolean;
 }

@@ -1,7 +1,10 @@
 import {ObjectValueEditorField} from '../src/value-editor/meta-editors/object/object-value-editor-configuration.provider';
 import {TextValueEditorOptions} from '../src/value-editor/editors/text/text-value-editor-configuration.provider';
 import {TextValueEditorValidations} from '../src/value-editor/editors/text/text.value-editor.component';
-import {AcceptableValueEditorOptions} from '../src/value-editor/editors/acceptable/acceptable-value-editor-configuration.provider';
+import {
+    AcceptableValueEditorOptions,
+    UndocumentedAcceptableValueEditorInternalOptions
+} from '../src/value-editor/editors/acceptable/acceptable-value-editor-configuration.provider';
 import {IndexSelectionValueEditorOptions} from '../src/value-editor/editors/index-selection/index-selection-value-editor-configuration.provider';
 import {PasswordValueEditorOptions} from '../src/value-editor/editors/password/password-value-editor-configuration.provider';
 import {SignatureValueEditorOptions} from '../src/value-editor/editors/signature/signature-value-editor-configuration.provider';
@@ -128,8 +131,9 @@ export default class DemoController {
                         'one',
                         'two',
                         'three'
-                    ]
-                } as AcceptableValueEditorOptions<string>
+                    ],
+                    __forceDisableNgAnimate: true
+                } as AcceptableValueEditorOptions<string> & UndocumentedAcceptableValueEditorInternalOptions
             }
         },
         {

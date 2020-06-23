@@ -129,30 +129,39 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
  *                  fields: [
  *                      {
  *                          label: 'Text',
- *                          type: 'text',
- *                          editorName: 'text',
- *                          validations: {
- *                              required: true
+ *                          fieldName: 'text',
+ *                          editor: {
+ *                              type: 'text',
+ *                              editorName: 'text',
+ *                              validations: {
+ *                                  required: true
+ *                              }
  *                          }
  *                      },
  *                      {
  *                          label: 'Number',
- *                          type: 'number',
- *                          editorName: 'number'
+ *                          fieldName: 'number',
+ *                          editor: {
+ *                              type: 'number',
+ *                              editorName: 'number'
+ *                          }
  *                      },
  *                      {
  *                          label: 'Data',
- *                          type: 'list',
- *                          editorName: 'dates',
- *                          options: {
- *                              subEditorType: 'date',
- *                              newItemPrototype: '',
- *                              subEditorValidations: {
+ *                          fieldName: 'date',
+ *                          editor: {
+ *                              type: 'list',
+ *                              editorName: 'dates',
+ *                              options: {
+ *                                  subEditorType: 'date',
+ *                                  newItemPrototype: '',
+ *                                  subEditorValidations: {
+ *                                      required: true
+ *                                  }
+ *                              },
+ *                              validations: {
  *                                  required: true
  *                              }
- *                          },
- *                          validations: {
- *                              required: true
  *                          }
  *                      }
  *                  ]

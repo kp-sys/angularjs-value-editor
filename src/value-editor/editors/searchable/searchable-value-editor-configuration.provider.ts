@@ -18,7 +18,7 @@ import {Injectable} from 'angular';
  * ```
  * Searching angularjs injectable function. Returns model value in promise.
  *
- * | Injectable argument name | Description                        |
+ * | Injectable&nbsp;argument&nbsp;name | Description                        |
  * | ------------------------ | ---------------------------------- |
  * | `$model`                 | Current model                      |
  * | `$additionalParameters`  | Additional parameters from options |
@@ -29,7 +29,7 @@ import {Injectable} from 'angular';
  * ```
  * Function that calls edit value. Returns new model in promise.
  *
- * | Injectable argument name | Description                        |
+ * | Injectable&nbsp;argument&nbsp;name | Description                        |
  * | ------------------------ | ---------------------------------- |
  * | `$model`                 | Current model                      |
  * | `$additionalParameters`  | Additional parameters from options |
@@ -40,10 +40,12 @@ import {Injectable} from 'angular';
  * Default value: {@link searchableValueEditorDefaultOptions}
  */
 export interface SearchableValueEditorOptions<MODEL> extends ValueEditorOptions {
-    modelTemplate: string;
-    additionalParameters: {} | undefined;
-    searchModelFunction: Injectable<(...args: any[]) => Promise<MODEL>>;
-    editModelFunction: Injectable<(...args: any[]) => Promise<MODEL>>;
+    modelTemplate?: string;
+    additionalParameters?: {} | undefined;
+    // tslint:disable-next-line:ban-types
+    searchModelFunction?: Injectable<Function | ((...args: any[]) => PromiseLike<MODEL>)>;
+    // tslint:disable-next-line:ban-types
+    editModelFunction?: Injectable<Function | ((...args: any[]) => PromiseLike<MODEL>)>;
 }
 
 /**

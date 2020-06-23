@@ -1,6 +1,6 @@
 import {IAttributes, IAugmentedJQuery, ICompileService, IScope} from 'angular';
 import {ValueEditorLocalizations} from '../common/abstract-value-editor-localization.provider';
-import {ValueEditorComponentController} from '../kp-value-editor/kp-value-editor.component';
+import {KpValueEditorComponentController} from '../kp-value-editor/kp-value-editor.component';
 
 export interface PatternDescriptionLocalization extends ValueEditorLocalizations {
     patternDescription?;
@@ -29,7 +29,7 @@ export default class PatternDescriptionTooltipDirective {
     constructor(private $compile: ICompileService) {
     }
 
-    public link($scope: IScope, $element: IAugmentedJQuery, $attrs: IAttributes, kpValueEditorController: ValueEditorComponentController) {
+    public link($scope: IScope, $element: IAugmentedJQuery, $attrs: IAttributes, kpValueEditorController: KpValueEditorComponentController) {
         $element.removeAttr($attrs[PatternDescriptionTooltipDirective.directiveName]);
 
         const patternDescription = (kpValueEditorController.localizations as PatternDescriptionLocalization)?.patternDescription;

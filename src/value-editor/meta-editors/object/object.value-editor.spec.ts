@@ -6,7 +6,7 @@ import {ObjectValueEditorBindings} from './object.value-editor.component';
 import {
     ObjectValueEditorField,
     ObjectValueEditorOptions,
-    UndocumentedInternalOptions
+    UndocumentedObjectValueEditorInternalOptions
 } from './object-value-editor-configuration.provider';
 import {ListValueEditorOptions} from '../list/list-value-editor-configuration.provider';
 import {TextValueEditorValidations} from '../../editors/text/text.value-editor.component';
@@ -191,7 +191,7 @@ describe('object-value-editor', () => {
             options: {
                 fields: FIELDS,
                 __withoutNgForm: true
-            } as ObjectValueEditorOptions & UndocumentedInternalOptions
+            } as ObjectValueEditorOptions & UndocumentedObjectValueEditorInternalOptions
         });
 
         expect(element.querySelector('fieldset[ng-form]')).toBe(null);

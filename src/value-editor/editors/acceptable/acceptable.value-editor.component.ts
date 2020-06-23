@@ -240,7 +240,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
  *                  switchToCheckboxesThreshold: $ctrl.switchToCheckboxesThreshold,
  *                  sortComparator: $ctrl.sortComparator,
  *                  equalityComparator: $ctrl.equalityComparator
- *              }" placeholder="Select...">
+ *              }" placeholder="'Select...'">
  *              </kp-value-editor>
  *              <div>Model: {{model}}</div>
  *              <hr>

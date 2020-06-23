@@ -10,7 +10,7 @@ import {customEquals, PropertyChangeDetection, whichPropertiesAreNotEqual} from 
 import {KpUniversalFormComponentController} from '../kp-universal-form/kp-universal-form.component';
 import {ValueEditorLocalizations} from '../common/abstract-value-editor-localization.provider';
 
-export abstract class ValueEditorComponentController<MODEL = any, EDITOROPTS extends ValueEditorOptions = ValueEditorOptions, EDITORVALIDATIONS extends ValueEditorValidations = ValueEditorValidations>
+export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS extends ValueEditorOptions = ValueEditorOptions, EDITORVALIDATIONS extends ValueEditorValidations = ValueEditorValidations>
     extends NgModelConnector<MODEL>
     implements ValueEditorBindings<EDITOROPTS, EDITORVALIDATIONS>, IOnInit, IDoCheck, IOnDestroy, IOnChanges {
 
@@ -140,7 +140,7 @@ export default class KpValueEditorComponent {
         localizations: '<?'
     };
 
-    public controller = ValueEditorComponentController;
+    public controller = KpValueEditorComponentController;
 
     public templateUrl = require('./kp-value-editor.tpl.pug');
 }

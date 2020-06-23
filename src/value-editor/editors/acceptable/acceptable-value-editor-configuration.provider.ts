@@ -72,7 +72,7 @@ export interface AcceptableValueEditorOptions<VALUE> extends ValueEditorOptions 
  *  }
  * ```
  */
-export const ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<AcceptableValueEditorOptions<null>> = {
+export const ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<AcceptableValueEditorOptions<null>> & UndocumentedAcceptableValueEditorInternalOptions = {
     acceptableValues: [],
     multiselectable: false,
     searchable: true,
@@ -85,7 +85,8 @@ export const ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<AcceptableV
     selectedFirst: false,
     sortComparator: undefined,
     sortModel: false,
-    switchToCheckboxesThreshold: 13
+    switchToCheckboxesThreshold: 13,
+    __forceDisableNgAnimate: false
 };
 
 /**
@@ -120,4 +121,10 @@ export default class AcceptableValueEditorConfigurationServiceProvider<VALUE> ex
  * Default options: {@link acceptableValueEditorDefaultOptions}
  */
 export interface AcceptableValueEditorConfigurationService<VALUE> extends AbstractValueEditorConfigurationService<AcceptableValueEditorOptions<VALUE>> {
+}
+
+export interface UndocumentedAcceptableValueEditorInternalOptions {
+    // if true, it force to not using ngAnimate, due to some special technical issues, specially if ngAnimate is present
+    // and classNameFilter is set, uiSelect does not showing options.
+    __forceDisableNgAnimate: boolean;
 }

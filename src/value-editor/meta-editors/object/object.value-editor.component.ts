@@ -4,7 +4,7 @@ import {IFormController, IInterpolateService, IOnInit, ITemplateCacheService} fr
 import {
     ObjectValueEditorConfigurationService,
     ObjectValueEditorOptions,
-    UndocumentedInternalOptions
+    UndocumentedObjectValueEditorInternalOptions
 } from './object-value-editor-configuration.provider';
 import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
 import {AbstractMetaValueEditorComponentController} from '../abstract-meta-value-editor.component';
@@ -35,7 +35,7 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
     public $onInit() {
         super.$onInit();
 
-        if ((this.options as UndocumentedInternalOptions).__withoutNgForm) {
+        if ((this.options as UndocumentedObjectValueEditorInternalOptions).__withoutNgForm) {
 
             if (this.formController) {
                 this.form = this.formController;
@@ -82,7 +82,7 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
         return Object.assign({
             labelsWidth: this.options.labelsWidth,
             inputsWidth: 12 - this.options.labelsWidth,
-            withoutNgForm: (this.options as UndocumentedInternalOptions).__withoutNgForm
+            withoutNgForm: (this.options as UndocumentedObjectValueEditorInternalOptions).__withoutNgForm
         }, super.getTemplateModel());
     }
 }

@@ -1,7 +1,7 @@
 import './error-messages.less';
 import * as angular from 'angular';
 import {IAttributes, IAugmentedJQuery, INgModelController, IScope, ITimeoutService} from 'angular';
-import {ValueEditorComponentController} from '../kp-value-editor/kp-value-editor.component';
+import {KpValueEditorComponentController} from '../kp-value-editor/kp-value-editor.component';
 import {
     ValueEditorErrorMessagesLocalizations,
     ValueEditorErrorMessagesLocalizationsService
@@ -40,7 +40,7 @@ export default class ErrorMessagesDirective {
         this.localize = valueEditorErrorMessagesLocalizationsService.getLocalization.bind(valueEditorErrorMessagesLocalizationsService);
     }
 
-    public link($scope: ErrorMessagesDirectiveScope, $element: IAugmentedJQuery, $attrs: IAttributes, [ngModelController, kpValueEditorController]: [INgModelController, ValueEditorComponentController]) {
+    public link($scope: ErrorMessagesDirectiveScope, $element: IAugmentedJQuery, $attrs: IAttributes, [ngModelController, kpValueEditorController]: [INgModelController, KpValueEditorComponentController]) {
         $scope.appendedElements = {};
 
         // <editor-fold defaultstate="collapsed" desc=" Functions... ">
@@ -84,7 +84,7 @@ export default class ErrorMessagesDirective {
                     errorsToRemove.forEach((error) => {
                         $scope.appendedElements[error].classList.add('not-visible');
                         this.$timeout(() => {
-                            $scope.appendedElements[error].remove();
+                            $scope.appendedElements[error]?.remove();
                             delete $scope.appendedElements[error];
                         }, 150);
                     });

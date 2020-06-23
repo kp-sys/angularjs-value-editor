@@ -2,6 +2,7 @@ import {DefaultOptions} from '../../typings';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../common/abstract-value-editor-configuration.provider';
 import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
 import {AutocompleteRequestParams} from './autocomplete.value-editor.component';
+import {Injectable} from 'angular';
 
 /**
  * @ngdoc type
@@ -18,8 +19,8 @@ import {AutocompleteRequestParams} from './autocomplete.value-editor.component';
  *
  * Function is invoked via [$injector.invoke](https://docs.angularjs.org/api/auto/service/$injector#invoke) with following locals:
  *
- *  - `$model`: Actual model value
- *  - `$staticParams`: Params passed from options
+ *  - `$model`: `string` - Actual model value
+ *  - `$staticParams`: `{}` - Params passed from options
  *
  * @property {object} staticParams Any static params, which are passed to `dataSource` function.
  * @property {string} minLength Pull down popup input string length threshold.
@@ -30,8 +31,9 @@ import {AutocompleteRequestParams} from './autocomplete.value-editor.component';
  *
  * Default value: {@link autocompleteValueEditorDefaultOptions}
  */
-export interface AutocompleteValueEditorOptions<PARAMS> extends ValueEditorOptions {
-    dataSource?: ($model?: string, $staticParams?: PARAMS, ...args) => PromiseLike<string[]>;
+export interface AutocompleteValueEditorOptions<PARAMS = {}> extends ValueEditorOptions {
+    // tslint:disable-next-line:ban-types
+    dataSource?: Injectable<Function | ((...args: any[]) => PromiseLike<string[]>)>;
     minLength?: number;
     staticParams?: PARAMS;
 }

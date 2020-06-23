@@ -31,8 +31,10 @@ export interface CardNumberValueEditorAdditionalRequestParameters {
  *  ```
  * Function is invoked via [$injector.invoke](https://docs.angularjs.org/api/auto/service/$injector#invoke) with following locals:
  *
- *  - `$requestParameters`: Parameters from {@link CardNumberValueEditorOptions}.requestParameters
- *  - `$additionalParameters`: Some {@link CardNumberValueEditorAdditionalRequestParameters additional parameters}.
+ * | Injectable&nbsp;argument&nbsp;name | Description                                                                         |
+ * | ---------------------------------- | ----------------------------------------------------------------------------------- |
+ * | `$requestParameters`: `{}`               | Parameters from {@link CardNumberValueEditorOptions}.requestParameters              |
+ * | `$additionalParameters`: `CardNumberValueEditorAdditionalRequestParameters`            | Some {@link CardNumberValueEditorAdditionalRequestParameters additional parameters} |
  *
  * @description
  * Extends {@link type:ValueEditorOptions}
