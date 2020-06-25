@@ -100,6 +100,12 @@ module.exports = {
 
     devtool: 'source-map',
 
+    stats: {
+        warningsFilter: [
+            /Failed to parse source map/
+        ]
+    },
+
     devServer: {
         port: 3000,
         contentBase: '.',

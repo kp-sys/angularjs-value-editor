@@ -13,10 +13,10 @@
     )
 
     .panel-body
-        .row.list-item(
+        .list-item(
             ng-repeat-start="itemModel in $ctrl.model track by $index"
         )
-            .col-lg-10(ng-class="{'has-error': $ctrl.showValidationError('{{name}}_' + $index), 'has-not-error': !$ctrl.showValidationError('{{name}}_' + $index)}")
+            .list-item-content(ng-class="{'has-error': $ctrl.showValidationError('{{name}}_' + $index), 'has-not-error': !$ctrl.showValidationError('{{name}}_' + $index)}")
                 kp-value-editor(
                     editor-id="$index"
                     editor-name="'{{name}}_' + $index"
@@ -30,18 +30,18 @@
                     is-visible="$ctrl.trueIfUndefined($ctrl.valueEditorController.isVisible)"
 
                     validations="$ctrl.options.subEditorValidations"
-                    options="$ctrl.options.subEditorOptions"
+                    options="$ctrl.adjustForceShowErrors($ctrl.options.subEditorOptions)"
                 )
 
-            .col-lg-2
+            .list-item-delete-button
                 button.btn.btn-default.remove(
                     type="button"
+                    ng-attr-title="\\{\\{$ctrl.localize('remove')\\}\\}"
                     ng-disabled="$ctrl.valueEditorController.isDisabled"
                     ng-show="$ctrl.canRemoveItems()"
                     ng-click="$ctrl.removeItem($index)"
                 )
-                    i.glyphicon.glyphicon-minus
-                    span(ng-bind="$ctrl.localize('remove')")
+                    i.glyphicon.glyphicon-trash
 
         hr(ng-repeat-end ng-if="!$last")
 

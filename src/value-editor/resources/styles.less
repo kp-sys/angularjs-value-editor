@@ -1,4 +1,6 @@
 @import '~bootstrap-less/bootstrap/variables';
+@import '~bootstrap-less/bootstrap/mixins/forms';
+@import '~bootstrap-less/bootstrap/mixins/vendor-prefixes';
 
 kp-value-editor {
     .input-group-select {
@@ -22,6 +24,15 @@ kp-value-editor {
     .has-error .input-group .btn-default {
         border-color: @state-danger-text;
         transition: border-color 0.15s ease-in-out;
+    }
+
+    .has-error .has-not-error .input-group .btn-default {
+        border-color: @input-border;
+        transition: border-color 0.15s ease-in-out;
+    }
+
+    .has-error .has-not-error {
+        .form-control-validation(@input-color, @input-border, @input-bg);
     }
 
     .validation-helper {

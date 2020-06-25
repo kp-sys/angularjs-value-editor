@@ -7,7 +7,7 @@ import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value
 import {DateValueEditorBindings} from './date.value-editor.component';
 
 Settings.defaultLocale = DateTime.local().resolvedLocaleOpts().locale;
-Settings.defaultZoneName = FixedOffsetZone.utcInstance;
+Settings.defaultZoneName = FixedOffsetZone.utcInstance.name;
 
 function isVisible(element: HTMLElement): boolean {
     return (element.style ? element.style.display !== 'none' : true) && (element.parentNode ? isVisible(element.parentNode as HTMLElement) : true);

@@ -12,7 +12,7 @@ import {AbstractMetaValueEditorComponentController} from '../abstract-meta-value
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.listValueEditor';
 
-export class ListValueEditorComponentController<MODEL> extends AbstractMetaValueEditorComponentController<MODEL[], ListValueEditorOptions> implements IOnInit {
+export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEditorOptions> extends AbstractMetaValueEditorComponentController<MODEL[], ListValueEditorOptions<MODEL, OPTIONS>> implements IOnInit {
     public static readonly TEMPLATE_URL = require('./list.value-editor.tpl.pug');
 
     public form: IFormController;
@@ -21,7 +21,7 @@ export class ListValueEditorComponentController<MODEL> extends AbstractMetaValue
     constructor(
         $interpolate: IInterpolateService,
         $templateCache: ITemplateCacheService,
-        listValueEditorConfigurationService: ListValueEditorConfigurationService,
+        listValueEditorConfigurationService: ListValueEditorConfigurationService<MODEL, OPTIONS>,
         listValueEditorLocalizationsService: ListValueEditorLocalizationsService,
         private $timeout: ITimeoutService
     ) {
@@ -62,6 +62,15 @@ export class ListValueEditorComponentController<MODEL> extends AbstractMetaValue
             ((this.model.length > 0 && !this.valueEditorController.validations?.required) ||
                 (this.model.length > 1 && this.valueEditorController.validations?.required)
             );
+    }
+
+    public adjustForceShowErrors(subEditorOptions: OPTIONS): OPTIONS {
+
+        if (subEditorOptions) {
+            subEditorOptions.forceShowErrors = subEditorOptions.forceShowErrors || this.options.forceShowErrors;
+        }
+
+        return subEditorOptions;
     }
 
     private normalizeModelIfNeeded() {
