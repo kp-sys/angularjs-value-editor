@@ -6,6 +6,7 @@
         {"message": "*MINOR*", "release": "minor"},
         {"message": "*MAJOR*", "release": "major"}
       ]
-    }]
+    }],
+   "@semantic-release/npm"
   ]
 }
