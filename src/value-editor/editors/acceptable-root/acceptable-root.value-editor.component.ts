@@ -48,10 +48,6 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
     public $onInit(): void {
         super.$onInit();
 
-        if (this.options.multiselect && !Array.isArray(this.model)) {
-            this.model = [];
-        }
-
         this.internalAcceptableValues = [this.options.acceptableValue];
         this.treeOptions = {
             nodeChildren: 'children',
