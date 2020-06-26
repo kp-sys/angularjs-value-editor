@@ -12,7 +12,7 @@ import {generateUuid} from '../utils/uuid-generator';
 
 /**
  * @ngdoc type
- * @name KpUniversalFormComponentSettings
+ * @name KpUniversalFormSettings
  * @module angularjs-value-editor
  *
  * @property {ObjectValueEditorField[]} fields Fields definition.
@@ -22,7 +22,7 @@ import {generateUuid} from '../utils/uuid-generator';
  * @description
  *
  */
-export interface KpUniversalFormComponentSettings {
+export interface KpUniversalFormSettings {
     fields: ObjectValueEditorField[];
     header?: string;
     footer?: string;
@@ -34,7 +34,7 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
     public static TEMPLATE_URL = require('./kp-universal-form.tpl.pug');
 
     public templateUrl: string;
-    public formSettings: KpUniversalFormComponentSettings;
+    public formSettings: KpUniversalFormSettings;
     public internalFormController: IFormController;
     public name: string;
     public labelsWidth: number;
@@ -95,7 +95,7 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
  * @name kpUniversalForm
  * @module angularjs-value-editor
  *
- * @param {KpUniversalFormComponentSettings} formSettings Definition of form content.
+ * @param {KpUniversalFormSettings} formSettings Definition of form content.
  * @param {string=} name Name of the form. Due to internal reason, it must be in accordance with `^[a-zA-Z0-9._]*$` regexp.
  * @param {function(IFormController)=} formController Connecting to controller.
  * @param {function(IFormController)=} formController.$formController Exposed form controller.
@@ -208,7 +208,7 @@ export interface KpUniversalFormComponentOptions {
 }
 
 export interface KpUniversalFormComponentBindings {
-    formSettings: KpUniversalFormComponentSettings;
+    formSettings: KpUniversalFormSettings;
     name?: string;
     labelsWidth?: number;
     forceShowErrors?: boolean;

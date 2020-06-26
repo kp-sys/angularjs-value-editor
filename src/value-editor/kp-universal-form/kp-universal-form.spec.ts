@@ -2,20 +2,20 @@
 import valueEditorModule from '../value-editor.module';
 import * as angular from 'angular';
 import {ICompileService, IFormController, INgModelController, IScope, ITimeoutService} from 'angular';
-import {KpUniversalFormComponentSettings} from './kp-universal-form.component';
+import {KpUniversalFormSettings} from './kp-universal-form.component';
 import {ListValueEditorOptions} from '../meta-editors/list/list-value-editor-configuration.provider';
 import objectContaining = jasmine.objectContaining;
 import anything = jasmine.anything;
 
 interface UniversalFormScope extends IScope {
     model: {},
-    formSettings: KpUniversalFormComponentSettings,
+    formSettings: KpUniversalFormSettings,
     name: string,
     formController: IFormController,
     onSubmit: ($event: Event) => void
 }
 
-const FORM_SETTINGS: KpUniversalFormComponentSettings = {
+const FORM_SETTINGS: KpUniversalFormSettings = {
     header: '<div class="hello"></div>',
     footer: '<div class="footer"></div>',
     fields: [
