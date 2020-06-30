@@ -9,12 +9,15 @@
 
             ng-disabled="$ctrl.valueEditorController.isDisabled"
 
+            disable-ng-animate
+
             tagging
         )
             ui-select-match {{$ctrl.localize(($ctrl.extensions | filter: $select.selected)[0])}}
             ui-select-choices(repeat="$extension in $ctrl.extensions track by $extension") {{$ctrl.localize($extension)}}
 
     input.form-control(
+
         type="text"
 
         id="{{$ctrl.valueEditorController.editorId}}"

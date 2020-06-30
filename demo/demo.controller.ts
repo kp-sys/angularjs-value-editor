@@ -1,10 +1,7 @@
 import {ObjectValueEditorField} from '../src/value-editor/meta-editors/object/object-value-editor-configuration.provider';
 import {TextValueEditorOptions} from '../src/value-editor/editors/text/text-value-editor-configuration.provider';
 import {TextValueEditorValidations} from '../src/value-editor/editors/text/text.value-editor.component';
-import {
-    AcceptableValueEditorOptions,
-    UndocumentedAcceptableValueEditorInternalOptions
-} from '../src/value-editor/editors/acceptable/acceptable-value-editor-configuration.provider';
+import {AcceptableValueEditorOptions} from '../src/value-editor/editors/acceptable/acceptable-value-editor-configuration.provider';
 import {IndexSelectionValueEditorOptions} from '../src/value-editor/editors/index-selection/index-selection-value-editor-configuration.provider';
 import {PasswordValueEditorOptions} from '../src/value-editor/editors/password/password-value-editor-configuration.provider';
 import {SignatureValueEditorOptions} from '../src/value-editor/editors/signature/signature-value-editor-configuration.provider';
@@ -14,6 +11,7 @@ import {SearchableValueEditorOptions} from '../src/value-editor/editors/searchab
 import {ITimeoutService} from 'angular';
 import {PasswordValueEditorLocalizations} from '../src/value-editor/editors/password/password-value-editor-localization.provider';
 import {TextValueEditorLocalizations} from '../src/value-editor/editors/text/text-value-editor-localization.provider';
+import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../src/value-editor/common-directives/disable-ngAnimate.directive';
 
 export default class DemoController {
 
@@ -133,7 +131,7 @@ export default class DemoController {
                         'three'
                     ],
                     __forceDisableNgAnimate: true
-                } as AcceptableValueEditorOptions<string> & UndocumentedAcceptableValueEditorInternalOptions
+                } as AcceptableValueEditorOptions<string> & UndocumentedDisableNgAnimateValueEditorInternalOption
             }
         },
         {

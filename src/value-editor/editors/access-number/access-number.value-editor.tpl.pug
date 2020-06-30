@@ -3,8 +3,12 @@
         ui-select(
             ng-model="$ctrl.model"
             ng-model-options="{getterSetter: true}"
-            search-enabled="false"
+
             ng-disabled="$ctrl.valueEditorController.isDisabled"
+
+            disable-ng-animate
+
+            search-enabled="false"
             tagging
         )
             ui-select-match(placeholder="{{$ctrl.localize('select')}}") {{($ctrl.items | filter: $select.selected)[0]}}

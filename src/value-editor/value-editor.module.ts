@@ -32,7 +32,8 @@ import {EmptyConfigurationService} from './common/abstract-value-editor';
 import KpValueEditorConfigurationServiceProvider from './kp-value-editor/kp-value-editor-configuration-provider';
 import KpUniversalFormComponent from './kp-universal-form/kp-universal-form.component';
 import errorMessagesModule from './error-messages/error-messages.module';
-import PatternDescriptionTooltipDirective from './pattern-description/pattern-description-tooltip.directive';
+import PatternDescriptionTooltipDirective from './common-directives/pattern-description-tooltip.directive';
+import DisableNgAnimateDirective from './common-directives/disable-ngAnimate.directive';
 
 /**
  * @ngdoc constant
@@ -85,6 +86,7 @@ export default register('angularjs-value-editor', [
     .provider(EmptyConfigurationService.serviceName, EmptyConfigurationService)
     .provider(KpValueEditorConfigurationServiceProvider.providerName, KpValueEditorConfigurationServiceProvider)
     .directive(PatternDescriptionTooltipDirective.directiveName, PatternDescriptionTooltipDirective)
+    .directive(DisableNgAnimateDirective.directiveName, DisableNgAnimateDirective)
     .component(KpValueEditorComponent.componentName, KpValueEditorComponent)
     .component(KpUniversalFormComponent.componentName, KpUniversalFormComponent)
     .name();

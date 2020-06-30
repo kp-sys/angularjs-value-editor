@@ -2,6 +2,7 @@ import {DefaultOptions} from '../../typings';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../common/abstract-value-editor-configuration.provider';
 import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
 import {Injectable} from 'angular';
+import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../common-directives/disable-ngAnimate.directive';
 
 /**
  * @ngdoc type
@@ -45,9 +46,10 @@ export interface AccessNumberValueEditorOptions extends ValueEditorOptions {
  * }
  * ```
  */
-export const ACCESS_NUMBER_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<AccessNumberValueEditorOptions> = {
+export const ACCESS_NUMBER_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<AccessNumberValueEditorOptions & UndocumentedDisableNgAnimateValueEditorInternalOption> = {
     canDoAction: false,
-    dataSource: /* istanbul ignore next */ () => Promise.resolve([])
+    dataSource: /* istanbul ignore next */ () => Promise.resolve([]),
+    __forceDisableNgAnimate: false
 };
 
 /**

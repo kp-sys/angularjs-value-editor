@@ -2,6 +2,7 @@ import {DefaultOptions} from '../../typings';
 import AbstractValueEditorConfigurationServiceProvider, {AbstractValueEditorConfigurationService} from '../../common/abstract-value-editor-configuration.provider';
 import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
+import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../common-directives/disable-ngAnimate.directive';
 
 /**
  * @ngdoc type
@@ -72,7 +73,7 @@ export interface AcceptableValueEditorOptions<VALUE> extends ValueEditorOptions 
  *  }
  * ```
  */
-export const ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<AcceptableValueEditorOptions<null>> & UndocumentedAcceptableValueEditorInternalOptions = {
+export const ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<AcceptableValueEditorOptions<null>> & UndocumentedDisableNgAnimateValueEditorInternalOption = {
     acceptableValues: [],
     multiselectable: false,
     searchable: true,
@@ -121,10 +122,4 @@ export default class AcceptableValueEditorConfigurationServiceProvider<VALUE> ex
  * Default options: {@link acceptableValueEditorDefaultOptions}
  */
 export interface AcceptableValueEditorConfigurationService<VALUE> extends AbstractValueEditorConfigurationService<AcceptableValueEditorOptions<VALUE>> {
-}
-
-export interface UndocumentedAcceptableValueEditorInternalOptions {
-    // if true, it force to not using ngAnimate, due to some special technical issues, specially if ngAnimate is present
-    // and classNameFilter is set, uiSelect does not showing options.
-    __forceDisableNgAnimate: boolean;
 }

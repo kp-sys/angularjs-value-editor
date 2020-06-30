@@ -3,12 +3,10 @@ import * as angular from 'angular';
 import {ITimeoutService} from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {AcceptableValueEditorBindings} from './acceptable.value-editor.component';
-import {
-    AcceptableValueEditorOptions,
-    UndocumentedAcceptableValueEditorInternalOptions
-} from './acceptable-value-editor-configuration.provider';
+import {AcceptableValueEditorOptions} from './acceptable-value-editor-configuration.provider';
 import KpValueEditorConfigurationServiceProvider from '../../kp-value-editor/kp-value-editor-configuration-provider';
 import * as ngAnimateModule from 'angular-animate';
+import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../common-directives/disable-ngAnimate.directive';
 
 interface AcceptableValueEditorModel {
     value: string;
@@ -825,7 +823,7 @@ describe('acceptable-value-editor', () => {
                     acceptableValues: ACCEPTABLE_VALUES,
                     // enable bug workaround
                     __forceDisableNgAnimate: true
-                } as AcceptableValueEditorOptions<any> & UndocumentedAcceptableValueEditorInternalOptions
+                } as AcceptableValueEditorOptions<any> & UndocumentedDisableNgAnimateValueEditorInternalOption
             });
 
             const uiSelect = valueEditorMocker.getInputElement<HTMLElement>();
@@ -845,7 +843,7 @@ describe('acceptable-value-editor', () => {
             controller.selectNthOption(1);
 
             // disable bug workaround
-            ($scope.options as unknown as UndocumentedAcceptableValueEditorInternalOptions).__forceDisableNgAnimate = false;
+            ($scope.options as unknown as UndocumentedDisableNgAnimateValueEditorInternalOption).__forceDisableNgAnimate = false;
 
             controller.openUiSelect();
 

@@ -2,6 +2,7 @@ import {DefaultOptions} from '../../typings';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../common/abstract-value-editor-configuration.provider';
 import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
 import {Injectable} from 'angular';
+import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../common-directives/disable-ngAnimate.directive';
 
 /**
  * @ngdoc type
@@ -47,9 +48,10 @@ export interface SignatureValueEditorOptions extends ValueEditorOptions {
  * }
  * ```
  */
-export const SIGNATURE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<SignatureValueEditorOptions> = {
+export const SIGNATURE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<SignatureValueEditorOptions & UndocumentedDisableNgAnimateValueEditorInternalOption> = {
     dataSource: /* istanbul ignore next */ () => Promise.resolve([]),
-    canDoAction: false
+    canDoAction: false,
+    __forceDisableNgAnimate: false
 };
 
 /**
