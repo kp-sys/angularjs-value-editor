@@ -1,6 +1,6 @@
 import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
-import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
+import ValueEditorMocker, {NgChangeBindings, ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {
     SearchTextValueEditorBindings,
     SearchTextValueEditorModel,
@@ -14,8 +14,8 @@ const TEST_MODEL: SearchTextValueEditorModel = {
 
 describe('search-text-value-editor', () => {
 
-    let valueEditorMocker: ValueEditorMocker<SearchTextValueEditorBindings>;
-    let $scope: ScopeWithBindings<SearchTextValueEditorModel, SearchTextValueEditorBindings>;
+    let valueEditorMocker: ValueEditorMocker<SearchTextValueEditorBindings & NgChangeBindings>;
+    let $scope: ScopeWithBindings<SearchTextValueEditorModel, SearchTextValueEditorBindings & NgChangeBindings>;
 
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
@@ -128,6 +128,24 @@ describe('search-text-value-editor', () => {
 
         expect(valueEditorMocker.getInputElement<HTMLInputElement>().disabled).toBe(true);
         expect(valueEditorMocker.getInputElement<HTMLInputElement>().parentElement.querySelector<HTMLSpanElement>('.ui-select-toggle').attributes.getNamedItem('disabled').value).toBe('disabled');
+    });
+
+    it('should cooperate with ngChange', () => {
+        const ngChangeSpy = jasmine.createSpy('ngChangeSpy');
+
+        valueEditorMocker.create('search-text', {
+            'ngChange()': ngChangeSpy
+        });
+
+        valueEditorMocker.getInputElement<HTMLInputElement>().value = TEST_MODEL.row;
+        valueEditorMocker.getInputElement().parentElement.querySelector<HTMLSpanElement>('.ui-select-toggle').click();
+
+        Array.from(valueEditorMocker.getInputElement().parentElement.querySelectorAll<HTMLSpanElement>('.ui-select-choices-row-inner'))
+            .filter((element) => element.textContent === 'Equals')[0].click();
+
+        $scope.$apply();
+
+        expect(ngChangeSpy).toHaveBeenCalled();
     });
 
 });

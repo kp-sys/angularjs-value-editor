@@ -3,8 +3,8 @@ import * as angular from 'angular';
 import {IAugmentedJQuery, ICompileService, IFormController, IScope} from 'angular';
 import {TValueEditorType} from '../../src/value-editor/typings';
 
-function camelCaseToKebabCase(name) {
-    return name.replace(/([A-Z])/g, ($1) => `-${$1.toLowerCase()}`);
+function camelCaseToKebabCaseAndRemoveBrackets(name) {
+    return name.replace(/([A-Z])/g, ($1) => `-${$1.toLowerCase()}`).replace('()', '');
 }
 
 /**
@@ -108,9 +108,9 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
             const bindingsTemplates = [];
             for (const key in bindings) {
                 if (Object.prototype.hasOwnProperty.call(bindings, key)) {
-                    bindingsTemplates.push(`${camelCaseToKebabCase(key)}="${key}"`);
+                    bindingsTemplates.push(`${camelCaseToKebabCaseAndRemoveBrackets(key)}="${key}"`);
                     // @ts-ignore
-                    this.$scope[key] = bindings[key];
+                    this.$scope[key.replace('()', '')] = bindings[key];
                 }
             }
             template += bindingsTemplates.join(' ');
@@ -133,3 +133,8 @@ export type ScopeWithBindings<MODEL, BINDINGS extends ValueEditorBindings = Valu
     IScope
     & { [K in keyof BINDINGS]: BINDINGS[K] }
     & { model: MODEL, form: IFormController };
+
+export interface NgChangeBindings {
+    'ngChange()'?: () => any
+    ngChange?: () => any;
+}

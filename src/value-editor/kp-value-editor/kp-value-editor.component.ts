@@ -81,6 +81,10 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
         this.optionChangeListeners.push(listener);
     }
 
+    public forceCallNgModelViewChangeListeners() {
+        this.ngModelController.$viewChangeListeners.forEach((callback) => callback());
+    }
+
     private generateEditorName(): string {
         return this.editorId || `${this.type}_${generateUuid()}`;
     }

@@ -3,6 +3,7 @@
         ui-select(
             ng-model="$ctrl.model.extension"
             ng-model-options="{getterSetter: true}"
+            ng-change="$ctrl.triggerNgChange()"
 
             search-enabled="false"
 
@@ -22,6 +23,7 @@
 
         ng-model="$ctrl.model.row"
         ng-model-options="{ getterSetter: true}"
+        ng-change="$ctrl.triggerNgChange()"
 
         ng-disabled="$ctrl.valueEditorController.isDisabled"
 

@@ -61,6 +61,10 @@ export class SearchTextValueEditorComponentController extends AbstractValueEdito
         this.normalizeModel();
     }
 
+    public triggerNgChange() {
+        this.valueEditorController.forceCallNgModelViewChangeListeners();
+    }
+
     /* istanbul ignore next */
     protected onOptionsChange(newOptions: never, oldOptions, whatChanged: PropertyChangeDetection<never>) {
         //
