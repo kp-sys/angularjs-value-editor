@@ -10,7 +10,7 @@ kp-value-editor(
 
     is-disabled="$ctrl.valueEditorController.isDisabled"
 
-    options="{viewFormat: 'y', maximumGranularity: 'year'}"
+    options="{viewFormat: 'y', maximumGranularity: 'year', forceShowErrors: $ctrl.options.forceShowErrors}"
     validations="{" +
         "minDate: $ctrl.convertYearToISO($ctrl.valueEditorController.validations.minDate), " +
         "maxDate: $ctrl.convertYearToISO($ctrl.valueEditorController.validations.maxDate), " +
