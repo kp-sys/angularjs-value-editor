@@ -4,7 +4,7 @@ import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value
 import {Identified, IndexSelectionValueEditorBindings} from './index-selection.value-editor.component';
 import KpValueEditorConfigurationServiceProvider from '../../kp-value-editor/kp-value-editor-configuration-provider';
 
-const ITEMS: Identified<number>[] = [
+const ITEMS: Array<Identified<number>> = [
     {
         id: 1,
         text: 'jedna'
@@ -26,7 +26,7 @@ const ITEMS: Identified<number>[] = [
 describe('index-selection-value-editor', () => {
 
     let valueEditorMocker: ValueEditorMocker<IndexSelectionValueEditorBindings<any, Identified>>;
-    let $scope: ScopeWithBindings<[number], IndexSelectionValueEditorBindings<any, Identified>>;
+    let $scope: ScopeWithBindings<number, IndexSelectionValueEditorBindings<any, Identified>>;
 
     function getButton(index: number): HTMLButtonElement {
         return valueEditorMocker.getInputElement<HTMLDivElement>().querySelectorAll<HTMLButtonElement>('button')[index];
@@ -48,11 +48,11 @@ describe('index-selection-value-editor', () => {
         getButton(2).click();
         valueEditorMocker.triggerHandlerOnInput('input');
 
-        expect($scope.model).toEqual([3]);
+        expect($scope.model).toEqual(3);
     });
 
     it('should change value if model is changed', () => {
-        $scope.model = [2];
+        $scope.model = 2;
 
         valueEditorMocker.create('index-selection', {options: {items: ITEMS}});
 

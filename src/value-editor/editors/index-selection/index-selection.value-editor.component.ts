@@ -19,7 +19,7 @@ export interface Identified<ID = any> {
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.indexSelectionValueEditor';
 
-export class IndexSelectionValueEditorComponentController<ID, VALUE extends Identified<ID>> extends AbstractTemplateValueEditor<[ID], IndexSelectionValueEditorOptions<ID, VALUE>> implements IOnInit {
+export class IndexSelectionValueEditorComponentController<ID, VALUE extends Identified<ID>> extends AbstractTemplateValueEditor<ID, IndexSelectionValueEditorOptions<ID, VALUE>> implements IOnInit {
     private static readonly TEMPLATE_URL = require('./index-selection.value-editor.tpl.pug');
 
     /*@ngInject*/
@@ -36,15 +36,6 @@ export class IndexSelectionValueEditorComponentController<ID, VALUE extends Iden
         );
     }
 
-    public $onInit(): void {
-        super.$onInit();
-
-        // normalize model
-        if (this.model && !Array.isArray(this.model)) {
-            this.model = [this.model];
-        }
-    }
-
     public isSelected(item: VALUE): boolean {
         if (this.model !== undefined && this.model !== null) {
             const comparator = this.options.equalityComparator ? this.options.equalityComparator : this.indexSelectionValueEditorConfigurationService.getDefaults().equalityComparator;
@@ -56,7 +47,7 @@ export class IndexSelectionValueEditorComponentController<ID, VALUE extends Iden
     }
 
     public selectItem(item: VALUE) {
-        this.model = [item.id];
+        this.model = item.id;
     }
 
     protected onOptionsChange(newOptions: IndexSelectionValueEditorOptions<ID, VALUE>, oldOptions, whatChanged: PropertyChangeDetection<IndexSelectionValueEditorOptions<ID, VALUE>>) {

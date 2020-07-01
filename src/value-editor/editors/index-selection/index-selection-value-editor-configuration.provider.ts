@@ -24,7 +24,7 @@ import {Identified} from './index-selection.value-editor.component';
 export interface IndexSelectionValueEditorOptions<ID, VALUE extends Identified<ID> = Identified<ID>> extends ValueEditorOptions {
     items: VALUE[];
     optionsTemplate?: string;
-    equalityComparator?: (model: [ID], item: VALUE) => boolean;
+    equalityComparator?: (model: ID, item: VALUE) => boolean;
 }
 
 /**
@@ -46,7 +46,7 @@ export interface IndexSelectionValueEditorOptions<ID, VALUE extends Identified<I
 export const INDEX_SELECTION_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<IndexSelectionValueEditorOptions<any, Identified>> = {
     items: [],
     optionsTemplate: '{{$item}}',
-    equalityComparator: (model, item) => angular.equals(Array.isArray(model) ? model[0] : model, item.id)
+    equalityComparator: (model, item) => angular.equals(model, item.id)
 };
 
 /**
