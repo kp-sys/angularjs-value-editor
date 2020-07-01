@@ -6,8 +6,14 @@ import AbstractValueEditor from '../../common/abstract-value-editor';
 import {DateTime} from 'luxon';
 import * as angular from 'angular';
 import {PropertyChangeDetection} from '../../utils/equals';
+import {YearValueEditorConfigurationService, YearValueEditorOptions} from './year-value-editor-configuration.provider';
 
-export class YearValueEditorComponentController extends AbstractValueEditor<number, never> {
+export class YearValueEditorComponentController extends AbstractValueEditor<number, YearValueEditorOptions> {
+
+    /*@ngInject*/
+    constructor(yearValueEditorConfigurationService: YearValueEditorConfigurationService) {
+        super(yearValueEditorConfigurationService);
+    }
 
     public $onInit(): void {
         super.$onInit();
@@ -104,5 +110,5 @@ export interface YearValueEditorValidations extends ValueEditorValidations {
     maxDate?: number;
 }
 
-export interface YearValueEditorBindings extends ValueEditorBindings<never, YearValueEditorValidations> {
+export interface YearValueEditorBindings extends ValueEditorBindings<YearValueEditorOptions, YearValueEditorValidations> {
 }

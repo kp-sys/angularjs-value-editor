@@ -1,9 +1,13 @@
-import AbstractValueEditor, {EmptyConfigurationService} from '../../common/abstract-value-editor';
+import AbstractValueEditor from '../../common/abstract-value-editor';
 import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import {SearchTextValueEditorLocalizationsService} from './search-text-value-editor-localization.provider';
 import {IOnInit} from 'angular';
 import {TextValueEditorValidations} from '../text/text.value-editor.component';
 import {PropertyChangeDetection} from '../../utils/equals';
+import {
+    SearchTextValueEditorConfigurationService,
+    SearchTextValueEditorOptions
+} from './search-text-value-editor-configuration.provider';
 
 /**
  * @ngdoc type
@@ -44,13 +48,13 @@ export interface SearchTextValueEditorModel {
     row: string;
 }
 
-export class SearchTextValueEditorComponentController extends AbstractValueEditor<SearchTextValueEditorModel, never> implements IOnInit {
+export class SearchTextValueEditorComponentController extends AbstractValueEditor<SearchTextValueEditorModel, SearchTextValueEditorOptions> implements IOnInit {
     public extensions;
 
     /*@ngInject*/
-    constructor(emptyConfigurationService: EmptyConfigurationService,
+    constructor(searchTextValueEditorConfigurationService: SearchTextValueEditorConfigurationService,
                 public searchTextValueEditorLocalizationsService: SearchTextValueEditorLocalizationsService) {
-        super(emptyConfigurationService, searchTextValueEditorLocalizationsService);
+        super(searchTextValueEditorConfigurationService, searchTextValueEditorLocalizationsService);
 
         this.extensions = Object.values(SearchTextValueEditorModelExtension);
     }
@@ -141,5 +145,5 @@ export default class SearchTextValueEditorComponent {
     public controller = SearchTextValueEditorComponentController;
 }
 
-export interface SearchTextValueEditorBindings extends ValueEditorBindings<never, TextValueEditorValidations> {
+export interface SearchTextValueEditorBindings extends ValueEditorBindings<SearchTextValueEditorOptions, TextValueEditorValidations> {
 }
