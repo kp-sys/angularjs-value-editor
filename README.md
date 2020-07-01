@@ -1,5 +1,5 @@
-<img src="https://api.travis-ci.org/DostalTomas/angularjs-value-editor.svg?branch=master" alt="Build status" title="Build status">
-        
+[![Build Status](https://travis-ci.org/kp-sys/angularjs-value-editor.svg?branch=master)](https://travis-ci.org/kp-sys/angularjs-value-editor)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/kp-sys/angularjs-value-editor?label=version)        
 # angularjs-value-editors
 Dynamically created inputs
 

@@ -15,7 +15,7 @@ install:
 script:
   - npm run lib:prod
   - CHROMIUM_BIN="/usr/bin/google-chrome" npm test
-  - EXAMPLES_SCRIPTS_URL_PREFIX="https://kp-sys.github.io/angularjs-value-editor" npm run docs:build
+  - EXAMPLES_SCRIPTS_URL_PREFIX="https://kp-sys.github.io/angularjs-value-editor" RELEASE=true npm run docs:build
   - npm run lib:dts
 
 deploy:

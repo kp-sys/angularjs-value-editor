@@ -1,3 +1,5 @@
+const semanticRelease = require('semantic-release');
+
 module.exports = (grunt) => {
     const pkg = grunt.file.readJSON('package.json');
 
@@ -91,6 +93,36 @@ module.exports = (grunt) => {
     grunt.loadNpmTasks('dgeni-alive');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('docs:build', ['extract-comments', 'copy', 'dgeni-alive']);
+    grunt.registerTask('get-version', async function getVersion() {
+        if (process.env.RELEASE && process.env.RELEASE.toUpperCase() === 'TRUE') {
+            const done = this.async();
+
+            try {
+                const releaseVersion = await getReleaseVersion(grunt);
+                grunt.config.set('dgeni-alive.api.version', releaseVersion);
+            } finally {
+                done();
+            }
+        } else {
+            grunt.log.writeln('Skipping, to enable version resolving set env variable `RELEASE` to `true`. Also need to be set `GH_TOKEN` env variable.');
+        }
+    });
+
+    grunt.registerTask('docs:build', ['get-version', 'extract-comments', 'copy', 'dgeni-alive']);
     grunt.registerTask('docs:watch', ['watch']);
 };
+
+async function getReleaseVersion(grunt) {
+    try {
+        const {nextRelease: {name}} = await semanticRelease({
+            branches: [
+                'master'
+            ],
+            dryRun: true
+        });
+
+        return name;
+    } catch (e) {
+        grunt.log.error(`Error in semVer: ${e}`);
+    }
+}
