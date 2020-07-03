@@ -12,7 +12,7 @@ import {PropertyChangeDetection} from '../../utils/equals';
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.acceptableValueEditor';
 
-export class AcceptableValueEditorComponentController<VALUE> extends AbstractTemplateValueEditor<VALUE[], AcceptableValueEditorOptions<VALUE>> {
+export class AcceptableValueEditorComponentController<VALUE> extends AbstractTemplateValueEditor<VALUE[] | VALUE, AcceptableValueEditorOptions<VALUE>> {
     private static readonly SELECT_TEMPLATE_URL = require('./select.tpl.pug');
     private static readonly CHECKBOXES_TEMPLATE_URL = require('./checkboxes.tpl.pug');
 
@@ -36,17 +36,27 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
         this.uiSelectComparator = this.uiSelectComparator.bind(this);
     }
 
-    public get model(): VALUE[] {
-        return super.model;
+    public get model(): VALUE[] | VALUE {
+        const model = super.model;
+
+        if (!this.options.multiselectable && this.options.modelAsArray && Array.isArray(model)) {
+            return model[0];
+        }
+
+        return model;
     }
 
-    public set model(value: VALUE[]) {
+    public set model(value: VALUE[] | VALUE) {
         this.setValidationHelperTouched();
 
         if (this.options.multiselectable && this.options.sortModel && Array.isArray(value)) {
             super.model = value.sort(this.options.sortComparator);
         } else {
-            super.model = value;
+            if (this.options.modelAsArray && !Array.isArray(value)) {
+                this.model = [value];
+            } else {
+                super.model = value;
+            }
         }
     }
 
@@ -168,15 +178,15 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
             return [];
         }
 
-        if (!Array.isArray(value)) {
-            return [value];
-        } else {
+        if (Array.isArray(value)) {
             return value;
+        } else {
+            return [value];
         }
     }
 
     private isChecked(item: VALUE): boolean {
-        return this.includes(this.model, item);
+        return this.includes((this.model as VALUE[]), item);
     }
 
     private includes(array: VALUE[], item: VALUE): boolean {
@@ -195,7 +205,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
     }
 
     private getIndexOfItemInModelUsingEqualityComparator(item: VALUE): number {
-        for (let i = 0; i < this.model.length; i++) {
+        for (let i = 0; i < (this.model as VALUE[]).length; i++) {
             if (this.options.equalityComparator(this.model[i], item)) {
                 return i;
             }

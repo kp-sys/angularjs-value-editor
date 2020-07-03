@@ -67,7 +67,7 @@ describe('acceptable-value-editor', () => {
     let $scope: ScopeWithBindings<AcceptableValueEditorModel | AcceptableValueEditorModel[], AcceptableValueEditorBindings<AcceptableValueEditorModel>>;
     let defaultOptions: AcceptableValueEditorOptions<AcceptableValueEditorModel>;
 
-    describe('', () => {
+    describe('common', () => {
         beforeEach(() => {
             angular.mock.module(valueEditorModule, /*@ngInject*/ (kpValueEditorConfigurationServiceProvider: KpValueEditorConfigurationServiceProvider) => {
                 kpValueEditorConfigurationServiceProvider.setPreciseWatchForOptionsChanges(true);
@@ -237,6 +237,38 @@ describe('acceptable-value-editor', () => {
 
                 expect($scope.model).toEqual(null);
 
+            });
+
+            it('should convert model to array if modeAsArray option is set to true', () => {
+                valueEditorMocker.create('acceptable', {
+                    options: {
+                        acceptableValues: ACCEPTABLE_VALUES,
+                        modelAsArray: true
+                    }
+                });
+
+                const uiSelect = valueEditorMocker.getInputElement<HTMLElement>();
+                const controller = new UISelectController(uiSelect);
+
+                controller.openAndSelectNthOption(4);
+
+                expect($scope.model).toEqual([{value: 'd'}]);
+            });
+
+            it('should select value if model is array and modelAsArray is se to true', () => {
+                valueEditorMocker.create('acceptable', {
+                    options: {
+                        acceptableValues: ACCEPTABLE_VALUES,
+                        modelAsArray: true
+                    }
+                });
+
+                $scope.model = [{value: 'c'}];
+                $scope.$apply();
+
+                const value = new UISelectController(valueEditorMocker.getInputElement<HTMLInputElement>()).getSingleSelectedValueAsText();
+
+                expect(value).toBe('{"value":"c"}');
             });
         });
 
@@ -462,6 +494,43 @@ describe('acceptable-value-editor', () => {
                 }).not.toThrow();
 
             });
+
+            it('should convert model to array if modeAsArray option is set to true', () => {
+                valueEditorMocker.create('acceptable', {
+                    options: {
+                        acceptableValues: ACCEPTABLE_VALUES,
+                        modelAsArray: true,
+                        multiselectable: true
+                    }
+                });
+
+                const uiSelect = valueEditorMocker.getInputElement<HTMLElement>();
+                const controller = new UISelectController(uiSelect);
+
+                controller.openAndSelectNthOption(4);
+                // 4 because selected options disappears from list
+                controller.selectNthOption(4)
+
+                expect($scope.model).toEqual([{value: 'e'}, {value: 'f'}]);
+            });
+
+            it('should select value if model is array and modelAsArray is se to true', () => {
+                valueEditorMocker.create('acceptable', {
+                    options: {
+                        acceptableValues: ACCEPTABLE_VALUES,
+                        modelAsArray: true,
+                        multiselectable: true
+                    }
+                });
+
+                $scope.model = [{value: 'c'}, {value: 'd'}];
+                $scope.$apply();
+
+                const value = new UISelectController(valueEditorMocker.getInputElement<HTMLInputElement>()).getMultipleSelectedValuesAsTexts();
+
+                expect(value).toEqual(['{"value":"c"}', '{"value":"d"}']);
+            });
+
 
         });
 
