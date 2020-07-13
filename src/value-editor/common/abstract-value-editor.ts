@@ -4,7 +4,7 @@ import {IOnInit, IPostLink} from 'angular';
 import {KpValueEditorComponentController, ValueEditorOptions} from '../kp-value-editor/kp-value-editor.component';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from './abstract-value-editor-configuration.provider';
 import {AbstractValueEditorLocalizationService} from './abstract-value-editor-localization.provider';
-import {AliasesServiceProvider, DEFAULT_ALIAS} from '../aliases/aliases.service';
+import {AliasesServiceProvider} from '../aliases/aliases.service';
 import {customEquals, PropertyChangeDetection, whichPropertiesAreNotEqual} from '../utils/equals';
 
 /**
@@ -20,19 +20,19 @@ export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEd
 
     constructor(protected configurationService: AbstractValueEditorConfigurationService<OPTIONS>, protected localizationService?: AbstractValueEditorLocalizationService<any>) {
         super();
-        this.options = angular.merge({}, this.configurationService.forAlias(DEFAULT_ALIAS).getConfiguration());
+        this.options = angular.merge({}, this.configurationService.getConfiguration());
     }
 
     public $onInit(): void {
         super.$onInit();
         this.valueEditorController.registerValueEditor(this);
-        this.options = angular.merge({}, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration(), this.valueEditorController.options);
+        this.options = this.processNewOptions(this.valueEditorController.options);
     }
 
     public $postLink(): void {
         // If initial options are not defaults, trigger options change.
         if (!customEquals(this.options, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration())) {
-            this.onOptionsChange(this.options, undefined, whichPropertiesAreNotEqual(this.options, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration() as unknown as OPTIONS));
+            this.onOptionsChange(this.options, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration() as unknown as OPTIONS, whichPropertiesAreNotEqual(this.options, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration() as unknown as OPTIONS));
         }
     }
 
@@ -43,7 +43,7 @@ export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEd
      * @param {PropertyChangeDetection} whatChanged
      */
     public changeOptions(newOptions: OPTIONS, oldOptions: OPTIONS, whatChanged: PropertyChangeDetection<OPTIONS>) {
-        this.options = angular.copy(newOptions);
+        this.options = this.processNewOptions(newOptions);
         this.onOptionsChange(newOptions, oldOptions, whatChanged);
     }
 
@@ -72,6 +72,10 @@ export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEd
      * @param {PropertyChangeDetection<OPTIONS>} optionsChangeDetection Object whose keys are name of changed properties and value is boolean status of change.
      */
     protected abstract onOptionsChange(newOptions: OPTIONS, oldOptions?: OPTIONS, optionsChangeDetection?: PropertyChangeDetection<OPTIONS>);
+
+    private processNewOptions(newOptions: OPTIONS): OPTIONS {
+        return angular.merge({}, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration(), newOptions, this.valueEditorController.forceSettingsController?.getOptionsForTypeOrEmpty(this.valueEditorController.type) ?? {});
+    }
 }
 
 export class EmptyConfigurationService extends AbstractValueEditorConfigurationProvider<never> {

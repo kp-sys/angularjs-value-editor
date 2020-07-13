@@ -7,8 +7,9 @@ import AliasesService, {CustomValueEditorType} from '../aliases/aliases.service'
 import {KpValueEditorConfigurationService} from './kp-value-editor-configuration-provider';
 import AbstractValueEditor from '../common/abstract-value-editor';
 import {customEquals, PropertyChangeDetection, whichPropertiesAreNotEqual} from '../utils/equals';
-import {KpUniversalFormComponentController} from '../kp-universal-form/kp-universal-form.component';
+import KpUniversalFormComponent, {KpUniversalFormComponentController} from '../kp-universal-form/kp-universal-form.component';
 import {ValueEditorLocalizations} from '../common/abstract-value-editor-localization.provider';
+import KpValueEditorForceSettingsComponent, {KpValueEditorForceSettingsComponentController} from '../kp-value-editor-force-settings/kp-value-editor-force-settings.component';
 
 export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS extends ValueEditorOptions = ValueEditorOptions, EDITORVALIDATIONS extends ValueEditorValidations = ValueEditorValidations>
     extends NgModelConnector<MODEL>
@@ -22,13 +23,17 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
     public isDisabled: boolean;
     public isVisible: boolean = true;
     public validations: EDITORVALIDATIONS;
+    // settings for specific value editor sub-component
     public options: EDITOROPTS;
     public localizations: ValueEditorLocalizations;
+    // required component controllers
     public formController: IFormController;
+    public universalFormController: KpUniversalFormComponentController;
+    public forceSettingsController: KpValueEditorForceSettingsComponentController;
+    // settings for common kp-value-editor wrapper component
     public configuration: KpValueEditorConfigurationService;
     public valueEditorInstance: AbstractValueEditor<MODEL, EDITOROPTS>;
     /* Internal */
-    private universalFormController: KpUniversalFormComponentController;
     private previousOptions: EDITOROPTS;
     private optionChangeListeners: Array<(newOptions?: EDITOROPTS, oldOptions?: EDITOROPTS, whatChanged?: PropertyChangeDetection<EDITOROPTS>) => void> = [];
 
@@ -129,7 +134,8 @@ export default class KpValueEditorComponent {
     public require = {
         ngModelController: 'ngModel',
         formController: '?^^form',
-        universalFormController: '?^^kpUniversalForm'
+        universalFormController: `?^^${KpUniversalFormComponent.componentName}`,
+        forceSettingsController: `?^^${KpValueEditorForceSettingsComponent.componentName}`
     };
 
     public bindings = {

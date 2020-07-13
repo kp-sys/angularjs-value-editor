@@ -27,7 +27,10 @@ export default class NumberRangeValidationsDirective {
     constructor(private $parse: IParseService) {
     }
 
-    public link($scope: NumberRangeValidationsDirectiveScope, $element: IAugmentedJQuery, $attrs: IAttributes, [ngModelController, numberRangeValueEditorController]: [INgModelController, NumberRangeValueEditorComponentController]) {
+    public link($scope: NumberRangeValidationsDirectiveScope,
+                $element: IAugmentedJQuery,
+                $attrs: IAttributes,
+                [ngModelController, numberRangeValueEditorController]: [INgModelController, NumberRangeValueEditorComponentController]) {
         ngModelController.$validators.required = requiredValidationFactory(numberRangeValueEditorController);
         ngModelController.$validators.min = minValidationFactory(numberRangeValueEditorController);
         ngModelController.$validators.max = maxValidationFactory(numberRangeValueEditorController);
@@ -73,6 +76,6 @@ function toBiggerThanFromValidationFactory(numberRangeValueEditorController: Num
 
 function numberValidationFactory($scope: NumberRangeValidationsDirectiveScope, $parse: IParseService, $attrs: IAttributes) {
     return (): boolean => {
-        return $parse($attrs[NumberRangeValidationsDirective.directiveName])($scope)
+        return $parse($attrs[NumberRangeValidationsDirective.directiveName])($scope);
     };
 }

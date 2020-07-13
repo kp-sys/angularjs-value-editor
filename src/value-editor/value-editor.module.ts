@@ -26,6 +26,7 @@ import velocityTemplateValueEditorModule from './editors/velocity-template/veloc
 import rangeValueEditorModule from './editors/range/range.value-editor.module';
 import listValueEditorModule from './meta-editors/list/list.value-editor.module';
 import objectValueEditorModule from './meta-editors/object/object.value-editor.module';
+import valueEditorForceSettingsModule from './kp-value-editor-force-settings/kp-value-editor-force-settings.module';
 
 import KpValueEditorComponent from './kp-value-editor/kp-value-editor.component';
 import {EmptyConfigurationService} from './common/abstract-value-editor';
@@ -80,7 +81,8 @@ export default register('angularjs-value-editor', [
     rangeValueEditorModule,
     listValueEditorModule,
     objectValueEditorModule,
-    errorMessagesModule
+    errorMessagesModule,
+    valueEditorForceSettingsModule
 ])
     .constant('loadingSpinnerTemplateUrl', LOADING_SPINNER_TPL_URL)
     .provider(EmptyConfigurationService.serviceName, EmptyConfigurationService)

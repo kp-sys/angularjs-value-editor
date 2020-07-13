@@ -19,7 +19,7 @@ function isWindow(obj) {
 }
 
 function simpleCompare(a, b) {
-    return a === b || (a !== a && b !== b);
+    return a === b || (a !== a && b !== b); // NaN === NaN
 }
 
 function createMap() {

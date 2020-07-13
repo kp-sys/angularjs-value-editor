@@ -1,5 +1,9 @@
 /* istanbul ignore file */ // neni cas... :-(
 
+/**
+ * Taken from https://github.com/wix/angular-tree-control and modified
+ */
+
 import './angular-tree-control.less';
 import * as angular from 'angular';
 import {IScope} from 'angular';

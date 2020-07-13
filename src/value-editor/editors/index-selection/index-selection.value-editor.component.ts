@@ -50,7 +50,9 @@ export class IndexSelectionValueEditorComponentController<ID, VALUE extends Iden
         this.model = item.id;
     }
 
-    protected onOptionsChange(newOptions: IndexSelectionValueEditorOptions<ID, VALUE>, oldOptions, whatChanged: PropertyChangeDetection<IndexSelectionValueEditorOptions<ID, VALUE>>) {
+    protected onOptionsChange(newOptions: IndexSelectionValueEditorOptions<ID, VALUE>,
+                              oldOptions,
+                              whatChanged: PropertyChangeDetection<IndexSelectionValueEditorOptions<ID, VALUE>>) {
         if (whatChanged.optionsTemplate) {
             this.updateTemplate();
         }
