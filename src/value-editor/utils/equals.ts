@@ -1,4 +1,8 @@
-/* istanbul ignore file */ // tested by angular team
+/* istanbul ignore file */ // tested by angular team ツ
+
+/**
+ * Taken from original angular.js file.
+ */
 
 import * as angular from 'angular';
 
@@ -28,6 +32,8 @@ function createMap() {
 
 /**
  * Modified `angular.equals` function for support function check also.
+ *
+ * TODO: Refactor this
  *
  * @param {any} o1
  * @param {any} o2

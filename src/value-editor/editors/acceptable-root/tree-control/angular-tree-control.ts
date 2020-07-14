@@ -2,6 +2,7 @@
 
 /**
  * Taken from https://github.com/wix/angular-tree-control and modified
+ * TODO: Refactoring needed.
  */
 
 import './angular-tree-control.less';

@@ -12,10 +12,6 @@ interface ErrorMessagesDirectiveScope extends IScope {
     appendedElements: { [errorName: string]: HTMLElement };
 }
 
-function template(strings, customClass: string, rightPosition: number, message: string) {
-    return `<div class="error-message not-visible ${customClass}" style="right: calc(10% + ${rightPosition}px)">${message}</div>`;
-}
-
 /**
  * @ngdoc directive
  * @name errorMessages
@@ -43,59 +39,27 @@ export default class ErrorMessagesDirective {
     public link($scope: ErrorMessagesDirectiveScope, $element: IAugmentedJQuery, $attrs: IAttributes, [ngModelController, kpValueEditorController]: [INgModelController, KpValueEditorComponentController]) {
         $scope.appendedElements = {};
 
-        // <editor-fold defaultstate="collapsed" desc=" Functions... ">
-        function getErrorType(index: number, errorsObject: {}): string {
-            return Object.keys(errorsObject)?.[index];
-        }
-
-        function getErrorsCount(errorsObject: {}): number {
-            return Object.keys(errorsObject).length;
-        }
-
-        function getSerializedErrors(errorsObject: {}): string {
-            const errors: string[] = [];
-            for (let i = 0; i < getErrorsCount(errorsObject); i++) {
-                errors.push(getErrorType(i, errorsObject));
-            }
-
-            return errors.sort().reduce(((previousValue, currentValue) => previousValue + currentValue), '');
-        }
-
-        function arraySubtraction<T>(from: T[], what: T[]): T[] {
-            return (from || [])
-                .slice()
-                .reduce((acc, element) => {
-                    if (!what.includes(element)) {
-                        acc.push(element);
-                    }
-
-                    return acc;
-                }, []);
-        }
-        // </editor-fold>
-
         const processErrors = () => {
-            if (ngModelController.$touched || (kpValueEditorController.valueEditorInstance.options.forceShowErrors ?? false)) {
+            if ((ngModelController.$touched || (kpValueEditorController.valueEditorInstance.options.forceShowErrors ?? false)) &&
+                getSerializedErrors(ngModelController.$error) !== getSerializedErrors($scope.appendedElements)) {
 
-                if (getSerializedErrors(ngModelController.$error) !== getSerializedErrors($scope.appendedElements)) {
-                    const errorsToRemove = arraySubtraction(Object.keys($scope.appendedElements), Object.keys(ngModelController.$error));
-                    const errorsToAdd = arraySubtraction(Object.keys(ngModelController.$error), Object.keys($scope.appendedElements));
+                const errorsToRemove = arraySubtraction(Object.keys($scope.appendedElements), Object.keys(ngModelController.$error));
+                const errorsToAdd = arraySubtraction(Object.keys(ngModelController.$error), Object.keys($scope.appendedElements));
 
-                    errorsToRemove.forEach((error) => {
-                        $scope.appendedElements[error].classList.add('not-visible');
-                        this.$timeout(() => {
-                            $scope.appendedElements[error]?.remove();
-                            delete $scope.appendedElements[error];
-                        }, 150);
-                    });
+                errorsToRemove.forEach((error) => {
+                    $scope.appendedElements[error].classList.add('not-visible');
+                    this.$timeout(() => {
+                        $scope.appendedElements[error]?.remove();
+                        delete $scope.appendedElements[error];
+                    }, 150);
+                });
 
-                    errorsToAdd.forEach((error, index) => {
-                        const element = angular.element(template`custom class: ${$attrs.errorMessagesCustomClass ?? ''}, right position: ${20 * index}, message: ${this.localize(error)}`);
-                        $scope.appendedElements[error] = element[0];
-                        kpValueEditorController.$element.after(element);
-                        this.$timeout(() => element.removeClass('not-visible'));
-                    });
-                }
+                errorsToAdd.forEach((error, index) => {
+                    const element = angular.element(template`custom class: ${$attrs.errorMessagesCustomClass ?? ''}, right position: ${20 * index}, message: ${this.localize(error)}`);
+                    $scope.appendedElements[error] = element[0];
+                    kpValueEditorController.$element.after(element);
+                    this.$timeout(() => element.removeClass('not-visible'));
+                });
             }
 
             return true;
@@ -110,4 +74,37 @@ export default class ErrorMessagesDirective {
 
         ngModelController.$validators.__validationMessageListener = processErrors;
     }
+}
+
+function getErrorType(index: number, errorsObject: {}): string {
+    return Object.keys(errorsObject)?.[index];
+}
+
+function getErrorsCount(errorsObject: {}): number {
+    return Object.keys(errorsObject).length;
+}
+
+function getSerializedErrors(errorsObject: {}): string {
+    const errors: string[] = [];
+    for (let i = 0; i < getErrorsCount(errorsObject); i++) {
+        errors.push(getErrorType(i, errorsObject));
+    }
+
+    return errors.sort().reduce(((previousValue, currentValue) => previousValue + currentValue), '');
+}
+
+function arraySubtraction<T>(from: T[], what: T[]): T[] {
+    return (from || [])
+        .slice()
+        .reduce((acc, element) => {
+            if (!what.includes(element)) {
+                acc.push(element);
+            }
+
+            return acc;
+        }, []);
+}
+
+function template(strings, customClass: string, rightPosition: number, message: string) {
+    return `<div class="error-message not-visible ${customClass}" style="right: calc(10% + ${rightPosition}px)">${message}</div>`;
 }
