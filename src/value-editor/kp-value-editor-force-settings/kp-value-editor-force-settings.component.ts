@@ -3,6 +3,8 @@ import {ValueEditorOptions, ValueEditorValidations} from '../kp-value-editor/kp-
 import {CustomValueEditorType} from '../aliases/aliases.service';
 import {IOnDestroy} from 'angular';
 
+export const ALL_TYPES = 'ALL';
+
 class OptionsAndValidations<OPTIONS extends ValueEditorOptions = ValueEditorOptions, VALIDATIONS extends ValueEditorValidations = ValueEditorValidations> {
 
     public options?: OPTIONS;
@@ -27,7 +29,7 @@ export class KpValueEditorForceSettingsComponentController implements IOnDestroy
     }
 
     public getOptionsForTypeOrEmpty<OPTIONS extends ValueEditorOptions>(type: CustomValueEditorType): OPTIONS {
-        return (this.settings.get(type)?.options ?? {}) as OPTIONS;
+        return Object.assign({}, (this.settings.get(ALL_TYPES)?.options ?? {}), this.settings.get(type)?.options ?? {}) as OPTIONS;
     }
 
     public getValidationsForTypeOrEmpty<VALIDATIONS extends ValueEditorOptions>(type: CustomValueEditorType): VALIDATIONS {

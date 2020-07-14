@@ -1,7 +1,10 @@
 import {ValueEditorOptions, ValueEditorValidations} from '../kp-value-editor/kp-value-editor.component';
 import {CustomValueEditorType} from '../aliases/aliases.service';
 import {Component} from '@kpsys/angularjs-register';
-import KpValueEditorForceSettingsComponent, {KpValueEditorForceSettingsComponentController} from './kp-value-editor-force-settings.component';
+import KpValueEditorForceSettingsComponent, {
+    ALL_TYPES,
+    KpValueEditorForceSettingsComponentController
+} from './kp-value-editor-force-settings.component';
 import {ILogService, IOnInit} from 'angular';
 
 export class KpValueEditorForceSettingComponentController<OPTIONS, VALIDATIONS> implements KpValueEditorForceSettingComponentBindings<OPTIONS, VALIDATIONS>, IOnInit {
@@ -20,7 +23,7 @@ export class KpValueEditorForceSettingComponentController<OPTIONS, VALIDATIONS> 
             this.$log.warn('Setting of validations is not implemented yet!');
         }
 
-        this.kpValueEditorForceSettingsComponentController.addNewSettings(this.type, this.options, this.validations);
+        this.kpValueEditorForceSettingsComponentController.addNewSettings(this.type ?? ALL_TYPES, this.options, this.validations);
     }
 }
 
@@ -34,7 +37,7 @@ export class KpValueEditorForceSettingComponentController<OPTIONS, VALIDATIONS> 
  *
  * @requires component:kpValueEditorForceSettings
  *
- * @param {CustomValueEditorType} type Type of value editor
+ * @param {CustomValueEditorType=} type Type of value editor. If `type` is not specified, options will be passed to all editors.
  * @param {OPTIONS=} options Options
  * @param {VALIDATIONS=} validations Validations (not implemented yet)
  *
@@ -49,7 +52,7 @@ export default class KpValueEditorForceSettingComponent<OPTIONS extends ValueEdi
     };
 
     public bindings = {
-        type: '@',
+        type: '@?',
         options: '<?',
         validations: '<?'
     } as const;
@@ -60,7 +63,7 @@ export default class KpValueEditorForceSettingComponent<OPTIONS extends ValueEdi
 }
 
 interface KpValueEditorForceSettingComponentBindings<OPTIONS extends ValueEditorOptions = ValueEditorOptions, VALIDATIONS extends ValueEditorValidations = ValueEditorValidations> {
-    type: CustomValueEditorType;
+    type?: CustomValueEditorType;
     options?: OPTIONS;
     validations?: VALIDATIONS;
 }
