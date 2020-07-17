@@ -1,5 +1,5 @@
-import AbstractValueEditor from '../../common/abstract-value-editor';
-import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
+import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
+import {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import {
     CardNumberValueEditorConfigurationService,
     CardNumberValueEditorOptions
@@ -8,9 +8,11 @@ import {IAugmentedJQuery, ILogService, ITimeoutService} from 'angular';
 import {CardNumberValueEditorLocalizationsService} from './card-number-value-editor-localization.provider';
 import {PropertyChangeDetection} from '../../utils/equals';
 import {TextValueEditorValidations} from '../text/text.value-editor.component';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 import IInjectorService = angular.auto.IInjectorService;
 
-export class CardNumberValueEditorComponentController extends AbstractValueEditor<string, CardNumberValueEditorOptions> {
+export class CardNumberValueEditorComponentController extends AbstractValueEditorComponentController<string, CardNumberValueEditorOptions> {
     public generationButton: IAugmentedJQuery;
     public openPopover: boolean;
     public popoverError: any;
@@ -77,6 +79,8 @@ export class CardNumberValueEditorComponentController extends AbstractValueEdito
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: `string`
+ *
  * Value editor for card-number input with possibility to generation from backend.
  *
  * Supported options: {@link type:CardNumberValueEditorOptions}
@@ -109,13 +113,9 @@ export class CardNumberValueEditorComponentController extends AbstractValueEdito
  *     </file>
  * </example>
  */
-export default class CardNumberValueEditorComponent {
-    public static componentName = 'cardNumberValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class CardNumberValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'cardNumberValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'card-number';
 
     public templateUrl = require('./card-number.value-editor.tpl.pug');
 

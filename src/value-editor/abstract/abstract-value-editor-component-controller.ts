@@ -1,4 +1,4 @@
-import NgModelConnector from './ng-model-connector';
+import NgModelConnector from '../utils/ng-model-connector';
 import * as angular from 'angular';
 import {IOnInit, IPostLink} from 'angular';
 import {KpValueEditorComponentController, ValueEditorOptions} from '../kp-value-editor/kp-value-editor.component';
@@ -12,7 +12,7 @@ import {customEquals, PropertyChangeDetection, whichPropertiesAreNotEqual} from 
  *
  * @template OPTIONS
  */
-export default abstract class AbstractValueEditor<MODEL, OPTIONS extends ValueEditorOptions> extends NgModelConnector<MODEL> implements IPostLink, IOnInit {
+export default abstract class AbstractValueEditorComponentController<MODEL, OPTIONS extends ValueEditorOptions> extends NgModelConnector<MODEL> implements IPostLink, IOnInit {
     private static $inject = ['emptyConfigurationService'];
 
     public options: OPTIONS;

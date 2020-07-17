@@ -1,5 +1,5 @@
-import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
-import AbstractValueEditor from '../../common/abstract-value-editor';
+import {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
+import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import * as angular from 'angular';
 import {IAugmentedJQuery, ILogService, INgModelController, IPostLink, ITimeoutService} from 'angular';
 import {
@@ -7,6 +7,8 @@ import {
     AutocompleteValueEditorOptions
 } from './autocomplete-value-editor-configuration.provider';
 import {PropertyChangeDetection} from '../../utils/equals';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 import IInjectorService = angular.auto.IInjectorService;
 
 /**
@@ -25,7 +27,7 @@ export interface AutocompleteRequestParams {
     query: string;
 }
 
-export class AutocompleteValueEditorComponentController<PARAMS> extends AbstractValueEditor<string, AutocompleteValueEditorOptions<PARAMS>> implements IPostLink {
+export class AutocompleteValueEditorComponentController<PARAMS> extends AbstractValueEditorComponentController<string, AutocompleteValueEditorOptions<PARAMS>> implements IPostLink {
     private items: string[] = [];
     private loading: boolean;
     private inputNgModelController: INgModelController;
@@ -115,6 +117,8 @@ export class AutocompleteValueEditorComponentController<PARAMS> extends Abstract
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: `string`
+ *
  * Value editor for autocompletion input.
  *
  * Supported options: {@link type:AutocompleteValueEditorOptions}
@@ -149,13 +153,9 @@ export class AutocompleteValueEditorComponentController<PARAMS> extends Abstract
  *     </file>
  * </example>
  */
-export default class AutocompleteValueEditorComponent {
-    public static componentName = 'autocompleteValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class AutocompleteValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'autocompleteValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'autocomplete';
 
     public templateUrl = require('./autocomplete.value-editor.tpl.pug');
 

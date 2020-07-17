@@ -1,15 +1,14 @@
-import KpValueEditorComponent, {
-    ValueEditorBindings,
-    ValueEditorValidations
-} from '../../kp-value-editor/kp-value-editor.component';
+import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {IInterpolateService, IOnInit, ITemplateCacheService} from 'angular';
 import {
     IndexSelectionValueEditorConfigurationService,
     IndexSelectionValueEditorOptions
 } from './index-selection-value-editor-configuration.provider';
-import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
+import AbstractTemplateValueEditor from '../../abstract/abstract-template-value-editor';
 import {PropertyChangeDetection} from '../../utils/equals';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
 export interface Identified<ID = any> {
     id: ID;
@@ -74,6 +73,8 @@ export class IndexSelectionValueEditorComponentController<ID, VALUE extends Iden
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: `any`
+ *
  * Value editor for index select.
  *
  * From some unknown reason, model is array.
@@ -115,13 +116,9 @@ export class IndexSelectionValueEditorComponentController<ID, VALUE extends Iden
  *     </file>
  * </example>
  */
-export default class IndexSelectionValueEditorComponent {
-    public static componentName = 'indexSelectionValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class IndexSelectionValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'indexSelectionValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'index-selection';
 
     public template = AbstractTemplateValueEditor.COMPONENT_TEMPLATE;
 

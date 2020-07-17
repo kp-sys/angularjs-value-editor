@@ -29,12 +29,14 @@ import objectValueEditorModule from './meta-editors/object/object.value-editor.m
 import valueEditorForceSettingsModule from './kp-value-editor-force-settings/kp-value-editor-force-settings.module';
 
 import KpValueEditorComponent from './kp-value-editor/kp-value-editor.component';
-import {EmptyConfigurationService} from './common/abstract-value-editor';
+import {EmptyConfigurationService} from './abstract/abstract-value-editor-component-controller';
 import KpValueEditorConfigurationServiceProvider from './kp-value-editor/kp-value-editor-configuration-provider';
 import KpUniversalFormComponent from './kp-universal-form/kp-universal-form.component';
 import errorMessagesModule from './error-messages/error-messages.module';
 import PatternDescriptionTooltipDirective from './common-directives/pattern-description-tooltip.directive';
 import DisableNgAnimateDirective from './common-directives/disable-ngAnimate.directive';
+import KpValueEditorRegistrationServiceProvider from './kp-value-editor/kp-value-editor-registration.provider';
+import valueEditorsConfig from './value-editor.config';
 
 /**
  * @ngdoc constant
@@ -85,8 +87,10 @@ export default register('angularjs-value-editor', [
     valueEditorForceSettingsModule
 ])
     .constant('loadingSpinnerTemplateUrl', LOADING_SPINNER_TPL_URL)
+    .config(valueEditorsConfig)
     .provider(EmptyConfigurationService.serviceName, EmptyConfigurationService)
     .provider(KpValueEditorConfigurationServiceProvider.providerName, KpValueEditorConfigurationServiceProvider)
+    .provider(KpValueEditorRegistrationServiceProvider.providerName, KpValueEditorRegistrationServiceProvider)
     .directive(PatternDescriptionTooltipDirective.directiveName, PatternDescriptionTooltipDirective)
     .directive(DisableNgAnimateDirective.directiveName, DisableNgAnimateDirective)
     .component(KpValueEditorComponent.componentName, KpValueEditorComponent)

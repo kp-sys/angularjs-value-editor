@@ -1,13 +1,12 @@
-import KpValueEditorComponent, {
-    ValueEditorBindings,
-    ValueEditorValidations
-} from '../../kp-value-editor/kp-value-editor.component';
+import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
 import {IDoCheck, IOnDestroy, IPostLink, ITimeoutService} from 'angular';
-import AbstractValueEditor from '../../common/abstract-value-editor';
+import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import {HtmlValueEditorConfigurationService, HtmlValueEditorOptions} from './html-value-editor-configuration.provider';
 import bind from 'bind-decorator';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
-export class HtmlValueEditorComponentController extends AbstractValueEditor<string, HtmlValueEditorOptions> implements IPostLink, IDoCheck, IOnDestroy {
+export class HtmlValueEditorComponentController extends AbstractValueEditorComponentController<string, HtmlValueEditorOptions> implements IPostLink, IDoCheck, IOnDestroy {
     public container: JQuery;
     private isDisabled: boolean;
 
@@ -82,6 +81,8 @@ export class HtmlValueEditorComponentController extends AbstractValueEditor<stri
  * @requires https://alex-d.github.io/Trumbowyg/documentation/#installation Trumbowyg dependencies and plugins.
  *
  * @description
+ * Model type: `string`
+ *
  * Value editor for formatted text input.
  *
  * Component uses <a href="https://alex-d.github.io/Trumbowyg/documentation/#basic-options">Trumbowyg editor</a>,
@@ -122,13 +123,9 @@ export class HtmlValueEditorComponentController extends AbstractValueEditor<stri
  *     </file>
  * </example>
  */
-export default class HtmlValueEditorComponent {
-    public static componentName = 'htmlValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class HtmlValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'htmlValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'html';
 
     public templateUrl = require('./html.value-editor.tpl.pug');
 

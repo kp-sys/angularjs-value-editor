@@ -1,8 +1,5 @@
-import KpValueEditorComponent, {
-    ValueEditorBindings,
-    ValueEditorValidations
-} from '../../kp-value-editor/kp-value-editor.component';
-import AbstractValueEditor from '../../common/abstract-value-editor';
+import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
+import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import * as angular from 'angular';
 import {IAugmentedJQuery, IDoCheck, IOnInit} from 'angular';
 import {
@@ -11,6 +8,8 @@ import {
 } from './number-range-value-editor-configuration.provider';
 import {NumberRangeValueEditorLocalizationsService} from './number-range-value-editor-localization.provider';
 import {PropertyChangeDetection} from '../../utils/equals';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
 /**
  * @ngdoc type
@@ -32,7 +31,7 @@ export interface NumberRangeValueEditorModel {
     to: number;
 }
 
-export class NumberRangeValueEditorComponentController extends AbstractValueEditor<NumberRangeValueEditorModel, NumberRangeValueEditorOptions> implements IOnInit, IDoCheck {
+export class NumberRangeValueEditorComponentController extends AbstractValueEditorComponentController<NumberRangeValueEditorModel, NumberRangeValueEditorOptions> implements IOnInit, IDoCheck {
     public modelFrom: number;
     public modelTo: number;
     public fromRef: IAugmentedJQuery;
@@ -102,6 +101,8 @@ export class NumberRangeValueEditorComponentController extends AbstractValueEdit
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: {@link NumberRangeValueEditorModel}
+ *
  * Value editor for integer number range input.
  *
  * Supported options: {@link type:NumberRangeValueEditorOptions}
@@ -124,13 +125,9 @@ export class NumberRangeValueEditorComponentController extends AbstractValueEdit
  *     </file>
  * </example>
  */
-export default class NumberRangeValueEditorComponent {
-    public static componentName = 'numberRangeValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class NumberRangeValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'numberRangeValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'number-range';
 
     public templateUrl = require('./number-range.value-editor.tpl.pug');
 

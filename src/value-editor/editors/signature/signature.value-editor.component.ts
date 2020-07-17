@@ -1,5 +1,5 @@
-import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
-import AbstractValueEditor from '../../common/abstract-value-editor';
+import {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
+import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import * as angular from 'angular';
 import {ILogService, IOnInit, ITimeoutService} from 'angular';
 import {
@@ -10,8 +10,10 @@ import {SignatureValueEditorLocalizationsService} from './signature-value-editor
 import {TextValueEditorValidations} from '../text/text.value-editor.component';
 import {getFormModel} from '../../utils/forms';
 import {PropertyChangeDetection} from '../../utils/equals';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
-export class SignatureValueEditorComponentController extends AbstractValueEditor<string, SignatureValueEditorOptions> implements IOnInit {
+export class SignatureValueEditorComponentController extends AbstractValueEditorComponentController<string, SignatureValueEditorOptions> implements IOnInit {
     public items: string[] = [];
     public showSelect: boolean;
 
@@ -66,6 +68,8 @@ export class SignatureValueEditorComponentController extends AbstractValueEditor
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: `string`
+ *
  * Value editor for signature input.
  *
  * Supported options: {@link type:SignatureValueEditorOptions}
@@ -88,13 +92,9 @@ export class SignatureValueEditorComponentController extends AbstractValueEditor
  *     </file>
  * </example>
  */
-export default class SignatureValueEditorComponent {
+export default class SignatureValueEditorComponent extends AbstractValueEditorComponent {
     public static componentName = 'signatureValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+    public static readonly valueEditorType: TValueEditorType = 'signature';
 
     public templateUrl = require('./signature.value-editor.tpl.pug');
 

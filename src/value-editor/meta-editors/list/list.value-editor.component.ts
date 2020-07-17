@@ -1,4 +1,4 @@
-import KpValueEditorComponent, {
+import {
     ValueEditorBindings,
     ValueEditorOptions,
     ValueEditorValidations
@@ -7,8 +7,10 @@ import * as angular from 'angular';
 import {IFormController, IInterpolateService, IOnInit, ITemplateCacheService, ITimeoutService} from 'angular';
 import {ListValueEditorConfigurationService, ListValueEditorOptions} from './list-value-editor-configuration.provider';
 import {ListValueEditorLocalizationsService} from './list-value-editor-localization.provider';
-import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
+import AbstractTemplateValueEditor from '../../abstract/abstract-template-value-editor';
 import {AbstractMetaValueEditorComponentController} from '../abstract-meta-value-editor.component';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.listValueEditor';
 
@@ -90,6 +92,8 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: `[]`
+ *
  * Value editor for list input.
  *
  * Supported options: {@link type:ListValueEditorOptions}
@@ -109,13 +113,9 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
  *     </file>
  * </example>
  */
-export default class ListValueEditorComponent {
-    public static componentName = 'listValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class ListValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'listValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'list';
 
     public template = AbstractTemplateValueEditor.COMPONENT_TEMPLATE;
 

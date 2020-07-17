@@ -1,7 +1,4 @@
-import KpValueEditorComponent, {
-    ValueEditorBindings,
-    ValueEditorValidations
-} from '../../kp-value-editor/kp-value-editor.component';
+import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {IInterpolateService, ITemplateCacheService, ITimeoutService} from 'angular';
 import {
@@ -9,8 +6,10 @@ import {
     SearchableValueEditorOptions
 } from './searchable-value-editor-configuration.provider';
 import {SearchableValueEditorLocalizationsService} from './searchable-value-editor-localization.provider';
-import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
+import AbstractTemplateValueEditor from '../../abstract/abstract-template-value-editor';
 import {PropertyChangeDetection} from '../../utils/equals';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 import IInjectorService = angular.auto.IInjectorService;
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.searchableValueEditor';
@@ -95,6 +94,8 @@ export class SearchableValueEditorComponentController<MODEL = any> extends Abstr
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: `any`
+ *
  * Value editor for searchable input.
  *
  * Supported options: {@link type:SearchableValueEditorOptions}
@@ -119,13 +120,9 @@ export class SearchableValueEditorComponentController<MODEL = any> extends Abstr
  *     </file>
  * </example>
  */
-export default class SearchableValueEditorComponent {
-    public static componentName = 'searchableValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class SearchableValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'searchableValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'searchable';
 
     public template = AbstractTemplateValueEditor.COMPONENT_TEMPLATE;
 

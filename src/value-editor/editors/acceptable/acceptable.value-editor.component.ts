@@ -1,5 +1,5 @@
 import './acceptable.value-editor.less';
-import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
+import {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {IAugmentedJQuery, IFilterOrderByItem, IInterpolateService, ITemplateCacheService} from 'angular';
 import {AcceptableValueEditorLocalizationsService} from './acceptable-value-editor-localizations.provider';
@@ -7,8 +7,10 @@ import {
     AcceptableValueEditorConfigurationService,
     AcceptableValueEditorOptions
 } from './acceptable-value-editor-configuration.provider';
-import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
+import AbstractTemplateValueEditor from '../../abstract/abstract-template-value-editor';
 import {PropertyChangeDetection} from '../../utils/equals';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.acceptableValueEditor';
 
@@ -224,6 +226,8 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: `any`
+ *
  * This component is for selecting value from predefined values.
  * It has two basic modes - single selectable and multi selectable - which are controlled by `multiselectable` option.
  * Multi selectable mode has two visual sub-modes: select-based and checkbox-based which are controlled by `switchToCheckboxesThreshold` option.
@@ -313,13 +317,9 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
  *     </file>
  * </example>
  */
-export default class AcceptableValueEditorComponent {
-    public static componentName = 'acceptableValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class AcceptableValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'acceptableValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'acceptable';
 
     public template = AbstractTemplateValueEditor.COMPONENT_TEMPLATE;
 

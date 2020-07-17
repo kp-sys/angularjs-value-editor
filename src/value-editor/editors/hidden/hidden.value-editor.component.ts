@@ -1,11 +1,10 @@
-import KpValueEditorComponent, {
-    ValueEditorBindings,
-    ValueEditorOptions
-} from '../../kp-value-editor/kp-value-editor.component';
-import AbstractValueEditor from '../../common/abstract-value-editor';
+import {ValueEditorBindings, ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
+import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import * as angular from 'angular';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
-export class HiddenValueEditorComponentController extends AbstractValueEditor<any, ValueEditorOptions> {
+export class HiddenValueEditorComponentController extends AbstractValueEditorComponentController<any, ValueEditorOptions> {
 
     /* istanbul ignore next */
     protected onOptionsChange(newOptions: ValueEditorOptions, oldOptions: ValueEditorOptions) {
@@ -22,6 +21,8 @@ export class HiddenValueEditorComponentController extends AbstractValueEditor<an
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: `any`
+ *
  * Value editor for store any value.
  *
  * Supported options: {@link type:ValueEditorOptions}
@@ -41,13 +42,9 @@ export class HiddenValueEditorComponentController extends AbstractValueEditor<an
  *     </file>
  * </example>
  */
-export default class HiddenValueEditorComponent {
-    public static componentName = 'hiddenValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class HiddenValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'hiddenValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'hidden';
 
     public templateUrl = require('./hidden.value-editor.tpl.pug');
 

@@ -1,16 +1,15 @@
 import './number.value-editor.less';
-import KpValueEditorComponent, {
-    ValueEditorBindings,
-    ValueEditorValidations
-} from '../../kp-value-editor/kp-value-editor.component';
+import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
-import AbstractValueEditor from '../../common/abstract-value-editor';
+import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import {
     NumberValueEditorConfigurationService,
     NumberValueEditorOptions
 } from './number-value-editor-configuration.provider';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
-export class NumberValueEditorComponentController extends AbstractValueEditor<number, NumberValueEditorOptions> {
+export class NumberValueEditorComponentController extends AbstractValueEditorComponentController<number, NumberValueEditorOptions> {
 
     /*@ngInject*/
     constructor(numberValueEditorConfigurationService: NumberValueEditorConfigurationService) {
@@ -31,6 +30,8 @@ export class NumberValueEditorComponentController extends AbstractValueEditor<nu
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: `number`
+ *
  * Value editor for number input.
  *
  * Supported options: {@link type:NumberValueEditorOptions}
@@ -50,13 +51,9 @@ export class NumberValueEditorComponentController extends AbstractValueEditor<nu
  *     </file>
  * </example>
  */
-export default class NumberValueEditorComponent {
-    public static componentName = 'numberValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class NumberValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'numberValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'number';
 
     public templateUrl = require('./number.value-editor.tpl.pug');
 

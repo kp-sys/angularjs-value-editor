@@ -6,10 +6,12 @@ import {
     ObjectValueEditorOptions,
     UndocumentedObjectValueEditorInternalOptions
 } from './object-value-editor-configuration.provider';
-import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
+import AbstractTemplateValueEditor from '../../abstract/abstract-template-value-editor';
 import {AbstractMetaValueEditorComponentController} from '../abstract-meta-value-editor.component';
 import {generateUuid} from '../../utils/uuid-generator';
 import {PropertyChangeDetection} from '../../utils/equals';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.objectValueEditor';
 
@@ -96,6 +98,8 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: `{}`
+ *
  * Value editor for object input.
  *
  * Supported options: {@link type:ObjectValueEditorOptions}
@@ -149,8 +153,9 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
  *     </file>
  * </example>
  */
-export default class ObjectValueEditorComponent {
-    public static componentName = 'objectValueEditor';
+export default class ObjectValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'objectValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'object';
 
     public require = {
         ngModelController: 'ngModel',

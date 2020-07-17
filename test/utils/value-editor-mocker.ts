@@ -2,10 +2,8 @@ import {ValueEditorBindings} from '../../src/value-editor/kp-value-editor/kp-val
 import * as angular from 'angular';
 import {IAugmentedJQuery, ICompileService, IFormController, IScope} from 'angular';
 import {TValueEditorType} from '../../src/value-editor/typings';
-
-function camelCaseToKebabCaseAndRemoveBrackets(name) {
-    return name.replace(/([A-Z])/g, ($1) => `-${$1.toLowerCase()}`).replace('()', '');
-}
+import {camelCaseToKebabCaseAndRemoveBrackets} from '../../src/value-editor/utils/string-utils';
+import {CustomValueEditorType} from '../../src/value-editor/aliases/aliases.service';
 
 /**
  * Helper for easy mocking of value-editor component
@@ -25,7 +23,7 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
      * @param {boolean=} attachToBody If `true`, element wil be attached to `body` element before compilation.
      * @returns {JQLite} Compiled element
      */
-    public create(type: TValueEditorType, bindings?: BINDINGS, attachToBody?: boolean): HTMLElement {
+    public create(type: CustomValueEditorType, bindings?: BINDINGS, attachToBody?: boolean): HTMLElement {
         this.customTemplate = this.customTemplate || '';
 
         const template = this.getTemplate(type, bindings);
@@ -101,7 +99,7 @@ export default class ValueEditorMocker<BINDINGS extends ValueEditorBindings = Va
      * @param {object} bindings Component bindings
      * @returns {string} HTML template.
      */
-    private getTemplate(type: TValueEditorType, bindings: BINDINGS): string {
+    private getTemplate(type: CustomValueEditorType, bindings: BINDINGS): string {
         let template = `<kp-value-editor type="'${type}'" ng-model="model" `;
 
         if (bindings) {

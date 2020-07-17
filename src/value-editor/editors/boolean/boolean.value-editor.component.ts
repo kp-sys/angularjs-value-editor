@@ -1,13 +1,15 @@
-import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
+import {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {INgModelController, IPostLink} from 'angular';
-import AbstractValueEditor from '../../common/abstract-value-editor';
+import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import {
     BooleanValueEditorConfigurationService,
     BooleanValueEditorOptions
 } from './boolean-value-editor-configuration.provider';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
-export class BooleanValueEditorComponentController<MODEL = boolean> extends AbstractValueEditor<MODEL, BooleanValueEditorOptions> implements IPostLink {
+export class BooleanValueEditorComponentController<MODEL = boolean> extends AbstractValueEditorComponentController<MODEL, BooleanValueEditorOptions> implements IPostLink {
     public inputElementModelController: INgModelController;
 
     /*@ngInject*/
@@ -73,6 +75,8 @@ export class BooleanValueEditorComponentController<MODEL = boolean> extends Abst
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: `boolean`
+ *
  * Value editor for boolean input.
  *
  * Supported options: {@link type:BooleanValueEditorOptions}
@@ -94,13 +98,9 @@ export class BooleanValueEditorComponentController<MODEL = boolean> extends Abst
  *     </file>
  * </example>
  */
-export default class BooleanValueEditorComponent {
-    public static componentName = 'booleanValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class BooleanValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'booleanValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'boolean';
 
     public templateUrl = require('./boolean.value-editor.tpl.pug');
 

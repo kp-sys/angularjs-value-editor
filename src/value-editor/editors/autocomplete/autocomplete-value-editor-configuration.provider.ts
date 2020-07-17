@@ -1,5 +1,5 @@
 import {DefaultOptions} from '../../typings';
-import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../common/abstract-value-editor-configuration.provider';
+import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../abstract/abstract-value-editor-configuration.provider';
 import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
 import {AutocompleteRequestParams} from './autocomplete.value-editor.component';
 import {Injectable} from 'angular';

@@ -1,5 +1,5 @@
 import {IAttributes, IAugmentedJQuery, ICompileService, IScope} from 'angular';
-import {ValueEditorLocalizations} from '../common/abstract-value-editor-localization.provider';
+import {ValueEditorLocalizations} from '../abstract/abstract-value-editor-localization.provider';
 import {KpValueEditorComponentController} from '../kp-value-editor/kp-value-editor.component';
 
 export interface PatternDescriptionLocalization extends ValueEditorLocalizations {

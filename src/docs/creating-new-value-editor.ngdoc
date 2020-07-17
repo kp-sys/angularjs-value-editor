@@ -1,0 +1,250 @@
+@ngdoc overview
+@name Creating new custom editor
+@area docs
+@description
+
+Value editor is composed of configuration provider, localizations provider, controller and component definition.
+
+First of all, you should think about editor options and if You need some options, the configuration provider has to be implemented.
+
+### Configuration provider
+
+The configuration is composed of four parts:
+ - `XxxValueEditorOptions` interface
+ 
+    Defining options names and types.
+    ```
+    export interface TextValueEditorOptions extends ValueEditorOptions {
+       type?: TTextValueEditorType;
+       aceOptions?: any;
+    }
+    ```
+   Interface has to extend `ValueEditorOptions` for maintain compatibility with common options.
+   All options should be optional, except options required for correct editor functionality.
+    
+ - `XXX_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<XxxValueEditorOptions>` object
+ 
+    Defining default values for each option.
+    ```
+    export const TEXT_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<TextValueEditorOptions> = {
+        type: 'text',
+        aceOptions: {
+            useWrapMode: false,
+            showGutter: true
+        }
+    };
+    ```
+   All options should have default values.
+   This object will be later registered as `constant` into editor module with `xxxValueEditorDefaultOptions` name.
+    
+ - `class TextValueEditorConfigurationServiceProvider` provider
+ 
+    Configuration provider
+    ```
+    export default class TextValueEditorConfigurationServiceProvider extends AbstractValueEditorConfigurationProvider<TextValueEditorOptions> {
+        public static readonly providerName = 'textValueEditorConfigurationService';
+    
+        /*@ngInject*/
+        constructor(aliasesServiceProvider, textValueEditorDefaultOptions: DefaultOptions<TextValueEditorOptions>) {
+            super(aliasesServiceProvider, textValueEditorDefaultOptions);
+        }
+    }
+    ```
+    Provider has to extend `AbstractValueEditorConfigurationProvider<XxxValueEditorOptions>`. All functionality is implemented in this abstract class.
+    
+    You should only write correctly constructor injections. It needs `aliasesServiceProvider` and default settings injected with constant name.
+    
+ - `interface TextValueEditorConfigurationService` service
+ 
+    Configuration service interface
+    
+    ```
+    export interface TextValueEditorConfigurationService extends AbstractValueEditorConfigurationService<TextValueEditorOptions> {
+    }
+    ```
+   
+    All You need is <s>love</s> extend `AbstractValueEditorConfigurationService<XxxValueEditorOptions>`
+
+### Component definition
+
+```
+export default class TextValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'textValueEditor';
+    public static readonly valueEditorType: CustomValueEditorType = 'text';
+
+    public templateUrl = require('./text.value-editor.tpl.pug');
+
+    public controller = TextValueEditorComponentController;
+}
+```
+The important thing is, that component class has to extend `AbstractValueEditorComponent` class, because this abstract class has defined required section.
+
+Component definition should contain readonly static properties:
+ - `componentName: string` - Component selector name in camelCase style.
+ - `valueEditorType: CustomValueEditorType | string` - This is the type of editor with which it is later registered.
+    
+### Controller definition
+
+```
+export class TextValueEditorComponentController extends AbstractValueEditorComponentController<string, TextValueEditorOptions> {
+
+        /*@ngInject*/
+        constructor(private textValueEditorConfigurationService: TextValueEditorConfigurationService,
+                    textValueEditorLocalizationsService: TextValueEditorLocalizationsService) {
+            super(textValueEditorConfigurationService, textValueEditorLocalizationsService);
+        }
+
+        protected onOptionsChange(newOptions: TextValueEditorOptions, oldOptions, whatChanged: PropertyChangeDetection<TextValueEditorOptions>) {
+            //
+        }
+
+        ...
+}
+```
+
+The component controller is the most important part of value editor. The most of the things are done in `AbstractValueEditorComponentController`, so You have to 
+extend Your controller class with `AbstractValueEditorComponentController<MODEL_TYPE, XxValueEditorOptions>`. 
+
+If Your editor has no options, You don't need to override constructor, but if need localizations working, You have to pass `emptyConfigurationService` as first `super()` argument.
+Second argument of `super()` is optional `localizationService`. 
+
+`onOptionsChange` method is called every time, if option changed. First argument contains new options, second argument contains old options and finally third argument contains object of
+booleans describing what options have been changed.
+
+Extending abstract class brings You access to these properties:
+
+ - `this.model` - model getter/setter
+ - `this.options` - Current value editor options
+ - `this.localize(code: string): string` - Method for localization
+ - `this.valueEditorController` - reference to kp-value-editor wrapper component controller
+    - `this.valueEditorController.type` - Value editor type
+    - `this.valueEditorController.editorId` - Editor ID
+    - `this.valueEditorController.editorName` - Editor name
+    - `this.valueEditorController.placeholder` - Placeholder
+    - `this.valueEditorController.isDisabled` - Disabled status
+    - `this.valueEditorController.isVisible` - Visibility status
+    - `this.valueEditorController.validations` - Editor validations
+ - `this.ngModelController: INgModelController` - Controller of ngModel directive
+ 
+    If you want to override `$render` method of this controller, You have to call original `$render` method.
+    Like that:
+    ```
+    const originalRender = this.ngModelController.$render;
+    this.ngModelController.$render = () => {
+        originalRender();
+        ...
+    };
+    ```
+
+### Localization provider
+
+Localization is also composed of four parts:
+
+ - `XxxValueEditorLocalizations` interface
+ 
+    Interface has to extend `ValueEditorLocalizations` interface which constrains all properties to `string` type.
+    Then only define messages codes.
+    ```
+    export interface TextValueEditorLocalizations extends ValueEditorLocalizations {
+        patternDescription;
+    }
+    ```
+    
+ - `XXX_VALUE_EDITOR_DEFAULT_LOCALIZATIONS: Readonly<TextValueEditorLocalizations>` - Frozen object with default localizations
+    
+    ```
+    export const TEXT_VALUE_EDITOR_DEFAULT_LOCALIZATIONS: Readonly<TextValueEditorLocalizations> = Object.freeze({
+        patternDescription: 'Pattern',
+    });
+    ```
+    
+ - `XxxValueEditorLocalizationsServiceProvider` - provider
+ 
+    This provider is main part of localizations. It must extend `AbstractValueEditorLocalizationProvider<XxxValueEditorLocalizations>` class.
+    
+    You have to only pass correct argument into `super()`. This argument is DI name of default localizations.
+    
+    ```
+    export default class TextValueEditorLocalizationsServiceProvider extends AbstractValueEditorLocalizationProvider<TextValueEditorLocalizations> {
+        public static readonly providerName = 'textValueEditorLocalizationsService';
+    
+        /*@ngInject*/
+        constructor(textValueEditorDefaultLocalizations: TextValueEditorLocalizations) {
+            super(textValueEditorDefaultLocalizations);
+        }
+    }
+    ```
+    
+ - `XxxValueEditorLocalizationsService` - Only define this interface and extend it with `AbstractValueEditorLocalizationService<TXxxValueEditorLocalizations>`
+ 
+    ```
+    export interface TextValueEditorLocalizationsService extends AbstractValueEditorLocalizationService<TextValueEditorLocalizations> {
+    }
+    ```
+    
+### Template
+
+Template has to contain some "main" input with followed attributes:
+ - `id="{\{ $ctrl.valueEditorController.editorId }}"` - ID given or generated from wrapper `kp-value-editor` component
+ - `name="{\{$ctrl.valueEditorController.editorName}}"` - Name given or generated from wrapper `kp-value-editor` component
+ - `placeholder="{\{$ctrl.valueEditorController.placeholder}}"` - Placeholder passed from wrapper `kp-value-editor` component
+ - `ng-model="$ctrl.model"` - Internal model
+ - `ng-model-options="{ getterSetter: true}"` - Because we use model ass setter/getter, ngModel directive must know about it. 
+ - `ng-disabled="$ctrl.valueEditorController.isDisabled"` - Disabled status passed from wrapper `kp-value-editor` component
+ - `ng-required="$ctrl.valueEditorController.validations.required"` - Required validation is required validation.
+ - `error-messages` - directive for displaying error messages. See <a href="#/api/angularjs-value-editor.error-messages/directive/errorMessages">error-messages directive</a>
+ - `data-main-input` - indicates main input. Useful for testing. 
+ 
+ ```html
+    <input class="form-control"
+           
+           id="{{$ctrl.valueEditorController.editorId}}"
+           name="{{$ctrl.valueEditorController.editorName}}"
+           placeholder="{{$ctrl.valueEditorController.placeholder}}"
+           
+           ng-model="$ctrl.model"
+           ng-model-options="{ getterSetter: true}"
+           
+           ng-disabled="$ctrl.valueEditorController.isDisabled"
+           
+           ng-required="$ctrl.valueEditorController.validations.required"
+           ng-minlength="$ctrl.valueEditorController.validations.minlength"
+           ng-maxlength="$ctrl.valueEditorController.validations.maxlength"
+           ng-pattern="$ctrl.valueEditorController.validations.pattern"
+           pattern-description-tooltip
+           
+           error-messages
+           
+           data-main-input
+    >
+ ```
+
+### Module - Getting things together
+
+Last of all it is recommended to put all this files together to one module file.
+
+Example:
+```
+export default register('angularjs-value-editor.text', ['ui.ace'])
+        .constant('textValueEditorDefaultOptions', TEXT_VALUE_EDITOR_DEFAULT_OPTIONS)
+        .constant('textValueEditorDefaultLocalizations', TEXT_VALUE_EDITOR_DEFAULT_LOCALIZATIONS)
+        .provider(TextValueEditorConfigurationServiceProvider.providerName, TextValueEditorConfigurationServiceProvider)
+        .provider(TextValueEditorLocalizationsServiceProvider.providerName, TextValueEditorLocalizationsServiceProvider)
+        .component(TextValueEditorComponent.componentName, TextValueEditorComponent)
+        .name();
+```
+
+## One More Thing...
+
+Your shiny new value editor has to be registered to editors pool by `kpValueEditorRegistrationServiceProvider` in angular config phase.
+
+Example:
+```
+/*@ngInject*/
+function valueEditorConfig(kpValueEditorRegistrationServiceProvider: KpValueEditorRegistrationServiceProvider) {
+    kpValueEditorRegistrationServiceProvider.registerEditor(MyNewShinyValueEditorComponent.valueEditorType, camelCaseToKebabCase(MyNewShinyValueEditorComponent.componentName));
+}
+
+register('my-new-shiny-value-editor-module')
+    .config(valueEditorConfig);
+```

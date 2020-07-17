@@ -1,7 +1,8 @@
-import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
-import AbstractValueEditor from '../../common/abstract-value-editor';
+import {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {ILogService, IOnInit, ITimeoutService} from 'angular';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
+import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import {
     AccessNumberValueEditorConfigurationService,
     AccessNumberValueEditorOptions
@@ -10,8 +11,9 @@ import {AccessNumberValueEditorLocalizationsService} from './access-number-value
 import {TextValueEditorValidations} from '../text/text.value-editor.component';
 import {getFormModel} from '../../utils/forms';
 import {PropertyChangeDetection} from '../../utils/equals';
+import {TValueEditorType} from '../../typings';
 
-export class AccessNumberValueEditorComponentController extends AbstractValueEditor<string, AccessNumberValueEditorOptions> implements IOnInit {
+export class AccessNumberValueEditorComponentController extends AbstractValueEditorComponentController<string, AccessNumberValueEditorOptions> implements IOnInit {
     public items: string[] = [];
     public showSelect: boolean;
 
@@ -70,6 +72,8 @@ export class AccessNumberValueEditorComponentController extends AbstractValueEdi
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: `string`
+ *
  * Value editor for access number input.
  *
  * Supported options: {@link type:AccessNumberValueEditorOptions}
@@ -92,13 +96,9 @@ export class AccessNumberValueEditorComponentController extends AbstractValueEdi
  *     </file>
  * </example>
  */
-export default class AccessNumberValueEditorComponent {
-    public static componentName = 'accessNumberValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class AccessNumberValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'accessNumberValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'access-number';
 
     public templateUrl = require('./access-number.value-editor.tpl.pug');
 

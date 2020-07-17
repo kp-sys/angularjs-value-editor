@@ -1,9 +1,6 @@
 /* istanbul ignore file */ // neni cas... :-(
 
-import KpValueEditorComponent, {
-    ValueEditorBindings,
-    ValueEditorValidations
-} from '../../kp-value-editor/kp-value-editor.component';
+import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
 import {
     AcceptableRootValueEditorConfigurationService,
     AcceptableRootValueEditorOptions
@@ -12,8 +9,10 @@ import {AcceptableRootValueEditorLocalizationsService} from './acceptable-root-v
 import {IInterpolateService, IOnInit, ITemplateCacheService} from 'angular';
 import {AngularTreeControlOptions} from './tree-control/angular-tree-control';
 import bind from 'bind-decorator';
-import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
+import AbstractTemplateValueEditor from '../../abstract/abstract-template-value-editor';
 import {PropertyChangeDetection} from '../../utils/equals';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
 export interface Childrenable {
     children?: Childrenable[];
@@ -110,6 +109,9 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: `any | any[]`
+ *
+ *
  * Value editor for tree selection.
  *
  * It has two aliases:
@@ -155,13 +157,10 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
  *     </file>
  * </example>
  */
-export default class AcceptableRootValueEditorComponent {
-    public static componentName = 'acceptableRootValueEditor';
+export default class AcceptableRootValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'acceptableRootValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'acceptable-root';
 
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
 
     public template = AbstractTemplateValueEditor.COMPONENT_TEMPLATE;
 

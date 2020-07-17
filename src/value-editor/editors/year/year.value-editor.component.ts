@@ -1,14 +1,13 @@
-import KpValueEditorComponent, {
-    ValueEditorBindings,
-    ValueEditorValidations
-} from '../../kp-value-editor/kp-value-editor.component';
-import AbstractValueEditor from '../../common/abstract-value-editor';
+import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
+import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import {DateTime} from 'luxon';
 import * as angular from 'angular';
 import {PropertyChangeDetection} from '../../utils/equals';
 import {YearValueEditorConfigurationService, YearValueEditorOptions} from './year-value-editor-configuration.provider';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
-export class YearValueEditorComponentController extends AbstractValueEditor<number, YearValueEditorOptions> {
+export class YearValueEditorComponentController extends AbstractValueEditorComponentController<number, YearValueEditorOptions> {
 
     /*@ngInject*/
     constructor(yearValueEditorConfigurationService: YearValueEditorConfigurationService) {
@@ -61,6 +60,8 @@ export class YearValueEditorComponentController extends AbstractValueEditor<numb
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: `number`
+ *
  * Value editor for year input.
  *
  * Supported options: {@link type:YearValueEditorOptions}
@@ -81,13 +82,9 @@ export class YearValueEditorComponentController extends AbstractValueEditor<numb
  *     </file>
  * </example>
  */
-export default class YearValueEditorComponent {
-    public static componentName = 'yearValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class YearValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'yearValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'year';
 
     public templateUrl = require('./year.value-editor.tpl.pug');
 

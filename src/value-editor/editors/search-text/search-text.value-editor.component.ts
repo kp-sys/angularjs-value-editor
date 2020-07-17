@@ -1,5 +1,5 @@
-import AbstractValueEditor from '../../common/abstract-value-editor';
-import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
+import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
+import {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import {SearchTextValueEditorLocalizationsService} from './search-text-value-editor-localization.provider';
 import {IOnInit} from 'angular';
 import {TextValueEditorValidations} from '../text/text.value-editor.component';
@@ -8,6 +8,8 @@ import {
     SearchTextValueEditorConfigurationService,
     SearchTextValueEditorOptions
 } from './search-text-value-editor-configuration.provider';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
 /**
  * @ngdoc type
@@ -34,6 +36,8 @@ export enum SearchTextValueEditorModelExtension {
  * @name SearchTextValueEditorModel
  * @module angularjs-value-editor.search-text
  *
+ * @requires SearchTextValueEditorModelExtension
+ *
  * @description
  * ```
  * interface SearchTextValueEditorModel {
@@ -48,7 +52,7 @@ export interface SearchTextValueEditorModel {
     row: string;
 }
 
-export class SearchTextValueEditorComponentController extends AbstractValueEditor<SearchTextValueEditorModel, SearchTextValueEditorOptions> implements IOnInit {
+export class SearchTextValueEditorComponentController extends AbstractValueEditorComponentController<SearchTextValueEditorModel, SearchTextValueEditorOptions> implements IOnInit {
     public extensions;
 
     /*@ngInject*/
@@ -104,6 +108,8 @@ export class SearchTextValueEditorComponentController extends AbstractValueEdito
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: {@link type:SearchTextValueEditorModel}
+ *
  * Value editor for search-text input with possibility to generation from backend.
  *
  * No options needed.
@@ -132,13 +138,9 @@ export class SearchTextValueEditorComponentController extends AbstractValueEdito
  *     </file>
  * </example>
  */
-export default class SearchTextValueEditorComponent {
-    public static componentName = 'searchTextValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class SearchTextValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'searchTextValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'search-text';
 
     public templateUrl = require('./search-text.value-editor.tpl.pug');
 

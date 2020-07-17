@@ -1,5 +1,5 @@
-import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
-import AbstractValueEditor from '../../common/abstract-value-editor';
+import {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
+import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import * as angular from 'angular';
 import {IOnInit} from 'angular';
 import {
@@ -9,8 +9,10 @@ import {
 import {PasswordValueEditorLocalizationsService} from './password-value-editor-localization.provider';
 import {TextValueEditorValidations} from '../text/text.value-editor.component';
 import {PropertyChangeDetection} from '../../utils/equals';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
-export class PasswordValueEditorComponentController extends AbstractValueEditor<string, PasswordValueEditorOptions> implements IOnInit {
+export class PasswordValueEditorComponentController extends AbstractValueEditorComponentController<string, PasswordValueEditorOptions> implements IOnInit {
     public passwordRepetition: string;
 
     /*@ngInject*/
@@ -45,6 +47,8 @@ export class PasswordValueEditorComponentController extends AbstractValueEditor<
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: `string`
+ *
  * Value editor for password input.
  *
  * Supported options: {@link type:PasswordValueEditorOptions}
@@ -64,13 +68,9 @@ export class PasswordValueEditorComponentController extends AbstractValueEditor<
  *     </file>
  * </example>
  */
-export default class PasswordValueEditorComponent {
-    public static componentName = 'passwordValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class PasswordValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'passwordValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'password';
 
     public templateUrl = require('./password.value-editor.tpl.pug');
 

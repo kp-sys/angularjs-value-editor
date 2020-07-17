@@ -1,5 +1,5 @@
 import {DefaultOptions} from '../../typings';
-import AbstractValueEditorConfigurationServiceProvider, {AbstractValueEditorConfigurationService} from '../../common/abstract-value-editor-configuration.provider';
+import AbstractValueEditorConfigurationServiceProvider, {AbstractValueEditorConfigurationService} from '../../abstract/abstract-value-editor-configuration.provider';
 import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../common-directives/disable-ngAnimate.directive';

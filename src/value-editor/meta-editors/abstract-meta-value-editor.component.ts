@@ -1,5 +1,5 @@
 import {IFormController} from 'angular';
-import AbstractTemplateValueEditor from '../common/abstract-template-value-editor';
+import AbstractTemplateValueEditor from '../abstract/abstract-template-value-editor';
 import {ValueEditorOptions} from '../kp-value-editor/kp-value-editor.component';
 import {PropertyChangeDetection} from '../utils/equals';
 

@@ -1,4 +1,4 @@
-import NgModelConnector from '../common/ng-model-connector';
+import NgModelConnector from '../utils/ng-model-connector';
 import {
     IFormController,
     IInterpolateService,

@@ -1,12 +1,9 @@
 import './text.value-editor.less';
-import KpValueEditorComponent, {
-    ValueEditorBindings,
-    ValueEditorValidations
-} from '../../kp-value-editor/kp-value-editor.component';
+import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {IDoCheck} from 'angular';
 import {Ace} from 'ace-builds';
-import AbstractValueEditor from '../../common/abstract-value-editor';
+import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import {
     TextValueEditorConfigurationService,
     TextValueEditorOptions,
@@ -14,6 +11,8 @@ import {
 } from './text-value-editor-configuration.provider';
 import {PropertyChangeDetection} from '../../utils/equals';
 import {TextValueEditorLocalizationsService} from './text-value-editor-localization.provider';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
 const TEXT_INPUTS: TTextValueEditorType[] = [
     'text',
@@ -22,7 +21,7 @@ const TEXT_INPUTS: TTextValueEditorType[] = [
     'tel'
 ];
 
-export class TextValueEditorComponentController extends AbstractValueEditor<string, TextValueEditorOptions> implements IDoCheck {
+export class TextValueEditorComponentController extends AbstractValueEditorComponentController<string, TextValueEditorOptions> implements IDoCheck {
     private aceEditor: Ace.Editor;
     private isDisabled: boolean;
 
@@ -110,6 +109,8 @@ export class TextValueEditorComponentController extends AbstractValueEditor<stri
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: `string`
+ *
  * Value editor for text input.
  * Depending on type are four versions:
  * - `text`
@@ -153,13 +154,9 @@ export class TextValueEditorComponentController extends AbstractValueEditor<stri
  *     </file>
  * </example>
  */
-export default class TextValueEditorComponent {
-    public static componentName = 'textValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class TextValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'textValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'text';
 
     public templateUrl = require('./text.value-editor.tpl.pug');
 

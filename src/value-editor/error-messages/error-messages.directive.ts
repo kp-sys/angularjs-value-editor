@@ -6,7 +6,7 @@ import {
     ValueEditorErrorMessagesLocalizations,
     ValueEditorErrorMessagesLocalizationsService
 } from './error-messages-localization.provider';
-import {AbstractValueEditorLocalizationService} from '../common/abstract-value-editor-localization.provider';
+import {AbstractValueEditorLocalizationService} from '../abstract/abstract-value-editor-localization.provider';
 
 interface ErrorMessagesDirectiveScope extends IScope {
     appendedElements: { [errorName: string]: HTMLElement };
@@ -17,10 +17,18 @@ interface ErrorMessagesDirectiveScope extends IScope {
  * @name errorMessages
  * @module angularjs-value-editor.error-messages
  *
+ * @priority 1
+ *
+ * @restrict A
+ *
+ * @requires valueEditorErrorMessagesLocalizationsServiceProvider
+ * @requires ngModel
+ *
  * @param {string} errorMessagesCustomClass Custom CSS class to add to error message element.
  *
  * @description
- *
+ * Directive manages showing / hiding errors. Directive is being placed to main input element or element with validations.
+ * It will listen to validation status change and shows/hides localized validation messages.
  */
 export default class ErrorMessagesDirective {
     public static readonly directiveName = 'errorMessages';

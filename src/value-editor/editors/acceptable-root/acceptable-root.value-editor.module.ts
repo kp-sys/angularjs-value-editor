@@ -4,7 +4,7 @@ import treeControlModule from './tree-control/angular-tree-control';
 import AcceptableRootValueEditorConfigurationServiceProvider, {ACCEPTABLE_ROOT_VALUE_EDITOR_DEFAULT_OPTIONS} from './acceptable-root-value-editor-configuration.provider';
 import AcceptableRootValueEditorLocalizationsServiceProvider, {ACCEPTABLE_ROOT_VALUE_EDITOR_DEFAULT_LOCALIZATIONS} from './acceptable-root-value-editor-localization.provider';
 import AcceptableRootValueEditorComponent from './acceptable-root.value-editor.component';
-import {acceptableRootValueEditorConfig} from './acceptable-root.value-editor';
+import {acceptableRootValueEditorConfig} from './acceptable-root.value-editor.config';
 import AcceptableRootRequiredValidationsDirective from './acceptable-root-required-validations-directive';
 
 /**

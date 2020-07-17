@@ -1,7 +1,7 @@
 import AbstractValueEditorLocalizationProvider, {
     AbstractValueEditorLocalizationService,
     ValueEditorLocalizations
-} from '../../common/abstract-value-editor-localization.provider';
+} from '../../abstract/abstract-value-editor-localization.provider';
 
 /**
  * @ngdoc provider

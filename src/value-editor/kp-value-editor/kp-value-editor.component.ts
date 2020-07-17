@@ -1,19 +1,31 @@
 import * as angular from 'angular';
-import {IAugmentedJQuery, IDoCheck, IFormController, IOnChanges, IOnDestroy, IOnInit} from 'angular';
-import NgModelConnector from '../common/ng-model-connector';
+import {
+    IAugmentedJQuery,
+    IDoCheck,
+    IDocumentService,
+    IFormController,
+    IOnChanges,
+    IOnDestroy,
+    IOnInit,
+    ITemplateCacheService
+} from 'angular';
+import NgModelConnector from '../utils/ng-model-connector';
 import {generateUuid} from '../utils/uuid-generator';
 import {TValueEditorType} from '../typings';
 import AliasesService, {CustomValueEditorType} from '../aliases/aliases.service';
 import {KpValueEditorConfigurationService} from './kp-value-editor-configuration-provider';
-import AbstractValueEditor from '../common/abstract-value-editor';
+import AbstractValueEditorComponentController from '../abstract/abstract-value-editor-component-controller';
 import {customEquals, PropertyChangeDetection, whichPropertiesAreNotEqual} from '../utils/equals';
 import KpUniversalFormComponent, {KpUniversalFormComponentController} from '../kp-universal-form/kp-universal-form.component';
-import {ValueEditorLocalizations} from '../common/abstract-value-editor-localization.provider';
+import {ValueEditorLocalizations} from '../abstract/abstract-value-editor-localization.provider';
 import KpValueEditorForceSettingsComponent, {KpValueEditorForceSettingsComponentController} from '../kp-value-editor-force-settings/kp-value-editor-force-settings.component';
+import {KpValueEditorRegistrationService} from './kp-value-editor-registration.provider';
 
 export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS extends ValueEditorOptions = ValueEditorOptions, EDITORVALIDATIONS extends ValueEditorValidations = ValueEditorValidations>
     extends NgModelConnector<MODEL>
     implements ValueEditorBindings<EDITOROPTS, EDITORVALIDATIONS>, IOnInit, IDoCheck, IOnDestroy, IOnChanges {
+
+    private static readonly TEMPLATE_PREFIX = '';
 
     /* Bindings */
     public editorId: string;
@@ -32,15 +44,24 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
     public forceSettingsController: KpValueEditorForceSettingsComponentController;
     // settings for common kp-value-editor wrapper component
     public configuration: KpValueEditorConfigurationService;
-    public valueEditorInstance: AbstractValueEditor<MODEL, EDITOROPTS>;
+    public valueEditorInstance: AbstractValueEditorComponentController<MODEL, EDITOROPTS>;
     /* Internal */
+    public templateUrl: string;
+    private uuid: string;
     private previousOptions: EDITOROPTS;
     private optionChangeListeners: Array<(newOptions?: EDITOROPTS, oldOptions?: EDITOROPTS, whatChanged?: PropertyChangeDetection<EDITOROPTS>) => void> = [];
+    private templateUpdated: boolean;
 
     /*@ngInject*/
-    constructor(private aliasesService: AliasesService, kpValueEditorConfigurationService: KpValueEditorConfigurationService, public $element: IAugmentedJQuery) {
+    constructor(private aliasesService: AliasesService,
+                kpValueEditorConfigurationService: KpValueEditorConfigurationService,
+                public $element: IAugmentedJQuery,
+                private $templateCache: ITemplateCacheService,
+                private kpValueEditorRegistrationService: KpValueEditorRegistrationService,
+                private $document: IDocumentService) {
         super();
         this.configuration = kpValueEditorConfigurationService;
+        this.uuid = generateUuid();
     }
 
     public $onInit(): void {
@@ -56,6 +77,10 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
 
         if (!this.editorName) {
             this.editorName = this.editorId || this.generateEditorName();
+        }
+
+        if (!this.templateUpdated) {
+            this.updateTemplate();
         }
     }
 
@@ -74,7 +99,7 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
         this.optionChangeListeners = undefined;
     }
 
-    public registerValueEditor<CONTROLLER extends AbstractValueEditor<MODEL, EDITOROPTS>>(editorController: CONTROLLER) {
+    public registerValueEditor<CONTROLLER extends AbstractValueEditorComponentController<MODEL, EDITOROPTS>>(editorController: CONTROLLER) {
         this.valueEditorInstance = editorController;
     }
 
@@ -103,6 +128,24 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
 
             this.previousOptions = angular.copy(this.options);
         }
+    }
+
+    private updateTemplate() {
+        const selector = this.kpValueEditorRegistrationService.getSelectorForType(this.resolveAlias());
+
+        this.templateUpdated = true;
+
+        this.$templateCache.remove(this.templateUrl);
+        const newTemplateName = `${KpValueEditorComponentController.TEMPLATE_PREFIX}_${this.uuid}_${new Date().valueOf()}`;
+
+        const element = this.$document[0].createElement(selector);
+        element.setAttribute('ng-model', '$ctrl.model');
+        element.setAttribute('ng-model-options', '{ getterSetter: true }');
+        element.setAttribute('ng-show', '$ctrl.isVisible');
+
+        this.$templateCache.put(newTemplateName, element.outerHTML);
+
+        this.templateUrl = newTemplateName;
     }
 }
 
@@ -152,7 +195,7 @@ export default class KpValueEditorComponent {
 
     public controller = KpValueEditorComponentController;
 
-    public templateUrl = require('./kp-value-editor.tpl.pug');
+    public template = '<ng-include src="$ctrl.templateUrl"></ng-include>';
 }
 
 /**

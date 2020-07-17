@@ -1,11 +1,11 @@
-import KpValueEditorComponent, {
+import {
     KpValueEditorComponentController,
     ValueEditorBindings,
     ValueEditorValidations
 } from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {IOnInit} from 'angular';
-import AbstractValueEditor from '../../common/abstract-value-editor';
+import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import {
     DateValueEditorConfigurationService,
     DateValueEditorOptions,
@@ -13,8 +13,10 @@ import {
 } from './date-value-editor-configuration.provider';
 import {DateTime} from 'luxon';
 import {PropertyChangeDetection} from '../../utils/equals';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
-export class DateValueEditorComponentController extends AbstractValueEditor<string, DateValueEditorOptions> implements IOnInit {
+export class DateValueEditorComponentController extends AbstractValueEditorComponentController<string, DateValueEditorOptions> implements IOnInit {
     public startView: TDateValueEditorGranularity;
     protected valueEditorController: KpValueEditorComponentController<string, DateValueEditorOptions, DateValueEditorValidations>;
 
@@ -66,6 +68,8 @@ export class DateValueEditorComponentController extends AbstractValueEditor<stri
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: `string`
+ *
  * Value editor for date input.
  *
  * Supported options: {@link type:DateValueEditorOptions}
@@ -86,13 +90,9 @@ export class DateValueEditorComponentController extends AbstractValueEditor<stri
  *     </file>
  * </example>
  */
-export default class DateValueEditorComponent {
-    public static componentName = 'dateValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class DateValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'dateValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'date';
 
     public templateUrl = require('./date.value-editor.tpl.pug');
 

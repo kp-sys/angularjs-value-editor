@@ -135,6 +135,27 @@ export default class DemoController {
             }
         },
         {
+            label: 'acceptable:select:multiple',
+            fieldName: 'acceptable-select-multiple',
+            editor: {
+                type: 'acceptable',
+                editorName: 'acceptable-select-multiple',
+
+                validations: {
+                    required: true
+                },
+                options: {
+                    acceptableValues: [
+                        'one',
+                        'two',
+                        'three'
+                    ],
+                    __forceDisableNgAnimate: true,
+                    multiselectable: true
+                } as AcceptableValueEditorOptions<string> & UndocumentedDisableNgAnimateValueEditorInternalOption
+            }
+        },
+        {
             label: 'acceptable:checkboxes',
             fieldName: 'acceptableCheckboxes',
             editor: {

@@ -1,15 +1,30 @@
 /* istanbul ignore file */ // neni moc co testovat... viz. testy
 
-import KpValueEditorComponent, {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
+import {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {IDoCheck, IInterpolateService, ITemplateCacheService} from 'angular';
 import {
     RangeValueEditorConfigurationService,
     RangeValueEditorOptions
 } from './range-value-editor-configuration.provider';
-import AbstractTemplateValueEditor from '../../common/abstract-template-value-editor';
+import AbstractTemplateValueEditor from '../../abstract/abstract-template-value-editor';
 import {PropertyChangeDetection} from '../../utils/equals';
+import {TValueEditorType} from '../../typings';
+import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
+/**
+ * @ngdoc type
+ * @name RangeValueEditorModel
+ * @module angularjs-value-editor.range
+ *
+ * @description
+ * ```
+ *  interface RangeValueEditorModel {
+ *      from: number;
+ *      to: number;
+ *  }
+ * ```
+ */
 export interface RangeValueEditorModel {
     from: number;
     to: number;
@@ -69,6 +84,8 @@ export class RangeValueEditorComponentController extends AbstractTemplateValueEd
  * @requires component:kpValueEditor
  *
  * @description
+ * Model type: {@link RangeValueEditorModel}
+ *
  * Value editor for range input.
  *
  * Supported options: {@link type:RangeValueEditorOptions}
@@ -88,13 +105,9 @@ export class RangeValueEditorComponentController extends AbstractTemplateValueEd
  *     </file>
  * </example>
  */
-export default class RangeValueEditorComponent {
-    public static componentName = 'rangeValueEditor';
-
-    public require = {
-        ngModelController: 'ngModel',
-        valueEditorController: `^${KpValueEditorComponent.componentName}`
-    };
+export default class RangeValueEditorComponent extends AbstractValueEditorComponent {
+    public static readonly componentName = 'rangeValueEditor';
+    public static readonly valueEditorType: TValueEditorType = 'range';
 
     public template = AbstractTemplateValueEditor.COMPONENT_TEMPLATE;
 
