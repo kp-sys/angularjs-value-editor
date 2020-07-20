@@ -35,6 +35,9 @@ export type TTextValueEditorType = 'text' | 'textarea' | 'rich-textarea' | 'emai
 export interface TextValueEditorOptions extends ValueEditorOptions {
     type?: TTextValueEditorType;
     aceOptions?: any;
+    prefix?: string;
+    postfix?: string;
+    includePrefixAndPostfixToModel?: boolean;
 }
 
 /**
@@ -60,7 +63,10 @@ export const TEXT_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<TextValueEditorOp
     aceOptions: {
         useWrapMode: false,
         showGutter: true
-    }
+    },
+    prefix: undefined,
+    postfix: undefined,
+    includePrefixAndPostfixToModel: false
 };
 
 /**

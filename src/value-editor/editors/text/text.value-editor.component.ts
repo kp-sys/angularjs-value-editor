@@ -1,7 +1,7 @@
 import './text.value-editor.less';
 import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
-import {IDoCheck} from 'angular';
+import {IDoCheck, IOnInit} from 'angular';
 import {Ace} from 'ace-builds';
 import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import {
@@ -13,6 +13,7 @@ import {PropertyChangeDetection} from '../../utils/equals';
 import {TextValueEditorLocalizationsService} from './text-value-editor-localization.provider';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
+import bind from 'bind-decorator';
 
 const TEXT_INPUTS: TTextValueEditorType[] = [
     'text',
@@ -21,7 +22,7 @@ const TEXT_INPUTS: TTextValueEditorType[] = [
     'tel'
 ];
 
-export class TextValueEditorComponentController extends AbstractValueEditorComponentController<string, TextValueEditorOptions> implements IDoCheck {
+export class TextValueEditorComponentController extends AbstractValueEditorComponentController<string, TextValueEditorOptions> implements IOnInit, IDoCheck {
     private aceEditor: Ace.Editor;
     private isDisabled: boolean;
 
@@ -30,6 +31,13 @@ export class TextValueEditorComponentController extends AbstractValueEditorCompo
                 private emailRegex: string,
                 textValueEditorLocalizationsService: TextValueEditorLocalizationsService) {
         super(textValueEditorConfigurationService, textValueEditorLocalizationsService);
+    }
+
+    public $onInit() {
+        super.$onInit();
+
+        this.ngModelController.$formatters.push(this.trimPrefixAndPostfix);
+        this.ngModelController.$parsers.push(this.addPrefixAndPostfix);
     }
 
     $doCheck(): void {
@@ -97,6 +105,32 @@ export class TextValueEditorComponentController extends AbstractValueEditorCompo
 
         // Propagate disabled -> set Ace to readonly
         this.aceEditor.setReadOnly(this.valueEditorController.isDisabled);
+    }
+
+    @bind
+    private trimPrefixAndPostfix(modelValue: string): string {
+        if (this.options.includePrefixAndPostfixToModel && typeof modelValue === 'string') {
+            return modelValue
+                .replace(new RegExp(`^${this.options.prefix}`), '')
+                .replace(new RegExp(`${this.options.postfix}$`), '');
+        }
+
+        return modelValue;
+    }
+
+    @bind
+    private addPrefixAndPostfix(modelValue: string): string {
+        if (this.options.includePrefixAndPostfixToModel) {
+            if (this.options.prefix) {
+                modelValue = this.options.prefix + modelValue;
+            }
+
+            if (this.options.postfix) {
+                modelValue = modelValue + this.options.postfix;
+            }
+        }
+
+        return modelValue;
     }
 }
 

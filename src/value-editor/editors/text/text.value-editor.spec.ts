@@ -249,6 +249,49 @@ describe('text-value-editor', () => {
 
             expect(inputElement.rows).toBe(4);
         });
+
+        it('should add prefix and postfix to model', () => {
+            const PREFIX = 'prefix';
+            const POSTFIX = 'postfix';
+
+            valueEditorMocker.create('text', {
+                editorName: 'text',
+                options: {
+                    type: 'text',
+                    prefix: PREFIX,
+                    postfix: POSTFIX,
+                    includePrefixAndPostfixToModel: true
+                }
+            });
+
+            const inputElement = valueEditorMocker.getInputElement<HTMLInputElement>();
+            inputElement.value = 'hello';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.model).toBe(`${PREFIX}hello${POSTFIX}`);
+        });
+
+        it('should parse prefix and postfix from model', () => {
+            const PREFIX = 'prefix';
+            const POSTFIX = 'postfix';
+
+            $scope.model = `${PREFIX}hello${POSTFIX}`;
+
+            valueEditorMocker.create('text', {
+                editorName: 'text',
+                options: {
+                    type: 'text',
+                    prefix: PREFIX,
+                    postfix: POSTFIX,
+                    includePrefixAndPostfixToModel: true
+                }
+            });
+
+            const inputElement = valueEditorMocker.getInputElement<HTMLInputElement>();
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect(inputElement.value).toBe(`hello`);
+        });
     });
 
     describe('type: rich-textarea', () => {

@@ -67,6 +67,23 @@ export default class DemoController {
             }
         },
         {
+            label: 'text:prefixed-text',
+            fieldName: 'prefixedText',
+            editor: {
+                type: 'text',
+                editorName: 'prefixedText',
+
+                options: {
+                    prefix: 'Prefix',
+                    postfix: 'Postfix',
+                    includePrefixAndPostfixToModel: true
+                } as TextValueEditorOptions,
+                validations: {
+                    required: true
+                }
+            }
+        },
+        {
             label: 'number',
             fieldName: 'number',
             editor: {
@@ -118,7 +135,7 @@ export default class DemoController {
             label: 'acceptable:select',
             fieldName: 'acceptable-select',
             editor: {
-                type: 'acceptable',
+                type: 'single-acceptable',
                 editorName: 'acceptable-select',
 
                 validations: {
@@ -150,8 +167,8 @@ export default class DemoController {
                         'two',
                         'three'
                     ],
-                    __forceDisableNgAnimate: true,
-                    multiselectable: true
+                    multiselectable: true,
+                    __forceDisableNgAnimate: true
                 } as AcceptableValueEditorOptions<string> & UndocumentedDisableNgAnimateValueEditorInternalOption
             }
         },
@@ -159,7 +176,7 @@ export default class DemoController {
             label: 'acceptable:checkboxes',
             fieldName: 'acceptableCheckboxes',
             editor: {
-                type: 'acceptable',
+                type: 'multiple-acceptable',
                 editorName: 'acceptableCheckboxes',
 
                 validations: {
@@ -172,7 +189,6 @@ export default class DemoController {
                         'three'
                     ],
                     switchToCheckboxesThreshold: 1,
-                    multiselectable: true,
                     showFirstCount: 2
                 } as AcceptableValueEditorOptions<string>
             }

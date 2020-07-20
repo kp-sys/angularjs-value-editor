@@ -1,5 +1,38 @@
+// TEXT WITH PREFIX/POSTFIX
+.input-group(ng-if="$ctrl.isText() && ($ctrl.options.prefix || $ctrl.options.postfix)")
+    .input-group-addon(ng-show="$ctrl.options.prefix") {{$ctrl.options.prefix}}
+    input.form-control(
+        ng-if="$ctrl.isText()"
+
+        type="{{$ctrl.options.type}}"
+
+        id="{{$ctrl.valueEditorController.editorId}}"
+        name="{{$ctrl.valueEditorController.editorName}}"
+        placeholder="{{$ctrl.valueEditorController.placeholder}}"
+
+        ng-model="$ctrl.model"
+        ng-model-options="{ getterSetter: true}"
+
+        ng-disabled="$ctrl.valueEditorController.isDisabled"
+
+        ng-required="$ctrl.valueEditorController.validations.required"
+        ng-minlength="$ctrl.valueEditorController.validations.minlength"
+        ng-maxlength="$ctrl.valueEditorController.validations.maxlength"
+        ng-pattern="$ctrl.valueEditorController.validations.pattern"
+
+        pattern-description-tooltip
+
+        error-messages
+
+        data-main-input
+    )
+    .input-group-addon(ng-show="$ctrl.options.postfix") {{$ctrl.options.postfix}}
+
+
 // TEXT
-input.form-control(  ng-if="$ctrl.isText()"
+input.form-control(
+    ng-if="$ctrl.isText() && !($ctrl.options.prefix || $ctrl.options.postfix)"
+
     type="{{$ctrl.options.type}}"
 
     id="{{$ctrl.valueEditorController.editorId}}"
