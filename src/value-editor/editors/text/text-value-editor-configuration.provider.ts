@@ -26,6 +26,10 @@ export type TTextValueEditorType = 'text' | 'textarea' | 'rich-textarea' | 'emai
  *
  * @property {TTextValueEditorType} type Input type. Possible values are `text`, `textarea`, `rich-textarea`.
  * @property {object} aceOptions Options for ACE editor. Applicable only if `type` is `'rich-textarea'`.
+ * @property {string} prefix Non-editable prefix before input element.
+ * @property {string} suffix Non-editable prefix after input element.
+ * @property {boolean} includePrefixAndSuffixToModel If `true`, prefix and suffix will be appended to the model.
+ * @property {boolean} trim If true, model will be trimmed.
  *
  * @description
  * Extends {@link type:ValueEditorOptions}
@@ -36,8 +40,9 @@ export interface TextValueEditorOptions extends ValueEditorOptions {
     type?: TTextValueEditorType;
     aceOptions?: any;
     prefix?: string;
-    postfix?: string;
-    includePrefixAndPostfixToModel?: boolean;
+    suffix?: string;
+    includePrefixAndSuffixToModel?: boolean;
+    trim?: boolean;
 }
 
 /**
@@ -65,8 +70,9 @@ export const TEXT_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<TextValueEditorOp
         showGutter: true
     },
     prefix: undefined,
-    postfix: undefined,
-    includePrefixAndPostfixToModel: false
+    suffix: undefined,
+    includePrefixAndSuffixToModel: false,
+    trim: false
 };
 
 /**

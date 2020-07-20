@@ -36,8 +36,9 @@ export class TextValueEditorComponentController extends AbstractValueEditorCompo
     public $onInit() {
         super.$onInit();
 
-        this.ngModelController.$formatters.push(this.trimPrefixAndPostfix);
-        this.ngModelController.$parsers.push(this.addPrefixAndPostfix);
+        this.ngModelController.$formatters.push(this.trimPrefixAndSuffix);
+        this.ngModelController.$parsers.push(this.addPrefixAndSuffix);
+        this.ngModelController.$parsers.push(this.trim);
     }
 
     $doCheck(): void {
@@ -108,26 +109,35 @@ export class TextValueEditorComponentController extends AbstractValueEditorCompo
     }
 
     @bind
-    private trimPrefixAndPostfix(modelValue: string): string {
-        if (this.options.includePrefixAndPostfixToModel && typeof modelValue === 'string') {
+    private trimPrefixAndSuffix(modelValue: string): string {
+        if (this.options.includePrefixAndSuffixToModel && typeof modelValue === 'string') {
             return modelValue
                 .replace(new RegExp(`^${this.options.prefix}`), '')
-                .replace(new RegExp(`${this.options.postfix}$`), '');
+                .replace(new RegExp(`${this.options.suffix}$`), '');
         }
 
         return modelValue;
     }
 
     @bind
-    private addPrefixAndPostfix(modelValue: string): string {
-        if (this.options.includePrefixAndPostfixToModel) {
+    private addPrefixAndSuffix(modelValue: string): string {
+        if (this.options.includePrefixAndSuffixToModel) {
             if (this.options.prefix) {
                 modelValue = this.options.prefix + modelValue;
             }
 
-            if (this.options.postfix) {
-                modelValue = modelValue + this.options.postfix;
+            if (this.options.suffix) {
+                modelValue = modelValue + this.options.suffix;
             }
+        }
+
+        return modelValue;
+    }
+
+    @bind
+    private trim(modelValue: string): string {
+        if (modelValue && this.options.trim) {
+            return modelValue.trim();
         }
 
         return modelValue;

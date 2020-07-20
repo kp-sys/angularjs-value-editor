@@ -112,6 +112,60 @@ describe('text-value-editor', () => {
 
             expect(valueEditorMocker.getInputElement<HTMLInputElement>().disabled).toBe(true);
         });
+
+        it('should add prefix and suffix to model', () => {
+            const PREFIX = 'prefix';
+            const SUFFIX = 'suffix';
+
+            valueEditorMocker.create('text', {
+                editorName: 'text',
+                options: {
+                    type: 'text',
+                    prefix: PREFIX,
+                    suffix: SUFFIX,
+                    includePrefixAndSuffixToModel: true
+                }
+            });
+
+            const inputElement = valueEditorMocker.getInputElement<HTMLInputElement>();
+            inputElement.value = 'hello';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.model).toBe(`${PREFIX}hello${SUFFIX}`);
+        });
+
+        it('should parse prefix and suffix from model', () => {
+            const PREFIX = 'prefix';
+            const SUFFIX = 'suffix';
+
+            $scope.model = `${PREFIX}hello${SUFFIX}`;
+
+            valueEditorMocker.create('text', {
+                editorName: 'text',
+                options: {
+                    type: 'text',
+                    prefix: PREFIX,
+                    suffix: SUFFIX,
+                    includePrefixAndSuffixToModel: true
+                }
+            });
+
+            const inputElement = valueEditorMocker.getInputElement<HTMLInputElement>();
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect(inputElement.value).toBe(`hello`);
+        });
+
+        it('should has working trimming', () => {
+            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'text', trim: true}});
+
+            valueEditorMocker.getInputElement<HTMLTextAreaElement>().value = '   hello  ';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.model).toBe('hello');
+        });
+
+
     });
 
     describe('type: textarea', () => {
@@ -248,49 +302,6 @@ describe('text-value-editor', () => {
             valueEditorMocker.triggerHandlerOnInput('input');
 
             expect(inputElement.rows).toBe(4);
-        });
-
-        it('should add prefix and postfix to model', () => {
-            const PREFIX = 'prefix';
-            const POSTFIX = 'postfix';
-
-            valueEditorMocker.create('text', {
-                editorName: 'text',
-                options: {
-                    type: 'text',
-                    prefix: PREFIX,
-                    postfix: POSTFIX,
-                    includePrefixAndPostfixToModel: true
-                }
-            });
-
-            const inputElement = valueEditorMocker.getInputElement<HTMLInputElement>();
-            inputElement.value = 'hello';
-            valueEditorMocker.triggerHandlerOnInput('input');
-
-            expect($scope.model).toBe(`${PREFIX}hello${POSTFIX}`);
-        });
-
-        it('should parse prefix and postfix from model', () => {
-            const PREFIX = 'prefix';
-            const POSTFIX = 'postfix';
-
-            $scope.model = `${PREFIX}hello${POSTFIX}`;
-
-            valueEditorMocker.create('text', {
-                editorName: 'text',
-                options: {
-                    type: 'text',
-                    prefix: PREFIX,
-                    postfix: POSTFIX,
-                    includePrefixAndPostfixToModel: true
-                }
-            });
-
-            const inputElement = valueEditorMocker.getInputElement<HTMLInputElement>();
-            valueEditorMocker.triggerHandlerOnInput('input');
-
-            expect(inputElement.value).toBe(`hello`);
         });
     });
 
