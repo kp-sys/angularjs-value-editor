@@ -36,6 +36,8 @@ export type TMetaValueEditor =
  */
 export type TValueEditorTypeAliases =
     'exemplar-bar-code' |
+    'single-acceptable' |
+    'multiple-acceptable' |
     'single-acceptable-root' |
     'multiple-acceptable-root' |
     'velocity-template';

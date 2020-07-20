@@ -10,6 +10,7 @@ import AcceptableValueEditorComponent from './acceptable.value-editor.component'
 import AcceptableValueEditorConfigurationServiceProvider, {ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS} from './acceptable-value-editor-configuration.provider';
 import CheckboxesValidationsDirective from './checkboxes-validations-directive';
 import nullAwareFilter from './null-aware-filter.filter';
+import {acceptableValueEditorConfig} from './acceptable.value-editor.config';
 
 /**
  * @ngdoc module
@@ -21,6 +22,7 @@ import nullAwareFilter from './null-aware-filter.filter';
  */
 
 export default register('angularjs-value-editor.acceptable', [aliasesModule, 'ngSanitize', 'ui.select'])
+    .config(acceptableValueEditorConfig)
     .decorator(uiSelectDecorator.decoratorName, uiSelectDecorator)
     .constant('acceptableValueEditorDefaultOptions', ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS)
     .constant('acceptableValueEditorDefaultLocalizations', ACCEPTABLE_VALUE_EDITOR_DEFAULT_LOCALIZATIONS)
