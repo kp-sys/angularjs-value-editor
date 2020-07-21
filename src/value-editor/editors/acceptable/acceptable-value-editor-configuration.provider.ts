@@ -38,8 +38,10 @@ export interface AcceptableValueEditorOptions<VALUE> extends ValueEditorOptions 
     optionsTemplate?: string;
     singleSelectedValueTemplate?: string;
     multiSelectedValueTemplate?: string;
+    // TODO: Refactor to use injector.invoke
     equalityComparator?: (element1: VALUE, element2: VALUE) => boolean;
     reorderable?: boolean;
+    // TODO: Refactor to use injector.invoke
     sortComparator?: (element1: VALUE, element2: VALUE) => number | undefined;
     sortModel?: boolean;
     switchToCheckboxesThreshold?: number;

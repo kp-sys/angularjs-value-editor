@@ -8,6 +8,7 @@ import {
 } from './boolean-value-editor-configuration.provider';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
+import bind from 'bind-decorator';
 
 export class BooleanValueEditorComponentController<MODEL = boolean> extends AbstractValueEditorComponentController<MODEL, BooleanValueEditorOptions> implements IPostLink {
     public inputElementModelController: INgModelController;
@@ -20,17 +21,22 @@ export class BooleanValueEditorComponentController<MODEL = boolean> extends Abst
     public $postLink(): void {
         super.$postLink();
 
-        this.ngModelController.$formatters.push(this.formatToCustomValue.bind(this));
-        this.ngModelController.$parsers.push(this.parseFromCustomValue.bind(this));
+        this.ngModelController.$formatters.push(this.formatToCustomValue);
+        this.ngModelController.$parsers.push(this.parseFromCustomValue);
 
-        this.ngModelController.$parsers.push(this.adjustIndeterminateState.bind(this));
-        this.ngModelController.$formatters.push(this.adjustIndeterminateState.bind(this));
+        this.ngModelController.$parsers.push(this.adjustIndeterminateState);
+        this.ngModelController.$formatters.push(this.adjustIndeterminateState);
     }
 
     protected onOptionsChange(newOptions: BooleanValueEditorOptions, oldOptions: BooleanValueEditorOptions) {
         this.ngModelController.$processModelValue();
     }
 
+    protected get emptyModel(): MODEL {
+        return null;
+    }
+
+    @bind
     private formatToCustomValue(value: MODEL) {
         if (this.options.trueValue !== undefined && value === this.options.trueValue) {
             return true;
@@ -43,6 +49,7 @@ export class BooleanValueEditorComponentController<MODEL = boolean> extends Abst
         return value;
     }
 
+    @bind
     private parseFromCustomValue(value: boolean): MODEL | boolean {
         if (this.options.trueValue !== undefined && value === true) {
             return this.options.trueValue;
@@ -55,6 +62,7 @@ export class BooleanValueEditorComponentController<MODEL = boolean> extends Abst
         return value;
     }
 
+    @bind
     private adjustIndeterminateState<T>(value: T): T {
         // @ts-ignore - $$element is not typed, because it's internal API
         (this.inputElementModelController.$$element[0] as HTMLInputElement).indeterminate = this.options.nullAsIndeterminate && value === null;

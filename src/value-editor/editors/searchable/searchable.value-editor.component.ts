@@ -38,6 +38,10 @@ export class SearchableValueEditorComponentController<MODEL = any> extends Abstr
         );
     }
 
+    protected get emptyModel(): any {
+        return null;
+    }
+
     public get hasEditModelFunction(): boolean {
         return typeof this.options.editModelFunction === 'function';
     }

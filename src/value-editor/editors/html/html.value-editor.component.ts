@@ -21,6 +21,10 @@ export class HtmlValueEditorComponentController extends AbstractValueEditorCompo
         this.$timeout(this.initTrumbowyg);
     }
 
+    protected get emptyModel(): string {
+        return '';
+    }
+
     $doCheck(): void {
         if (this.valueEditorController.isDisabled !== this.isDisabled && this.container?.trumbowyg) {
             this.isDisabled = this.valueEditorController.isDisabled;
@@ -35,9 +39,7 @@ export class HtmlValueEditorComponentController extends AbstractValueEditorCompo
         }
     }
 
-    protected onOptionsChange(newOptions: HtmlValueEditorOptions, oldOptions: HtmlValueEditorOptions) {
-        //
-    }
+    
 
     @bind
     private initTrumbowyg() {

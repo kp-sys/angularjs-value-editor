@@ -16,9 +16,11 @@ export class NumberValueEditorComponentController extends AbstractValueEditorCom
         super(numberValueEditorConfigurationService);
     }
 
-    protected onOptionsChange(newOptions: NumberValueEditorOptions, oldOptions: NumberValueEditorOptions) {
-        //
+    protected get emptyModel(): number {
+        return 0;
     }
+
+    
 }
 
 /**

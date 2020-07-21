@@ -70,12 +70,19 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
         };
     };
 
+    protected get emptyModel(): VALUE[] | VALUE {
+        return this.options.multiselect ? [] : undefined;
+    }
 
     public select(selectedNode: VALUE, selectedNodes: VALUE[]) {
         if (this.options.multiselect) {
             this.model = (selectedNodes as []).slice();
         } else {
-            this.model = selectedNode;
+            if (selectedNode === undefined && this.options.emptyAsNull) {
+                this.model = null
+            } else {
+                this.model = selectedNode;
+            }
         }
     }
 

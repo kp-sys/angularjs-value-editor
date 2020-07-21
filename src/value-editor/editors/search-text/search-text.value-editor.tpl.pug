@@ -1,9 +1,8 @@
 .input-group
     .input-group-addon.input-group-select
         ui-select(
-            ng-model="$ctrl.model.extension"
+            ng-model="$ctrl.extension"
             ng-model-options="{getterSetter: true}"
-            ng-change="$ctrl.triggerNgChange()"
 
             search-enabled="false"
 
@@ -24,9 +23,8 @@
         name="{{$ctrl.valueEditorController.editorName}}"
         placeholder="{{$ctrl.valueEditorController.placeholder}}"
 
-        ng-model="$ctrl.model.row"
+        ng-model="$ctrl.row"
         ng-model-options="{ getterSetter: true}"
-        ng-change="$ctrl.triggerNgChange()"
 
         ng-disabled="$ctrl.valueEditorController.isDisabled"
 

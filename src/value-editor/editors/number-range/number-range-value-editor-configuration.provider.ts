@@ -1,6 +1,8 @@
 import {DefaultOptions} from '../../typings';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../abstract/abstract-value-editor-configuration.provider';
 import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
+import {EMPTY_MODEL, NumberRangeValueEditorModel} from './number-range.value-editor.component';
+import {customEquals} from '../../utils/equals';
 
 /**
  * @ngdoc type
@@ -26,10 +28,12 @@ export interface NumberRangeValueEditorOptions extends ValueEditorOptions {
  *
  * ```javascript
  * {
+ *      customEmptyAsNullCheck: ($value: NumberRangeValueEditorModel) => $value === undefined || $value === null || customEquals($value, {}) || customEquals($value, EMPTY_MODEL)
  * }
  * ```
  */
 export const NUMBER_RANGE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<NumberRangeValueEditorOptions> = {
+    customEmptyAsNullCheck: /*@ngInject*/ ($value: NumberRangeValueEditorModel) => $value === undefined || $value === null || customEquals($value, {}) || customEquals($value, EMPTY_MODEL)
 };
 
 /**

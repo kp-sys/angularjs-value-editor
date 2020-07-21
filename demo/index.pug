@@ -10,33 +10,10 @@ html
 
     body(ng-app="app" ng-strict-di)
         h1 Value Editor Demo
-        main.container(ng-controller="demoController as $ctrl" ng-init="isDisabled = false")
-            button.btn.btn-default(ng-click="$ctrl.forceShowErrors()") Show errors
-            span {{$ctrl.showErrors | json}}
-            kp-universal-form(
-                name="myForm"
-                form-settings="::{fields: $ctrl.fields}"
-                form-controller="formController = $formController"
-                submit-function="$ctrl.submit()"
-                labels-width="2"
-                force-show-errors="$ctrl.showErrors"
 
-                ng-model="$ctrl.model"
-            )
+        uib-tabset(ng-cloak)
+            uib-tab(heading="Lab")
+                include lab/lab
 
-            button(type="button" ng-click="$ctrl.model = undefined") Reset
-
-            div
-                label Disabled:
-                    input(type="checkbox" ng-model="isDisabled")
-
-            div Value:
-                input(ng-model="$ctrl.model")
-
-            div Model: {{$ctrl.model | json}}
-
-            button(type="button" ng-click="$ctrl.clear()") Clear
-
-            pre(ng-bind="formController | json")
-
-            pre(ng-bind="$ctrl.fields | json")
+            uib-tab(heading="Full Demo")
+                include full-demo/full-demo

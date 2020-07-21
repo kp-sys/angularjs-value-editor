@@ -34,6 +34,10 @@ export class SignatureValueEditorComponentController extends AbstractValueEditor
         }
     }
 
+    protected get emptyModel(): string {
+        return '';
+    }
+
     protected onOptionsChange(newOptions: SignatureValueEditorOptions, oldOptions, whatChanged: PropertyChangeDetection<SignatureValueEditorOptions>) {
         if (newOptions.canDoAction) {
             this.loadItems();

@@ -2,7 +2,7 @@ import '@kpsys/angular-ui-bootstrap';
 import './resources/styles.less';
 
 import register from '@kpsys/angularjs-register';
-import aliasesModule from './aliases/aliases.module';
+// EDITORS
 import acceptableValueEditorModule from './editors/acceptable/acceptable.value-editor.module';
 import booleanValueEditorModule from './editors/boolean/boolean.value-editor.module';
 import dateValueEditorModule from './editors/date/date.value-editor.module';
@@ -24,18 +24,23 @@ import searchTextValueEditorModule from './editors/search-text/search-text.value
 import searchableValueEditorModule from './editors/searchable/searchable.value-editor.module';
 import velocityTemplateValueEditorModule from './editors/velocity-template/velocity-template.value-editor.module';
 import rangeValueEditorModule from './editors/range/range.value-editor.module';
+// META EDITORS
 import listValueEditorModule from './meta-editors/list/list.value-editor.module';
 import objectValueEditorModule from './meta-editors/object/object.value-editor.module';
-import valueEditorForceSettingsModule from './kp-value-editor-force-settings/kp-value-editor-force-settings.module';
-
+// OTHER COMPONENTS
 import KpValueEditorComponent from './kp-value-editor/kp-value-editor.component';
-import {EmptyConfigurationService} from './abstract/abstract-value-editor-component-controller';
-import KpValueEditorConfigurationServiceProvider from './kp-value-editor/kp-value-editor-configuration-provider';
+import valueEditorForceSettingsModule from './kp-value-editor-force-settings/kp-value-editor-force-settings.module';
 import KpUniversalFormComponent from './kp-universal-form/kp-universal-form.component';
+// DIRECTIVES
 import errorMessagesModule from './error-messages/error-messages.module';
 import PatternDescriptionTooltipDirective from './common-directives/pattern-description-tooltip.directive';
 import DisableNgAnimateDirective from './common-directives/disable-ngAnimate.directive';
+// COMMON SERVICES AND PROVIDERS
+import {EmptyConfigurationService} from './abstract/abstract-value-editor-component-controller';
+import aliasesModule from './aliases/aliases.module';
+import KpValueEditorConfigurationServiceProvider from './kp-value-editor/kp-value-editor-configuration-provider';
 import KpValueEditorRegistrationServiceProvider from './kp-value-editor/kp-value-editor-registration.provider';
+// CONFIG
 import valueEditorsConfig from './value-editor.config';
 
 /**

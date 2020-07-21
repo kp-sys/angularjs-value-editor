@@ -6,7 +6,6 @@ import {
     AutocompleteValueEditorConfigurationService,
     AutocompleteValueEditorOptions
 } from './autocomplete-value-editor-configuration.provider';
-import {PropertyChangeDetection} from '../../utils/equals';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 import IInjectorService = angular.auto.IInjectorService;
@@ -51,6 +50,10 @@ export class AutocompleteValueEditorComponentController<PARAMS> extends Abstract
         this.inputNgModelController = angular.element(inputElement).controller('ngModel');
     }
 
+    protected get emptyModel(): string {
+        return '';
+    }
+
     public async fetchItemsIfNeed(): Promise<void> {
         if (this.items === null || (Array.isArray(this.items) && this.items.length === 0)) {
             try {
@@ -74,9 +77,7 @@ export class AutocompleteValueEditorComponentController<PARAMS> extends Abstract
         this.asyncCall(() => this.minLength = this.options.minLength);
     }
 
-    protected onOptionsChange(newOptions: AutocompleteValueEditorOptions<PARAMS>, oldOptions, whatChanged: PropertyChangeDetection<AutocompleteValueEditorOptions<PARAMS>>) {
-        //
-    }
+
 
     private async fetchItems(): Promise<string[]> {
         this.asyncCall(() => this.loading = true);

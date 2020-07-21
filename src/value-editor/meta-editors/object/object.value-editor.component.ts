@@ -48,6 +48,12 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
         }
     }
 
+    protected get emptyModel(): MODEL {
+        // Empty object value editor does not give a sense.
+        // TODO: Compose empty model by editor configuration
+        return undefined;
+    }
+
     public transformFieldEditor(fieldEditor: ValueEditorBindings, fieldName: string): ValueEditorBindings {
         if (typeof this.options.attributesTransformation === 'function') {
             fieldEditor = this.options.attributesTransformation(fieldEditor);

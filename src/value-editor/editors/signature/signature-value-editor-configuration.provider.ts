@@ -29,7 +29,7 @@ import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../commo
  */
 export interface SignatureValueEditorOptions extends ValueEditorOptions {
     // tslint:disable-next-line:ban-types
-    dataSource: Injectable<Function | ((...args: any[]) => PromiseLike<string[]>)>;
+    dataSource?: Injectable<Function | ((...args: any[]) => PromiseLike<string[]>)>;
     canDoAction?: boolean;
 }
 

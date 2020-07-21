@@ -177,4 +177,19 @@ describe('access-number-value-editor', () => {
 
         done();
     });
+
+    it('should has working emptyAsNull option', () => {
+        valueEditorMocker.create('access-number', {options: {emptyAsNull: true}});
+
+        valueEditorMocker.getInputElement().value = 'hello';
+        valueEditorMocker.triggerHandlerOnInput('input');
+
+        expect($scope.model).toEqual('hello');
+
+        valueEditorMocker.getInputElement().value = '';
+        valueEditorMocker.triggerHandlerOnInput('input');
+
+        expect($scope.model).toBeNull();
+
+    });
 });

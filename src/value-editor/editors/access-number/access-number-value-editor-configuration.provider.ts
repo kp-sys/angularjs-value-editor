@@ -26,9 +26,9 @@ import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../commo
  * Default value: {@link accessNumberValueEditorDefaultOptions}
  */
 export interface AccessNumberValueEditorOptions extends ValueEditorOptions {
-    canDoAction: boolean;
+    canDoAction?: boolean;
     // tslint:disable-next-line:ban-types
-    dataSource: Injectable<Function | ((...args: any[]) => PromiseLike<string[]>)>;
+    dataSource?: Injectable<Function | ((...args: any[]) => PromiseLike<string[]>)>;
 }
 
 /**

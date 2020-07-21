@@ -83,4 +83,19 @@ describe('year-value-editor', () => {
 
         expect($scope.form.year.$error).toEqual({});
     });
+
+    it('should has working emptyAsNull option', () => {
+        valueEditorMocker.create('year', {options: {emptyAsNull: true}});
+
+        valueEditorMocker.getInputElement<HTMLInputElement>().value = '2010';
+        valueEditorMocker.triggerHandlerOnInput('input');
+
+        expect($scope.model).toBe(2010);
+
+        valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
+        valueEditorMocker.triggerHandlerOnInput('input');
+
+        expect($scope.model).toBeNull();
+    });
+
 });

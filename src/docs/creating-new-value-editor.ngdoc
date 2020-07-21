@@ -94,8 +94,8 @@ export class TextValueEditorComponentController extends AbstractValueEditorCompo
             super(textValueEditorConfigurationService, textValueEditorLocalizationsService);
         }
 
-        protected onOptionsChange(newOptions: TextValueEditorOptions, oldOptions, whatChanged: PropertyChangeDetection<TextValueEditorOptions>) {
-            //
+        protected get emptyModel(): string {
+            return '';
         }
 
         ...
@@ -103,13 +103,14 @@ export class TextValueEditorComponentController extends AbstractValueEditorCompo
 ```
 
 The component controller is the most important part of value editor. The most of the things are done in `AbstractValueEditorComponentController`, so You have to 
-extend Your controller class with `AbstractValueEditorComponentController<MODEL_TYPE, XxValueEditorOptions>`. 
+extend Your controller class with `AbstractValueEditorComponentController<MODEL_TYPE, XxxValueEditorOptions>`. 
 
-If Your editor has no options, You don't need to override constructor, but if need localizations working, You have to pass `emptyConfigurationService` as first `super()` argument.
+If Your editor has no options, You don't need to override constructor, but if You need localizations working, You have to pass `emptyConfigurationService` as first argument to `super()`.
 Second argument of `super()` is optional `localizationService`. 
 
 `onOptionsChange` method is called every time, if option changed. First argument contains new options, second argument contains old options and finally third argument contains object of
-booleans describing what options have been changed.
+booleans describing which options have been changed.
+By default, method does nothing, but if You need some interaction on options change, You can override this method and react on options change.
 
 Extending abstract class brings You access to these properties:
 

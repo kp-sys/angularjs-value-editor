@@ -104,4 +104,19 @@ describe('card-number-value-editor', () => {
             done();
         }, 700);
     });
+
+    it('should has working emptyAsNull option', () => {
+        valueEditorMocker.create('card-number', {options: {emptyAsNull: true}});
+
+        valueEditorMocker.getInputElement<HTMLInputElement>().value = 'CardNumber1234';
+        valueEditorMocker.triggerHandlerOnInput('input');
+
+        expect($scope.model).toBe('CardNumber1234');
+
+        valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
+        valueEditorMocker.triggerHandlerOnInput('input');
+
+        expect($scope.model).toBeNull();
+
+    });
 });

@@ -119,4 +119,19 @@ describe('number-value-editor', () => {
 
         expect($scope.form.number.$error).toEqual({step: true});
     });
+
+    it('should has working emptyAsNull option', () => {
+        valueEditorMocker.create('number', {options: {emptyAsNull: true}});
+
+        valueEditorMocker.getInputElement<HTMLInputElement>().value = '123';
+        valueEditorMocker.triggerHandlerOnInput('input');
+
+        expect($scope.model).toBe(123);
+
+        valueEditorMocker.getInputElement<HTMLInputElement>().value = '0';
+        valueEditorMocker.triggerHandlerOnInput('input');
+
+        expect($scope.model).toBeNull();
+    });
+
 });

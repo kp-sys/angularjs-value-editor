@@ -8,7 +8,6 @@ import {
     RangeValueEditorOptions
 } from './range-value-editor-configuration.provider';
 import AbstractTemplateValueEditor from '../../abstract/abstract-template-value-editor';
-import {PropertyChangeDetection} from '../../utils/equals';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
@@ -55,6 +54,17 @@ export class RangeValueEditorComponentController extends AbstractTemplateValueEd
         }
     }
 
+    protected get emptyModel(): RangeValueEditorModel {
+        return this.options.extremesAsNull ?
+            {
+                from: null,
+                to: null
+            } : {
+            from: this.options.min,
+            to: this.options.max
+        };
+    }
+
 
     public get internalModel(): RangeValueEditorModel {
         return this.#internalModel;
@@ -64,9 +74,7 @@ export class RangeValueEditorComponentController extends AbstractTemplateValueEd
         this.model = value;
     }
 
-    protected onOptionsChange(newOptions: RangeValueEditorOptions, oldOptions, whatChanged: PropertyChangeDetection<RangeValueEditorOptions>) {
-        //
-    }
+
 
     protected getTemplateModel(): {} {
         return {

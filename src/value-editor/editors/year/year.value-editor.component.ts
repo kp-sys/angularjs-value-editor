@@ -2,10 +2,10 @@ import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor
 import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import {DateTime} from 'luxon';
 import * as angular from 'angular';
-import {PropertyChangeDetection} from '../../utils/equals';
 import {YearValueEditorConfigurationService, YearValueEditorOptions} from './year-value-editor-configuration.provider';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
+import bind from 'bind-decorator';
 
 export class YearValueEditorComponentController extends AbstractValueEditorComponentController<number, YearValueEditorOptions> {
 
@@ -16,32 +16,43 @@ export class YearValueEditorComponentController extends AbstractValueEditorCompo
 
     public $onInit(): void {
         super.$onInit();
-        this.ngModelController.$parsers.push(this.modelFormatter);
-        this.ngModelController.$formatters.push(this.modelParser);
+        this.ngModelController.$parsers.push(this.modelParser);
+        this.ngModelController.$formatters.push(this.modelFormatter);
     }
 
-    public convertYearToISO(year: number): string {
+    protected get emptyModel(): number {
+        return undefined;
+    }
+
+
+
+    private convertYearToISO(year: number): string {
         return year ? DateTime.fromFormat(String(year), 'y').toISODate() : undefined;
-    }
-
-    /* istanbul ignore next */
-    protected onOptionsChange(newOptions: never, oldOptions, whatChanged: PropertyChangeDetection<never>) {
-        //
     }
 
     private convertISOToYear(date: string): number {
         return date ? DateTime.fromISO(date).year : undefined;
     }
 
-    private modelFormatter(isoDate: string): number {
+    @bind
+    private modelParser(isoDate: string): number {
         if (isoDate) {
             return DateTime.fromISO(isoDate).year;
+        }
+
+        if (isoDate === null) {
+            if (this.options.emptyAsNull) {
+                return null;
+            } else {
+                return undefined;
+            }
         }
 
         return isoDate as unknown as number;
     }
 
-    private modelParser(year: number): string {
+    @bind
+    private modelFormatter(year: number): string {
         if (year) {
             const parsed = DateTime.fromFormat(String(year), 'y').toISODate();
             return parsed;

@@ -48,14 +48,27 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
         });
     }
 
+    protected get emptyModel(): MODEL[] {
+        return null;
+    }
+
     public addItem() {
         this.normalizeModelIfNeeded();
+
+        if (this.model === null) {
+            this.model = [];
+        }
+
         this.model.push(angular.fromJson(angular.toJson(this.options.newItemPrototype)));
     }
 
     public removeItem(index) {
         if (this.canRemoveItems()) {
-            this.model.splice(index, 1);
+            if (this.model.length === 1 && this.options.emptyAsNull) {
+                this.model = null;
+            } else {
+                this.model.splice(index, 1);
+            }
         }
     }
 
@@ -77,7 +90,15 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
 
     private normalizeModelIfNeeded() {
         if (!Array.isArray(this.model)) {
-            this.model = [];
+            if (this.options.emptyAsNull) {
+                this.model = null;
+            } else {
+                this.model = [];
+            }
+        } else {
+            if (this.options.emptyAsNull && this.model.length === 0) {
+                this.model = null;
+            }
         }
     }
 

@@ -34,6 +34,10 @@ export class AccessNumberValueEditorComponentController extends AbstractValueEdi
         }
     }
 
+    protected get emptyModel(): string {
+        return '';
+    }
+
     public get required() {
         return getFormModel(this.valueEditorController.formController).issue ? false : this.valueEditorController.validations?.required ?? false;
     }

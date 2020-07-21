@@ -100,4 +100,19 @@ describe('date-value-editor', () => {
         expect(valueEditorMocker.getInputElement<HTMLInputElement>().disabled).toBe(true);
         expect(() => openDateTimePicker(inputElement)).toThrowError('DateTimePicker is not visible');
     });
+
+    it('should has working emptyAsNull option', () => {
+        valueEditorMocker.create('date', {options: {emptyAsNull: true}});
+
+        valueEditorMocker.getInputElement<HTMLInputElement>().value = '22.2.2022';
+        valueEditorMocker.triggerHandlerOnInput('input');
+
+        expect($scope.model).toBe('2022-02-22T00:00:00.000Z');
+
+        valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
+        valueEditorMocker.triggerHandlerOnInput('input');
+
+        expect($scope.model).toBeNull();
+    });
+
 });

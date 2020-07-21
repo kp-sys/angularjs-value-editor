@@ -62,6 +62,10 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
         }
     }
 
+    protected get emptyModel(): VALUE[] | VALUE {
+        return this.options.multiselectable || this.options.modelAsArray ? [] : null;
+    }
+
     public hasMore(): boolean {
         return this.options.showFirstCount && this.getMoreCount() > 0;
     }

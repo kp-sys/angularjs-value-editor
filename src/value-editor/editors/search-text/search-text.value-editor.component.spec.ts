@@ -11,6 +11,7 @@ import * as ngAnimateModule from 'angular-animate';
 import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../common-directives/disable-ngAnimate.directive';
 import {SearchTextValueEditorOptions} from './search-text-value-editor-configuration.provider';
 import UISelectController from '../../../../test/utils/ui-select-controller';
+import {patchAngularElementToReturnInjector} from '../../../../test/utils/test-utils';
 
 const TEST_MODEL: SearchTextValueEditorModel = {
     extension: SearchTextValueEditorModelExtension.EQUALS,
@@ -22,13 +23,20 @@ describe('search-text-value-editor', () => {
     let valueEditorMocker: ValueEditorMocker<SearchTextValueEditorBindings & NgChangeBindings>;
     let $scope: ScopeWithBindings<SearchTextValueEditorModel, SearchTextValueEditorBindings & NgChangeBindings>;
 
+    function selectItemFromMenu(itemName: string) {
+        valueEditorMocker.getInputElement().parentElement.querySelector<HTMLSpanElement>('.ui-select-toggle').click();
+        Array.from(valueEditorMocker.getInputElement().parentElement.querySelectorAll<HTMLSpanElement>('.ui-select-choices-row-inner'))
+            .filter((element) => element.textContent === itemName)[0].click();
+    }
+
     describe('common usage', () => {
         beforeEach(() => {
             angular.mock.module(valueEditorModule);
 
-            inject(/*@ngInject*/ ($compile, $rootScope) => {
+            inject(/*@ngInject*/ ($compile, $rootScope, $injector) => {
                 $scope = $rootScope.$new();
                 valueEditorMocker = new ValueEditorMocker<SearchTextValueEditorBindings>($compile, $scope);
+                patchAngularElementToReturnInjector($injector);
             });
         });
 
@@ -42,9 +50,8 @@ describe('search-text-value-editor', () => {
             valueEditorMocker.create('search-text');
             valueEditorMocker.getInputElement<HTMLInputElement>().value = TEST_MODEL.row;
             valueEditorMocker.triggerHandlerOnInput('input');
-            valueEditorMocker.getInputElement().parentElement.querySelector<HTMLSpanElement>('.ui-select-toggle').click();
-            Array.from(valueEditorMocker.getInputElement().parentElement.querySelectorAll<HTMLSpanElement>('.ui-select-choices-row-inner'))
-                .filter((element) => element.textContent === 'Equals')[0].click();
+
+            selectItemFromMenu('Equals');
 
             $scope.$apply();
 
@@ -144,15 +151,35 @@ describe('search-text-value-editor', () => {
             });
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = TEST_MODEL.row;
-            valueEditorMocker.getInputElement().parentElement.querySelector<HTMLSpanElement>('.ui-select-toggle').click();
-
-            Array.from(valueEditorMocker.getInputElement().parentElement.querySelectorAll<HTMLSpanElement>('.ui-select-choices-row-inner'))
-                .filter((element) => element.textContent === 'Equals')[0].click();
+            selectItemFromMenu('Equals');
 
             $scope.$apply();
 
             expect(ngChangeSpy).toHaveBeenCalled();
         });
+
+        it('should has working emptyAsNull option', () => {
+            valueEditorMocker.create('search-text', {options: {emptyAsNull: true}});
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = TEST_MODEL.row;
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            selectItemFromMenu('Equals');
+
+            $scope.$apply();
+
+            expect($scope.model).toEqual(TEST_MODEL);
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.model).toBeNull();
+
+            selectItemFromMenu('Starts with');
+
+            expect($scope.model).toBeNull();
+        });
+
     });
 
     describe('interaction with ngAnimate', () => {

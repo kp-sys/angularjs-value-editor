@@ -48,6 +48,10 @@ export class TextValueEditorComponentController extends AbstractValueEditorCompo
         }
     }
 
+    protected get emptyModel(): string {
+        return '';
+    }
+
     /**
      * Get number of rows between nim and max range.
      */

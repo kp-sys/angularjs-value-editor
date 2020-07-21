@@ -121,4 +121,19 @@ describe('autocomplete-value-editor', () => {
             done();
         }, 0);
     });
+
+    it('should has working emptyAsNull option', () => {
+        valueEditorMocker.create('autocomplete', {options: {emptyAsNull: true}});
+
+        valueEditorMocker.getInputElement().value = 'hello';
+        valueEditorMocker.triggerHandlerOnInput('input');
+
+        expect($scope.model).toEqual('hello');
+
+        valueEditorMocker.getInputElement().value = '';
+        valueEditorMocker.triggerHandlerOnInput('input');
+
+        expect($scope.model).toBeNull();
+
+    });
 });

@@ -3,7 +3,7 @@ import {ValueEditorBindings} from '../../kp-value-editor/kp-value-editor.compone
 import {SearchTextValueEditorLocalizationsService} from './search-text-value-editor-localization.provider';
 import {IOnInit} from 'angular';
 import {TextValueEditorValidations} from '../text/text.value-editor.component';
-import {PropertyChangeDetection} from '../../utils/equals';
+import {customEquals} from '../../utils/equals';
 import {
     SearchTextValueEditorConfigurationService,
     SearchTextValueEditorOptions
@@ -66,35 +66,62 @@ export class SearchTextValueEditorComponentController extends AbstractValueEdito
     public $onInit(): void {
         super.$onInit();
 
+    }
+
+    public $postLink() {
+        super.$postLink();
+
         this.normalizeModel();
     }
 
-    public triggerNgChange() {
-        this.valueEditorController.forceCallNgModelViewChangeListeners();
+    public get extension(): SearchTextValueEditorModelExtension {
+        return this.model.extension;
     }
 
-    /* istanbul ignore next */
-    protected onOptionsChange(newOptions: never, oldOptions, whatChanged: PropertyChangeDetection<never>) {
-        //
+    public set extension(extension: SearchTextValueEditorModelExtension) {
+        this.model = Object.assign({}, this.model, {extension});
     }
+
+    public get row(): string {
+        return this.model.row;
+    }
+
+    public set row(row: string) {
+        this.model = Object.assign({}, this.model, {row});
+
+    }
+
+    protected get emptyModel(): SearchTextValueEditorModel {
+        return {
+            row: '',
+            extension: SearchTextValueEditorModelExtension.STARTS_WITH
+        };
+    }
+
+
 
     private normalizeModel() {
-        // @ts-ignore
-        if (typeof this.model !== 'object') {
-            this.model = {extension: undefined, row: ''};
+        let model = this.model;
+
+        if (typeof model !== 'object') {
+            model = {extension: undefined, row: ''};
         }
 
-        if (!this.model.extension) {
-            this.model.extension = SearchTextValueEditorModelExtension.STARTS_WITH;
+        if (!model.extension) {
+            model.extension = SearchTextValueEditorModelExtension.STARTS_WITH;
         }
 
-        // this.model.extension is not a member of SearchTextValueEditorModelExtension enum
-        if (!Object.values(SearchTextValueEditorModelExtension).includes(this.model.extension)) {
-            this.model.extension = SearchTextValueEditorModelExtension.STARTS_WITH;
+        // if model.extension is not a member of SearchTextValueEditorModelExtension enum
+        if (!Object.values(SearchTextValueEditorModelExtension).includes(model.extension)) {
+            model.extension = SearchTextValueEditorModelExtension.STARTS_WITH;
         }
 
-        if (typeof this.model.row !== 'string') {
-            this.model.row = '';
+        if (typeof model.row !== 'string') {
+            model.row = '';
+        }
+
+        if (!customEquals(model, this.model)) {
+            this.model = Object.assign({}, model);
         }
     }
 }

@@ -6,6 +6,7 @@ import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurati
 import {AbstractValueEditorLocalizationService} from './abstract-value-editor-localization.provider';
 import {AliasesServiceProvider} from '../aliases/aliases.service';
 import {customEquals, PropertyChangeDetection, whichPropertiesAreNotEqual} from '../utils/equals';
+import bind from 'bind-decorator';
 
 /**
  * Abstract base class for general value-editor features.
@@ -25,6 +26,7 @@ export default abstract class AbstractValueEditorComponentController<MODEL, OPTI
 
     public $onInit(): void {
         super.$onInit();
+
         this.valueEditorController.registerValueEditor(this);
         this.options = this.processNewOptions(this.valueEditorController.options);
     }
@@ -34,10 +36,14 @@ export default abstract class AbstractValueEditorComponentController<MODEL, OPTI
         if (!customEquals(this.options, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration())) {
             this.onOptionsChange(this.options, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration() as unknown as OPTIONS, whichPropertiesAreNotEqual(this.options, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration() as unknown as OPTIONS));
         }
+
+        this.ngModelController.$parsers.push(this.emptyAsNullParser);
+        this.ngModelController.$formatters.push(this.emptyAsNullFormatter);
     }
 
     /**
      * This method changes options.
+     * This method is called by KpValueEditorComponentController::processOptionsChange(), don't use it by own.
      * @param {OPTIONS} newOptions
      * @param {OPTIONS} oldOptions
      * @param {PropertyChangeDetection} whatChanged
@@ -71,10 +77,51 @@ export default abstract class AbstractValueEditorComponentController<MODEL, OPTI
      * @param {OPTIONS} oldOptions Old options.
      * @param {PropertyChangeDetection<OPTIONS>} optionsChangeDetection Object whose keys are name of changed properties and value is boolean status of change.
      */
-    protected abstract onOptionsChange(newOptions: OPTIONS, oldOptions?: OPTIONS, optionsChangeDetection?: PropertyChangeDetection<OPTIONS>);
+    // tslint:disable-next-line:no-empty
+    protected onOptionsChange(newOptions: OPTIONS, oldOptions?: OPTIONS, optionsChangeDetection?: PropertyChangeDetection<OPTIONS>) {};
+
+    /**
+     * Every editor must have defined empty model. It is important for `emptyAsNull` functionality (for now...).
+     * @returns {MODEL}
+     */
+    protected abstract get emptyModel(): MODEL;
 
     private processNewOptions(newOptions: OPTIONS): OPTIONS {
         return angular.merge({}, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration(), newOptions, this.valueEditorController.forceSettingsController?.getOptionsForTypeOrEmpty(this.valueEditorController.type) ?? {});
+    }
+
+    @bind
+    private emptyAsNullParser(modelValue: MODEL): MODEL | null {
+        if (!this.options.emptyAsNull) {
+            return modelValue;
+        }
+
+        if (this.options.customEmptyAsNullCheck) {
+            const isEmpty = this.valueEditorController.$element.injector().invoke(this.options.customEmptyAsNullCheck, this, {$value: modelValue});
+
+            if (isEmpty) {
+                return null;
+            }
+        }
+
+        if (customEquals(modelValue, this.emptyModel)) {
+            return null;
+        }
+
+        return modelValue;
+    }
+
+    @bind
+    private emptyAsNullFormatter(modelValue: MODEL | null): MODEL {
+        if (!this.options.emptyAsNull) {
+            return modelValue;
+        }
+
+        if (modelValue === null) {
+            return this.emptyModel;
+        }
+
+        return modelValue;
     }
 }
 

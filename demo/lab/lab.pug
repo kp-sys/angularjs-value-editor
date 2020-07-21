@@ -1,0 +1,13 @@
+main.container(ng-controller="labController as $ctrl")
+
+    kp-value-editor(
+        type="'list'"
+
+        options="{" +
+            "emptyAsNull: true" +
+        "}"
+
+        ng-model="$ctrl.model"
+    )
+
+    pre {{$ctrl.model | json}}

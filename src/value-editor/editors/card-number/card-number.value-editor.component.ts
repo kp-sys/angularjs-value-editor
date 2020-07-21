@@ -6,7 +6,6 @@ import {
 } from './card-number-value-editor-configuration.provider';
 import {IAugmentedJQuery, ILogService, ITimeoutService} from 'angular';
 import {CardNumberValueEditorLocalizationsService} from './card-number-value-editor-localization.provider';
-import {PropertyChangeDetection} from '../../utils/equals';
 import {TextValueEditorValidations} from '../text/text.value-editor.component';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
@@ -24,6 +23,10 @@ export class CardNumberValueEditorComponentController extends AbstractValueEdito
                 private $injector: IInjectorService,
                 private $log: ILogService) {
         super(cardNumberValueEditorConfigurationService, cardNumberValueEditorLocalizationsService);
+    }
+
+    protected get emptyModel(): string {
+        return '';
     }
 
     public async generate() {
@@ -65,9 +68,7 @@ export class CardNumberValueEditorComponentController extends AbstractValueEdito
         }
     }
 
-    protected onOptionsChange(newOptions: CardNumberValueEditorOptions, oldOptions, whatChanged: PropertyChangeDetection<CardNumberValueEditorOptions>) {
-        //
-    }
+
 }
 
 /**

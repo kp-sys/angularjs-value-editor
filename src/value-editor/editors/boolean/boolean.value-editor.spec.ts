@@ -2,6 +2,7 @@ import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {BooleanValueEditorBindings} from './boolean.value-editor.component';
+import {patchAngularElementToReturnInjector} from '../../../../test/utils/test-utils';
 
 describe('boolean-value-editor', () => {
 
@@ -11,9 +12,10 @@ describe('boolean-value-editor', () => {
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
-        inject(/*@ngInject*/ ($compile, $rootScope) => {
+        inject(/*@ngInject*/ ($compile, $rootScope, $injector) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<BooleanValueEditorBindings>($compile, $scope);
+            patchAngularElementToReturnInjector($injector);
         });
     });
 
@@ -68,7 +70,11 @@ describe('boolean-value-editor', () => {
     });
 
     it('should has working required validation', () => {
-        valueEditorMocker.create('boolean', {editorName: 'bool', options: {nullAsIndeterminate: true}, validations: {required: true}});
+        valueEditorMocker.create('boolean', {
+            editorName: 'bool',
+            options: {nullAsIndeterminate: true},
+            validations: {required: true}
+        });
 
         $scope.model = null;
         $scope.$apply();
@@ -108,5 +114,20 @@ describe('boolean-value-editor', () => {
         $scope.$apply();
 
         expect(valueEditorMocker.getInputElement<HTMLInputElement>().checked).toBe(false);
+    });
+
+    it('should has working emptyAsNull option with combination of customEmptyAsNullCheck', () => {
+        valueEditorMocker.create('boolean', {
+            options: {
+                emptyAsNull: true,
+                customEmptyAsNullCheck: /*@ngInject*/ ($value) => $value
+            }
+        }, true);
+
+        valueEditorMocker.getInputElement<HTMLInputElement>().checked = true;
+        valueEditorMocker.triggerHandlerOnInput('change');
+
+        expect($scope.model).toBeNull();
+
     });
 });

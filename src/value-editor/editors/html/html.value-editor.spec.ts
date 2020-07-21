@@ -86,4 +86,23 @@ describe('html-value-editor', () => {
             done();
         }, 0);
     });
+
+    it('should has working emptyAsNull option', (done) => {
+        valueEditorMocker.create('html', {options: {emptyAsNull: true}});
+        $_timeout.flush();
+        $scope.$apply();
+
+        setTimeout(() => {
+            $(valueEditorMocker.getInputElement<HTMLTextAreaElement>()).trumbowyg('html', 'hello');
+
+            expect($scope.model).toBe('hello');
+
+            $(valueEditorMocker.getInputElement<HTMLTextAreaElement>()).trumbowyg('html', '');
+
+            expect($scope.model).toBe(null);
+
+            done();
+        }, 0);
+
+    });
 });

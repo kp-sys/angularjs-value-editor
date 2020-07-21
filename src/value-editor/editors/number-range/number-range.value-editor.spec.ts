@@ -2,6 +2,7 @@ import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {NumberRangeValueEditorBindings, NumberRangeValueEditorModel} from './number-range.value-editor.component';
+import {patchAngularElementToReturnInjector} from '../../../../test/utils/test-utils';
 import objectContaining = jasmine.objectContaining;
 
 describe('number-range-value-editor', () => {
@@ -20,9 +21,10 @@ describe('number-range-value-editor', () => {
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
-        inject(/*@ngInject*/ ($compile, $rootScope) => {
+        inject(/*@ngInject*/ ($compile, $rootScope, $injector) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<NumberRangeValueEditorBindings>($compile, $scope);
+            patchAngularElementToReturnInjector($injector);
         });
     });
 
@@ -167,4 +169,26 @@ describe('number-range-value-editor', () => {
 
         expect($scope.form.numberRange.$error).toEqual({});
     });
+
+    it('should has working emptyAsNull option', () => {
+        valueEditorMocker.create('number-range', {options: {emptyAsNull: true}});
+
+        getFrom().value = '10';
+        valueEditorMocker.triggerHandlerOnInput('input', getFrom());
+
+        expect($scope.model).toEqual(objectContaining({from: 10}));
+
+        getTo().value = '20';
+        valueEditorMocker.triggerHandlerOnInput('input', getTo());
+
+        expect($scope.model).toEqual({from: 10, to: 20});
+
+        getFrom().value = '0';
+        getTo().value = '0';
+        valueEditorMocker.triggerHandlerOnInput('input', getFrom());
+        valueEditorMocker.triggerHandlerOnInput('input', getTo());
+
+        expect($scope.model).toBeNull();
+    });
+
 });

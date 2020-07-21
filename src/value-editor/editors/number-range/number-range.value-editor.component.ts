@@ -7,7 +7,6 @@ import {
     NumberRangeValueEditorOptions
 } from './number-range-value-editor-configuration.provider';
 import {NumberRangeValueEditorLocalizationsService} from './number-range-value-editor-localization.provider';
-import {PropertyChangeDetection} from '../../utils/equals';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
@@ -30,6 +29,11 @@ export interface NumberRangeValueEditorModel {
     from: number;
     to: number;
 }
+
+export const EMPTY_MODEL: NumberRangeValueEditorModel = {
+    from: 0,
+    to: 0
+};
 
 export class NumberRangeValueEditorComponentController extends AbstractValueEditorComponentController<NumberRangeValueEditorModel, NumberRangeValueEditorOptions> implements IOnInit, IDoCheck {
     public modelFrom: number;
@@ -72,6 +76,10 @@ export class NumberRangeValueEditorComponentController extends AbstractValueEdit
         return this.valueEditorController.validations;
     }
 
+    protected get emptyModel(): NumberRangeValueEditorModel {
+        return EMPTY_MODEL;
+    }
+
     public setNgModel() {
         this.model = {
             from: this.modelFrom,
@@ -86,10 +94,7 @@ export class NumberRangeValueEditorComponentController extends AbstractValueEdit
         }
     }
 
-    /* istanbul ignore next */
-    protected onOptionsChange(newOptions: NumberRangeValueEditorOptions, oldOptions, whatChanged: PropertyChangeDetection<NumberRangeValueEditorOptions>) {
-        //
-    }
+
 }
 
 /**

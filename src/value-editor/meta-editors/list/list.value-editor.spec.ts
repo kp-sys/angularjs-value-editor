@@ -236,4 +236,25 @@ describe('list-value-editor', () => {
 
         expect($scope.model).toEqual(['']);
     });
+
+    it('should has working emptyAsNull option', () => {
+        $scope.model = ['hello'];
+
+        valueEditorMocker.create('list', {
+            options: {
+                newItemPrototype: '',
+                subEditorType: 'text',
+                emptyAsNull: true
+            }
+        });
+
+        expect($scope.model).toEqual(['hello']);
+
+        removeItemOnIndex(0);
+
+        $scope.$apply();
+
+        expect($scope.model).toBeNull();
+    });
+
 });

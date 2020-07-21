@@ -4,6 +4,7 @@ import {
     IDoCheck,
     IDocumentService,
     IFormController,
+    Injectable,
     IOnChanges,
     IOnDestroy,
     IOnInit,
@@ -111,10 +112,6 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
         this.optionChangeListeners.push(listener);
     }
 
-    public forceCallNgModelViewChangeListeners() {
-        this.ngModelController.$viewChangeListeners.forEach((callback) => callback());
-    }
-
     private generateEditorName(): string {
         return this.editorId || `${this.type}_${generateUuid()}`;
     }
@@ -214,10 +211,23 @@ export interface ValueEditorValidations {
  * @name ValueEditorOptions
  * @module angularjs-value-editor
  *
- * @property {boolean=} forceShowErrors Force show validations error messages.
+ * @property {boolean} forceShowErrors Force show validations error messages.
+ * @property {boolean} emptyAsNull If `true`, empty value will be passed as `null` to model.
+ * @property {function} customEmptyAsNullCheck Custom check of empty value. If returns `true` it sign empty value.
+ *  ```
+ *  function ($value, ...args): boolean;
+ *  ```
+ * Function is invoked via [$injector.invoke](https://docs.angularjs.org/api/auto/service/$injector#invoke) with following locals:
+ *
+ * | Injectable&nbsp;argument&nbsp;name | Description                |
+ * | ---------------------------------- | -------------------------- |
+ * | `$value`: `MODEL`                  | Current value-editor model |
  */
 export interface ValueEditorOptions {
     forceShowErrors?: boolean;
+    emptyAsNull?: boolean;
+    // tslint:disable-next-line:ban-types
+    customEmptyAsNullCheck?: Injectable<Function | ((...args: any[]) => boolean)>;
 }
 
 /**

@@ -17,8 +17,10 @@ class DummyValueEditorComponent extends AbstractValueEditorComponent implements 
     public template = '<div class="dummy" data-main-input>DUMMY</div>';
 
     public controller = class extends AbstractValueEditorComponentController<any, any> {
-        protected onOptionsChange() {
-            //
+        
+
+        protected get emptyModel(): any {
+            return undefined;
         }
     };
 }

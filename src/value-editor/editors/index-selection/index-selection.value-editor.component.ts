@@ -35,6 +35,10 @@ export class IndexSelectionValueEditorComponentController<ID, VALUE extends Iden
         );
     }
 
+    protected get emptyModel(): ID {
+        return null;
+    }
+
     public isSelected(item: VALUE): boolean {
         if (this.model !== undefined && this.model !== null) {
             const comparator = this.options.equalityComparator ? this.options.equalityComparator : this.indexSelectionValueEditorConfigurationService.getDefaults().equalityComparator;

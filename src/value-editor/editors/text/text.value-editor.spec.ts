@@ -165,7 +165,19 @@ describe('text-value-editor', () => {
             expect($scope.model).toBe('hello');
         });
 
+        it('should has working emptyAsNull option', () => {
+            valueEditorMocker.create('text', {options: {emptyAsNull: true}});
 
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.model).toBe('hello');
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.model).toBeNull();
+        });
     });
 
     describe('type: textarea', () => {
@@ -303,6 +315,21 @@ describe('text-value-editor', () => {
 
             expect(inputElement.rows).toBe(4);
         });
+
+        it('should has working emptyAsNull option', () => {
+            valueEditorMocker.create('text', {options: {type: 'textarea', emptyAsNull: true}});
+
+            valueEditorMocker.getInputElement<HTMLTextAreaElement>().value = 'hello';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.model).toBe('hello');
+
+            valueEditorMocker.getInputElement<HTMLTextAreaElement>().value = '';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.model).toBeNull();
+        });
+
     });
 
     describe('type: rich-textarea', () => {

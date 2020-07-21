@@ -30,6 +30,10 @@ export class DateValueEditorComponentController extends AbstractValueEditorCompo
         this.startView = this.options.maximumGranularity;
     }
 
+    protected get emptyModel(): string {
+        return '';
+    }
+
     public dateRestriction(dates, view) {
         if (!this.valueEditorController.validations) {
             return;

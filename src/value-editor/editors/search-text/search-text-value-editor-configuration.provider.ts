@@ -2,6 +2,7 @@ import {DefaultOptions} from '../../typings';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../abstract/abstract-value-editor-configuration.provider';
 import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
 import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../common-directives/disable-ngAnimate.directive';
+import {SearchTextValueEditorModel} from './search-text.value-editor.component';
 
 /**
  * @ngdoc type
@@ -27,11 +28,13 @@ export interface SearchTextValueEditorOptions extends ValueEditorOptions {
  *
  * ```javascript
  * {
+ *      customEmptyAsNullCheck: ($value) => ($value?.row ?? '').length === 0
  * }
  * ```
  */
 export const SEARCH_TEXT_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<SearchTextValueEditorOptions & UndocumentedDisableNgAnimateValueEditorInternalOption> = {
-    __forceDisableNgAnimate: false
+    __forceDisableNgAnimate: false,
+    customEmptyAsNullCheck: /*@ngInject*/ ($value: SearchTextValueEditorModel) => ($value?.row ?? '').length === 0
 };
 
 /**

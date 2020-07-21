@@ -1,7 +1,6 @@
 import {IFormController} from 'angular';
 import AbstractTemplateValueEditor from '../abstract/abstract-template-value-editor';
 import {ValueEditorOptions} from '../kp-value-editor/kp-value-editor.component';
-import {PropertyChangeDetection} from '../utils/equals';
 
 export abstract class AbstractMetaValueEditorComponentController<MODEL, OPTIONS extends ValueEditorOptions> extends AbstractTemplateValueEditor<MODEL, OPTIONS> {
 
@@ -31,7 +30,5 @@ export abstract class AbstractMetaValueEditorComponentController<MODEL, OPTIONS 
         };
     }
 
-    protected onOptionsChange(newOptions: OPTIONS, oldOptions: OPTIONS | undefined, optionsChangeDetection: PropertyChangeDetection<OPTIONS> | undefined) {
-        //
-    }
+
 }

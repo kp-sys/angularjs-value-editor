@@ -8,7 +8,6 @@ import {
 } from './password-value-editor-configuration.provider';
 import {PasswordValueEditorLocalizationsService} from './password-value-editor-localization.provider';
 import {TextValueEditorValidations} from '../text/text.value-editor.component';
-import {PropertyChangeDetection} from '../../utils/equals';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 
@@ -32,9 +31,11 @@ export class PasswordValueEditorComponentController extends AbstractValueEditorC
         };
     }
 
-    protected onOptionsChange(newOptions: PasswordValueEditorOptions, oldOptions, whatChanged: PropertyChangeDetection<PasswordValueEditorOptions>) {
-        //
+    protected get emptyModel(): string {
+        return '';
     }
+
+
 
 }
 

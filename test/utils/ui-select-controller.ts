@@ -70,4 +70,12 @@ export default class UISelectController {
 
         return this;
     }
+
+    public clearMultiselect() {
+        let item: HTMLSpanElement;
+        // tslint:disable-next-line:no-conditional-assignment
+        while ((item = this.element.querySelector<HTMLSpanElement>('.ui-select-match .ui-select-match-item .close')) !== null) {
+            item.click();
+        }
+    }
 }

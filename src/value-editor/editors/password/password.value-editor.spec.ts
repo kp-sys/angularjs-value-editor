@@ -151,6 +151,21 @@ describe('password-value-editor', () => {
 
             expect($scope.form.password.$error).toEqual({});
         });
+
+        it('should has working emptyAsNull option', () => {
+            valueEditorMocker.create('password', {options: {emptyAsNull: true}});
+
+            valueEditorMocker.getInputElement().value = 'hello';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.model).toEqual('hello');
+
+            valueEditorMocker.getInputElement().value = '';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.model).toBeNull();
+        });
+
     });
 
     describe('with confirmation', () => {
@@ -263,6 +278,21 @@ describe('password-value-editor', () => {
 
             expect($scope.form.password.$error).toEqual({});
         });
+
+        it('should has working emptyAsNull option', () => {
+            valueEditorMocker.create('password', {options: {withConfirmation: true, emptyAsNull: true}});
+
+            fillBothInputs('hello');
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.model).toEqual('hello');
+
+            fillBothInputs('');
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.model).toBeNull();
+        });
+
     });
 
 });

@@ -59,6 +59,15 @@ class CheckboxesController {
         return Array.from(this.element.querySelectorAll<HTMLDivElement>('[name^="acceptable_"] + div label span')).map((element) => element.textContent);
     }
 
+    public clearSelection() {
+        let item: HTMLInputElement;
+
+        // tslint:disable-next-line:no-conditional-assignment
+        while ((item = this.element.querySelector('[name^="acceptable_"]:checked')) !== null) {
+            item.click();
+        }
+    }
+
 }
 
 describe('acceptable-value-editor', () => {
@@ -509,7 +518,7 @@ describe('acceptable-value-editor', () => {
 
                 controller.openAndSelectNthOption(4);
                 // 4 because selected options disappears from list
-                controller.selectNthOption(4)
+                controller.selectNthOption(4);
 
                 expect($scope.model).toEqual([{value: 'e'}, {value: 'f'}]);
             });
@@ -529,6 +538,27 @@ describe('acceptable-value-editor', () => {
                 const value = new UISelectController(valueEditorMocker.getInputElement<HTMLInputElement>()).getMultipleSelectedValuesAsTexts();
 
                 expect(value).toEqual(['{"value":"c"}', '{"value":"d"}']);
+            });
+
+            it('should has working emptyAsNull option', () => {
+                valueEditorMocker.create('acceptable', {
+                    options: {
+                        acceptableValues: ACCEPTABLE_VALUES,
+                        multiselectable: true,
+                        emptyAsNull: true
+                    }
+                }, true);
+
+                $scope.model = [{value: 'c'}];
+                $scope.$apply();
+
+                const uiSelectController = new UISelectController(valueEditorMocker.getInputElement<HTMLInputElement>());
+
+                expect(uiSelectController.getMultipleSelectedValuesAsTexts()).toEqual(['{"value":"c"}']);
+
+                uiSelectController.clearMultiselect();
+
+                expect($scope.model).toBeNull();
             });
 
 
@@ -789,6 +819,28 @@ describe('acceptable-value-editor', () => {
 
                 expect($scope.model).toEqual([{value: 'd'}]);
                 expect($scope.form.acceptable.$error).toEqual({});
+            });
+
+            it('should has working emptyAsNull option', () => {
+                valueEditorMocker.create('acceptable', {
+                    options: {
+                        acceptableValues: ACCEPTABLE_VALUES,
+                        multiselectable: true,
+                        switchToCheckboxesThreshold: 5,
+                        emptyAsNull: true
+                    }
+                }, true);
+
+                $scope.model = [{value: 'c'}];
+                $scope.$apply();
+
+                const checkboxesController = new CheckboxesController(valueEditorMocker.getInputElement<HTMLInputElement>());
+
+                expect(checkboxesController.getMultipleSelectedValuesAsTexts()).toEqual(['{"value":"c"}']);
+
+                checkboxesController.clearSelection();
+
+                expect($scope.model).toBeNull();
             });
         });
     });

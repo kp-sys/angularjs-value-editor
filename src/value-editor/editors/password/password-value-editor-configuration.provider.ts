@@ -15,7 +15,7 @@ import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.componen
  * Default value: {@link passwordValueEditorDefaultOptions}
  */
 export interface PasswordValueEditorOptions extends ValueEditorOptions {
-    withConfirmation: boolean;
+    withConfirmation?: boolean;
 }
 
 /**
