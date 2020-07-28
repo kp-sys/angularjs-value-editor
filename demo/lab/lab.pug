@@ -1,13 +1,24 @@
 main.container(ng-controller="labController as $ctrl")
 
-    kp-value-editor(
-        type="'list'"
+    form(name="$ctrl.form")
 
-        options="{" +
-            "emptyAsNull: true" +
-        "}"
+        kp-value-editor(
+            type="'text'"
 
-        ng-model="$ctrl.model"
-    )
+            options="{" +
+                "emptyAsNull: false" +
+            "}"
 
+            validations="{" +
+                "async: true" +
+            "}"
+
+            ng-model="$ctrl.model"
+        )
+
+    div Model:
     pre {{$ctrl.model | json}}
+
+    div Form:
+    pre {{$ctrl.form | json}}
+

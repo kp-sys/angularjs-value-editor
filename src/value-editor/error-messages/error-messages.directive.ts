@@ -1,16 +1,13 @@
 import './error-messages.less';
 import * as angular from 'angular';
 import {IAttributes, IAugmentedJQuery, INgModelController, IScope, ITimeoutService} from 'angular';
-import {KpValueEditorComponentController} from '../kp-value-editor/kp-value-editor.component';
+import KpValueEditorComponent, {KpValueEditorComponentController} from '../kp-value-editor/kp-value-editor.component';
 import {
     ValueEditorErrorMessagesLocalizations,
     ValueEditorErrorMessagesLocalizationsService
 } from './error-messages-localization.provider';
 import {AbstractValueEditorLocalizationService} from '../abstract/abstract-value-editor-localization.provider';
-
-interface ErrorMessagesDirectiveScope extends IScope {
-    appendedElements: { [errorName: string]: HTMLElement };
-}
+import bind from 'bind-decorator';
 
 /**
  * @ngdoc directive
@@ -35,53 +32,69 @@ export default class ErrorMessagesDirective {
 
     public restrict = 'A';
     public priority = 1;
-    public require = ['ngModel', '^^kpValueEditor'];
+    public require = [`${ErrorMessagesDirective.directiveName}`, 'ngModel', `^^${KpValueEditorComponent.componentName}`];
 
-    private localize: AbstractValueEditorLocalizationService<ValueEditorErrorMessagesLocalizations>['getLocalization'];
+    public controller = ErrorMessagesDirectiveController;
 
-    /*@ngInject*/
-    constructor(valueEditorErrorMessagesLocalizationsService: ValueEditorErrorMessagesLocalizationsService, private $timeout: ITimeoutService) {
-        this.localize = valueEditorErrorMessagesLocalizationsService.getLocalization.bind(valueEditorErrorMessagesLocalizationsService);
-    }
-
-    public link($scope: ErrorMessagesDirectiveScope, $element: IAugmentedJQuery, $attrs: IAttributes, [ngModelController, kpValueEditorController]: [INgModelController, KpValueEditorComponentController]) {
-        $scope.appendedElements = {};
-
-        const processErrors = () => {
-            if ((ngModelController.$touched || (kpValueEditorController.valueEditorInstance.options.forceShowErrors ?? false)) &&
-                getSerializedErrors(ngModelController.$error) !== getSerializedErrors($scope.appendedElements)) {
-
-                const errorsToRemove = arraySubtraction(Object.keys($scope.appendedElements), Object.keys(ngModelController.$error));
-                const errorsToAdd = arraySubtraction(Object.keys(ngModelController.$error), Object.keys($scope.appendedElements));
-
-                errorsToRemove.forEach((error) => {
-                    $scope.appendedElements[error].classList.add('not-visible');
-                    this.$timeout(() => {
-                        $scope.appendedElements[error]?.remove();
-                        delete $scope.appendedElements[error];
-                    }, 150);
-                });
-
-                errorsToAdd.forEach((error, index) => {
-                    const element = angular.element(template`custom class: ${$attrs.errorMessagesCustomClass ?? ''}, right position: ${20 * index}, message: ${this.localize(error)}`);
-                    $scope.appendedElements[error] = element[0];
-                    kpValueEditorController.$element.after(element);
-                    this.$timeout(() => element.removeClass('not-visible'));
-                });
-            }
-
-            return true;
-        };
+    public link($scope: IScope, $element: IAugmentedJQuery, $attrs: IAttributes, [errorMessagesController, ngModelController, kpValueEditorController]: [ErrorMessagesDirectiveController, INgModelController, KpValueEditorComponentController]) {
+        errorMessagesController.setControllers(kpValueEditorController, ngModelController);
 
         const removeWatcher = $scope.$watch(() => ngModelController.$touched, (isTouched) => {
             if (isTouched) {
-                processErrors();
+                errorMessagesController.processErrors();
                 removeWatcher();
             }
         });
 
-        ngModelController.$validators.__validationMessageListener = processErrors;
+        ngModelController.$validators.__validationMessageListener = errorMessagesController.processErrors;
     }
+}
+
+export class ErrorMessagesDirectiveController {
+    private kpValueEditorController: KpValueEditorComponentController;
+    private ngModelController: INgModelController;
+    private localize: AbstractValueEditorLocalizationService<ValueEditorErrorMessagesLocalizations>['getLocalization'];
+    private appendedElements: { [errorName: string]: HTMLElement };
+
+    /*@ngInject*/
+    constructor(private $timeout: ITimeoutService,
+                private $attrs: IAttributes,
+                valueEditorErrorMessagesLocalizationsService: ValueEditorErrorMessagesLocalizationsService) {
+        this.localize = valueEditorErrorMessagesLocalizationsService.getLocalization.bind(valueEditorErrorMessagesLocalizationsService);
+        this.appendedElements = {};
+    }
+
+    public setControllers(kpValueEditorController: KpValueEditorComponentController, ngModelController: INgModelController) {
+        this.kpValueEditorController = kpValueEditorController;
+        this.ngModelController = ngModelController;
+    }
+
+    @bind
+    public processErrors() {
+        if ((this.ngModelController.$touched || (this.kpValueEditorController.valueEditorInstance.options.forceShowErrors ?? false)) &&
+            getSerializedErrors(this.ngModelController.$error) !== getSerializedErrors(this.appendedElements)) {
+
+            const errorsToRemove = arraySubtraction(Object.keys(this.appendedElements), Object.keys(this.ngModelController.$error));
+            const errorsToAdd = arraySubtraction(Object.keys(this.ngModelController.$error), Object.keys(this.appendedElements));
+
+            errorsToRemove.forEach((error) => {
+                this.appendedElements[error].classList.add('not-visible');
+                this.$timeout(() => {
+                    this.appendedElements[error]?.remove();
+                    delete this.appendedElements[error];
+                }, 150);
+            });
+
+            errorsToAdd.forEach((error, index) => {
+                const element = angular.element(template`custom class: ${this.$attrs.errorMessagesCustomClass ?? ''}, right position: ${20 * index}, message: ${this.localize(error)}`);
+                this.appendedElements[error] = element[0];
+                this.kpValueEditorController.$element.after(element);
+                this.$timeout(() => element.removeClass('not-visible'));
+            });
+        }
+
+        return true;
+    };
 }
 
 function getErrorType(index: number, errorsObject: {}): string {

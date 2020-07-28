@@ -15,7 +15,8 @@
         "member-ordering": false,
         "prefer-template": true,
         "max-classes-per-file": [true, 2],
-        "array-type": [true, "array-simple"]
+        "array-type": [true, "array-simple"],
+        "arrow-parens": true
     },
     "rulesDirectory": []
 }

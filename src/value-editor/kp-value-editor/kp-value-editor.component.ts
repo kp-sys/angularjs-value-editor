@@ -21,6 +21,8 @@ import KpUniversalFormComponent, {KpUniversalFormComponentController} from '../k
 import {ValueEditorLocalizations} from '../abstract/abstract-value-editor-localization.provider';
 import KpValueEditorForceSettingsComponent, {KpValueEditorForceSettingsComponentController} from '../kp-value-editor-force-settings/kp-value-editor-force-settings.component';
 import {KpValueEditorRegistrationService} from './kp-value-editor-registration.provider';
+import {Component} from '@kpsys/angularjs-register';
+import {KpAsyncValidationOptions} from '../kp-async-validation/kp-async-validation.directive';
 
 export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS extends ValueEditorOptions = ValueEditorOptions, EDITORVALIDATIONS extends ValueEditorValidations = ValueEditorValidations>
     extends NgModelConnector<MODEL>
@@ -168,7 +170,7 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
  * - `text`: {@link textValueEditor}
  * - `number`: {@link numberValueEditor}
  */
-export default class KpValueEditorComponent {
+export default class KpValueEditorComponent implements Component<ValueEditorBindings> {
     public static componentName = 'kpValueEditor';
 
     public require = {
@@ -188,7 +190,7 @@ export default class KpValueEditorComponent {
         validations: '<?',
         options: '<?',
         localizations: '<?'
-    };
+    } as const;
 
     public controller = KpValueEditorComponentController;
 
@@ -200,10 +202,12 @@ export default class KpValueEditorComponent {
  * @name ValueEditorValidations
  * @module angularjs-value-editor
  *
- * @property {boolean=} required Optional required validation.
+ * @property {boolean} required Optional required validation.
+ * @property {KpAsyncValidationOptions} async Boolean or definition for remote validation.
  */
 export interface ValueEditorValidations {
     required?: boolean;
+    async?: boolean | KpAsyncValidationOptions;
 }
 
 /**

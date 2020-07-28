@@ -35,6 +35,7 @@ import KpUniversalFormComponent from './kp-universal-form/kp-universal-form.comp
 import errorMessagesModule from './error-messages/error-messages.module';
 import PatternDescriptionTooltipDirective from './common-directives/pattern-description-tooltip.directive';
 import DisableNgAnimateDirective from './common-directives/disable-ngAnimate.directive';
+import asyncValidationsModule from './kp-async-validation/kp-async-validation.module';
 // COMMON SERVICES AND PROVIDERS
 import {EmptyConfigurationService} from './abstract/abstract-value-editor-component-controller';
 import aliasesModule from './aliases/aliases.module';
@@ -89,7 +90,8 @@ export default register('angularjs-value-editor', [
     listValueEditorModule,
     objectValueEditorModule,
     errorMessagesModule,
-    valueEditorForceSettingsModule
+    valueEditorForceSettingsModule,
+    asyncValidationsModule
 ])
     .constant('loadingSpinnerTemplateUrl', LOADING_SPINNER_TPL_URL)
     .config(valueEditorsConfig)

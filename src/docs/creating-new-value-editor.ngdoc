@@ -220,6 +220,24 @@ Template has to contain some "main" input with followed attributes:
     >
  ```
 
+### Error messages
+
+You should try show error some message and if You have input which doesn't cooperate with error messages well, You should add custom class to error-message 
+element and add some styles to fix it.
+
+See <a href="#/api/angularjs-value-editor.error-messages/directive/errorMessages">error-messages's</a> `error-messages-custom-class` attribute.
+
+### Validations
+
+If You want to add some validation to Your value-editor, do it by standard AngularJS way. 
+
+You have to add validation to main input (if You have more inputs in the template, it is the input which has `name` attribute).
+If Your value-editor has complicated template, You should add some validation helper input. See `acceptable-root.value-editor.tpl.pug`.
+
+First of all, look into `ValueEditorErrorMessagesLocalizations` interface, if You find appropriate validation name.
+If not, create Your own validation directive and create `interface` to Your validation like in `model-equals.directive.ts`.
+Then add that interface to `extends` section to `ValueEditorErrorMessagesLocalizations` interface.  
+
 ### Module - Getting things together
 
 Last of all it is recommended to put all this files together to one module file.

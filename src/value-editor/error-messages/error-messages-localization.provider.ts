@@ -74,6 +74,7 @@ export interface ValueEditorErrorMessagesLocalizations extends ValueEditorLocali
     ValidationsToLocalizations<ListRequiredValidationHelper>,
     ValidationsToLocalizations<PasswordEqualsValidation> {
     required;
+    async;
     minlength;
     maxlength;
     pattern;
@@ -113,6 +114,7 @@ export interface ValueEditorErrorMessagesLocalizations extends ValueEditorLocali
  */
 export const VALUE_EDITOR_ERROR_MESSAGES_DEFAULT_LOCALIZATIONS: Readonly<ValueEditorErrorMessagesLocalizations> = Object.freeze({
     required: 'This field is required',
+    async: 'Error',
     minlength: 'Too short',
     maxlength: 'Too long',
     pattern: 'Input does not match pattern',
