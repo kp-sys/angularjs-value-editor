@@ -4,14 +4,14 @@ import KpValueEditorForceSettingComponent from './kp-value-editor-force-setting.
 
 /**
  * @ngdoc module
- * @name angularjs-value-editors.force-settings
- * @module angularjs-value-editors.force-settings
+ * @name angularjs-value-editor.force-settings
+ * @module angularjs-value-editor.force-settings
  *
  * @description
  *
  */
 
-export default register('angularjs-value-editors.force-settings')
+export default register('angularjs-value-editor.force-settings')
     .component(KpValueEditorForceSettingsComponent.componentName, KpValueEditorForceSettingsComponent)
     .component(KpValueEditorForceSettingComponent.componentName, KpValueEditorForceSettingComponent)
     .name();

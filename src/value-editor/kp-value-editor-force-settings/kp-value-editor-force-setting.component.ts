@@ -30,7 +30,7 @@ export class KpValueEditorForceSettingComponentController<OPTIONS, VALIDATIONS> 
 /**
  * @ngdoc component
  * @name kpValueEditorForceSetting
- * @module angularjs-value-editors.force-settings
+ * @module angularjs-value-editor.force-settings
  *
  * @template OPTIONS
  * @template VALIDATIONS

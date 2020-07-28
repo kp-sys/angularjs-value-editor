@@ -44,7 +44,7 @@ export class KpValueEditorForceSettingsComponentController implements IOnDestroy
 /**
  * @ngdoc component
  * @name kpValueEditorForceSettings
- * @module angularjs-value-editors.force-settings
+ * @module angularjs-value-editor.force-settings
  *
  * @description
  *  This component allows to force settings of value-editor.

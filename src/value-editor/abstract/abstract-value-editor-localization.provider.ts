@@ -1,23 +1,15 @@
 /**
- * @ngdoc provider
- * @name AbstractValueEditorLocalizationProvider
+ * @ngdoc service
+ * @name AbstractValueEditorLocalizationService
  * @module angularjs-value-editor
  *
- * @abstract
- *
  * @description
- * Generic provider for value editor localizations.
+ * Generic service for value editor localizations.
  */
-export default abstract class AbstractValueEditorLocalizationProvider<LOC extends ValueEditorLocalizations> {
-    private localizations: LOC;
-
-    protected constructor(defaultLocalizations: Required<Readonly<LOC>>) {
-        this.localizations = Object.assign({}, defaultLocalizations);
-    }
-
+export interface AbstractValueEditorLocalizationService<LOC extends ValueEditorLocalizations> {
     /**
      * @ngdoc method
-     * @name AbstractValueEditorLocalizationProvider#setLocalization
+     * @name AbstractValueEditorLocalizationService#setLocalization
      * @module angularjs-value-editor
      *
      * @param {string} code Message code.
@@ -26,13 +18,11 @@ export default abstract class AbstractValueEditorLocalizationProvider<LOC extend
      * @description
      * Sets one localization message to given parameter.
      */
-    public setLocalization<KEY extends keyof LOC>(code: KEY, message: LOC[KEY]) {
-        this.localizations[code] = message;
-    }
+    setLocalization<KEY extends keyof LOC>(code: KEY, message: LOC[KEY]): void;
 
     /**
      * @ngdoc method
-     * @name AbstractValueEditorLocalizationProvider#setAll
+     * @name AbstractValueEditorLocalizationService#setAll
      * @module angularjs-value-editor
      *
      * @param {ValueEditorLocalizations} localizations
@@ -40,13 +30,11 @@ export default abstract class AbstractValueEditorLocalizationProvider<LOC extend
      * @description
      * Sets localizations at once.
      */
-    public setAll(localizations: LOC) {
-        this.localizations = Object.assign({}, localizations);
-    }
+    setAll(localizations: LOC): void;
 
     /**
      * @ngdoc method
-     * @name AbstractValueEditorLocalizationProvider#getLocalization
+     * @name AbstractValueEditorLocalizationService#getLocalization
      * @module angularjs-value-editor
      *
      * @param {string} code Wanted localization code.
@@ -56,13 +44,11 @@ export default abstract class AbstractValueEditorLocalizationProvider<LOC extend
      * @description
      * Returns specific localization message.
      */
-    public getLocalization<KEY extends keyof LOC>(code: KEY): LOC[KEY] | KEY {
-        return this.localizations[code] ?? code;
-    }
+    getLocalization<KEY extends keyof LOC>(code: KEY): LOC[KEY] | KEY;
 
     /**
      * @ngdoc method
-     * @name AbstractValueEditorLocalizationProvider#getAll
+     * @name AbstractValueEditorLocalizationService#getAll
      * @module angularjs-value-editor
      *
      * @returns {ValueEditorLocalizations} All messages.
@@ -70,6 +56,38 @@ export default abstract class AbstractValueEditorLocalizationProvider<LOC extend
      * @description
      * Returns all localization messages.
      */
+    getAll(): LOC;
+}
+
+/**
+ * @ngdoc provider
+ * @name AbstractValueEditorLocalizationProvider
+ * @module angularjs-value-editor
+ *
+ * @abstract
+ *
+ * @description
+ * All methods from {@link AbstractValueEditorLocalizationService} work well in this provider.
+ */
+export default abstract class AbstractValueEditorLocalizationProvider<LOC extends ValueEditorLocalizations> implements AbstractValueEditorLocalizationService<LOC> {
+    private localizations: LOC;
+
+    protected constructor(defaultLocalizations: Required<Readonly<LOC>>) {
+        this.localizations = Object.assign({}, defaultLocalizations);
+    }
+
+    public setLocalization<KEY extends keyof LOC>(code: KEY, message: LOC[KEY]) {
+        this.localizations[code] = message;
+    }
+
+    public setAll(localizations: LOC) {
+        this.localizations = Object.assign({}, localizations);
+    }
+
+    public getLocalization<KEY extends keyof LOC>(code: KEY): LOC[KEY] | KEY {
+        return this.localizations[code] ?? code;
+    }
+
     public getAll(): LOC {
         return Object.assign({}, this.localizations);
     }
@@ -95,18 +113,4 @@ export default abstract class AbstractValueEditorLocalizationProvider<LOC extend
  */
 export interface ValueEditorLocalizations {
     [key: string]: string;
-}
-
-/**
- * @ngdoc service
- * @name AbstractValueEditorLocalizationService
- * @module angularjs-value-editor
- *
- * @abstract
- *
- * @description
- * See {@link AbstractValueEditorLocalizationProvider}
- */
-export type AbstractValueEditorLocalizationService<LOC extends ValueEditorLocalizations> = {
-    [METHOD in keyof AbstractValueEditorLocalizationProvider<LOC>]: AbstractValueEditorLocalizationProvider<LOC>[METHOD];
 }

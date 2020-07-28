@@ -2,27 +2,23 @@ import {DefaultOptions} from '../typings';
 import {AliasesServiceProvider, CustomValueEditorType, DEFAULT_ALIAS} from '../aliases/aliases.service';
 
 /**
- * @ngdoc provider
- * @name AbstractValueEditorConfigurationProvider
+ * @ngdoc service
+ * @name AbstractValueEditorConfigurationService
  * @module angularjs-value-editor
  *
  * @template CONFIGURATION
  *
- * @description
- * Abstract provider for configuring editors options.
+ * @abstract
  *
- * Generic parameter `CONFIGURATION` is current value editor options type.
+ * @description
+ * Abstract service for configuring editors options.
+ *
+ * The generic parameter `CONFIGURATION` is current value editor options type.
  */
-export default abstract class AbstractValueEditorConfigurationProvider<CONFIGURATION> implements ConfigurationBuilder<CONFIGURATION> {
-    private currentConfiguration: Map<CustomValueEditorType, DefaultOptions<CONFIGURATION>> = new Map();
-
-    protected constructor(private aliasesServiceProvider: AliasesServiceProvider, private readonly defaultConfiguration: DefaultOptions<CONFIGURATION>) {
-        this.currentConfiguration.set(DEFAULT_ALIAS, defaultConfiguration);
-    }
-
+export interface AbstractValueEditorConfigurationService<CONFIGURATION> {
     /**
      * @ngdoc method
-     * @name AbstractValueEditorConfigurationProvider#forAlias
+     * @name AbstractValueEditorConfigurationService#forAlias
      * @module angularjs-value-editor
      *
      * @param {CustomValueEditorType} alias Alias
@@ -32,6 +28,94 @@ export default abstract class AbstractValueEditorConfigurationProvider<CONFIGURA
      * @description
      * This method is used for aliasing configuration.
      */
+    forAlias(alias: CustomValueEditorType | 'DEFAULT'): ConfigurationBuilder<CONFIGURATION>;
+
+    /**
+     * @ngdoc method
+     * @name AbstractValueEditorConfigurationService#getDefaults
+     * @module angularjs-value-editor
+     *
+     * @returns {DefaultOptions<CONFIGURATION>} Default value editor options.
+     *
+     * @description
+     * Returns default value editor options.
+     *
+     */
+    getDefaults(): DefaultOptions<CONFIGURATION>;
+
+    /**
+     * @ngdoc method
+     * @name AbstractValueEditorConfigurationService#getConfiguration
+     * @module angularjs-value-editor
+     *
+     * @returns {DefaultOptions<CONFIGURATION>} Current value editor options.
+     *
+     * @description
+     * Returns current value editor options.
+     */
+    getConfiguration(): DefaultOptions<CONFIGURATION>;
+
+    /**
+     * @ngdoc method
+     * @name AbstractValueEditorConfigurationService#setConfiguration
+     * @module angularjs-value-editor
+     *
+     * @param {Partial<CONFIGURATION>} configuration New value editor configuration.
+     *
+     * @returns {DefaultOptions<CONFIGURATION>} Complete new value editor configuration.
+     *
+     * @description
+     * Sets new value editor configuration.
+     */
+    setConfiguration(configuration: Partial<CONFIGURATION>): DefaultOptions<CONFIGURATION>;
+
+    /**
+     * @ngdoc method
+     * @name AbstractValueEditorConfigurationService#setAliasedConfiguration
+     * @module angularjs-value-editor
+     *
+     * @param {CustomValueEditorType} alias Alias
+     * @param {Partial<CONFIGURATION>} configuration New value editor configuration.
+     *
+     * @returns {DefaultOptions<CONFIGURATION>} Complete new value editor configuration for specified alias.
+     *
+     * @description
+     * Sets new value editor configuration for specific alias.
+     */
+    setAliasedConfiguration(alias: CustomValueEditorType, configuration: Partial<CONFIGURATION>): DefaultOptions<CONFIGURATION>;
+
+    /**
+     * @ngdoc method
+     * @name AbstractValueEditorConfigurationService#getAliasedConfiguration
+     * @module angularjs-value-editor
+     *
+     * @param {CustomValueEditorType} alias Alias
+     *
+     * @returns {DefaultOptions<CONFIGURATION>} Complete value editor configuration for specified alias.
+     *
+     * @description
+     * Get value editor configuration for specific alias.
+     */
+    getAliasedConfiguration(alias: CustomValueEditorType): DefaultOptions<CONFIGURATION>;
+}
+
+/**
+ * @ngdoc provider
+ * @name AbstractValueEditorConfigurationProvider
+ * @module angularjs-value-editor
+ *
+ * @template CONFIGURATION
+ *
+ * @description
+ * All methods from {@link AbstractValueEditorConfigurationService} is available in this provider.
+ */
+export default abstract class AbstractValueEditorConfigurationProvider<CONFIGURATION> implements ConfigurationBuilder<CONFIGURATION>, AbstractValueEditorConfigurationService<CONFIGURATION> {
+    private currentConfiguration: Map<CustomValueEditorType, DefaultOptions<CONFIGURATION>> = new Map();
+
+    protected constructor(private aliasesServiceProvider: AliasesServiceProvider, private readonly defaultConfiguration: DefaultOptions<CONFIGURATION>) {
+        this.currentConfiguration.set(DEFAULT_ALIAS, defaultConfiguration);
+    }
+
     public forAlias(alias: CustomValueEditorType | 'DEFAULT'): ConfigurationBuilder<CONFIGURATION> {
         let fallbackedAlias = alias;
         if (!this.aliasesServiceProvider.isAlias(alias)) {
@@ -44,47 +128,14 @@ export default abstract class AbstractValueEditorConfigurationProvider<CONFIGURA
         };
     }
 
-    /**
-     * @ngdoc method
-     * @name AbstractValueEditorConfigurationProvider#getDefaults
-     * @module angularjs-value-editor
-     *
-     * @returns {DefaultOptions<CONFIGURATION>} Default value editor options.
-     *
-     * @description
-     * Returns default value editor options.
-     *
-     */
     public getDefaults(): DefaultOptions<CONFIGURATION> {
         return Object.assign({}, this.defaultConfiguration);
     }
 
-    /**
-     * @ngdoc method
-     * @name AbstractValueEditorConfigurationProvider#getConfiguration
-     * @module angularjs-value-editor
-     *
-     * @returns {DefaultOptions<CONFIGURATION>} Current value editor options.
-     *
-     * @description
-     * Returns current value editor options.
-     */
     public getConfiguration(): DefaultOptions<CONFIGURATION> {
         return this.getAliasedConfiguration(DEFAULT_ALIAS);
     }
 
-    /**
-     * @ngdoc method
-     * @name AbstractValueEditorConfigurationProvider#setConfiguration
-     * @module angularjs-value-editor
-     *
-     * @param {Partial<CONFIGURATION>} configuration New value editor configuration.
-     *
-     * @returns {DefaultOptions<CONFIGURATION>} Complete new value editor configuration.
-     *
-     * @description
-     * Sets new value editor configuration.
-     */
     public setConfiguration(configuration: Partial<CONFIGURATION>): DefaultOptions<CONFIGURATION> {
         return this.setAliasedConfiguration(DEFAULT_ALIAS, configuration);
     }
@@ -93,29 +144,15 @@ export default abstract class AbstractValueEditorConfigurationProvider<CONFIGURA
         return this;
     }
 
-    private setAliasedConfiguration(alias: CustomValueEditorType, configuration: Partial<CONFIGURATION>): DefaultOptions<CONFIGURATION> {
+    public setAliasedConfiguration(alias: CustomValueEditorType, configuration: Partial<CONFIGURATION>): DefaultOptions<CONFIGURATION> {
         this.currentConfiguration.set(alias, Object.assign<{}, DefaultOptions<CONFIGURATION>, Partial<CONFIGURATION>>({}, this.currentConfiguration.get(alias), configuration));
 
         return this.currentConfiguration.get(alias);
     }
 
-    private getAliasedConfiguration(alias: CustomValueEditorType): DefaultOptions<CONFIGURATION> {
+    public getAliasedConfiguration(alias: CustomValueEditorType): DefaultOptions<CONFIGURATION> {
         return Object.assign({}, this.getDefaults(), this.currentConfiguration.get(alias));
     }
-}
-
-/**
- * @ngdoc service
- * @name AbstractValueEditorConfigurationService
- * @module angularjs-value-editor
- *
- * @abstract
- *
- * @description
- * See {@link AbstractValueEditorConfigurationProvider}
- */
-export type AbstractValueEditorConfigurationService<CONFIGURATION> = {
-    [METHOD in keyof AbstractValueEditorConfigurationProvider<CONFIGURATION>]: AbstractValueEditorConfigurationProvider<CONFIGURATION>[METHOD];
 }
 
 /**
