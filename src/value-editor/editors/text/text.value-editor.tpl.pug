@@ -21,7 +21,7 @@
         ng-maxlength="$ctrl.valueEditorController.validations.maxlength"
         ng-pattern="$ctrl.valueEditorController.validations.pattern"
 
-        kp-async-validation="$ctrl.validations.async"
+        kp-async-validation="$ctrl.valueEditorController.validations.async"
 
         pattern-description-tooltip
 
@@ -82,6 +82,8 @@ textarea.form-control(
     ng-maxlength="$ctrl.valueEditorController.validations.maxlength"
     ng-pattern="$ctrl.valueEditorController.validations.pattern"
 
+    kp-async-validation="$ctrl.valueEditorController.validations.async"
+
     error-messages
 
     data-main-input
@@ -106,6 +108,8 @@ textarea.form-control(
     ng-minlength="$ctrl.valueEditorController.validations.minlength"
     ng-maxlength="$ctrl.valueEditorController.validations.maxlength"
     ng-pattern="$ctrl.valueEditorController.validations.pattern"
+
+    kp-async-validation="$ctrl.valueEditorController.validations.async"
 
     error-messages
 

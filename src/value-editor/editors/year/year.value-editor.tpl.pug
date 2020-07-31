@@ -14,6 +14,7 @@ kp-value-editor(
     validations="{" +
         "minDate: $ctrl.convertYearToISO($ctrl.valueEditorController.validations.minDate), " +
         "maxDate: $ctrl.convertYearToISO($ctrl.valueEditorController.validations.maxDate), " +
-        "required: $ctrl.valueEditorController.validations.required" +
+        "required: $ctrl.valueEditorController.validations.required," +
+        "async: $ctrl.valueEditorController.validations.async" +
     "}"
 )

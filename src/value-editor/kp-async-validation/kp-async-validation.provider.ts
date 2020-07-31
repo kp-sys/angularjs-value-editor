@@ -7,11 +7,11 @@ import {Injectable, IPromise} from 'angular';
  *
  * @description
  * ```
- * type ValidationFunction = Injectable<((...args: any[]) => IPromise<string>)>;
+ * type ValidationFunction = Injectable<((...args: any[]) => IPromise<any>)>;
  * ```
  */
 // tslint:disable-next-line:ban-types
-type ValidationFunction = Injectable<((...args: any[]) => IPromise<never>)>;
+type ValidationFunction = Injectable<((...args: any[]) => IPromise<any>)>;
 
 /**
  * @ngdoc service
@@ -65,6 +65,7 @@ export class KpAsyncValidationServiceProvider {
      *
      * | Injectable&nbsp;argument&nbsp;name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description                                                                           |
      * | ------------------------ | ----------------------------------------------------------------------------------------------- |
+     * | `$propertyName`          | Property name passed from `editorName` attribute of kpValueEditor component                     |
      * | `$model`                 | Current model                                                                                   |
      * | `$formModel`             | If `sendWholeForm` {@link type:KpAsyncValidationOptions option} is true, it contains form model |
      * | `$additionalParameters`  | Current model                                                                                   |

@@ -80,13 +80,14 @@ export default class KpAsyncValidationDirective {
 
         if (options) {
             options = Object.assign({}, ASYNC_VALIDATION_DEFAULT_OPTIONS, options);
-            ngModelController.$asyncValidators.async = this.validate(options, valueEditorController.formController, errorMessagesController, ngModelController);
+            ngModelController.$asyncValidators.async = this.validate(options, valueEditorController.formController, errorMessagesController, ngModelController, valueEditorController.editorName);
         }
     }
 
     @bind
-    private validate(options: KpAsyncValidationOptions, formController: IFormController, errorMessagesController: ErrorMessagesDirectiveController, ngModelController: INgModelController): ($model: any) => IPromise<string> {
+    private validate(options: KpAsyncValidationOptions, formController: IFormController, errorMessagesController: ErrorMessagesDirectiveController, ngModelController: INgModelController, $propertyName: string): ($model: any) => IPromise<string> {
         return ($model) => this.$injector.invoke(this.kpAsyncValidationService.getValidationsFunction(), null, {
+            $propertyName,
             $model,
             $formModel: options?.sendWholeForm ? this.getFormModel(formController) : undefined,
             $additionalParameters: options?.additionalParameters

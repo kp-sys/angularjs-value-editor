@@ -10,7 +10,11 @@ main.container(ng-controller="labController as $ctrl")
             "}"
 
             validations="{" +
-                "async: true" +
+                "async: {" +
+                    "additionalParameters: {" +
+                        "validationUrl: ''" +
+                    "}" +
+                "}" +
             "}"
 
             ng-model="$ctrl.model"
