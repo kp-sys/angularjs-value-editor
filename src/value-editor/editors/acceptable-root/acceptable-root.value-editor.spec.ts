@@ -1,30 +1,30 @@
 import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
-import {RangeValueEditorBindings, RangeValueEditorModel} from './range.value-editor.component';
+import {AcceptableRootValueEditorBindings} from './acceptable-root.value-editor.component';
 
-describe('range-value-editor', () => {
+describe('acceptable-root-value-editor', () => {
 
-    let valueEditorMocker: ValueEditorMocker<RangeValueEditorBindings>;
-    let $scope: ScopeWithBindings<RangeValueEditorModel, RangeValueEditorBindings>;
+    let valueEditorMocker: ValueEditorMocker<AcceptableRootValueEditorBindings<any>>;
+    let $scope: ScopeWithBindings<{}, AcceptableRootValueEditorBindings<any>>;
 
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
         inject(/*@ngInject*/ ($compile, $rootScope) => {
             $scope = $rootScope.$new();
-            valueEditorMocker = new ValueEditorMocker<RangeValueEditorBindings>($compile, $scope);
+            valueEditorMocker = new ValueEditorMocker<AcceptableRootValueEditorBindings<any>>($compile, $scope);
         });
     });
 
     it('should render component', () => {
-        valueEditorMocker.create('range');
+        valueEditorMocker.create('acceptable-root');
 
         expect(valueEditorMocker.getInputElement()).not.toBeNull();
     });
 
     xit('should change model on input', () => {
-        valueEditorMocker.create('range');
+        valueEditorMocker.create('acceptable-root');
 
         valueEditorMocker.getInputElement().value = 'hello';
         valueEditorMocker.triggerHandlerOnInput('input');
@@ -35,7 +35,7 @@ describe('range-value-editor', () => {
     xit('should change value if model is changed', () => {
         $scope.model = {from: 10, to: 20};
 
-        valueEditorMocker.create('range');
+        valueEditorMocker.create('acceptable-root');
 
         const input = valueEditorMocker.getInputElement();
         expect(input.value).toBe('hello');
@@ -46,26 +46,24 @@ describe('range-value-editor', () => {
         expect(input.value).toBe('world');
     });
 
-    // nothing to require
     xit('should has working required validation', () => {
-        valueEditorMocker.create('range', {
-            editorName: 'range',
+        valueEditorMocker.create('acceptable-root', {
+            editorName: 'acceptable-root',
             validations: {required: true}
         });
 
         $scope.$apply();
 
-        expect($scope.form.range.$error).toEqual({required: true});
+        expect($scope.form['acceptable-root'].$error).toEqual({required: true});
 
         $scope.model = {from: 10, to: 20};
         $scope.$apply();
 
-        expect($scope.form.range.$error).toEqual({});
+        expect($scope.form['acceptable-root'].$error).toEqual({});
     });
 
-    // component does not support disabling for this time
     xit('should be disabled', () => {
-        valueEditorMocker.create('range', {isDisabled: false});
+        valueEditorMocker.create('acceptable-root', {isDisabled: false});
         const input = valueEditorMocker.getInputElement<HTMLInputElement>();
 
         expect(input.disabled).toBe(false);
