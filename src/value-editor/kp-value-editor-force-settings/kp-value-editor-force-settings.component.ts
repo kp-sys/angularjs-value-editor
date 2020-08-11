@@ -1,18 +1,25 @@
 import {Component} from '@kpsys/angularjs-register';
 import {ValueEditorOptions, ValueEditorValidations} from '../kp-value-editor/kp-value-editor.component';
 import {CustomValueEditorType} from '../aliases/aliases.service';
+import * as angular from 'angular';
 import {IOnDestroy} from 'angular';
+import {
+    DEFAULT_MERGE_STRATEGY,
+    KpValueEditorForceSettingsMergeStrategy
+} from './kp-value-editor-force-setting.component';
 
 export const ALL_TYPES = 'ALL';
 
 class OptionsAndValidations<OPTIONS extends ValueEditorOptions = ValueEditorOptions, VALIDATIONS extends ValueEditorValidations = ValueEditorValidations> {
 
-    public options?: OPTIONS;
-    public validations?: VALIDATIONS;
+    public options: OPTIONS;
+    public validations: VALIDATIONS;
+    public strategy: KpValueEditorForceSettingsMergeStrategy;
 
-    constructor(options: OPTIONS, validations: VALIDATIONS) {
+    constructor(options: OPTIONS, validations: VALIDATIONS, strategy: KpValueEditorForceSettingsMergeStrategy) {
         this.options = options;
         this.validations = validations;
+        this.strategy = strategy;
     }
 }
 
@@ -28,16 +35,23 @@ export class KpValueEditorForceSettingsComponentController implements IOnDestroy
         this.settings = undefined;
     }
 
-    public getOptionsForTypeOrEmpty<OPTIONS extends ValueEditorOptions>(type: CustomValueEditorType): OPTIONS {
-        return Object.assign({}, (this.settings.get(ALL_TYPES)?.options ?? {}), this.settings.get(type)?.options ?? {}) as OPTIONS;
-    }
-
     public getValidationsForTypeOrEmpty<VALIDATIONS extends ValueEditorOptions>(type: CustomValueEditorType): VALIDATIONS {
         return (this.settings.get(type)?.validations ?? {}) as VALIDATIONS;
     }
 
-    public addNewSettings<OPTIONS extends ValueEditorOptions = ValueEditorOptions, VALIDATIONS extends ValueEditorValidations = ValueEditorValidations>(type: CustomValueEditorType, options: OPTIONS, validations?: VALIDATIONS) {
-        this.settings.set(type, new OptionsAndValidations<OPTIONS, VALIDATIONS>(options, validations));
+    public mergeOptionsForType<OPTIONS extends ValueEditorOptions = ValueEditorOptions>(type: CustomValueEditorType, options: OPTIONS): OPTIONS {
+        const mergeStrategy = this.settings.get(type)?.strategy ?? DEFAULT_MERGE_STRATEGY;
+        const mergeFunction = mergeStrategy === 'merge' ? angular.merge : Object.assign;
+        return mergeFunction({}, options, this.getOptionsForTypeOrEmpty(type, mergeStrategy));
+    }
+
+    public addNewSettings<OPTIONS extends ValueEditorOptions = ValueEditorOptions, VALIDATIONS extends ValueEditorValidations = ValueEditorValidations>(type: CustomValueEditorType, options: OPTIONS, validations: VALIDATIONS, strategy: KpValueEditorForceSettingsMergeStrategy) {
+        this.settings.set(type, new OptionsAndValidations<OPTIONS, VALIDATIONS>(options, validations, strategy));
+    }
+
+    private getOptionsForTypeOrEmpty<OPTIONS extends ValueEditorOptions>(type: CustomValueEditorType, mergeStrategy: KpValueEditorForceSettingsMergeStrategy): OPTIONS {
+        const mergeFunction = mergeStrategy === 'merge' ? angular.merge : Object.assign;
+        return mergeFunction({}, (this.settings.get(ALL_TYPES)?.options ?? {}), this.settings.get(type)?.options ?? {}) as OPTIONS;
     }
 }
 

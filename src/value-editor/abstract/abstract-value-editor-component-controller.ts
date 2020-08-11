@@ -87,7 +87,13 @@ export default abstract class AbstractValueEditorComponentController<MODEL, OPTI
     protected abstract get emptyModel(): MODEL;
 
     private processNewOptions(newOptions: OPTIONS): OPTIONS {
-        return angular.merge({}, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration(), newOptions, this.valueEditorController.forceSettingsController?.getOptionsForTypeOrEmpty(this.valueEditorController.type) ?? {});
+        let options = angular.merge({}, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration(), newOptions);
+
+        if (this.valueEditorController.forceSettingsController) {
+            options = this.valueEditorController.forceSettingsController.mergeOptionsForType(this.valueEditorController.type, options);
+        }
+
+        return options;
     }
 
     @bind

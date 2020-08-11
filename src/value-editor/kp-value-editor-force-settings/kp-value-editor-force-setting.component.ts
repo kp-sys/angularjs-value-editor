@@ -11,6 +11,7 @@ export class KpValueEditorForceSettingComponentController<OPTIONS, VALIDATIONS> 
     public options: OPTIONS;
     public type: CustomValueEditorType;
     public validations: VALIDATIONS;
+    public strategy: KpValueEditorForceSettingsMergeStrategy;
 
     public kpValueEditorForceSettingsComponentController: KpValueEditorForceSettingsComponentController;
 
@@ -23,7 +24,7 @@ export class KpValueEditorForceSettingComponentController<OPTIONS, VALIDATIONS> 
             this.$log.warn('Setting of validations is not implemented yet!');
         }
 
-        this.kpValueEditorForceSettingsComponentController.addNewSettings(this.type ?? ALL_TYPES, this.options, this.validations);
+        this.kpValueEditorForceSettingsComponentController.addNewSettings(this.type ?? ALL_TYPES, this.options, this.validations, this.strategy ?? DEFAULT_MERGE_STRATEGY);
     }
 }
 
@@ -40,6 +41,7 @@ export class KpValueEditorForceSettingComponentController<OPTIONS, VALIDATIONS> 
  * @param {CustomValueEditorType=} type Type of value editor. If `type` is not specified, options will be passed to all editors.
  * @param {OPTIONS=} options Options
  * @param {VALIDATIONS=} validations Validations (not implemented yet)
+ * @param {KpValueEditorForceSettingsMergeStrategy=} strategy If some option is object, this param specifies merge strategy.
  *
  * @description
  * This component is used for override options and validations for specified type of value editor. It requires {@link component:kpValueEditorForceSettings}
@@ -54,7 +56,8 @@ export default class KpValueEditorForceSettingComponent<OPTIONS extends ValueEdi
     public bindings = {
         type: '@?',
         options: '<?',
-        validations: '<?'
+        validations: '<?',
+        strategy: '@?'
     } as const;
 
     public priority = 20;
@@ -66,4 +69,33 @@ interface KpValueEditorForceSettingComponentBindings<OPTIONS extends ValueEditor
     type?: CustomValueEditorType;
     options?: OPTIONS;
     validations?: VALIDATIONS;
+    strategy?: KpValueEditorForceSettingsMergeStrategy;
 }
+
+/**
+ * @ngdoc type
+ * @name KpValueEditorForceSettingsMergeStrategy
+ * @module angularjs-value-editor.force-settings
+ *
+ * @description
+ * ```
+ *  type KpValueEditorForceSettingsMergeStrategy = 'overwrite' | 'merge';
+ * ```
+ *
+ * Default value: {@link DEFAULT_MERGE_STRATEGY}.
+ */
+export type KpValueEditorForceSettingsMergeStrategy = 'overwrite' | 'merge';
+
+/**
+ * @ngdoc constant
+ * @name DEFAULT_MERGE_STRATEGY
+ * @module angularjs-value-editor.force-settings
+ *
+ * @description
+ * Default value for {@link KpValueEditorForceSettingsMergeStrategy}
+ *
+ * ```
+ *  const DEFAULT_MERGE_STRATEGY: KpValueEditorForceSettingsMergeStrategy = 'overwrite';
+ * ```
+ */
+export const DEFAULT_MERGE_STRATEGY: KpValueEditorForceSettingsMergeStrategy = 'overwrite';
