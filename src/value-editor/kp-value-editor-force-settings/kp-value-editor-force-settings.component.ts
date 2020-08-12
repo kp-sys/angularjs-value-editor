@@ -1,6 +1,6 @@
 import {Component} from '@kpsys/angularjs-register';
 import {ValueEditorOptions, ValueEditorValidations} from '../kp-value-editor/kp-value-editor.component';
-import {CustomValueEditorType} from '../aliases/aliases.service';
+import {CustomValueEditorType} from '../aliases/kp-value-editor-aliases.service';
 import * as angular from 'angular';
 import {IOnDestroy} from 'angular';
 import {

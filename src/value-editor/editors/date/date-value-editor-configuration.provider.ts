@@ -73,8 +73,8 @@ export default class DateValueEditorConfigurationServiceProvider extends Abstrac
     public static readonly providerName = 'dateValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, dateValueEditorDefaultOptions: DefaultOptions<DateValueEditorOptions>) {
-        super(aliasesServiceProvider, dateValueEditorDefaultOptions);
+    constructor(kpValueEditorAliasesServiceProvider, dateValueEditorDefaultOptions: DefaultOptions<DateValueEditorOptions>) {
+        super(kpValueEditorAliasesServiceProvider, dateValueEditorDefaultOptions);
     }
 }
 

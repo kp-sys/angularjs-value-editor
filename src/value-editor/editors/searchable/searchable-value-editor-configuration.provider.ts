@@ -87,8 +87,8 @@ export default class SearchableValueEditorConfigurationServiceProvider<MODEL> ex
     public static readonly providerName = 'searchableValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, searchableValueEditorDefaultOptions: DefaultOptions<SearchableValueEditorOptions<MODEL>>) {
-        super(aliasesServiceProvider, searchableValueEditorDefaultOptions);
+    constructor(kpValueEditorAliasesServiceProvider, searchableValueEditorDefaultOptions: DefaultOptions<SearchableValueEditorOptions<MODEL>>) {
+        super(kpValueEditorAliasesServiceProvider, searchableValueEditorDefaultOptions);
     }
 }
 

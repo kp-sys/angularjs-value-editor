@@ -8,7 +8,7 @@ import register, {Component} from '@kpsys/angularjs-register';
 import AbstractValueEditorComponent from '../abstract/abstract-value-editor-component';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../test/utils/value-editor-mocker';
 import {NumberValueEditorBindings} from '../editors/number/number.value-editor.component';
-import {AliasesServiceProvider} from '../aliases/aliases.service';
+import {KpValueEditorAliasesServiceProvider} from '../aliases/kp-value-editor-aliases.service';
 
 class DummyValueEditorComponent extends AbstractValueEditorComponent implements Component<never> {
     public static readonly componentName = 'dummyValueEditor';
@@ -17,7 +17,7 @@ class DummyValueEditorComponent extends AbstractValueEditorComponent implements 
     public template = '<div class="dummy" data-main-input>DUMMY</div>';
 
     public controller = class extends AbstractValueEditorComponentController<any, any> {
-        
+
 
         protected get emptyModel(): any {
             return undefined;
@@ -70,8 +70,8 @@ describe('kpValueEditorRegistrationProvider', () => {
             kpValueEditorRegistrationServiceProvider.registerEditor(DummyValueEditorComponent.valueEditorType, camelCaseToKebabCase(DummyValueEditorComponent.componentName));
         });
 
-        angular.mock.module(mockModule, /*@ngInject*/ (aliasesServiceProvider: AliasesServiceProvider) => {
-            aliasesServiceProvider.addAlias('dummy-alias', 'dummy');
+        angular.mock.module(mockModule, /*@ngInject*/ (kpValueEditorAliasesServiceProvider: KpValueEditorAliasesServiceProvider) => {
+            kpValueEditorAliasesServiceProvider.addAlias('dummy-alias', 'dummy');
         });
 
         let valueEditorMocker: ValueEditorMocker<NumberValueEditorBindings>;

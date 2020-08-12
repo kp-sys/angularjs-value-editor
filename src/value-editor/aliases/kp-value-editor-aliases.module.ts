@@ -1,5 +1,5 @@
 import register from '@kpsys/angularjs-register';
-import {AliasesServiceProviderImpl} from './aliases.service';
+import {KpValueEditorAliasesServiceProviderImpl} from './kp-value-editor-aliases.service';
 
 /**
  * @ngdoc module
@@ -11,5 +11,5 @@ import {AliasesServiceProviderImpl} from './aliases.service';
  */
 
 export default register('angularjs-value-editor.aliases')
-    .provider(AliasesServiceProviderImpl.providerName, AliasesServiceProviderImpl)
+    .provider(KpValueEditorAliasesServiceProviderImpl.providerName, KpValueEditorAliasesServiceProviderImpl)
     .name();

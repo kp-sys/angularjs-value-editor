@@ -18,8 +18,8 @@ export type CustomValueEditorType = TValueEditorType | string;
 
 export const DEFAULT_ALIAS = 'DEFAULT';
 
-export class AliasesServiceProviderImpl implements AliasesServiceProvider {
-    public static readonly providerName = 'aliasesService';
+export class KpValueEditorAliasesServiceProviderImpl implements KpValueEditorAliasesServiceProvider {
+    public static readonly providerName = 'kpValueEditorAliasesService';
 
     private aliases: Record<CustomValueEditorType, CustomValueEditorType> = {};
 
@@ -59,7 +59,7 @@ export class AliasesServiceProviderImpl implements AliasesServiceProvider {
         return !!this.aliases[type];
     }
 
-    private $get(): AliasesService {
+    private $get(): KpValueEditorAliasesService {
         return {
             getAlias: this.getAlias.bind(this),
 
@@ -70,17 +70,17 @@ export class AliasesServiceProviderImpl implements AliasesServiceProvider {
 
 /**
  * @ngdoc service
- * @name aliasesService
+ * @name kpValueEditorAliasesService
  * @module angularjs-value-editor.aliases
  *
  * @description
  * Service for working with editor aliases.
  */
-export default interface AliasesService {
+export default interface KpValueEditorAliasesService {
 
     /**
      * @ngdoc method
-     * @name aliasesService#getAlias
+     * @name kpValueEditorAliasesService#getAlias
      *
      * @param {CustomValueEditorType} alias Get alias settings.
      *
@@ -93,7 +93,7 @@ export default interface AliasesService {
 
     /**
      * @ngdoc method
-     * @name aliasesService#isAlias
+     * @name kpValueEditorAliasesService#isAlias
      *
      * @param {CustomValueEditorType} type Tested editor type.
      *
@@ -107,17 +107,17 @@ export default interface AliasesService {
 
 /**
  * @ngdoc provider
- * @name aliasesServiceProvider
+ * @name kpValueEditorAliasesServiceProvider
  * @module angularjs-value-editor.aliases
  *
  * @description
  * Provider for define aliases.
  */
-export interface AliasesServiceProvider extends AliasesService {
+export interface KpValueEditorAliasesServiceProvider extends KpValueEditorAliasesService {
 
     /**
      * @ngdoc method
-     * @name aliasesServiceProvider#addAlias
+     * @name kpValueEditorAliasesServiceProvider#addAlias
      *
      * @param {CustomValueEditorType} aliasTypeName New alias.
      * @param {CustomValueEditorType} editorType Existing aliased editor.
@@ -131,7 +131,7 @@ export interface AliasesServiceProvider extends AliasesService {
 
     /**
      * @ngdoc method
-     * @name aliasesServiceProvider#removeAlias
+     * @name kpValueEditorAliasesServiceProvider#removeAlias
      *
      * @param {CustomValueEditorType} aliasTypeName Removing alias.
      *

@@ -84,8 +84,8 @@ export default class CardNumberValueEditorConfigurationServiceProvider extends A
     public static readonly providerName = 'cardNumberValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, cardNumberValueEditorDefaultOptions: DefaultOptions<CardNumberValueEditorOptions>) {
-        super(aliasesServiceProvider, cardNumberValueEditorDefaultOptions);
+    constructor(kpValueEditorAliasesServiceProvider, cardNumberValueEditorDefaultOptions: DefaultOptions<CardNumberValueEditorOptions>) {
+        super(kpValueEditorAliasesServiceProvider, cardNumberValueEditorDefaultOptions);
     }
 }
 

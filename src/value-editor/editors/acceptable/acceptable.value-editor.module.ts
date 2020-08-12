@@ -1,5 +1,5 @@
 import register from '@kpsys/angularjs-register';
-import aliasesModule from '../../aliases/aliases.module';
+import aliasesModule from '../../aliases/kp-value-editor-aliases.module';
 
 import 'angular-sanitize';
 import 'ui-select';

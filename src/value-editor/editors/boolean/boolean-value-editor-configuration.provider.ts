@@ -73,8 +73,8 @@ export default class BooleanValueEditorConfigurationServiceProvider extends Abst
     public static readonly providerName = 'booleanValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, booleanValueEditorDefaultOptions: DefaultOptions<BooleanValueEditorOptions>) {
-        super(aliasesServiceProvider, booleanValueEditorDefaultOptions);
+    constructor(kpValueEditorAliasesServiceProvider, booleanValueEditorDefaultOptions: DefaultOptions<BooleanValueEditorOptions>) {
+        super(kpValueEditorAliasesServiceProvider, booleanValueEditorDefaultOptions);
     }
 }
 

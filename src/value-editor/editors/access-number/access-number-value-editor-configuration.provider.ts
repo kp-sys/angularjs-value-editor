@@ -67,8 +67,8 @@ export default class AccessNumberValueEditorConfigurationServiceProvider extends
     public static readonly providerName = 'accessNumberValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, accessNumberValueEditorDefaultOptions: DefaultOptions<AccessNumberValueEditorOptions>) {
-        super(aliasesServiceProvider, accessNumberValueEditorDefaultOptions);
+    constructor(kpValueEditorAliasesServiceProvider, accessNumberValueEditorDefaultOptions: DefaultOptions<AccessNumberValueEditorOptions>) {
+        super(kpValueEditorAliasesServiceProvider, accessNumberValueEditorDefaultOptions);
     }
 }
 

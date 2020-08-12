@@ -69,8 +69,8 @@ export default class SignatureValueEditorConfigurationServiceProvider extends Ab
     public static readonly providerName = 'signatureValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, signatureValueEditorDefaultOptions: DefaultOptions<SignatureValueEditorOptions>) {
-        super(aliasesServiceProvider, signatureValueEditorDefaultOptions);
+    constructor(kpValueEditorAliasesServiceProvider, signatureValueEditorDefaultOptions: DefaultOptions<SignatureValueEditorOptions>) {
+        super(kpValueEditorAliasesServiceProvider, signatureValueEditorDefaultOptions);
     }
 }
 

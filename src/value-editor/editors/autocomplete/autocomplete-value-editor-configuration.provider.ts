@@ -75,8 +75,8 @@ export default class AutocompleteValueEditorConfigurationServiceProvider<PARAMS>
     public static readonly providerName = 'autocompleteValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, autocompleteValueEditorDefaultOptions: DefaultOptions<AutocompleteValueEditorOptions<PARAMS>>) {
-        super(aliasesServiceProvider, autocompleteValueEditorDefaultOptions);
+    constructor(kpValueEditorAliasesServiceProvider, autocompleteValueEditorDefaultOptions: DefaultOptions<AutocompleteValueEditorOptions<PARAMS>>) {
+        super(kpValueEditorAliasesServiceProvider, autocompleteValueEditorDefaultOptions);
     }
 }
 

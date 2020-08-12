@@ -90,8 +90,8 @@ export default class TextValueEditorConfigurationServiceProvider extends Abstrac
     public static readonly providerName = 'textValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, textValueEditorDefaultOptions: DefaultOptions<TextValueEditorOptions>) {
-        super(aliasesServiceProvider, textValueEditorDefaultOptions);
+    constructor(kpValueEditorAliasesServiceProvider, textValueEditorDefaultOptions: DefaultOptions<TextValueEditorOptions>) {
+        super(kpValueEditorAliasesServiceProvider, textValueEditorDefaultOptions);
     }
 }
 

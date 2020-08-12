@@ -8,7 +8,7 @@ import velocityTemplateValueEditorConfig from './velocity-template.value-editor.
  * @module angularjs-value-editor.velocity-template
  *
  * @description
- * `velocity-template` value editor is only {@link aliasesService alias} for {@link textValueEditor text-value-editor} with default {@link TextValueEditorOptions options}:
+ * `velocity-template` value editor is only {@link kpValueEditorAliasesService alias} for {@link textValueEditor text-value-editor} with default {@link TextValueEditorOptions options}:
  * ```
  *  {
  *      type: 'rich-textarea'

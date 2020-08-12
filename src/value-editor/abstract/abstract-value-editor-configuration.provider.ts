@@ -1,5 +1,9 @@
 import {DefaultOptions} from '../typings';
-import {AliasesServiceProvider, CustomValueEditorType, DEFAULT_ALIAS} from '../aliases/aliases.service';
+import {
+    CustomValueEditorType,
+    DEFAULT_ALIAS,
+    KpValueEditorAliasesServiceProvider
+} from '../aliases/kp-value-editor-aliases.service';
 
 /**
  * @ngdoc service
@@ -112,13 +116,13 @@ export interface AbstractValueEditorConfigurationService<CONFIGURATION> {
 export default abstract class AbstractValueEditorConfigurationProvider<CONFIGURATION> implements ConfigurationBuilder<CONFIGURATION>, AbstractValueEditorConfigurationService<CONFIGURATION> {
     private currentConfiguration: Map<CustomValueEditorType, DefaultOptions<CONFIGURATION>> = new Map();
 
-    protected constructor(private aliasesServiceProvider: AliasesServiceProvider, private readonly defaultConfiguration: DefaultOptions<CONFIGURATION>) {
+    protected constructor(private kpValueEditorAliasesServiceProvider: KpValueEditorAliasesServiceProvider, private readonly defaultConfiguration: DefaultOptions<CONFIGURATION>) {
         this.currentConfiguration.set(DEFAULT_ALIAS, defaultConfiguration);
     }
 
     public forAlias(alias: CustomValueEditorType | 'DEFAULT'): ConfigurationBuilder<CONFIGURATION> {
         let fallbackedAlias = alias;
-        if (!this.aliasesServiceProvider.isAlias(alias)) {
+        if (!this.kpValueEditorAliasesServiceProvider.isAlias(alias)) {
             fallbackedAlias = DEFAULT_ALIAS;
         }
 

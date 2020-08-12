@@ -52,8 +52,8 @@ export default class SearchTextValueEditorConfigurationServiceProvider extends A
     public static readonly providerName = 'searchTextValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, searchTextValueEditorDefaultOptions: DefaultOptions<SearchTextValueEditorOptions>) {
-        super(aliasesServiceProvider, searchTextValueEditorDefaultOptions);
+    constructor(kpValueEditorAliasesServiceProvider, searchTextValueEditorDefaultOptions: DefaultOptions<SearchTextValueEditorOptions>) {
+        super(kpValueEditorAliasesServiceProvider, searchTextValueEditorDefaultOptions);
     }
 }
 

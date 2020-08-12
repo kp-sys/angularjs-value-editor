@@ -38,7 +38,7 @@ import DisableNgAnimateDirective from './common-directives/disable-ngAnimate.dir
 import asyncValidationsModule from './kp-async-validation/kp-async-validation.module';
 // COMMON SERVICES AND PROVIDERS
 import {EmptyConfigurationService} from './abstract/abstract-value-editor-component-controller';
-import aliasesModule from './aliases/aliases.module';
+import aliasesModule from './aliases/kp-value-editor-aliases.module';
 import KpValueEditorConfigurationServiceProvider from './kp-value-editor/kp-value-editor-configuration-provider';
 import KpValueEditorRegistrationServiceProvider from './kp-value-editor/kp-value-editor-registration.provider';
 // CONFIG

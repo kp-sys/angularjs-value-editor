@@ -45,14 +45,14 @@ The configuration is composed of four parts:
         public static readonly providerName = 'textValueEditorConfigurationService';
     
         /*@ngInject*/
-        constructor(aliasesServiceProvider, textValueEditorDefaultOptions: DefaultOptions<TextValueEditorOptions>) {
-            super(aliasesServiceProvider, textValueEditorDefaultOptions);
+        constructor(kpValueEditorAliasesServiceProvider, textValueEditorDefaultOptions: DefaultOptions<TextValueEditorOptions>) {
+            super(kpValueEditorAliasesServiceProvider, textValueEditorDefaultOptions);
         }
     }
     ```
     Provider has to extend `AbstractValueEditorConfigurationProvider<XxxValueEditorOptions>`. All functionality is implemented in this abstract class.
     
-    You should only write correctly constructor injections. It needs `aliasesServiceProvider` and default settings injected with constant name.
+    You should only write correctly constructor injections. It needs `kpValueEditorAliasesServiceProvider` and default settings injected with constant name.
     
  - `interface TextValueEditorConfigurationService` service
  

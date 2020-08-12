@@ -75,8 +75,8 @@ export default class RangeValueEditorConfigurationServiceProvider extends Abstra
     public static readonly providerName = 'rangeValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, rangeValueEditorDefaultOptions: DefaultOptions<RangeValueEditorOptions>) {
-        super(aliasesServiceProvider, rangeValueEditorDefaultOptions);
+    constructor(kpValueEditorAliasesServiceProvider, rangeValueEditorDefaultOptions: DefaultOptions<RangeValueEditorOptions>) {
+        super(kpValueEditorAliasesServiceProvider, rangeValueEditorDefaultOptions);
     }
 }
 

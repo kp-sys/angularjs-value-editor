@@ -51,8 +51,8 @@ export default class NumberRangeValueEditorConfigurationServiceProvider extends 
     public static readonly providerName = 'numberRangeValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, numberRangeValueEditorDefaultOptions: DefaultOptions<NumberRangeValueEditorOptions>) {
-        super(aliasesServiceProvider, numberRangeValueEditorDefaultOptions);
+    constructor(kpValueEditorAliasesServiceProvider, numberRangeValueEditorDefaultOptions: DefaultOptions<NumberRangeValueEditorOptions>) {
+        super(kpValueEditorAliasesServiceProvider, numberRangeValueEditorDefaultOptions);
     }
 }
 

@@ -13,7 +13,7 @@ import {
 import NgModelConnector from '../utils/ng-model-connector';
 import {generateUuid} from '../utils/uuid-generator';
 import {TValueEditorType} from '../typings';
-import AliasesService, {CustomValueEditorType} from '../aliases/aliases.service';
+import KpValueEditorAliasesService, {CustomValueEditorType} from '../aliases/kp-value-editor-aliases.service';
 import {KpValueEditorConfigurationService} from './kp-value-editor-configuration-provider';
 import AbstractValueEditorComponentController from '../abstract/abstract-value-editor-component-controller';
 import {customEquals, PropertyChangeDetection, whichPropertiesAreNotEqual} from '../utils/equals';
@@ -56,7 +56,7 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
     private templateUpdated: boolean;
 
     /*@ngInject*/
-    constructor(private aliasesService: AliasesService,
+    constructor(private kpValueEditorAliasesService: KpValueEditorAliasesService,
                 kpValueEditorConfigurationService: KpValueEditorConfigurationService,
                 public $element: IAugmentedJQuery,
                 private $templateCache: ITemplateCacheService,
@@ -107,7 +107,7 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
     }
 
     public resolveAlias(): CustomValueEditorType {
-        return this.aliasesService.isAlias(this.type) ? this.aliasesService.getAlias(this.type) : this.type;
+        return this.kpValueEditorAliasesService.isAlias(this.type) ? this.kpValueEditorAliasesService.getAlias(this.type) : this.type;
     }
 
     public addOptionsChangeListener(listener: (newOptions?: EDITOROPTS, oldOptions?: EDITOROPTS) => void) {

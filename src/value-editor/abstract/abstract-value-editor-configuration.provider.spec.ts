@@ -1,9 +1,9 @@
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from './abstract-value-editor-configuration.provider';
 import register from '@kpsys/angularjs-register';
-import aliasesModule from '../aliases/aliases.module';
+import aliasesModule from '../aliases/kp-value-editor-aliases.module';
 import {DefaultOptions} from '../typings';
 import * as angular from 'angular';
-import {AliasesServiceProvider} from '../aliases/aliases.service';
+import {KpValueEditorAliasesServiceProvider} from '../aliases/kp-value-editor-aliases.service';
 import objectContaining = jasmine.objectContaining;
 
 interface TestingOptions {
@@ -26,8 +26,8 @@ class TestingProvider extends AbstractValueEditorConfigurationProvider<TestingOp
     public static readonly providerName = 'testingService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, testingOptions: TestingOptions) {
-        super(aliasesServiceProvider, testingOptions);
+    constructor(kpValueEditorAliasesServiceProvider, testingOptions: TestingOptions) {
+        super(kpValueEditorAliasesServiceProvider, testingOptions);
     }
 }
 
@@ -110,8 +110,8 @@ describe('abstract-value-editor-configuration-provider', () => {
         let testService: TestingService;
         const ALIAS = 'custom-test';
 
-        angular.mock.module(testingModule, /*@ngInject*/(testingServiceProvider: TestingProvider, aliasesServiceProvider: AliasesServiceProvider) => {
-            aliasesServiceProvider.addAlias(ALIAS, 'test');
+        angular.mock.module(testingModule, /*@ngInject*/(testingServiceProvider: TestingProvider, kpValueEditorAliasesServiceProvider: KpValueEditorAliasesServiceProvider) => {
+            kpValueEditorAliasesServiceProvider.addAlias(ALIAS, 'test');
 
             testingServiceProvider
                 .forAlias(ALIAS)
@@ -132,8 +132,8 @@ describe('abstract-value-editor-configuration-provider', () => {
         let testService: TestingService;
         const ALIAS = 'custom-test';
 
-        angular.mock.module(testingModule, /*@ngInject*/(testingServiceProvider: TestingProvider, aliasesServiceProvider: AliasesServiceProvider) => {
-            aliasesServiceProvider.addAlias(ALIAS, 'test');
+        angular.mock.module(testingModule, /*@ngInject*/(testingServiceProvider: TestingProvider, kpValueEditorAliasesServiceProvider: KpValueEditorAliasesServiceProvider) => {
+            kpValueEditorAliasesServiceProvider.addAlias(ALIAS, 'test');
 
             testingServiceProvider
                 .forAlias(ALIAS)

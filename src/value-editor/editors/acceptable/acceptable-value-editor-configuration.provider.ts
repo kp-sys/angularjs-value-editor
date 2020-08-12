@@ -110,8 +110,8 @@ export default class AcceptableValueEditorConfigurationServiceProvider<VALUE> ex
     public static readonly providerName = 'acceptableValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, acceptableValueEditorDefaultOptions: DefaultOptions<AcceptableValueEditorOptions<VALUE>>) {
-        super(aliasesServiceProvider, acceptableValueEditorDefaultOptions);
+    constructor(kpValueEditorAliasesServiceProvider, acceptableValueEditorDefaultOptions: DefaultOptions<AcceptableValueEditorOptions<VALUE>>) {
+        super(kpValueEditorAliasesServiceProvider, acceptableValueEditorDefaultOptions);
     }
 }
 

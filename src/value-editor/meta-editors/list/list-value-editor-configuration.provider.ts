@@ -1,7 +1,7 @@
 import {DefaultOptions} from '../../typings';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../abstract/abstract-value-editor-configuration.provider';
 import {ValueEditorOptions, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
-import {CustomValueEditorType} from '../../aliases/aliases.service';
+import {CustomValueEditorType} from '../../aliases/kp-value-editor-aliases.service';
 import {TextValueEditorOptions} from '../../editors/text/text-value-editor-configuration.provider';
 import {TextValueEditorValidations} from '../../editors/text/text.value-editor.component';
 
@@ -70,8 +70,8 @@ export default class ListValueEditorConfigurationServiceProvider<MODEL = any, OP
     public static readonly providerName = 'listValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, listValueEditorDefaultOptions: DefaultOptions<ListValueEditorOptions<MODEL, OPTIONS, VALIDATIONS>>) {
-        super(aliasesServiceProvider, listValueEditorDefaultOptions);
+    constructor(kpValueEditorAliasesServiceProvider, listValueEditorDefaultOptions: DefaultOptions<ListValueEditorOptions<MODEL, OPTIONS, VALIDATIONS>>) {
+        super(kpValueEditorAliasesServiceProvider, listValueEditorDefaultOptions);
     }
 }
 

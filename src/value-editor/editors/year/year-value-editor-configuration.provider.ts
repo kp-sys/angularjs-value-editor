@@ -47,8 +47,8 @@ export default class YearValueEditorConfigurationServiceProvider extends Abstrac
     public static readonly providerName = 'yearValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, yearValueEditorDefaultOptions: DefaultOptions<YearValueEditorOptions>) {
-        super(aliasesServiceProvider, yearValueEditorDefaultOptions);
+    constructor(kpValueEditorAliasesServiceProvider, yearValueEditorDefaultOptions: DefaultOptions<YearValueEditorOptions>) {
+        super(kpValueEditorAliasesServiceProvider, yearValueEditorDefaultOptions);
     }
 }
 

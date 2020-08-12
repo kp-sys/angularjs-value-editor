@@ -51,8 +51,8 @@ export default class PasswordValueEditorConfigurationServiceProvider extends Abs
     public static readonly providerName = 'passwordValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, passwordValueEditorDefaultOptions: DefaultOptions<PasswordValueEditorOptions>) {
-        super(aliasesServiceProvider, passwordValueEditorDefaultOptions);
+    constructor(kpValueEditorAliasesServiceProvider, passwordValueEditorDefaultOptions: DefaultOptions<PasswordValueEditorOptions>) {
+        super(kpValueEditorAliasesServiceProvider, passwordValueEditorDefaultOptions);
     }
 }
 

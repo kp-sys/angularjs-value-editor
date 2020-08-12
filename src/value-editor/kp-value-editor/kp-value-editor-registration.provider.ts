@@ -1,4 +1,4 @@
-import AliasesService, {CustomValueEditorType} from '../aliases/aliases.service';
+import KpValueEditorAliasesService, {CustomValueEditorType} from '../aliases/kp-value-editor-aliases.service';
 
 /**
  * @ngdoc provider
@@ -47,11 +47,11 @@ export default class KpValueEditorRegistrationServiceProvider {
     }
 
     /*@ngInject*/
-    protected $get(aliasesService: AliasesService): KpValueEditorRegistrationService {
+    protected $get(kpValueEditorAliasesService: KpValueEditorAliasesService): KpValueEditorRegistrationService {
         return {
             getSelectorForType: (type: CustomValueEditorType) => {
-                if (aliasesService.isAlias(type)) {
-                    type = aliasesService.getAlias(type);
+                if (kpValueEditorAliasesService.isAlias(type)) {
+                    type = kpValueEditorAliasesService.getAlias(type);
                 }
 
                 if (!this.editors.has(type)) {

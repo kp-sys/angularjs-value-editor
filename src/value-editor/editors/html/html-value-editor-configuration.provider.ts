@@ -77,8 +77,8 @@ export default class HtmlValueEditorConfigurationServiceProvider extends Abstrac
     public static readonly providerName = 'htmlValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, htmlValueEditorDefaultOptions: DefaultOptions<HtmlValueEditorOptions>) {
-        super(aliasesServiceProvider, htmlValueEditorDefaultOptions);
+    constructor(kpValueEditorAliasesServiceProvider, htmlValueEditorDefaultOptions: DefaultOptions<HtmlValueEditorOptions>) {
+        super(kpValueEditorAliasesServiceProvider, htmlValueEditorDefaultOptions);
     }
 }
 

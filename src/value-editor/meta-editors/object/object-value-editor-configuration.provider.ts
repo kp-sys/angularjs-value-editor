@@ -103,8 +103,8 @@ export default class ObjectValueEditorConfigurationServiceProvider extends Abstr
     public static readonly providerName = 'objectValueEditorConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider, objectValueEditorDefaultOptions: DefaultOptions<ObjectValueEditorOptions>) {
-        super(aliasesServiceProvider, objectValueEditorDefaultOptions);
+    constructor(kpValueEditorAliasesServiceProvider, objectValueEditorDefaultOptions: DefaultOptions<ObjectValueEditorOptions>) {
+        super(kpValueEditorAliasesServiceProvider, objectValueEditorDefaultOptions);
     }
 }
 

@@ -4,7 +4,7 @@ import {IOnInit, IPostLink} from 'angular';
 import {KpValueEditorComponentController, ValueEditorOptions} from '../kp-value-editor/kp-value-editor.component';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from './abstract-value-editor-configuration.provider';
 import {AbstractValueEditorLocalizationService} from './abstract-value-editor-localization.provider';
-import {AliasesServiceProvider} from '../aliases/aliases.service';
+import {KpValueEditorAliasesServiceProvider} from '../aliases/kp-value-editor-aliases.service';
 import {customEquals, PropertyChangeDetection, whichPropertiesAreNotEqual} from '../utils/equals';
 import bind from 'bind-decorator';
 
@@ -135,7 +135,7 @@ export class EmptyConfigurationService extends AbstractValueEditorConfigurationP
     public static readonly serviceName = 'emptyConfigurationService';
 
     /*@ngInject*/
-    constructor(aliasesServiceProvider: AliasesServiceProvider) {
-        super(aliasesServiceProvider, {});
+    constructor(kpValueEditorAliasesServiceProvider: KpValueEditorAliasesServiceProvider) {
+        super(kpValueEditorAliasesServiceProvider, {});
     }
 }

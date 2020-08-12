@@ -3,7 +3,7 @@ import * as angular from 'angular';
 import {IAugmentedJQuery, ICompileService, IFormController, IScope} from 'angular';
 import {TValueEditorType} from '../../src/value-editor/typings';
 import {camelCaseToKebabCaseAndRemoveBrackets} from '../../src/value-editor/utils/string-utils';
-import {CustomValueEditorType} from '../../src/value-editor/aliases/aliases.service';
+import {CustomValueEditorType} from '../../src/value-editor/aliases/kp-value-editor-aliases.service';
 
 /**
  * Helper for easy mocking of value-editor component
