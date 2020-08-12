@@ -11,7 +11,7 @@ import {Childrenable} from './acceptable-root.value-editor.component';
  *
  * @template MODEL
  *
- * @property {MODEL} acceptableValue Tree of acceptable values. Every node should has array of child nodes in property `children`.
+ * @property {MODEL} acceptableValue Tree of acceptable values. Every node should have array of child nodes in property `children`.
  * @property {boolean} multiselect If `true`, it will be multiselectable.
  * @property {MODEL[]} disabledItems Disabled items.
  * @property {function(MODEL, MODEL): boolean} equalityComparator Same as {@link type:AcceptableValueEditorOptions#equalityComparator}

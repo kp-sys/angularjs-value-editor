@@ -46,7 +46,7 @@ describe('acceptable-root-value-editor', () => {
         expect(input.value).toBe('world');
     });
 
-    xit('should has working required validation', () => {
+    xit('should have working required validation', () => {
         valueEditorMocker.create('acceptable-root', {
             editorName: 'acceptable-root',
             validations: {required: true}

@@ -71,7 +71,7 @@ describe('number-range-value-editor', () => {
         expect(getTo().disabled).toBe(true);
     });
 
-    it('should has working required validation', () => {
+    it('should have working required validation', () => {
         valueEditorMocker.create('number-range', {
             editorName: 'numberRange',
             validations: {required: true}
@@ -92,7 +92,7 @@ describe('number-range-value-editor', () => {
         expect($scope.form.numberRange.$error).toEqual({required: true});
     });
 
-    it('should has working min validation', () => {
+    it('should have working min validation', () => {
         valueEditorMocker.create('number-range', {editorName: 'numberRange', validations: {min: 3}});
 
         getFrom().value = '8';
@@ -108,7 +108,7 @@ describe('number-range-value-editor', () => {
         expect($scope.form.numberRange.$error).toEqual({});
     });
 
-    it('should has working max validation', () => {
+    it('should have working max validation', () => {
         valueEditorMocker.create('number-range', {editorName: 'numberRange', validations: {max: 10}});
 
         getFrom().value = '18';
@@ -123,7 +123,7 @@ describe('number-range-value-editor', () => {
         expect($scope.form.numberRange.$error).toEqual({});
     });
 
-    it('should has working fromBiggerThanTo validation', () => {
+    it('should have working fromBiggerThanTo validation', () => {
         valueEditorMocker.create('number-range', {editorName: 'numberRange', validations: {fromBiggerThanTo: true}});
 
         getFrom().value = '10';
@@ -138,7 +138,7 @@ describe('number-range-value-editor', () => {
         expect($scope.form.numberRange.$error).toEqual({});
     });
 
-    it('should has working toBiggerThanFrom validation', () => {
+    it('should have working toBiggerThanFrom validation', () => {
         valueEditorMocker.create('number-range', {editorName: 'numberRange', validations: {toBiggerThanFrom: true}});
 
         getFrom().value = '18';
@@ -153,7 +153,7 @@ describe('number-range-value-editor', () => {
         expect($scope.form.numberRange.$error).toEqual({});
     });
 
-    it('should has working implicit number validation', () => {
+    it('should have working implicit number validation', () => {
         valueEditorMocker.create('number-range', {editorName: 'numberRange'}, true);
 
         // allow insert invalid number
@@ -170,7 +170,7 @@ describe('number-range-value-editor', () => {
         expect($scope.form.numberRange.$error).toEqual({});
     });
 
-    it('should has working emptyAsNull option', () => {
+    it('should have working emptyAsNull option', () => {
         valueEditorMocker.create('number-range', {options: {emptyAsNull: true}});
 
         getFrom().value = '10';

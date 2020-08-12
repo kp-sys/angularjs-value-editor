@@ -40,7 +40,7 @@ describe('search-text-value-editor', () => {
             });
         });
 
-        it('should has working model normalization', () => {
+        it('should have working model normalization', () => {
             valueEditorMocker.create('search-text');
 
             expect($scope.model).toEqual({extension: SearchTextValueEditorModelExtension.STARTS_WITH, row: ''});
@@ -69,7 +69,7 @@ describe('search-text-value-editor', () => {
             expect(inputValue).toBe(TEST_MODEL.row);
         });
 
-        it('should has working required validation', () => {
+        it('should have working required validation', () => {
             valueEditorMocker.create('search-text', {editorName: 'search-text', validations: {required: true}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
@@ -85,7 +85,7 @@ describe('search-text-value-editor', () => {
             expect($scope.form['search-text'].$error).toEqual({});
         });
 
-        it('should has working minlength validation', () => {
+        it('should have working minlength validation', () => {
             valueEditorMocker.create('search-text', {editorName: 'searchText', validations: {minlength: 3}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'h';
@@ -101,7 +101,7 @@ describe('search-text-value-editor', () => {
             expect($scope.form.searchText.$error).toEqual({});
         });
 
-        it('should has working maxlength validation', () => {
+        it('should have working maxlength validation', () => {
             valueEditorMocker.create('search-text', {editorName: 'searchText', validations: {maxlength: 3}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
@@ -117,7 +117,7 @@ describe('search-text-value-editor', () => {
             expect($scope.form.searchText.$error).toEqual({});
         });
 
-        it('should has working pattern validation', () => {
+        it('should have working pattern validation', () => {
             valueEditorMocker.create('search-text', {editorName: 'searchText', validations: {pattern: '[0-9]*'}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
@@ -133,7 +133,7 @@ describe('search-text-value-editor', () => {
             expect($scope.form.searchText.$error).toEqual({});
         });
 
-        it('should has working input disabling', () => {
+        it('should have working input disabling', () => {
             valueEditorMocker.create('search-text', {editorName: 'searchText', isDisabled: true});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
@@ -158,7 +158,7 @@ describe('search-text-value-editor', () => {
             expect(ngChangeSpy).toHaveBeenCalled();
         });
 
-        it('should has working emptyAsNull option', () => {
+        it('should have working emptyAsNull option', () => {
             valueEditorMocker.create('search-text', {options: {emptyAsNull: true}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = TEST_MODEL.row;

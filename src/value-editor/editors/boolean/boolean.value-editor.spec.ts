@@ -44,7 +44,7 @@ describe('boolean-value-editor', () => {
         expect(valueEditorMocker.getInputElement<HTMLInputElement>().checked).toBe(false);
     });
 
-    it('should has working input disabling', () => {
+    it('should have working input disabling', () => {
         valueEditorMocker.create('boolean', {isDisabled: true});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().checked = true;
@@ -53,7 +53,7 @@ describe('boolean-value-editor', () => {
         expect(valueEditorMocker.getInputElement<HTMLInputElement>().disabled).toBe(true);
     });
 
-    it('should has indeterminate state if model is null', () => {
+    it('should have indeterminate state if model is null', () => {
         valueEditorMocker.create('boolean', {options: {nullAsIndeterminate: true}});
 
         $scope.model = null;
@@ -69,7 +69,7 @@ describe('boolean-value-editor', () => {
 
     });
 
-    it('should has working required validation', () => {
+    it('should have working required validation', () => {
         valueEditorMocker.create('boolean', {
             editorName: 'bool',
             options: {nullAsIndeterminate: true},
@@ -88,7 +88,7 @@ describe('boolean-value-editor', () => {
         expect($scope.form.bool.$error).toEqual({});
     });
 
-    it('should has working model value substitution options.{trueValue, falseValue} - checkbox -> model', () => {
+    it('should have working model value substitution options.{trueValue, falseValue} - checkbox -> model', () => {
         valueEditorMocker.create('boolean', {options: {trueValue: 'YES', falseValue: 'NO'}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().checked = true;
@@ -102,7 +102,7 @@ describe('boolean-value-editor', () => {
         expect($scope.model as unknown as string).toBe('NO');
     });
 
-    it('should has working model value substitution options.{trueValue, falseValue} - model -> checkbox', () => {
+    it('should have working model value substitution options.{trueValue, falseValue} - model -> checkbox', () => {
         valueEditorMocker.create('boolean', {options: {trueValue: 'YES', falseValue: 'NO'}});
 
         ($scope.model as unknown as string) = 'YES';
@@ -116,7 +116,7 @@ describe('boolean-value-editor', () => {
         expect(valueEditorMocker.getInputElement<HTMLInputElement>().checked).toBe(false);
     });
 
-    it('should has working emptyAsNull option with combination of customEmptyAsNullCheck', () => {
+    it('should have working emptyAsNull option with combination of customEmptyAsNullCheck', () => {
         valueEditorMocker.create('boolean', {
             options: {
                 emptyAsNull: true,

@@ -60,7 +60,7 @@ describe('password-value-editor', () => {
             expect(input.value).toBe('world');
         });
 
-        it('should has working required validation', () => {
+        it('should have working required validation', () => {
             valueEditorMocker.create('password', {
                 editorName: 'password',
                 validations: {required: true}
@@ -88,7 +88,7 @@ describe('password-value-editor', () => {
             expect(input.disabled).toBe(true);
         });
 
-        it('should has working required validation', () => {
+        it('should have working required validation', () => {
             valueEditorMocker.create('password', {editorName: 'password', validations: {required: true}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
@@ -104,7 +104,7 @@ describe('password-value-editor', () => {
             expect($scope.form.password.$error).toEqual({});
         });
 
-        it('should has working minlength validation', () => {
+        it('should have working minlength validation', () => {
             valueEditorMocker.create('password', {editorName: 'password', validations: {minlength: 3}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'h';
@@ -120,7 +120,7 @@ describe('password-value-editor', () => {
             expect($scope.form.password.$error).toEqual({});
         });
 
-        it('should has working maxlength validation', () => {
+        it('should have working maxlength validation', () => {
             valueEditorMocker.create('password', {editorName: 'password', validations: {maxlength: 3}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
@@ -136,7 +136,7 @@ describe('password-value-editor', () => {
             expect($scope.form.password.$error).toEqual({});
         });
 
-        it('should has working pattern validation', () => {
+        it('should have working pattern validation', () => {
             valueEditorMocker.create('password', {editorName: 'password', validations: {pattern: '[0-9]*'}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
@@ -152,7 +152,7 @@ describe('password-value-editor', () => {
             expect($scope.form.password.$error).toEqual({});
         });
 
-        it('should has working emptyAsNull option', () => {
+        it('should have working emptyAsNull option', () => {
             valueEditorMocker.create('password', {options: {emptyAsNull: true}});
 
             valueEditorMocker.getInputElement().value = 'hello';
@@ -199,7 +199,7 @@ describe('password-value-editor', () => {
             expect(input.value).toBe('world');
         });
 
-        it('should has working required validation', () => {
+        it('should have working required validation', () => {
             valueEditorMocker.create('password', {
                 editorName: 'password',
                 options: {withConfirmation: true},
@@ -231,7 +231,7 @@ describe('password-value-editor', () => {
             expect(input.disabled).toBe(true);
         });
 
-        it('should has working minlength validation', () => {
+        it('should have working minlength validation', () => {
             valueEditorMocker.create('password', {
                 editorName: 'password',
                 options: {withConfirmation: true},
@@ -247,7 +247,7 @@ describe('password-value-editor', () => {
             expect($scope.form.password.$error).toEqual({});
         });
 
-        it('should has working maxlength validation', () => {
+        it('should have working maxlength validation', () => {
             valueEditorMocker.create('password', {
                 editorName: 'password',
                 options: {withConfirmation: true},
@@ -263,7 +263,7 @@ describe('password-value-editor', () => {
             expect($scope.form.password.$error).toEqual({});
         });
 
-        it('should has working pattern validation', () => {
+        it('should have working pattern validation', () => {
             valueEditorMocker.create('password', {
                 editorName: 'password',
                 options: {withConfirmation: true},
@@ -279,7 +279,7 @@ describe('password-value-editor', () => {
             expect($scope.form.password.$error).toEqual({});
         });
 
-        it('should has working emptyAsNull option', () => {
+        it('should have working emptyAsNull option', () => {
             valueEditorMocker.create('password', {options: {withConfirmation: true, emptyAsNull: true}});
 
             fillBothInputs('hello');

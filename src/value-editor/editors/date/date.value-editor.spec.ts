@@ -73,7 +73,7 @@ describe('date-value-editor', () => {
         expect(inputValue).toBe('22.2.2020');
     });
 
-    it('should has working required validation', () => {
+    it('should have working required validation', () => {
         valueEditorMocker.create('date', {editorName: 'date', validations: {required: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
@@ -89,7 +89,7 @@ describe('date-value-editor', () => {
         expect($scope.form.date.$error).toEqual({});
     });
 
-    it('should has working input disabling', () => {
+    it('should have working input disabling', () => {
         valueEditorMocker.create('date', {isDisabled: true}, true);
 
         const inputElement = valueEditorMocker.getInputElement<HTMLInputElement>();
@@ -101,7 +101,7 @@ describe('date-value-editor', () => {
         expect(() => openDateTimePicker(inputElement)).toThrowError('DateTimePicker is not visible');
     });
 
-    it('should has working emptyAsNull option', () => {
+    it('should have working emptyAsNull option', () => {
         valueEditorMocker.create('date', {options: {emptyAsNull: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '22.2.2022';

@@ -108,7 +108,7 @@ describe('searchable-value-editor', () => {
         expect(input.disabled).toBe(true);
     });
 
-    it('should has working required validation', (done) => {
+    it('should have working required validation', (done) => {
         valueEditorMocker.create('searchable', {editorName: 'searchable', validations: {required: true}});
 
         expect($scope.form.searchable.$error).toEqual({required: true});
@@ -120,5 +120,9 @@ describe('searchable-value-editor', () => {
             expect($scope.form.searchable.$error).toEqual({});
             done();
         }, 150);
+    });
+
+    it('should have', () => {
+
     });
 });

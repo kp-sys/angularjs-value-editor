@@ -169,7 +169,7 @@ describe('acceptable-value-editor', () => {
                 expect(selectedValue).toBe('c');
             });
 
-            it('should has working searchable option', () => {
+            it('should have working searchable option', () => {
                 valueEditorMocker.create('acceptable', {options: {acceptableValues: ACCEPTABLE_VALUES}});
 
                 let uiSelectController = new UISelectController(valueEditorMocker.getInputElement());
@@ -191,7 +191,7 @@ describe('acceptable-value-editor', () => {
                 expect(optionsCount).toBe(ACCEPTABLE_VALUES.length + 1);
             });
 
-            it('should has working required validation', () => {
+            it('should have working required validation', () => {
                 valueEditorMocker.create('acceptable', {
                     editorName: 'acceptable',
                     options: {
@@ -213,7 +213,7 @@ describe('acceptable-value-editor', () => {
                 expect($scope.form.acceptable.$error).toEqual({});
             });
 
-            it('should has null option if component is singleselect and not required', () => {
+            it('should have null option if component is singleselect and not required', () => {
                 valueEditorMocker.create('acceptable', {options: {acceptableValues: ACCEPTABLE_VALUES}});
 
                 const count = new UISelectController(valueEditorMocker.getInputElement()).openUiSelect().getOptionsCount();
@@ -380,7 +380,7 @@ describe('acceptable-value-editor', () => {
                 expect(selectedValue).toEqual(['c', 'a']);
             });
 
-            it('should has working searchable option', () => {
+            it('should have working searchable option', () => {
                 valueEditorMocker.create('acceptable', {
                     options: {
                         acceptableValues: ACCEPTABLE_VALUES,
@@ -407,7 +407,7 @@ describe('acceptable-value-editor', () => {
                 expect(optionsCount).toBe(ACCEPTABLE_VALUES.length);
             });
 
-            it('should has working custom sorting', () => {
+            it('should have working custom sorting', () => {
                 valueEditorMocker.create('acceptable', {
                     options: {
                         acceptableValues: ACCEPTABLE_VALUES,
@@ -432,7 +432,7 @@ describe('acceptable-value-editor', () => {
                 expect(option3).toEqual(['{"value":"d"}']);
             });
 
-            it('should has working custom model sorting', () => {
+            it('should have working custom model sorting', () => {
                 valueEditorMocker.create('acceptable', {
                     options: {
                         acceptableValues: ACCEPTABLE_VALUES,
@@ -469,7 +469,7 @@ describe('acceptable-value-editor', () => {
                 expect($scope.model).toEqual([{value: 'h'}, {value: 'f'}, {value: 'd'}]);
             });
 
-            it('should has working required validation', () => {
+            it('should have working required validation', () => {
                 valueEditorMocker.create('acceptable', {
                     editorName: 'multiacceptable',
                     options: {
@@ -540,7 +540,7 @@ describe('acceptable-value-editor', () => {
                 expect(value).toEqual(['{"value":"c"}', '{"value":"d"}']);
             });
 
-            it('should has working emptyAsNull option', () => {
+            it('should have working emptyAsNull option', () => {
                 valueEditorMocker.create('acceptable', {
                     options: {
                         acceptableValues: ACCEPTABLE_VALUES,
@@ -662,7 +662,7 @@ describe('acceptable-value-editor', () => {
                 expect(option3).toBe('d');
             });
 
-            it('should has working custom sorting', () => {
+            it('should have working custom sorting', () => {
                 valueEditorMocker.create('acceptable', {
                     options: {
                         acceptableValues: ACCEPTABLE_VALUES.slice(),
@@ -689,7 +689,7 @@ describe('acceptable-value-editor', () => {
                 expect(option3).toEqual(['{"value":"d"}']);
             });
 
-            it('should has working custom model sorting', () => {
+            it('should have working custom model sorting', () => {
                 valueEditorMocker.create('acceptable', {
                     options: {
                         acceptableValues: ACCEPTABLE_VALUES.slice(),
@@ -729,7 +729,7 @@ describe('acceptable-value-editor', () => {
                 expect($scope.model).toEqual([{value: 'h'}, {value: 'g'}, {value: 'e'}]);
             });
 
-            it('should has working showFirstCount option', () => {
+            it('should have working showFirstCount option', () => {
                 valueEditorMocker.create('acceptable', {
                     options: {
                         acceptableValues: ACCEPTABLE_VALUES.slice(),
@@ -754,7 +754,7 @@ describe('acceptable-value-editor', () => {
                 expect(moreContainerItemsCount).toBe(3);
             });
 
-            it('should has working selectedFirst option', () => {
+            it('should have working selectedFirst option', () => {
                 $scope.model = [{value: 'b'}, {value: 'e'}, {value: 'g'}];
 
                 valueEditorMocker.create('acceptable', {
@@ -782,7 +782,7 @@ describe('acceptable-value-editor', () => {
                 expect(options).toEqual(['{"value":"b"}', '{"value":"e"}', '{"value":"g"}', '{"value":"a"}', '{"value":"c"}', '{"value":"d"}', '{"value":"f"}', '{"value":"h"}']);
             });
 
-            it('should has working select all and deselect all buttons', () => {
+            it('should have working select all and deselect all buttons', () => {
                 valueEditorMocker.create('acceptable', {
                     options: {
                         acceptableValues: ACCEPTABLE_VALUES.slice(),
@@ -798,7 +798,7 @@ describe('acceptable-value-editor', () => {
                 expect($scope.model).toEqual([]);
             });
 
-            it('should has working required validation', () => {
+            it('should have working required validation', () => {
                 valueEditorMocker.create('acceptable', {
                     editorName: 'acceptable',
                     options: {
@@ -821,7 +821,7 @@ describe('acceptable-value-editor', () => {
                 expect($scope.form.acceptable.$error).toEqual({});
             });
 
-            it('should has working emptyAsNull option', () => {
+            it('should have working emptyAsNull option', () => {
                 valueEditorMocker.create('acceptable', {
                     options: {
                         acceptableValues: ACCEPTABLE_VALUES,

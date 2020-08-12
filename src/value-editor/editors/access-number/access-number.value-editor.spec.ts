@@ -56,7 +56,7 @@ describe('access-number-value-editor', () => {
         expect(input.value).toBe('world');
     });
 
-    it('should has working required validation', () => {
+    it('should have working required validation', () => {
         valueEditorMocker.create('access-number', {
             editorName: 'accessNumber',
             validations: {required: true}
@@ -84,7 +84,7 @@ describe('access-number-value-editor', () => {
         expect(input.disabled).toBe(true);
     });
 
-    it('should has working required validation', () => {
+    it('should have working required validation', () => {
         valueEditorMocker.create('access-number', {editorName: 'accessNumber', validations: {required: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
@@ -100,7 +100,7 @@ describe('access-number-value-editor', () => {
         expect($scope.form.accessNumber.$error).toEqual({});
     });
 
-    it('should has not required validation if form contains `issue` field', () => {
+    it('should have not required validation if form contains `issue` field', () => {
         valueEditorMocker.setCustomTemplate(`
             <input type="text" name="issue" ng-model="issue">
         `);
@@ -115,7 +115,7 @@ describe('access-number-value-editor', () => {
         expect($scope.form.accessNumber.$error).toEqual({});
     });
 
-    it('should has working minlength validation', () => {
+    it('should have working minlength validation', () => {
         valueEditorMocker.create('access-number', {editorName: 'accessNumber', validations: {minlength: 3}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'h';
@@ -131,7 +131,7 @@ describe('access-number-value-editor', () => {
         expect($scope.form.accessNumber.$error).toEqual({});
     });
 
-    it('should has working maxlength validation', () => {
+    it('should have working maxlength validation', () => {
         valueEditorMocker.create('access-number', {editorName: 'accessNumber', validations: {maxlength: 3}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
@@ -147,7 +147,7 @@ describe('access-number-value-editor', () => {
         expect($scope.form.accessNumber.$error).toEqual({});
     });
 
-    it('should has working pattern validation', () => {
+    it('should have working pattern validation', () => {
         valueEditorMocker.create('access-number', {editorName: 'accessNumber', validations: {pattern: '[0-9]*'}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
@@ -178,7 +178,7 @@ describe('access-number-value-editor', () => {
         done();
     });
 
-    it('should has working emptyAsNull option', () => {
+    it('should have working emptyAsNull option', () => {
         valueEditorMocker.create('access-number', {options: {emptyAsNull: true}});
 
         valueEditorMocker.getInputElement().value = 'hello';

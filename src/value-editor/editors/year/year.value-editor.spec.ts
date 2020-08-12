@@ -36,7 +36,7 @@ describe('year-value-editor', () => {
         expect(inputValue).toBe('1994');
     });
 
-    it('should has working required validation', () => {
+    it('should have working required validation', () => {
         valueEditorMocker.create('year', {editorName: 'year', validations: {required: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
@@ -52,7 +52,7 @@ describe('year-value-editor', () => {
         expect($scope.form.year.$error).toEqual({});
     });
 
-    it('should has working minDate validation', () => {
+    it('should have working minDate validation', () => {
         valueEditorMocker.create('year', {editorName: 'year', validations: {minDate: 2010}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '2000';
@@ -68,7 +68,7 @@ describe('year-value-editor', () => {
         expect($scope.form.year.$error).toEqual({});
     });
 
-    it('should has working maxDate validation', () => {
+    it('should have working maxDate validation', () => {
         valueEditorMocker.create('year', {editorName: 'year', validations: {maxDate: 2020}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '2030';
@@ -84,7 +84,7 @@ describe('year-value-editor', () => {
         expect($scope.form.year.$error).toEqual({});
     });
 
-    it('should has working emptyAsNull option', () => {
+    it('should have working emptyAsNull option', () => {
         valueEditorMocker.create('year', {options: {emptyAsNull: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '2010';

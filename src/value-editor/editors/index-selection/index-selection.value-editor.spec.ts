@@ -63,7 +63,7 @@ describe('index-selection-value-editor', () => {
         expect(classList).toContain('active');
     });
 
-    it('should has working required validation', () => {
+    it('should have working required validation', () => {
         valueEditorMocker.create('index-selection', {options: {items: ITEMS}, editorName: 'idx', validations: {required: true}});
 
         $scope.$apply();

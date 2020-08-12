@@ -36,7 +36,7 @@ describe('number-value-editor', () => {
         expect(inputValue).toBe('321');
     });
 
-    it('should has working required validation', () => {
+    it('should have working required validation', () => {
         valueEditorMocker.create('number', {editorName: 'number', validations: {required: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
@@ -52,7 +52,7 @@ describe('number-value-editor', () => {
         expect($scope.form.number.$error).toEqual({});
     });
 
-    it('should has working minlength validation', () => {
+    it('should have working minlength validation', () => {
         valueEditorMocker.create('number', {editorName: 'number', validations: {minlength: 3}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '1';
@@ -68,7 +68,7 @@ describe('number-value-editor', () => {
         expect($scope.form.number.$error).toEqual({});
     });
 
-    it('should has working maxlength validation', () => {
+    it('should have working maxlength validation', () => {
         valueEditorMocker.create('number', {editorName: 'number', validations: {maxlength: 3}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '12345';
@@ -84,7 +84,7 @@ describe('number-value-editor', () => {
         expect($scope.form.number.$error).toEqual({});
     });
 
-    it('should has working input disabling', () => {
+    it('should have working input disabling', () => {
         valueEditorMocker.create('number', {isDisabled: true});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '123';
@@ -93,7 +93,7 @@ describe('number-value-editor', () => {
         expect(valueEditorMocker.getInputElement<HTMLInputElement>().disabled).toBe(true);
     });
 
-    it('should has hidden spinner', () => {
+    it('should have hidden spinner', () => {
         valueEditorMocker.create('number', {options: {hideSpinners: true}});
 
         const inputElement = valueEditorMocker.getInputElement<HTMLInputElement>();
@@ -102,7 +102,7 @@ describe('number-value-editor', () => {
     });
 
     // working only in Firefox
-    xit('should has implicit number validation', () => {
+    xit('should have implicit number validation', () => {
         valueEditorMocker.create('number', {editorName: 'number'});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
@@ -111,7 +111,7 @@ describe('number-value-editor', () => {
         expect($scope.form.number.$error).toEqual({number: true});
     });
 
-    it('should has implicit step validation', () => {
+    it('should have implicit step validation', () => {
         valueEditorMocker.create('number', {editorName: 'number', options: {step: 0.01}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '43.364';
@@ -120,7 +120,7 @@ describe('number-value-editor', () => {
         expect($scope.form.number.$error).toEqual({step: true});
     });
 
-    it('should has working emptyAsNull option', () => {
+    it('should have working emptyAsNull option', () => {
         valueEditorMocker.create('number', {options: {emptyAsNull: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '123';

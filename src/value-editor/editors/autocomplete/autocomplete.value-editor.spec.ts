@@ -56,7 +56,7 @@ describe('autocomplete-value-editor', () => {
         expect(input.value).toBe('world');
     });
 
-    it('should has working required validation', () => {
+    it('should have working required validation', () => {
         valueEditorMocker.create('autocomplete', {
             editorName: 'autocomplete',
             validations: {required: true}
@@ -122,7 +122,7 @@ describe('autocomplete-value-editor', () => {
         }, 0);
     });
 
-    it('should has working emptyAsNull option', () => {
+    it('should have working emptyAsNull option', () => {
         valueEditorMocker.create('autocomplete', {options: {emptyAsNull: true}});
 
         valueEditorMocker.getInputElement().value = 'hello';

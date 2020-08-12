@@ -40,7 +40,7 @@ describe('text-value-editor', () => {
             expect(inputValue).toBe('hello');
         });
 
-        it('should has working required validation', () => {
+        it('should have working required validation', () => {
             valueEditorMocker.create('text', {editorName: 'text', validations: {required: true}}, true);
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
@@ -56,7 +56,7 @@ describe('text-value-editor', () => {
             expect($scope.form.text.$error).toEqual({});
         });
 
-        it('should has working minlength validation', () => {
+        it('should have working minlength validation', () => {
             valueEditorMocker.create('text', {editorName: 'text', validations: {minlength: 3}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'h';
@@ -72,7 +72,7 @@ describe('text-value-editor', () => {
             expect($scope.form.text.$error).toEqual({});
         });
 
-        it('should has working maxlength validation', () => {
+        it('should have working maxlength validation', () => {
             valueEditorMocker.create('text', {editorName: 'text', validations: {maxlength: 3}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
@@ -88,7 +88,7 @@ describe('text-value-editor', () => {
             expect($scope.form.text.$error).toEqual({});
         });
 
-        it('should has working pattern validation', () => {
+        it('should have working pattern validation', () => {
             valueEditorMocker.create('text', {editorName: 'text', validations: {pattern: '[0-9]*'}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
@@ -104,7 +104,7 @@ describe('text-value-editor', () => {
             expect($scope.form.text.$error).toEqual({});
         });
 
-        it('should has working input disabling', () => {
+        it('should have working input disabling', () => {
             valueEditorMocker.create('text', {editorName: 'text', isDisabled: true});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
@@ -156,7 +156,7 @@ describe('text-value-editor', () => {
             expect(inputElement.value).toBe(`hello`);
         });
 
-        it('should has working trimming', () => {
+        it('should have working trimming', () => {
             valueEditorMocker.create('text', {editorName: 'text', options: {type: 'text', trim: true}});
 
             valueEditorMocker.getInputElement<HTMLTextAreaElement>().value = '   hello  ';
@@ -165,7 +165,7 @@ describe('text-value-editor', () => {
             expect($scope.model).toBe('hello');
         });
 
-        it('should has working emptyAsNull option', () => {
+        it('should have working emptyAsNull option', () => {
             valueEditorMocker.create('text', {options: {emptyAsNull: true}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
@@ -217,7 +217,7 @@ describe('text-value-editor', () => {
             expect(inputValue).toBe('hello');
         });
 
-        it('should has working required validation', () => {
+        it('should have working required validation', () => {
             valueEditorMocker.create('text', {
                 editorName: 'text',
                 options: {type: 'textarea'},
@@ -237,7 +237,7 @@ describe('text-value-editor', () => {
             expect($scope.form.text.$error).toEqual({});
         });
 
-        it('should has working minlength validation', () => {
+        it('should have working minlength validation', () => {
             valueEditorMocker.create('text', {
                 editorName: 'text',
                 options: {type: 'textarea'},
@@ -257,7 +257,7 @@ describe('text-value-editor', () => {
             expect($scope.form.text.$error).toEqual({});
         });
 
-        it('should has working maxlength validation', () => {
+        it('should have working maxlength validation', () => {
             valueEditorMocker.create('text', {
                 editorName: 'text',
                 options: {type: 'textarea'},
@@ -277,7 +277,7 @@ describe('text-value-editor', () => {
             expect($scope.form.text.$error).toEqual({});
         });
 
-        it('should has working pattern validation', () => {
+        it('should have working pattern validation', () => {
             valueEditorMocker.create('text', {
                 editorName: 'text',
                 options: {type: 'textarea'},
@@ -297,7 +297,7 @@ describe('text-value-editor', () => {
             expect($scope.form.text.$error).toEqual({});
         });
 
-        it('should has working input disabling', () => {
+        it('should have working input disabling', () => {
             valueEditorMocker.create('text', {editorName: 'text', options: {type: 'textarea'}, isDisabled: true});
 
             valueEditorMocker.getInputElement<HTMLTextAreaElement>().value = 'hello';
@@ -306,7 +306,7 @@ describe('text-value-editor', () => {
             expect(valueEditorMocker.getInputElement<HTMLTextAreaElement>().disabled).toBe(true);
         });
 
-        it('should has working rows calculation', () => {
+        it('should have working rows calculation', () => {
             valueEditorMocker.create('text', {editorName: 'text', options: {type: 'textarea'}});
             const inputElement = valueEditorMocker.getInputElement<HTMLTextAreaElement>();
 
@@ -316,7 +316,7 @@ describe('text-value-editor', () => {
             expect(inputElement.rows).toBe(4);
         });
 
-        it('should has working emptyAsNull option', () => {
+        it('should have working emptyAsNull option', () => {
             valueEditorMocker.create('text', {options: {type: 'textarea', emptyAsNull: true}});
 
             valueEditorMocker.getInputElement<HTMLTextAreaElement>().value = 'hello';
@@ -372,7 +372,7 @@ describe('text-value-editor', () => {
             expect(inputValue).toBe('hello');
         });
 
-        it('should has working required validation', () => {
+        it('should have working required validation', () => {
             valueEditorMocker.create('text', {
                 editorName: 'text',
                 options: {type: 'rich-textarea'},
@@ -387,7 +387,7 @@ describe('text-value-editor', () => {
             expect($scope.form.text.$error).toEqual({});
         });
 
-        it('should has working minlength validation', () => {
+        it('should have working minlength validation', () => {
             valueEditorMocker.create('text', {
                 editorName: 'text',
                 options: {type: 'rich-textarea'},
@@ -405,7 +405,7 @@ describe('text-value-editor', () => {
             expect($scope.form.text.$error).toEqual({});
         });
 
-        it('should has working maxlength validation', () => {
+        it('should have working maxlength validation', () => {
             valueEditorMocker.create('text', {
                 editorName: 'text',
                 options: {type: 'rich-textarea'},
@@ -423,7 +423,7 @@ describe('text-value-editor', () => {
             expect($scope.form.text.$error).toEqual({});
         });
 
-        it('should has working pattern validation', () => {
+        it('should have working pattern validation', () => {
             valueEditorMocker.create('text', {
                 editorName: 'text',
                 options: {type: 'rich-textarea'},
@@ -441,7 +441,7 @@ describe('text-value-editor', () => {
             expect($scope.form.text.$error).toEqual({});
         });
 
-        it('should has working input disabling', () => {
+        it('should have working input disabling', () => {
             valueEditorMocker.create('text', {editorName: 'text', options: {type: 'rich-textarea'}, isDisabled: true});
 
             const aceEditorTextarea = valueEditorMocker.getInputElement<HTMLDivElement>().querySelector('textarea');
@@ -454,7 +454,7 @@ describe('text-value-editor', () => {
             expect(aceEditorTextarea.attributes.getNamedItem('readonly')).toBe(null);
         });
 
-        it('should has working touched state', () => {
+        it('should have working touched state', () => {
             valueEditorMocker.create('text', {editorName: 'text', options: {type: 'rich-textarea'}});
 
             const focusEvent = document.createEvent('HTMLEvents');

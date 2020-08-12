@@ -130,7 +130,7 @@ describe('object-value-editor', () => {
         expect(inputs).toEqual([true, true]);
     });
 
-    it('should has working attributes transformation', () => {
+    it('should have working attributes transformation', () => {
         $scope.model = {};
 
         const editedFields = angular.copy(FIELDS);
@@ -197,7 +197,7 @@ describe('object-value-editor', () => {
         expect(element.querySelector('fieldset[ng-form]')).toBe(null);
     });
 
-    it('should has working editorName generation base on fieldName', () => {
+    it('should have working editorName generation base on fieldName', () => {
         $scope.model = {
             number: 10
         };

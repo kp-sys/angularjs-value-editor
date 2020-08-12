@@ -148,7 +148,7 @@ describe('list-value-editor', () => {
         // expect(() => removeItemOnIndex(0)).toThrow();
     });
 
-    it('should has working list-required validation', () => {
+    it('should have working list-required validation', () => {
         valueEditorMocker.create('list', {
             editorName: 'list',
             options: {
@@ -185,7 +185,7 @@ describe('list-value-editor', () => {
         expect(input.disabled).toBe(true);
     });
 
-    it('should has aggregate validation statuses', () => {
+    it('should have aggregate validation statuses', () => {
         $scope.model = [''];
 
         valueEditorMocker.create('list', {
@@ -237,7 +237,7 @@ describe('list-value-editor', () => {
         expect($scope.model).toEqual(['']);
     });
 
-    it('should has working emptyAsNull option', () => {
+    it('should have working emptyAsNull option', () => {
         $scope.model = ['hello'];
 
         valueEditorMocker.create('list', {

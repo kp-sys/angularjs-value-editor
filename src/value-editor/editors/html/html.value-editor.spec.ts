@@ -53,7 +53,7 @@ describe('html-value-editor', () => {
         }, 0);
     });
 
-    it('should has working input disabling', (done) => {
+    it('should have working input disabling', (done) => {
         valueEditorMocker.create('html', {isDisabled: true});
         $_timeout.flush();
         $scope.$apply();
@@ -67,7 +67,7 @@ describe('html-value-editor', () => {
         }, 0);
     });
 
-    it('should has working required validation', (done) => {
+    it('should have working required validation', (done) => {
         valueEditorMocker.create('html', {editorName: 'html', validations: {required: true}});
         $_timeout.flush();
         $scope.$apply();
@@ -87,7 +87,7 @@ describe('html-value-editor', () => {
         }, 0);
     });
 
-    it('should has working emptyAsNull option', (done) => {
+    it('should have working emptyAsNull option', (done) => {
         valueEditorMocker.create('html', {options: {emptyAsNull: true}});
         $_timeout.flush();
         $scope.$apply();

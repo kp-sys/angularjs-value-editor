@@ -39,7 +39,7 @@ describe('card-number-value-editor', () => {
         expect(inputValue).toBe('CardNumber1234');
     });
 
-    it('should has working required validation', () => {
+    it('should have working required validation', () => {
         valueEditorMocker.create('card-number', {editorName: 'card-number', validations: {required: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
@@ -105,7 +105,7 @@ describe('card-number-value-editor', () => {
         }, 700);
     });
 
-    it('should has working emptyAsNull option', () => {
+    it('should have working emptyAsNull option', () => {
         valueEditorMocker.create('card-number', {options: {emptyAsNull: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'CardNumber1234';

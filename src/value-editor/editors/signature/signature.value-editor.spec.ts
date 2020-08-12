@@ -56,7 +56,7 @@ describe('signature-value-editor', () => {
         expect(input.value).toBe('world');
     });
 
-    it('should has working required validation', () => {
+    it('should have working required validation', () => {
         valueEditorMocker.create('signature', {
             editorName: 'signature',
             validations: {required: true}
@@ -84,7 +84,7 @@ describe('signature-value-editor', () => {
         expect(input.disabled).toBe(true);
     });
 
-    it('should has working required validation', () => {
+    it('should have working required validation', () => {
         valueEditorMocker.create('signature', {editorName: 'signature', validations: {required: true}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
@@ -100,7 +100,7 @@ describe('signature-value-editor', () => {
         expect($scope.form.signature.$error).toEqual({});
     });
 
-    it('should has working minlength validation', () => {
+    it('should have working minlength validation', () => {
         valueEditorMocker.create('signature', {editorName: 'signature', validations: {minlength: 3}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'h';
@@ -116,7 +116,7 @@ describe('signature-value-editor', () => {
         expect($scope.form.signature.$error).toEqual({});
     });
 
-    it('should has working maxlength validation', () => {
+    it('should have working maxlength validation', () => {
         valueEditorMocker.create('signature', {editorName: 'signature', validations: {maxlength: 3}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
@@ -132,7 +132,7 @@ describe('signature-value-editor', () => {
         expect($scope.form.signature.$error).toEqual({});
     });
 
-    it('should has working pattern validation', () => {
+    it('should have working pattern validation', () => {
         valueEditorMocker.create('signature', {editorName: 'signature', validations: {pattern: '[0-9]*'}});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
@@ -163,7 +163,7 @@ describe('signature-value-editor', () => {
         done();
     });
 
-    it('should has working emptyAsNull option', () => {
+    it('should have working emptyAsNull option', () => {
         valueEditorMocker.create('signature', {options: {emptyAsNull: true}});
 
         valueEditorMocker.getInputElement().value = 'hello';
