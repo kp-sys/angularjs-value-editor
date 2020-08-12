@@ -10,6 +10,7 @@ import AbstractTemplateValueEditor from '../../abstract/abstract-template-value-
 import {PropertyChangeDetection} from '../../utils/equals';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
+import isInjectable from '../../utils/injectables';
 import IInjectorService = angular.auto.IInjectorService;
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.searchableValueEditor';
@@ -43,7 +44,7 @@ export class SearchableValueEditorComponentController<MODEL = any> extends Abstr
     }
 
     public get hasEditModelFunction(): boolean {
-        return typeof this.options.editModelFunction === 'function';
+        return isInjectable(this.options.editModelFunction) || angular.isFunction(this.options.editModelFunction);
     }
 
     public async search() {

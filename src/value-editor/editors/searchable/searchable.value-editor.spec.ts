@@ -122,7 +122,22 @@ describe('searchable-value-editor', () => {
         }, 150);
     });
 
-    it('should have', () => {
+    it('should have visible edit button if editModelFunction is specified', () => {
+        const element = valueEditorMocker.create('searchable', {
+            editorName: 'searchable',
+            options: {
+                editModelFunction: /*@ngInject*/ ($model) => Promise.resolve($model)
+            }
+        }, true);
 
+        const editButtonElement = element.querySelector<HTMLButtonElement>('.edit-button');
+
+        expect(isVisibleInDOM(editButtonElement)).toBe(true);
+
+        valueEditorMocker.detachElementFromDocument();
     });
 });
+
+function isVisibleInDOM(element: HTMLElement): boolean {
+    return element.offsetParent !== null;
+}
