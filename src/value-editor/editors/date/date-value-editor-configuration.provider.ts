@@ -47,7 +47,6 @@ export interface DateValueEditorOptions extends ValueEditorOptions {
  *
  * ```javascript
  *  {
- *      cssClasses: ['form-control'],
  *      maximumGranularity: 'day',
  *      viewFormat: 'd.L.y'
  *  }

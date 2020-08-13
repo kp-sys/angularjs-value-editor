@@ -412,7 +412,7 @@ describe('acceptable-value-editor', () => {
                     options: {
                         acceptableValues: ACCEPTABLE_VALUES,
                         multiselectable: true,
-                        sortComparator: (e1, e2) => e1.value.localeCompare(e2.value) * -1
+                        sortComparator: /*@ngInject*/ ($element1, $element2) => $element1.value.localeCompare($element2.value) * -1
                     }
                 });
 
@@ -438,7 +438,7 @@ describe('acceptable-value-editor', () => {
                         acceptableValues: ACCEPTABLE_VALUES,
                         multiselectable: true
                     }
-                }, true);
+                });
 
                 new UISelectController(valueEditorMocker.getInputElement()).openAndSelectNthOption(0).selectNthOption(3).selectNthOption(1);
                 expect($scope.model).toEqual([{value: 'a'}, {value: 'e'}, {value: 'c'}]);
@@ -447,7 +447,7 @@ describe('acceptable-value-editor', () => {
                     changeWholeOptions({
                         multiselectable: true,
                         acceptableValues: ACCEPTABLE_VALUES,
-                        sortComparator: (e1, e2) => e1.value.localeCompare(e2.value) * -1
+                        sortComparator: /*@ngInject*/ ($element1, $element2) => $element1.value.localeCompare($element2.value) * -1
                     });
                     $scope.model = [];
                 });
@@ -459,7 +459,7 @@ describe('acceptable-value-editor', () => {
                     changeWholeOptions({
                         multiselectable: true,
                         acceptableValues: ACCEPTABLE_VALUES,
-                        sortComparator: (e1, e2) => e1.value.localeCompare(e2.value) * -1,
+                        sortComparator: /*@ngInject*/ ($element1, $element2) => $element1.value.localeCompare($element2.value) * -1,
                         sortModel: true
                     });
                     $scope.model = [];
@@ -668,7 +668,7 @@ describe('acceptable-value-editor', () => {
                         acceptableValues: ACCEPTABLE_VALUES.slice(),
                         multiselectable: true,
                         switchToCheckboxesThreshold: 5,
-                        sortComparator: (e1, e2) => e1.value.localeCompare(e2.value) * -1
+                        sortComparator: /*@ngInject*/ ($element1, $element2) => $element1.value.localeCompare($element2.value) * -1
                     }
                 });
 
@@ -706,7 +706,7 @@ describe('acceptable-value-editor', () => {
                         multiselectable: true,
                         acceptableValues: ACCEPTABLE_VALUES.slice(),
                         switchToCheckboxesThreshold: 5,
-                        sortComparator: (e1, e2) => e1.value.localeCompare(e2.value) * -1
+                        sortComparator: /*@ngInject*/ ($element1, $element2) => $element1.value.localeCompare($element2.value) * -1
                     });
                     $scope.model = [];
                 });
@@ -719,7 +719,7 @@ describe('acceptable-value-editor', () => {
                         multiselectable: true,
                         acceptableValues: ACCEPTABLE_VALUES.slice(),
                         switchToCheckboxesThreshold: 5,
-                        sortComparator: (e1, e2) => e1.value.localeCompare(e2.value) * -1,
+                        sortComparator: /*@ngInject*/ ($element1, $element2) => $element1.value.localeCompare($element2.value) * -1,
                         sortModel: true
                     });
                     $scope.model = [];

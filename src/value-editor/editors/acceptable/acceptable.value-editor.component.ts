@@ -11,6 +11,8 @@ import AbstractTemplateValueEditor from '../../abstract/abstract-template-value-
 import {PropertyChangeDetection} from '../../utils/equals';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
+import {isInjectableOrFunction} from '../../utils/injectables';
+import IInjectorService = angular.auto.IInjectorService;
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.acceptableValueEditor';
 
@@ -25,7 +27,8 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
                 $templateCache: ITemplateCacheService,
                 public acceptableValueEditorLocalizationsService: AcceptableValueEditorLocalizationsService,
                 public acceptableValueEditorConfigurationService: AcceptableValueEditorConfigurationService<VALUE>,
-                private $element: IAugmentedJQuery) {
+                private $element: IAugmentedJQuery,
+                private $injector: IInjectorService) {
         super(
             AcceptableValueEditorComponentController.SELECT_TEMPLATE_URL,
             TEMPLATE_NAME_PREFIX,
@@ -52,7 +55,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
         this.setValidationHelperTouched();
 
         if (this.options.multiselectable && this.options.sortModel && Array.isArray(value)) {
-            super.model = value.sort(this.options.sortComparator);
+            super.model = value.sort(this.getSortComparator());
         } else {
             if (this.options.modelAsArray && !Array.isArray(value)) {
                 this.model = [value];
@@ -76,16 +79,16 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
         if (this.options.selectedFirst) {
             const selected = this.options.acceptableValues
                 .filter((value) => this.includes(this.adjustToArrayIfNot(this.model), value))
-                .sort(this.options.sortComparator);
+                .sort(this.getSortComparator());
 
             const unSelected = this.options.acceptableValues
                 .filter((value) => !this.includes(this.adjustToArrayIfNot(this.model), value))
-                .sort(this.options.sortComparator);
+                .sort(this.getSortComparator());
 
             values = selected.concat(unSelected);
         } else {
-            if (this.options.sortComparator) {
-                values.sort(this.options.sortComparator);
+            if (isInjectableOrFunction(this.options.sortComparator)) {
+                values.sort(this.getSortComparator());
             }
         }
 
@@ -126,7 +129,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
 
     public uiSelectComparator(e1: IFilterOrderByItem, e2: IFilterOrderByItem): number {
         try {
-            return (this.options.sortComparator && e1 !== null && e2 !== null) ? this.options.sortComparator(e1.value, e2.value) : 0;
+            return (isInjectableOrFunction(this.options.sortComparator) && e1 !== null && e2 !== null) ? this.getSortComparator()(e1.value, e2.value) : 0;
         } catch (e) {
             throw new Error(`Error in custom sortComparator: ${e}`);
         }
@@ -167,9 +170,33 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
             searchable: this.options.searchable,
             multiselectable: this.options.multiselectable,
             uuid: this.uuid,
-            sort: !!this.options.sortComparator,
+            sort: isInjectableOrFunction(this.options.sortComparator),
             name: this.valueEditorController.editorName
         };
+    }
+
+    private getSortComparator(): ((a, b) => number) | undefined {
+        if (isInjectableOrFunction(this.options.sortComparator)) {
+            return ($element1, $element2) => this.$injector.invoke(this.options.sortComparator, null, {
+                $element1,
+                $element2
+            });
+        }
+
+        return undefined;
+    }
+
+    private getEqualityComparator(): (a, b) => boolean {
+        let comparator = this.acceptableValueEditorConfigurationService.getDefaults().equalityComparator;
+
+        if (isInjectableOrFunction(this.options.equalityComparator)) {
+            comparator = this.options.equalityComparator;
+        }
+
+        return ($element1, $element2) => this.$injector.invoke(comparator, null, {
+            $element1,
+            $element2
+        });
     }
 
     private setValidationHelperTouched() {
@@ -196,9 +223,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
     }
 
     private includes(array: VALUE[], item: VALUE): boolean {
-        const comparator = this.options.equalityComparator ? this.options.equalityComparator : this.acceptableValueEditorConfigurationService.getDefaults().equalityComparator;
-
-        return Array.isArray(array) && array.some(comparator.bind(null, item));
+        return Array.isArray(array) && array.some((value) => this.getEqualityComparator()(value, item));
     }
 
     private getMoreCount(): number {
@@ -212,7 +237,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
 
     private getIndexOfItemInModelUsingEqualityComparator(item: VALUE): number {
         for (let i = 0; i < (this.model as VALUE[]).length; i++) {
-            if (this.options.equalityComparator(this.model[i], item)) {
+            if (this.getEqualityComparator()(this.model[i], item)) {
                 return i;
             }
         }

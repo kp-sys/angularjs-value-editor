@@ -1,7 +1,9 @@
+/* tslint:disable:ban-types */
 import {DefaultOptions} from '../../typings';
 import AbstractValueEditorConfigurationServiceProvider, {AbstractValueEditorConfigurationService} from '../../abstract/abstract-value-editor-configuration.provider';
 import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
+import {Injectable} from 'angular';
 import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../common-directives/disable-ngAnimate.directive';
 
 /**
@@ -16,10 +18,32 @@ import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../commo
  * @property {string} optionsTemplate Angular template for displaying options. Current option is accessible via `$item` variable name.
  * @property {string} singleSelectedValueTemplate Angular template for displaying selected value in single select mode. Current option is accessible via `$select.selected` variable name.
  * @property {string} multiSelectedValueTemplate Angular template for displaying selected value in multiple select mode. Current option is accessible via `$item` variable name.
- * @property {function(VALUE, VALUE): boolean} equalityComparator Custom equality comparator.
+ * @property {Injectable<Function>} equalityComparator
+ * ```
+ * function(...args: any[]) => boolean
+ * ```
+ * Custom equality comparator as angularjs injectable function.
+ *
+ * | Injectable&nbsp;argument&nbsp;name | Description  |
+ * | ------------------------ | ---------------------- |
+ * | `$element1`  | Element 1                          |
+ * | `$element2`  | Element 2                          |
+ *
  * @property {boolean} searchable If true, select component will have search input. Applicable only for select mode.
  * @property {boolean} reorderable If true, multi-select component will have capability for manual ordering selected items. Applicable only for multiple select mode.
- * @property {function(VALUE, VALUE): number} sortComparator If defined, options will be sorted using this comparator function.
+ * @property {Injectable<Function>} sortComparator
+ * ```
+ * function(...args: any[]) => number
+ * ```
+ *
+ * If defined, options will be sorted using this comparator function.
+ * Angularjs injectable function.
+ *
+ * | Injectable&nbsp;argument&nbsp;name | Description  |
+ * | ------------------------ | ---------------------- |
+ * | `$element1`  | Element 1                          |
+ * | `$element2`  | Element 2                          |
+ *
  * @property {boolean} sortModel It true, model will be sorted using `comparator`. Applicable only for multiselectable mode.
  * @property {number} switchToCheckboxesThreshold If count of options is bigger then this threshold, value editor switches into checkbox mode. If threshold is `0`, value editor forces into checkbox mode. Applicable only for multiselectable, non-reorderable mode.
  * @property {number} showFirstCount If count of options is bigger than this value, value editor shows only given count checkboxes and rest of options is hidden. Applicable only for multiselectable, checkbox mode.
@@ -38,11 +62,9 @@ export interface AcceptableValueEditorOptions<VALUE> extends ValueEditorOptions 
     optionsTemplate?: string;
     singleSelectedValueTemplate?: string;
     multiSelectedValueTemplate?: string;
-    // TODO: Refactor to use injector.invoke
-    equalityComparator?: (element1: VALUE, element2: VALUE) => boolean;
+    equalityComparator?: Injectable<Function | ((...args: any[]) => boolean)>;
     reorderable?: boolean;
-    // TODO: Refactor to use injector.invoke
-    sortComparator?: (element1: VALUE, element2: VALUE) => number | undefined;
+    sortComparator?: Injectable<Function | ((...args: any[]) => number | undefined)>;
     sortModel?: boolean;
     switchToCheckboxesThreshold?: number;
     showFirstCount?: number;
@@ -60,20 +82,20 @@ export interface AcceptableValueEditorOptions<VALUE> extends ValueEditorOptions 
  *
  * ```javascript
  *  {
- *      cssClasses: ['form-control'],
  *      acceptableValues: [],
  *      multiselectable: false,
  *      searchable: true,
  *      optionsTemplate: '{{$item}}',
  *      singleSelectedValueTemplate: '{{$select.selected}}',
  *      multiSelectedValueTemplate: '{{$item}}',
- *      equalityComparator: angular.equals,
+ *      equalityComparator: \/*@ngInject*\/ ($element1, $element2) => angular.equals($element1, $element2),
  *      reorderable: false,
  *      showFirstCount: 0,
  *      selectedFirst: false,
  *      sortComparator: undefined,
  *      sortModel: false,
- *      switchToCheckboxesThreshold: 13
+ *      switchToCheckboxesThreshold: 13,
+ *      modelAsArray: false
  *  }
  * ```
  */
@@ -84,7 +106,7 @@ export const ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<AcceptableV
     optionsTemplate: '{{$item}}',
     singleSelectedValueTemplate: '{{$select.selected}}',
     multiSelectedValueTemplate: '{{$item}}',
-    equalityComparator: angular.equals,
+    equalityComparator: /*@ngInject*/ ($element1, $element2) => angular.equals($element1, $element2),
     reorderable: false,
     showFirstCount: 0,
     selectedFirst: false,

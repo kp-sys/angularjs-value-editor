@@ -1,5 +1,5 @@
 /* tslint:disable:no-empty */
-import isInjectable from './injectables';
+import {isInjectable} from './injectables';
 
 describe('utils/injectables', () => {
 
