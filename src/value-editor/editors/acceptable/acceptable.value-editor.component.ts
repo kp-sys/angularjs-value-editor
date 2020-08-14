@@ -17,8 +17,9 @@ import IInjectorService = angular.auto.IInjectorService;
 const TEMPLATE_NAME_PREFIX = 'value-editor.acceptableValueEditor';
 
 export class AcceptableValueEditorComponentController<VALUE> extends AbstractTemplateValueEditor<VALUE[] | VALUE, AcceptableValueEditorOptions<VALUE>> {
-    private static readonly SELECT_TEMPLATE_URL = require('./select.tpl.pug');
-    private static readonly CHECKBOXES_TEMPLATE_URL = require('./checkboxes.tpl.pug');
+    private static readonly INLINE_TEMPLATE_URL = require('./templates/select.tpl.pug');
+    private static readonly MULTIPLE_BLOCK_TEMPLATE_URL = require('./templates/checkboxes.tpl.pug');
+    private static readonly SINGLE_BLOCK_TEMPLATE_URL = require('./templates/single-block.tpl.pug');
 
     private touched: boolean = false;
 
@@ -30,7 +31,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
                 private $element: IAugmentedJQuery,
                 private $injector: IInjectorService) {
         super(
-            AcceptableValueEditorComponentController.SELECT_TEMPLATE_URL,
+            AcceptableValueEditorComponentController.INLINE_TEMPLATE_URL,
             TEMPLATE_NAME_PREFIX,
             $interpolate,
             $templateCache,
@@ -55,10 +56,14 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
         this.setValidationHelperTouched();
 
         if (this.options.multiselectable && this.options.sortModel && Array.isArray(value)) {
-            super.model = value.sort(this.getSortComparator());
+            super.model = value.sort(this.sortComparator);
         } else {
             if (this.options.modelAsArray && !Array.isArray(value)) {
-                this.model = [value];
+                if (value === null) {
+                    super.model = [];
+                } else {
+                    super.model = [value];
+                }
             } else {
                 super.model = value;
             }
@@ -79,16 +84,16 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
         if (this.options.selectedFirst) {
             const selected = this.options.acceptableValues
                 .filter((value) => this.includes(this.adjustToArrayIfNot(this.model), value))
-                .sort(this.getSortComparator());
+                .sort(this.sortComparator);
 
             const unSelected = this.options.acceptableValues
                 .filter((value) => !this.includes(this.adjustToArrayIfNot(this.model), value))
-                .sort(this.getSortComparator());
+                .sort(this.sortComparator);
 
             values = selected.concat(unSelected);
         } else {
             if (isInjectableOrFunction(this.options.sortComparator)) {
-                values.sort(this.getSortComparator());
+                values.sort(this.sortComparator);
             }
         }
 
@@ -100,7 +105,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
     }
 
     public getAcceptableValuesForUiSelect(): VALUE[] {
-        if (!this.options.multiselectable && !this.valueEditorController.validations?.required) {
+        if (!this.options.multiselectable && this.options.allowSelectNull && !this.valueEditorController.validations?.required) {
             const adjustedAcceptableValues = this.options.acceptableValues.slice();
             adjustedAcceptableValues.unshift(null);
 
@@ -129,25 +134,44 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
 
     public uiSelectComparator(e1: IFilterOrderByItem, e2: IFilterOrderByItem): number {
         try {
-            return (isInjectableOrFunction(this.options.sortComparator) && e1 !== null && e2 !== null) ? this.getSortComparator()(e1.value, e2.value) : 0;
+            return (isInjectableOrFunction(this.options.sortComparator) && e1 !== null && e2 !== null) ? this.sortComparator(e1.value, e2.value) : 0;
         } catch (e) {
             throw new Error(`Error in custom sortComparator: ${e}`);
         }
     }
 
+    /**
+     * For block single selectable
+     * @param {VALUE} item
+     * @returns {boolean}
+     */
+    public isSelected(item: VALUE): boolean {
+        if (this.model !== undefined && this.model !== null) {
+            return this.equalityComparator(this.model, item);
+        }
+
+        return false;
+    }
+
+    public selectItem(item: VALUE) {
+        if (this.equalityComparator(item, this.model) && this.options.allowSelectNull && !this.valueEditorController.validations?.required) {
+            this.model = null;
+        } else {
+            this.model = item;
+        }
+    }
+
     protected onOptionsChange(newOptions: AcceptableValueEditorOptions<VALUE>, oldOptions: AcceptableValueEditorOptions<VALUE>, whichOptionIsChanged: PropertyChangeDetection<AcceptableValueEditorOptions<VALUE>>) {
         if (whichOptionIsChanged.optionsTemplate ||
-            whichOptionIsChanged.singleSelectedValueTemplate ||
-            whichOptionIsChanged.multiSelectedValueTemplate ||
             whichOptionIsChanged.searchable ||
             whichOptionIsChanged.multiselectable ||
             whichOptionIsChanged.sortComparator ||
             whichOptionIsChanged.reorderable ||
             whichOptionIsChanged.acceptableValues ||
-            whichOptionIsChanged.switchToCheckboxesThreshold ||
+            whichOptionIsChanged.switchToBlockModeThreshold ||
             whichOptionIsChanged.selectedFirst) {
 
-            this.baseTemplateUrl = this.checkboxesMode() ? AcceptableValueEditorComponentController.CHECKBOXES_TEMPLATE_URL : AcceptableValueEditorComponentController.SELECT_TEMPLATE_URL;
+            this.baseTemplateUrl = this.getTemplateUrl();
 
             this.updateTemplate();
         }
@@ -165,8 +189,6 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
     protected getTemplateModel(): {} {
         return {
             optionsTemplate: this.options.optionsTemplate,
-            singleSelectedValueTemplate: this.options.singleSelectedValueTemplate,
-            multiSelectedValueTemplate: this.options.multiSelectedValueTemplate,
             searchable: this.options.searchable,
             multiselectable: this.options.multiselectable,
             uuid: this.uuid,
@@ -175,7 +197,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
         };
     }
 
-    private getSortComparator(): ((a, b) => number) | undefined {
+    private get sortComparator(): ((a, b) => number) | undefined {
         if (isInjectableOrFunction(this.options.sortComparator)) {
             return ($element1, $element2) => this.$injector.invoke(this.options.sortComparator, null, {
                 $element1,
@@ -186,7 +208,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
         return undefined;
     }
 
-    private getEqualityComparator(): (a, b) => boolean {
+    private get equalityComparator(): (a, b) => boolean {
         let comparator = this.acceptableValueEditorConfigurationService.getDefaults().equalityComparator;
 
         if (isInjectableOrFunction(this.options.equalityComparator)) {
@@ -218,26 +240,37 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
         }
     }
 
+    /**
+     * For checkboxes
+     * @param {VALUE} item
+     * @returns {boolean}
+     * @private
+     */
     private isChecked(item: VALUE): boolean {
         return this.includes((this.model as VALUE[]), item);
     }
 
     private includes(array: VALUE[], item: VALUE): boolean {
-        return Array.isArray(array) && array.some((value) => this.getEqualityComparator()(value, item));
+        return Array.isArray(array) && array.some((value) => this.equalityComparator(value, item));
     }
 
     private getMoreCount(): number {
         return Math.max((this.options.acceptableValues || []).length - this.options.showFirstCount, 0);
     }
 
-    private checkboxesMode(): boolean {
-        return this.options.multiselectable && (this.options.switchToCheckboxesThreshold === 0 ||
-            (!this.options.reorderable && this.options.acceptableValues.length > this.options.switchToCheckboxesThreshold));
+    private getTemplateUrl(): string {
+        const isBlock = this.options.acceptableValues.length > this.options.switchToBlockModeThreshold;
+
+        if (isBlock && this.options.multiselectable) return AcceptableValueEditorComponentController.MULTIPLE_BLOCK_TEMPLATE_URL;
+
+        if (isBlock && !this.options.multiselectable) return AcceptableValueEditorComponentController.SINGLE_BLOCK_TEMPLATE_URL;
+
+        return AcceptableValueEditorComponentController.INLINE_TEMPLATE_URL;
     }
 
     private getIndexOfItemInModelUsingEqualityComparator(item: VALUE): number {
         for (let i = 0; i < (this.model as VALUE[]).length; i++) {
-            if (this.getEqualityComparator()(this.model[i], item)) {
+            if (this.equalityComparator(this.model[i], item)) {
                 return i;
             }
         }
@@ -273,16 +306,15 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
  *                  acceptableValues: $ctrl.acceptableValues,
  *                  multiselectable: $ctrl.multiselectable,
  *                  optionsTemplate: $ctrl.optionsTemplate,
- *                  singleSelectedValueTemplate: $ctrl.singleSelectedValueTemplate,
- *                  multiSelectedValueTemplate: $ctrl.multiSelectedValueTemplate,
  *                  searchable: $ctrl.searchable,
  *                  reorderable: $ctrl.reorderable,
  *                  showFirstCount: $ctrl.showFirstCount,
  *                  selectedFirst: $ctrl.selectedFirst,
  *                  sortModel: $ctrl.sortModel,
- *                  switchToCheckboxesThreshold: $ctrl.switchToCheckboxesThreshold,
  *                  sortComparator: $ctrl.sortComparator,
- *                  equalityComparator: $ctrl.equalityComparator
+ *                  equalityComparator: $ctrl.equalityComparator,
+ *                  modelAsArray: $ctrl.modelAsArray,
+ *                  switchToBlockModeThreshold: $ctrl.switchToBlockModeThreshold
  *              }" placeholder="'Select...'">
  *              </kp-value-editor>
  *              <div>Model: {{model}}</div>
@@ -292,18 +324,15 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
  *              Settings:
  *              <div>multiselectable: <input type="checkbox" ng-model="$ctrl.multiselectable"></div>
  *              <div>optionsTemplate: <input type="text" ng-model="$ctrl.optionsTemplate"></div>
- *              <div>singleSelectedValueTemplate: <input type="text" ng-model="$ctrl.singleSelectedValueTemplate"></div>
- *              <div>multiSelectedValueTemplate: <input type="text" ng-model="$ctrl.multiSelectedValueTemplate"></div>
  *              <div>searchable: <input type="checkbox" ng-model="$ctrl.searchable"></div>
  *              <div>reorderable: <input type="checkbox" ng-model="$ctrl.reorderable"></div>
  *              <div>showFirstCount: <input type="number" ng-model="$ctrl.showFirstCount"></div>
  *              <div>selectedFirst: <input type="checkbox" ng-model="$ctrl.selectedFirst"></div>
  *              <div>sortModel: <input type="checkbox" ng-model="$ctrl.sortModel"></div>
- *              <div>switchToCheckboxesThreshold: <input type="number" ng-model="$ctrl.switchToCheckboxesThreshold"></div>
+ *              <div>switchToBlockModeThreshold: <input type="number" ng-model="$ctrl.switchToBlockModeThreshold"></div>
  *              <div>sortComparator: <input type="text" ng-model="$ctrl.sortComparatorString" ng-change="$ctrl.evalComparators()"></div>
  *              <div>equalityComparator: <input type="text" ng-model="$ctrl.equalityComparatorString" ng-change="$ctrl.evalComparators()"></div>
- *              OPTS:
- *              <div>{{$ctrl.multiselectable | json}}</div>
+ *              <div>modelAsArray: <input type="checkbox" ng-model="$ctrl.modelAsArray"></div>
  *         </main>
  *     </file>
  *     <file name="script.js">
@@ -311,14 +340,13 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
  *          .controller('demoController', ['acceptableValueEditorDefaultOptions', class {
  *              multiselectable;
  *              optionsTemplate;
- *              singleSelectedValueTemplate;
- *              multiSelectedValueTemplate;
  *              searchable;
  *              reorderable;
  *              showFirstCount;
  *              selectedFirst;
  *              sortModel;
- *              switchToCheckboxesThreshold;
+ *              switchToBlockModeThreshold;
+ *              modelAsArray;
  *              sortComparatorString = `(e1, e2) => ((e1 || {x: ''}).x || '').localeCompare((e2 || {x: ''}).x) * -1`;
  *              equalityComparatorString = '(e1, e2) => e1.x === e2.x';
  *

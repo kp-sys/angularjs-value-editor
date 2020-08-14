@@ -12,7 +12,6 @@ import numberValueEditorModule from './editors/number/number.value-editor.module
 import textValueEditorModule from './editors/text/text.value-editor.module';
 import yearValueEditorModule from './editors/year/year.value-editor.module';
 import cardNumberValueEditorModule from './editors/card-number/card-number.value-editor.module';
-import indexSelectionValueEditorModule from './editors/index-selection/index-selection.value-editor.module';
 import autocompleteValueEditorModule from './editors/autocomplete/autocomplete.value-editor.module';
 import passwordValueEditorModule from './editors/password/password.value-editor.module';
 import signatureValueEditorModule from './editors/signature/signature.value-editor.module';
@@ -75,7 +74,6 @@ export default register('angularjs-value-editor', [
     textValueEditorModule,
     yearValueEditorModule,
     cardNumberValueEditorModule,
-    indexSelectionValueEditorModule,
     autocompleteValueEditorModule,
     passwordValueEditorModule,
     signatureValueEditorModule,

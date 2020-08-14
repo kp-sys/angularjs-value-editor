@@ -2,7 +2,6 @@ import {ObjectValueEditorField} from '../../src/value-editor/meta-editors/object
 import {TextValueEditorOptions} from '../../src/value-editor/editors/text/text-value-editor-configuration.provider';
 import {TextValueEditorValidations} from '../../src/value-editor/editors/text/text.value-editor.component';
 import {AcceptableValueEditorOptions} from '../../src/value-editor/editors/acceptable/acceptable-value-editor-configuration.provider';
-import {IndexSelectionValueEditorOptions} from '../../src/value-editor/editors/index-selection/index-selection-value-editor-configuration.provider';
 import {PasswordValueEditorOptions} from '../../src/value-editor/editors/password/password-value-editor-configuration.provider';
 import {SignatureValueEditorOptions} from '../../src/value-editor/editors/signature/signature-value-editor-configuration.provider';
 import {AccessNumberValueEditorOptions} from '../../src/value-editor/editors/access-number/access-number-value-editor-configuration.provider';
@@ -189,7 +188,7 @@ export default class DemoController {
                         'two',
                         'three'
                     ],
-                    switchToCheckboxesThreshold: 1,
+                    switchToBlockModeThreshold: 1,
                     showFirstCount: 2
                 } as AcceptableValueEditorOptions<string>
             }
@@ -213,31 +212,6 @@ export default class DemoController {
                 type: 'card-number',
                 editorName: 'card-number',
 
-                validations: {
-                    required: true
-                }
-            }
-        },
-        {
-            label: 'index-selection',
-            fieldName: 'index-selection',
-            editor: {
-                type: 'index-selection',
-                editorName: 'index-selection',
-
-                options: {
-                    items: [
-                        {
-                            id: 1
-                        },
-                        {
-                            id: 2
-                        },
-                        {
-                            id: 3
-                        }
-                    ]
-                } as IndexSelectionValueEditorOptions<number>,
                 validations: {
                     required: true
                 }

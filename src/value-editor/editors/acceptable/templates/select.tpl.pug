@@ -26,5 +26,5 @@ ui-select(
 
     ui-select-match(placeholder="\\{\\{$ctrl.valueEditorController.placeholder\\}\\}")
         span(ng-if="$select.selected === null" ng-bind="::$ctrl.localize('noItemSelected')")
-        span(ng-if="$select.selected !== null") {{multiselectable ? multiSelectedValueTemplate : singleSelectedValueTemplate}}
-
+        span(ng-if="$select.selected !== null")
+            | {{!multiselectable ? "\{\{$item = $select.selected; ''\}\}" : ""}}{{optionsTemplate}}

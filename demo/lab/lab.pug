@@ -3,18 +3,12 @@ main.container(ng-controller="labController as $ctrl")
     form(name="$ctrl.form")
 
         kp-value-editor(
-            type="'text'"
+            type="'acceptable'"
 
-            options="{" +
-                "emptyAsNull: false" +
-            "}"
+            options="$ctrl.options"
 
             validations="{" +
-                "async: {" +
-                    "additionalParameters: {" +
-                        "validationUrl: ''" +
-                    "}" +
-                "}" +
+                "required: false" +
             "}"
 
             ng-model="$ctrl.model"

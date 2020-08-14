@@ -10,7 +10,6 @@ import CardNumberValueEditorComponent from './editors/card-number/card-number.va
 import DateValueEditorComponent from './editors/date/date.value-editor.component';
 import HiddenValueEditorComponent from './editors/hidden/hidden.value-editor.component';
 import HtmlValueEditorComponent from './editors/html/html.value-editor.component';
-import IndexSelectionValueEditorComponent from './editors/index-selection/index-selection.value-editor.component';
 import NumberValueEditorComponent from './editors/number/number.value-editor.component';
 import NumberRangeValueEditorComponent from './editors/number-range/number-range.value-editor.component';
 import PasswordValueEditorComponent from './editors/password/password.value-editor.component';
@@ -44,7 +43,6 @@ export default function valueEditorsConfig(kpValueEditorRegistrationServiceProvi
     // TODO: Move outside of this library - too specific editors
     kpValueEditorRegistrationServiceProvider.registerEditor(AccessNumberValueEditorComponent.valueEditorType, camelCaseToKebabCase(AccessNumberValueEditorComponent.componentName));
     kpValueEditorRegistrationServiceProvider.registerEditor(CardNumberValueEditorComponent.valueEditorType, camelCaseToKebabCase(CardNumberValueEditorComponent.componentName));
-    kpValueEditorRegistrationServiceProvider.registerEditor(IndexSelectionValueEditorComponent.valueEditorType, camelCaseToKebabCase(IndexSelectionValueEditorComponent.componentName));
     kpValueEditorRegistrationServiceProvider.registerEditor(SearchTextValueEditorComponent.valueEditorType, camelCaseToKebabCase(SearchTextValueEditorComponent.componentName));
     kpValueEditorRegistrationServiceProvider.registerEditor(SignatureValueEditorComponent.valueEditorType, camelCaseToKebabCase(SignatureValueEditorComponent.componentName));
 

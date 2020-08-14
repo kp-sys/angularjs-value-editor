@@ -64,7 +64,6 @@ export type TValueEditorTypeAliases =
  *      'acceptable' |
  *      'year' |
  *      'card-number' |
- *      'index-selection' |
  *      'autocomplete' |
  *      'password' |
  *      'signature' |
@@ -86,7 +85,6 @@ export type TValueEditorType = TValueEditorTypeAliases | TMetaValueEditor |
     'acceptable' |
     'year' |
     'card-number' |
-    'index-selection' |
     'autocomplete' |
     'password' |
     'signature' |
