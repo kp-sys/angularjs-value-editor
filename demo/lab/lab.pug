@@ -3,13 +3,9 @@ main.container(ng-controller="labController as $ctrl")
     form(name="$ctrl.form")
 
         kp-value-editor(
-            type="'acceptable'"
+            type="'range'"
 
             options="$ctrl.options"
-
-            validations="{" +
-                "required: false" +
-            "}"
 
             ng-model="$ctrl.model"
         )

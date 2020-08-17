@@ -132,11 +132,11 @@ export default class DemoController {
             }
         },
         {
-            label: 'acceptable:select',
-            fieldName: 'acceptable-select',
+            label: 'acceptable:inline:single',
+            fieldName: 'acceptable-inline-single',
             editor: {
                 type: 'single-acceptable',
-                editorName: 'acceptable-select',
+                editorName: 'acceptable-inline-single',
 
                 validations: {
                     required: true
@@ -152,11 +152,30 @@ export default class DemoController {
             }
         },
         {
-            label: 'acceptable:select:multiple',
-            fieldName: 'acceptable-select-multiple',
+            label: 'acceptable:block:single',
+            fieldName: 'acceptable-block-single',
+            editor: {
+                type: 'single-acceptable',
+                editorName: 'acceptable-block-single',
+
+                options: {
+                    acceptableValues: [
+                        'one',
+                        'two',
+                        'three'
+                    ],
+                    switchToBlockModeThreshold: 0,
+                    allowSelectNull: true,
+                    __forceDisableNgAnimate: true
+                } as AcceptableValueEditorOptions<string> & UndocumentedDisableNgAnimateValueEditorInternalOption
+            }
+        },
+        {
+            label: 'acceptable:inline:multiple',
+            fieldName: 'acceptable-inline-multiple',
             editor: {
                 type: 'acceptable',
-                editorName: 'acceptable-select-multiple',
+                editorName: 'acceptable-inline-multiple',
 
                 validations: {
                     required: true
@@ -173,8 +192,8 @@ export default class DemoController {
             }
         },
         {
-            label: 'acceptable:checkboxes',
-            fieldName: 'acceptableCheckboxes',
+            label: 'acceptable:block:multiple',
+            fieldName: 'acceptable-block-multiple',
             editor: {
                 type: 'multiple-acceptable',
                 editorName: 'acceptableCheckboxes',

@@ -13,7 +13,15 @@ import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.componen
  * @property {boolean} snap If `true` handlers will snap to defined `snapPoints`.
  * @property {number[]} snapPoints Definition of snap points.
  * @property {number[]} pitPoints Definition where to be placed pits.
- * @property {string} currentValueTemplate Template of displaying current value of slider model above slider. From a to values are accessible via `$from` resp. `$to` variables.
+ * @property {string} currentValueTemplate Template for displaying current value of slider model above slider.
+ *
+ * | Template&nbsp;variable | Description                         |
+ * |------------------------|-------------------------------------|
+ * | `$from`                | From value                          |
+ * | `$to`                  | To value                            |
+ * | `$options`             | Options                             |
+ * | `$setFrom(value)`      | Function for setting **from** value |
+ * | `$setTo(value)`        | Function for setting **to** value   |
  *
  * @description
  * Extends {@link type:ValueEditorOptions}
@@ -21,13 +29,13 @@ import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.componen
  * Default value: {@link rangeValueEditorDefaultOptions}
  */
 export interface RangeValueEditorOptions extends ValueEditorOptions {
-    extremesAsNull: boolean;
-    min: number;
-    max: number;
-    snap: boolean;
-    snapPoints: number[];
-    pitPoints: number[];
-    currentValueTemplate: string;
+    extremesAsNull?: boolean;
+    min?: number;
+    max?: number;
+    snap?: boolean;
+    snapPoints?: number[];
+    pitPoints?: number[];
+    currentValueTemplate?: string;
 }
 
 /**
@@ -42,7 +50,7 @@ export interface RangeValueEditorOptions extends ValueEditorOptions {
  * {
  *     extremesAsNull: true,
  *     min: 0,
- *     max: 0,
+ *     max: 100,
  *     snap: false,
  *     snapPoints: undefined,
  *     pitPoints: undefined,
@@ -53,7 +61,7 @@ export interface RangeValueEditorOptions extends ValueEditorOptions {
 export const RANGE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<RangeValueEditorOptions> = {
     extremesAsNull: true,
     min: 0,
-    max: 0,
+    max: 100,
     snap: false,
     snapPoints: undefined,
     pitPoints: undefined,

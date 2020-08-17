@@ -63,7 +63,7 @@ describe('range-value-editor', () => {
         expect($scope.form.range.$error).toEqual({});
     });
 
-    // component does not support disabling for this time
+    // component td-slider does not support disabling for this time
     xit('should be disabled', () => {
         valueEditorMocker.create('range', {isDisabled: false});
         const input = valueEditorMocker.getInputElement<HTMLInputElement>();
@@ -74,5 +74,64 @@ describe('range-value-editor', () => {
         $scope.$apply();
 
         expect(input.disabled).toBe(true);
+    });
+
+    it('should set value via a custom template using $setTo and $setFrom functions', () => {
+        $scope.model = {
+            from: 50,
+            to: 80
+        };
+
+        const customTemplate = `
+            <button class="set-from" ng-click="$setFrom(10)"></button>
+            <button class="set-to" ng-click="$setTo(20)"></button>
+        `;
+
+        const element = valueEditorMocker.create('range', {
+            options: {
+                currentValueTemplate: customTemplate
+            }
+        });
+
+        expect($scope.model).toEqual({from: 50, to: 80});
+
+        angular.element(element.querySelector('.set-from')).triggerHandler('click');
+
+        expect($scope.model).toEqual({from: 10, to: 80});
+
+        angular.element(element.querySelector('.set-to')).triggerHandler('click');
+
+        expect($scope.model).toEqual({from: 10, to: 20});
+    });
+
+    it('should have accessible $options in custom template', () => {
+
+        function removeUndefinedFromObject<T = {}>(obj: T): Partial<T> {
+            const result: Partial<T> = {};
+
+            for (const key in obj) {
+                if (Object.prototype.hasOwnProperty.call(obj, key) && obj[key] !== undefined) {
+                    result[key] = obj[key];
+                }
+            }
+
+            return result;
+        }
+
+        const element = valueEditorMocker.create('range', {
+            options: {
+                currentValueTemplate: `
+                    <div class="options">{{$options | json}}</div>
+                `
+            }
+        });
+
+        const effectiveOptionsWithoutUndefined = removeUndefinedFromObject(angular.element(element).controller('kpValueEditor').valueEditorInstance.options);
+
+        const optionsAsText = element.querySelector('.options').textContent;
+
+        const evaluatedOptions = JSON.parse(optionsAsText);
+
+        expect(effectiveOptionsWithoutUndefined).toEqual(evaluatedOptions);
     });
 });

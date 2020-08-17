@@ -1,17 +1,19 @@
-import {AcceptableValueEditorOptions} from '../../src/value-editor/editors/acceptable/acceptable-value-editor-configuration.provider';
-import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../src/value-editor/common-directives/disable-ngAnimate.directive';
+import {RangeValueEditorModel} from '../../src/value-editor/editors/range/range.value-editor.component';
+import {RangeValueEditorOptions} from '../../src/value-editor/editors/range/range-value-editor-configuration.provider';
 
 export default class LabController {
     public static readonly controllerName = 'labController';
 
-    public model: any = 'houvno';
+    public model: RangeValueEditorModel = {
+        from: 1,
+        to: 100
+    };
 
     public options = {
-        __forceDisableNgAnimate: true,
-        acceptableValues: [{x: 'a'}, {x: 'b'}, {x: 'c'}, {x: 'd'}, {x: 'e'}, {x: 'f'}, {x: 'g'}, {x: 'h'}],
-        optionsTemplate: '{{$item.x}}',
-        switchToBlockModeThreshold: 10,
-        allowSelectNull: true,
-        modelAsArray: true
-    } as AcceptableValueEditorOptions<{x: string}> & UndocumentedDisableNgAnimateValueEditorInternalOption
+        currentValueTemplate: `
+             <input type="number" ng-model="$from" ng-change="$setFrom($from)" min="{{$options.min}}" max="{{$options.max}}">
+             - 
+             <input type="number" ng-model="$to" ng-change="$setTo($to)" min="{{$options.min}}" max="{{$options.max}}">
+        `
+    } as RangeValueEditorOptions
 }
