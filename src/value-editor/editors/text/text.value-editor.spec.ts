@@ -10,16 +10,16 @@ describe('text-value-editor', () => {
     let valueEditorMocker: ValueEditorMocker<TextValueEditorBindings>;
     let $scope: ScopeWithBindings<string, TextValueEditorBindings>;
 
-    describe('type: text', () => {
+    beforeEach(() => {
+        angular.mock.module(valueEditorModule);
 
-        beforeEach(() => {
-            angular.mock.module(valueEditorModule);
-
-            inject(/*@ngInject*/ ($compile, $rootScope) => {
-                $scope = $rootScope.$new();
-                valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
-            });
+        inject(/*@ngInject*/ ($compile, $rootScope) => {
+            $scope = $rootScope.$new();
+            valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
         });
+    });
+
+    describe('type: text', () => {
 
         it('should change model on input', () => {
             valueEditorMocker.create('text');
@@ -113,6 +113,21 @@ describe('text-value-editor', () => {
             expect(valueEditorMocker.getInputElement<HTMLInputElement>().disabled).toBe(true);
         });
 
+        it('should display prefix and suffix', () => {
+            const element = valueEditorMocker.create('text', {
+                options: {
+                    prefix: 'PREFIX',
+                    suffix: 'SUFFIX'
+                }
+            });
+
+            const prefixText = element.querySelector('.prefix').textContent;
+            const suffixText = element.querySelector('.suffix').textContent;
+
+            expect(prefixText).toBe('PREFIX');
+            expect(suffixText).toBe('SUFFIX');
+        });
+
         it('should add prefix and suffix to model', () => {
             const PREFIX = 'prefix';
             const SUFFIX = 'suffix';
@@ -181,15 +196,6 @@ describe('text-value-editor', () => {
     });
 
     describe('type: textarea', () => {
-
-        beforeEach(() => {
-            angular.mock.module(valueEditorModule);
-
-            inject(/*@ngInject*/ ($compile, $rootScope) => {
-                $scope = $rootScope.$new();
-                valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
-            });
-        });
 
         it('should be textarea input', () => {
             valueEditorMocker.create('text', {editorName: 'text', options: {type: 'textarea'}});
@@ -334,15 +340,6 @@ describe('text-value-editor', () => {
 
     describe('type: rich-textarea', () => {
 
-        beforeEach(() => {
-            angular.mock.module(valueEditorModule);
-
-            inject(/*@ngInject*/($compile, $rootScope) => {
-                $scope = $rootScope.$new();
-                valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
-            });
-        });
-
         it('should be div with ace editor', () => {
             valueEditorMocker.create('text', {editorName: 'text', options: {type: 'rich-textarea'}});
             const inputElement = valueEditorMocker.getInputElement<HTMLTextAreaElement>();
@@ -474,15 +471,6 @@ describe('text-value-editor', () => {
     });
 
     describe('transition between types', () => {
-        beforeEach(() => {
-            angular.mock.module(valueEditorModule);
-
-            inject(/*@ngInject*/ ($compile, $rootScope) => {
-                $scope = $rootScope.$new();
-                valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
-            });
-        });
-
         it('should keep disabled state', () => {
             valueEditorMocker.create('text', {editorName: 'text', isDisabled: true, options: {type: 'text'}});
 
@@ -508,15 +496,6 @@ describe('text-value-editor', () => {
     });
 
     describe('type: email', () => {
-        beforeEach(() => {
-            angular.mock.module(valueEditorModule);
-
-            inject(/*@ngInject*/ ($compile, $rootScope) => {
-                $scope = $rootScope.$new();
-                valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
-            });
-        });
-
         it('should be email input', () => {
             valueEditorMocker.create('text', {options: {type: 'email'}});
 
@@ -530,54 +509,43 @@ describe('text-value-editor', () => {
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
             valueEditorMocker.triggerHandlerOnInput('input');
 
-            expect($scope.form.text.$error).toEqual(objectContaining({pattern: true}));
+            expect($scope.form.text.$error).toEqual(objectContaining({email: true}));
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = 'a@b.c';
             valueEditorMocker.triggerHandlerOnInput('input');
 
             expect($scope.form.text.$error).toEqual({});
         });
-
-        it('should can override implicit email validation', () => {
-            valueEditorMocker.create('text', {
-                editorName: 'text',
-                options: {type: 'email'},
-                validations: {pattern: 'abc'}
-            });
-
-            valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
-            valueEditorMocker.triggerHandlerOnInput('input');
-
-            expect($scope.form.text.$error).toEqual(objectContaining({pattern: true}));
-
-            valueEditorMocker.getInputElement<HTMLInputElement>().value = 'abc';
-            valueEditorMocker.triggerHandlerOnInput('input');
-
-            expect($scope.form.text.$error).not.toEqual(objectContaining({pattern: true}));
-        });
     });
 
-    describe('other types', () => {
-        beforeEach(() => {
-            angular.mock.module(valueEditorModule);
-
-            inject(/*@ngInject*/ ($compile, $rootScope) => {
-                $scope = $rootScope.$new();
-                valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
-            });
-        });
-
-        it('should be tel input', () => {
-            valueEditorMocker.create('text', {options: {type: 'tel'}});
-
-            valueEditorMocker.getInputElement<HTMLInputElement>().type = 'tel';
-        });
-
+    describe('type: url', () => {
         it('should be url input', () => {
             valueEditorMocker.create('text', {options: {type: 'url'}});
 
             valueEditorMocker.getInputElement<HTMLInputElement>().type = 'url';
         });
 
+        it('should have implicit email validation', () => {
+            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'url'}});
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.text.$error).toEqual(objectContaining({url: true}));
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = 'http://kpsys.cz';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.text.$error).toEqual({});
+        });
+
+    });
+
+    describe('type: tel', () => {
+        it('should be tel input', () => {
+            valueEditorMocker.create('text', {options: {type: 'tel'}});
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().type = 'tel';
+        });
     });
 });

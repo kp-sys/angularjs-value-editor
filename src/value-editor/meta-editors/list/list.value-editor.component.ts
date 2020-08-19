@@ -4,7 +4,15 @@ import {
     ValueEditorValidations
 } from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
-import {IFormController, IInterpolateService, IOnInit, ITemplateCacheService, ITimeoutService} from 'angular';
+import {
+    IDoCheck,
+    IFormController,
+    IInterpolateService,
+    INgModelController,
+    IOnInit,
+    ITemplateCacheService,
+    ITimeoutService
+} from 'angular';
 import {ListValueEditorConfigurationService, ListValueEditorOptions} from './list-value-editor-configuration.provider';
 import {ListValueEditorLocalizationsService} from './list-value-editor-localization.provider';
 import AbstractTemplateValueEditor from '../../abstract/abstract-template-value-editor';
@@ -14,10 +22,11 @@ import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-c
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.listValueEditor';
 
-export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEditorOptions> extends AbstractMetaValueEditorComponentController<MODEL[], ListValueEditorOptions<MODEL, OPTIONS>> implements IOnInit {
+export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEditorOptions> extends AbstractMetaValueEditorComponentController<MODEL[], ListValueEditorOptions<MODEL, OPTIONS>, ListValueEditorValidations> implements IOnInit, IDoCheck {
     public static readonly TEMPLATE_URL = require('./list.value-editor.tpl.pug');
 
     public form: IFormController;
+    public validationHelperNgModelController: INgModelController;
 
     /*@ngInject*/
     constructor(
@@ -48,6 +57,12 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
         });
     }
 
+    public $doCheck(): void {
+        if(this.validationHelperNgModelController?.$untouched && this.hasTouchedItem()) {
+            this.validationHelperNgModelController.$setTouched();
+        }
+    }
+
     protected get emptyModel(): MODEL[] {
         return null;
     }
@@ -72,11 +87,23 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
         }
     }
 
-    public canRemoveItems() {
+    public canRemoveItems(): boolean {
         return Array.isArray(this.model) &&
             ((this.model.length > 0 && !this.valueEditorController.validations?.required) ||
                 (this.model.length > 1 && this.valueEditorController.validations?.required)
             );
+    }
+
+    public canAddItem(): boolean {
+        if (!Array.isArray(this.model)) return true;
+
+        const maxCount = this.valueEditorController.validations?.maxCount;
+
+        if (maxCount) {
+            return this.model.length < maxCount;
+        }
+
+        return true;
     }
 
     public adjustForceShowErrors(subEditorOptions: OPTIONS): OPTIONS {
@@ -102,6 +129,12 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
         }
     }
 
+    private hasTouchedItem(): boolean {
+        return this.form?.$getControls()
+            .map((controller) => controller.$touched)
+            .reduce((touched, currentTouchStatus) => touched || currentTouchStatus, false) ?? false;
+    }
+
 }
 
 /**
@@ -119,13 +152,13 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
  *
  * Supported options: {@link type:ListValueEditorOptions}
  *
- * Supported validations: {@link type:TextValueEditorValidations}
+ * Supported validations: {@link type:ListValueEditorValidations}
  *
  * @example
  * <example name="listValueEditorExample" module="listValueEditorExample" frame-no-resize="true">
  *     <file name="index.html">
  *         <main>
- *              <kp-value-editor type="'list'" ng-model="model" options="{withConfirmation: true}"></kp-value-editor>
+ *              <kp-value-editor type="'list'" ng-model="model" validations="{maxCount: 3}"></kp-value-editor>
  *              <div>Model: {{model}}</div>
  *         </main>
  *     </file>
@@ -143,5 +176,19 @@ export default class ListValueEditorComponent extends AbstractValueEditorCompone
     public controller = ListValueEditorComponentController;
 }
 
-export interface ListValueEditorBindings<MODEL = any, OPTIONS extends ValueEditorOptions = ValueEditorOptions, VALIDATIONS extends ValueEditorValidations = ValueEditorValidations> extends ValueEditorBindings<ListValueEditorOptions<MODEL, OPTIONS, VALIDATIONS>> {
+export interface ListValueEditorBindings<MODEL = any, OPTIONS extends ValueEditorOptions = ValueEditorOptions, VALIDATIONS extends ListValueEditorValidations = ValueEditorValidations> extends ValueEditorBindings<ListValueEditorOptions<MODEL, OPTIONS, VALIDATIONS>, ListValueEditorValidations> {
+}
+
+/**
+ * @ngdoc type
+ * @name ListValueEditorValidations
+ * @module angularjs-value-editor.list
+ *
+ * @property {number} maxCount Maximum count of items.
+ *
+ * @description
+ * Extends {@link type:ValueEditorValidations}
+ */
+export interface ListValueEditorValidations extends ValueEditorValidations {
+    maxCount?: number;
 }

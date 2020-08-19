@@ -171,6 +171,29 @@ describe('list-value-editor', () => {
         expect($scope.form.list.$error).toEqual({});
     });
 
+    it('should have working max-count validation', () => {
+        valueEditorMocker.create('list', {
+            editorName: 'list',
+            options: {
+                newItemPrototype: '',
+                subEditorType: 'text'
+            },
+            validations: {
+                maxCount: 2
+            }
+        });
+
+        $scope.model = ['', '', ''];
+        $scope.$apply();
+
+        expect($scope.form.list.$error).toEqual({'max-count': anything()});
+
+        $scope.model = ['hello'];
+        $scope.$apply();
+
+        expect($scope.form.list.$error).toEqual({});
+    });
+
     it('should be disabled', () => {
         $scope.model = ['hello'];
 

@@ -1,6 +1,8 @@
+/* tslint:disable:ban-types */
 import {DefaultOptions} from '../../typings';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../abstract/abstract-value-editor-configuration.provider';
 import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
+import {Injectable} from 'angular';
 
 /**
  * @ngdoc type
@@ -44,7 +46,7 @@ export interface CardNumberValueEditorAdditionalRequestParameters {
 export interface CardNumberValueEditorOptions<PARAMS = {}> extends ValueEditorOptions {
     inputSize?: string;
     requestParameters?: PARAMS;
-    requestFunction?: ($requestParameters?: PARAMS, $additionalParameters?: CardNumberValueEditorAdditionalRequestParameters, ...args) => PromiseLike<string>;
+    requestFunction?: Injectable<Function | ((...args: any[]) => PromiseLike<string>)>;
 }
 
 /**

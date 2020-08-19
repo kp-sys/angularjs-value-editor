@@ -8,6 +8,7 @@ import {
 } from './error-messages-localization.provider';
 import {AbstractValueEditorLocalizationService} from '../abstract/abstract-value-editor-localization.provider';
 import bind from 'bind-decorator';
+import {KpValueEditorConfigurationService} from '../kp-value-editor/kp-value-editor-configuration-provider';
 
 /**
  * @ngdoc directive
@@ -26,6 +27,10 @@ import bind from 'bind-decorator';
  * @description
  * Directive manages showing / hiding errors. Directive is being placed to main input element or element with validations.
  * It will listen to validation status change and shows/hides localized validation messages.
+ *
+ * If value-editor's parent has not `position: relative`, this directive adds wrapper with styled `position: relative`.
+ * This is done, because displaying error messages without relative positioned parent element caused wrong positioning of message.
+ * {@link kpValueEditorConfigurationServiceProvider kpValueEditor} has option `disableAutoWrapping` which controls this behaviour.
  */
 export default class ErrorMessagesDirective {
     public static readonly directiveName = 'errorMessages';
@@ -36,8 +41,16 @@ export default class ErrorMessagesDirective {
 
     public controller = ErrorMessagesDirectiveController;
 
+    /*@ngInject*/
+    constructor(private kpValueEditorConfigurationService: KpValueEditorConfigurationService) {
+    }
+
     public link($scope: IScope, $element: IAugmentedJQuery, $attrs: IAttributes, [errorMessagesController, ngModelController, kpValueEditorController]: [ErrorMessagesDirectiveController, INgModelController, KpValueEditorComponentController]) {
         errorMessagesController.setControllers(kpValueEditorController, ngModelController);
+
+        if (!this.kpValueEditorConfigurationService.disableAutoWrapping && !this.hasRelativePositionedParent($element[0])) {
+            kpValueEditorController.$element.wrap('<div class="error-message-relative-position-wrapper"></div>');
+        }
 
         const removeWatcher = $scope.$watch(() => ngModelController.$touched, (isTouched) => {
             if (isTouched) {
@@ -47,6 +60,10 @@ export default class ErrorMessagesDirective {
         });
 
         ngModelController.$validators.__validationMessageListener = errorMessagesController.processErrors;
+    }
+
+    private hasRelativePositionedParent(element: HTMLElement): boolean {
+        return window.getComputedStyle(element).position === 'relative';
     }
 }
 

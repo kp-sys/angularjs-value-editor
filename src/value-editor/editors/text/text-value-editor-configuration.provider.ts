@@ -57,9 +57,13 @@ export interface TextValueEditorOptions extends ValueEditorOptions {
  *  {
  *      type: 'text',
  *      aceOptions: {
- *          useWrapMode: false,
- *          showGutter: true
- *      }
+ *             useWrapMode: false,
+ *             showGutter: true
+ *         },
+ *      prefix: undefined,
+ *      suffix: undefined,
+ *      includePrefixAndSuffixToModel: false,
+ *      trim: false
  *  }
  * ```
  */

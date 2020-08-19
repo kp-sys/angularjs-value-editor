@@ -1,5 +1,5 @@
 import AbstractValueEditorComponentController from './abstract-value-editor-component-controller';
-import {ValueEditorOptions} from '../kp-value-editor/kp-value-editor.component';
+import {ValueEditorOptions, ValueEditorValidations} from '../kp-value-editor/kp-value-editor.component';
 import {IInterpolateService, IOnInit, ITemplateCacheService} from 'angular';
 import {AbstractValueEditorConfigurationService} from './abstract-value-editor-configuration.provider';
 import {AbstractValueEditorLocalizationService} from './abstract-value-editor-localization.provider';
@@ -8,7 +8,7 @@ import {generateUuid} from '../utils/uuid-generator';
 /**
  * Abstract editor class which contains some helpers for managing and simplify template parsing.
  */
-export default abstract class AbstractTemplateValueEditor<MODEL, OPTIONS extends ValueEditorOptions> extends AbstractValueEditorComponentController<MODEL, OPTIONS> implements IOnInit {
+export default abstract class AbstractTemplateValueEditor<MODEL, OPTIONS extends ValueEditorOptions, VALIDATIONS extends ValueEditorValidations = ValueEditorValidations> extends AbstractValueEditorComponentController<MODEL, OPTIONS, VALIDATIONS> implements IOnInit {
     /**
      * Pre-defined component template.
      * @type {string}

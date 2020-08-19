@@ -12,6 +12,7 @@ export default class KpValueEditorConfigurationServiceProvider {
 
     #debugMode: boolean = false;
     #preciseWatchForOptionsChanges: boolean = false;
+    #disableAutoWrapping: boolean = false;
 
     /**
      * @ngdoc method
@@ -41,6 +42,19 @@ export default class KpValueEditorConfigurationServiceProvider {
         this.#preciseWatchForOptionsChanges = preciseWatchForOptionsChanges;
     }
 
+    /**
+     * @ngdoc method
+     * @name kpValueEditorConfigurationServiceProvider#setDisableAutoWrapping
+     *
+     * @param {boolean} disableAutoWrapping
+     *
+     * @description
+     * If `true`, {@link errorMessages} directive will not wrap value editor, if its parent element isn't relatively positioned.
+     */
+    public setDisableAutoWrapping(disableAutoWrapping: boolean) {
+        this.#disableAutoWrapping = disableAutoWrapping;
+    }
+
     protected $get(): KpValueEditorConfigurationService {
         return Object.defineProperties({}, {
             debugMode: {
@@ -48,6 +62,9 @@ export default class KpValueEditorConfigurationServiceProvider {
             },
             preciseWatchForOptionsChanges: {
                 get: () => this.#preciseWatchForOptionsChanges
+            },
+            disableAutoWrapping: {
+                get: () => this.#disableAutoWrapping
             }
         })
     }
@@ -74,4 +91,5 @@ export default class KpValueEditorConfigurationServiceProvider {
 export interface KpValueEditorConfigurationService {
     readonly debugMode: boolean;
     readonly preciseWatchForOptionsChanges: boolean;
+    readonly disableAutoWrapping: boolean;
 }

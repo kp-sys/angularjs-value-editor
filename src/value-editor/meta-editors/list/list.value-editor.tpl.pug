@@ -3,13 +3,17 @@
 
     ng-form="{{name}}"
 )
-    list-required-validation(
+    list-value-editor-validations(
         name="{{name}}_required_validation_helper"
 
         ng-model="$ctrl.model.length"
         ng-model-options="{ getterSetter: true }"
 
-        enabled="$ctrl.valueEditorController.validations.required"
+        ng-ref="$ctrl.validationHelperNgModelController"
+        ng-ref-read="ngModel"
+
+        error-messages
+        error-messages-custom-class="list"
     )
 
     .panel-body
@@ -49,6 +53,7 @@
         button.btn.btn-default.btn-block.btn-xs.add(
             type="button"
             ng-disabled="$ctrl.valueEditorController.isDisabled"
+            ng-show="$ctrl.canAddItem()"
             ng-click="$ctrl.addItem()"
         )
             i.glyphicon.glyphicon-plus

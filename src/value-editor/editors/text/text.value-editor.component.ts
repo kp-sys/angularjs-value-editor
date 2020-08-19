@@ -1,7 +1,7 @@
 import './text.value-editor.less';
 import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
-import {IDoCheck, IOnInit} from 'angular';
+import {IDoCheck, INgModelController, IOnInit} from 'angular';
 import {Ace} from 'ace-builds';
 import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import {
@@ -22,13 +22,15 @@ const TEXT_INPUTS: TTextValueEditorType[] = [
     'tel'
 ];
 
-export class TextValueEditorComponentController extends AbstractValueEditorComponentController<string, TextValueEditorOptions> implements IOnInit, IDoCheck {
+export class TextValueEditorComponentController extends AbstractValueEditorComponentController<string, TextValueEditorOptions, TextValueEditorValidations> implements IOnInit, IDoCheck {
+
+    public preSufFixedNgModelController: INgModelController;
+
     private aceEditor: Ace.Editor;
     private isDisabled: boolean;
 
     /*@ngInject*/
     constructor(private textValueEditorConfigurationService: TextValueEditorConfigurationService,
-                private emailRegex: string,
                 textValueEditorLocalizationsService: TextValueEditorLocalizationsService) {
         super(textValueEditorConfigurationService, textValueEditorLocalizationsService);
     }
@@ -36,12 +38,10 @@ export class TextValueEditorComponentController extends AbstractValueEditorCompo
     public $onInit() {
         super.$onInit();
 
-        this.ngModelController.$formatters.push(this.trimPrefixAndSuffix);
-        this.ngModelController.$parsers.push(this.addPrefixAndSuffix);
         this.ngModelController.$parsers.push(this.trim);
     }
 
-    $doCheck(): void {
+    public $doCheck(): void {
         if (this.options.type === 'rich-textarea' && this.valueEditorController.isDisabled !== this.isDisabled && this.aceEditor) {
             this.isDisabled = this.valueEditorController.isDisabled;
             this.aceEditor.setReadOnly(this.isDisabled);
@@ -78,15 +78,6 @@ export class TextValueEditorComponentController extends AbstractValueEditorCompo
                 this.initACE();
             };
         }
-
-        if (whatChanged.type && this.options.type === 'email' && !((this.valueEditorController.validations as TextValueEditorValidations) ?? {}).pattern) {
-            if (!this.valueEditorController.validations) {
-                this.valueEditorController.validations = {};
-            }
-
-            (this.valueEditorController.validations as TextValueEditorValidations).pattern = this.emailRegex;
-        }
-
     }
 
     /**
@@ -110,32 +101,6 @@ export class TextValueEditorComponentController extends AbstractValueEditorCompo
 
         // Propagate disabled -> set Ace to readonly
         this.aceEditor.setReadOnly(this.valueEditorController.isDisabled);
-    }
-
-    @bind
-    private trimPrefixAndSuffix(modelValue: string): string {
-        if (this.options.includePrefixAndSuffixToModel && typeof modelValue === 'string') {
-            return modelValue
-                .replace(new RegExp(`^${this.options.prefix}`), '')
-                .replace(new RegExp(`${this.options.suffix}$`), '');
-        }
-
-        return modelValue;
-    }
-
-    @bind
-    private addPrefixAndSuffix(modelValue: string): string {
-        if (this.options.includePrefixAndSuffixToModel) {
-            if (this.options.prefix) {
-                modelValue = this.options.prefix + modelValue;
-            }
-
-            if (this.options.suffix) {
-                modelValue = modelValue + this.options.suffix;
-            }
-        }
-
-        return modelValue;
     }
 
     @bind

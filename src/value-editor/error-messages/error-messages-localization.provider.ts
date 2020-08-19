@@ -8,7 +8,7 @@ import {NumberValueEditorValidations} from '../editors/number/number.value-edito
 import {NumberRangeValueEditorValidations} from '../editors/number-range/number-range.value-editor.component';
 import {DateValueEditorValidations} from '../editors/date/date.value-editor.component';
 import {YearValueEditorValidations} from '../editors/year/year.value-editor.component';
-import {ListRequiredValidationHelper} from '../meta-editors/list/list-required-validation.component';
+import {ListValueEditorValidationsHelper} from '../meta-editors/list/list-value-editor-validation.component';
 import {PasswordEqualsValidation} from '../editors/password/model-equals.directive';
 
 /**
@@ -71,7 +71,7 @@ export interface ValueEditorErrorMessagesLocalizations extends ValueEditorLocali
     ValidationsToLocalizations<NumberRangeValueEditorValidations>,
     ValidationsToLocalizations<DateValueEditorValidations>,
     ValidationsToLocalizations<YearValueEditorValidations>,
-    ValidationsToLocalizations<ListRequiredValidationHelper>,
+    ValidationsToLocalizations<ListValueEditorValidationsHelper>,
     ValidationsToLocalizations<PasswordEqualsValidation> {
     required;
     async;
@@ -86,6 +86,7 @@ export interface ValueEditorErrorMessagesLocalizations extends ValueEditorLocali
     minDate;
     maxDate;
     'list-required';
+    'max-count';
     'passwords-equals';
 }
 
@@ -126,5 +127,6 @@ export const VALUE_EDITOR_ERROR_MESSAGES_DEFAULT_LOCALIZATIONS: Readonly<ValueEd
     minDate: 'Date is too in past',
     maxDate: 'Date is too in future',
     'list-required': 'List cannot be empty',
+    'max-count': 'Too many items',
     'passwords-equals': 'Passwords do not match'
 });

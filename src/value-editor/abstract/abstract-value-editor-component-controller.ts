@@ -1,7 +1,11 @@
 import NgModelConnector from '../utils/ng-model-connector';
 import * as angular from 'angular';
 import {IOnInit, IPostLink} from 'angular';
-import {KpValueEditorComponentController, ValueEditorOptions} from '../kp-value-editor/kp-value-editor.component';
+import {
+    KpValueEditorComponentController,
+    ValueEditorOptions,
+    ValueEditorValidations
+} from '../kp-value-editor/kp-value-editor.component';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from './abstract-value-editor-configuration.provider';
 import {AbstractValueEditorLocalizationService} from './abstract-value-editor-localization.provider';
 import {KpValueEditorAliasesServiceProvider} from '../aliases/kp-value-editor-aliases.service';
@@ -13,11 +17,11 @@ import bind from 'bind-decorator';
  *
  * @template OPTIONS
  */
-export default abstract class AbstractValueEditorComponentController<MODEL, OPTIONS extends ValueEditorOptions> extends NgModelConnector<MODEL> implements IPostLink, IOnInit {
+export default abstract class AbstractValueEditorComponentController<MODEL, OPTIONS extends ValueEditorOptions, VALIDATIONS extends ValueEditorValidations = ValueEditorValidations> extends NgModelConnector<MODEL> implements IPostLink, IOnInit {
     private static $inject = ['emptyConfigurationService'];
 
     public options: OPTIONS;
-    protected valueEditorController: KpValueEditorComponentController<MODEL, OPTIONS>;
+    protected valueEditorController: KpValueEditorComponentController<MODEL, OPTIONS, VALIDATIONS>;
 
     constructor(protected configurationService: AbstractValueEditorConfigurationService<OPTIONS>, protected localizationService?: AbstractValueEditorLocalizationService<any>) {
         super();

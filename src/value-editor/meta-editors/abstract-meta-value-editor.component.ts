@@ -1,8 +1,8 @@
 import {IFormController} from 'angular';
 import AbstractTemplateValueEditor from '../abstract/abstract-template-value-editor';
-import {ValueEditorOptions} from '../kp-value-editor/kp-value-editor.component';
+import {ValueEditorOptions, ValueEditorValidations} from '../kp-value-editor/kp-value-editor.component';
 
-export abstract class AbstractMetaValueEditorComponentController<MODEL, OPTIONS extends ValueEditorOptions> extends AbstractTemplateValueEditor<MODEL, OPTIONS> {
+export abstract class AbstractMetaValueEditorComponentController<MODEL, OPTIONS extends ValueEditorOptions, VALIDATIONS extends ValueEditorValidations = ValueEditorValidations> extends AbstractTemplateValueEditor<MODEL, OPTIONS, VALIDATIONS> {
 
     public form: IFormController;
 
