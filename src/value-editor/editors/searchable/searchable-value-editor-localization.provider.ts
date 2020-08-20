@@ -11,7 +11,7 @@ import AbstractValueEditorLocalizationProvider, {
  * @description
  * See {@link searchableValueEditorLocalizationsService}
  */
-export default class SearchableValueEditorLocalizationServiceProvider extends AbstractValueEditorLocalizationProvider<SearchableValueEditorLocalizations> {
+export default class SearchableValueEditorLocalizationsServiceProvider extends AbstractValueEditorLocalizationProvider<SearchableValueEditorLocalizations> {
     public static readonly providerName = 'searchableValueEditorLocalizationsService';
 
     /*@ngInject*/
