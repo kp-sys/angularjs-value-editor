@@ -42,7 +42,9 @@
     "src/",
     "webpack.demo.config.js",
     "webpack.library.config.js",
-    "tsconfig.json"
+    "tsconfig.json",
+    "babel-loader.js",
+    "README.md"
   ],
   "devDependencies": {
     "@babel/core": "^7.10.3",

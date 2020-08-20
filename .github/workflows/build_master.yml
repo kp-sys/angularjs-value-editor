@@ -1,0 +1,69 @@
+name: Build Master
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '12'
+
+      - run: npm ci
+      - run: npm run lib:prod
+      - run: npm run lib:dts
+
+      - run: rm -rf ./node_modules ./docs ./reports ./test ./.git
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: .
+
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '12'
+
+      - run: npm ci
+      - run: CHROMIUM_BIN="/usr/bin/google-chrome" npm test
+
+  publish-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '12'
+
+      - run: npm ci
+
+      - run: EXAMPLES_SCRIPTS_URL_PREFIX="https://kp-sys.github.io/angularjs-value-editor" RELEASE=true npm run docs:build
+
+      - name: Publish to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+
+  publish-npm:
+    runs-on: ubuntu-latest
+    needs: [build, test]
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: build
+
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+
