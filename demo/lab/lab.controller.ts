@@ -1,4 +1,5 @@
-import {DateValueEditorOptions} from '../../src/value-editor/editors/date/date-value-editor-configuration.provider';
+import {TextValueEditorOptions} from '../../src/value-editor/editors/text/text-value-editor-configuration.provider';
+import {TextValueEditorValidations} from '../../src/value-editor/editors/text/text.value-editor.component';
 
 export default class LabController {
     public static readonly controllerName = 'labController';
@@ -6,8 +7,14 @@ export default class LabController {
     public model: string = undefined;
 
     public options = {
-        onlyDate: false,
-        maximumGranularity: 'minute',
-        viewFormat: 'd.L.y HH:mm'
-    } as DateValueEditorOptions
+        prefix: 'http://',
+        suffix: '.cz',
+        includePrefixAndSuffixToModel: true,
+        type: 'url'
+    } as TextValueEditorOptions;
+
+    public validations = {
+        minlength: 12,
+        maxlength: 20
+    } as TextValueEditorValidations;
 }

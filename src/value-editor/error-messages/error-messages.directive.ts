@@ -48,7 +48,7 @@ export default class ErrorMessagesDirective {
     public link($scope: IScope, $element: IAugmentedJQuery, $attrs: IAttributes, [errorMessagesController, ngModelController, kpValueEditorController]: [ErrorMessagesDirectiveController, INgModelController, KpValueEditorComponentController]) {
         errorMessagesController.setControllers(kpValueEditorController, ngModelController);
 
-        if (!this.kpValueEditorConfigurationService.disableAutoWrapping && !this.hasRelativePositionedParent($element[0])) {
+        if (!this.kpValueEditorConfigurationService.disableAutoWrapping && !this.hasRelativePositionedParent(kpValueEditorController.$element[0])) {
             kpValueEditorController.$element.wrap('<div class="error-message-relative-position-wrapper"></div>');
         }
 
@@ -63,7 +63,7 @@ export default class ErrorMessagesDirective {
     }
 
     private hasRelativePositionedParent(element: HTMLElement): boolean {
-        return window.getComputedStyle(element).position === 'relative';
+        return window.getComputedStyle(element.parentElement).position === 'relative';
     }
 }
 

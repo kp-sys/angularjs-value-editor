@@ -193,6 +193,77 @@ describe('text-value-editor', () => {
 
             expect($scope.model).toBeNull();
         });
+
+        it('should validate length including prefix and suffix if includePrefixAndSuffixToModel is set to true', () => {
+            const PREFIX = '123';
+            const SUFFIX = '456';
+
+            valueEditorMocker.create('text', {
+                editorName: 'text',
+                options: {
+                    type: 'text',
+                    prefix: PREFIX,
+                    suffix: SUFFIX,
+                    includePrefixAndSuffixToModel: true
+                },
+                validations: {
+                    minlength: 9,
+                    maxlength: 12
+                }
+            });
+
+            const inputElement = valueEditorMocker.getInputElement<HTMLInputElement>();
+            inputElement.value = '12';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.text.$error).toEqual({minlength: true});
+
+            inputElement.value = '123456';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.text.$error).toEqual({});
+
+            inputElement.value = '1234567';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.text.$error).toEqual({maxlength: true});
+        });
+
+        it('should validate length except prefix and suffix if includePrefixAndSuffixToModel is set to false', () => {
+            const PREFIX = '123';
+            const SUFFIX = '456';
+
+            valueEditorMocker.create('text', {
+                editorName: 'text',
+                options: {
+                    type: 'text',
+                    prefix: PREFIX,
+                    suffix: SUFFIX,
+                    includePrefixAndSuffixToModel: false
+                },
+                validations: {
+                    minlength: 3,
+                    maxlength: 6
+                }
+            });
+
+            const inputElement = valueEditorMocker.getInputElement<HTMLInputElement>();
+            inputElement.value = '12';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.text.$error).toEqual({minlength: true});
+
+            inputElement.value = '12345';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.text.$error).toEqual({});
+
+            inputElement.value = '1234567';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.text.$error).toEqual({maxlength: true});
+        });
+
     });
 
     describe('type: textarea', () => {

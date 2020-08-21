@@ -4,7 +4,9 @@ import register from '@kpsys/angularjs-register';
 import TextValueEditorComponent from './text.value-editor.component';
 import TextValueEditorConfigurationServiceProvider, {TEXT_VALUE_EDITOR_DEFAULT_OPTIONS} from './text-value-editor-configuration.provider';
 import TextValueEditorLocalizationsServiceProvider, {TEXT_VALUE_EDITOR_DEFAULT_LOCALIZATIONS} from './text-value-editor-localization.provider';
-import PrefixSuffixModelAdderDirective from './prefix-suffix-model-adder.directive';
+import PrefixSuffixModelAdderDirective from './directives/prefix-suffix-model-adder.directive';
+import PrefixedMinlengthDirective from './directives/prefixed-minlength.directive';
+import PrefixedMaxlengthDirective from './directives/prefixed-maxlength.directive';
 
 /**
  * @ngdoc module
@@ -19,6 +21,8 @@ export default register('angularjs-value-editor.text', ['ui.ace'])
     .constant('textValueEditorDefaultOptions', TEXT_VALUE_EDITOR_DEFAULT_OPTIONS)
     .constant('textValueEditorDefaultLocalizations', TEXT_VALUE_EDITOR_DEFAULT_LOCALIZATIONS)
     .directive(PrefixSuffixModelAdderDirective.directiveName, PrefixSuffixModelAdderDirective)
+    .directive(PrefixedMinlengthDirective.directiveName, PrefixedMinlengthDirective)
+    .directive(PrefixedMaxlengthDirective.directiveName, PrefixedMaxlengthDirective)
     .provider(TextValueEditorConfigurationServiceProvider.providerName, TextValueEditorConfigurationServiceProvider)
     .provider(TextValueEditorLocalizationsServiceProvider.providerName, TextValueEditorLocalizationsServiceProvider)
     .component(TextValueEditorComponent.componentName, TextValueEditorComponent)

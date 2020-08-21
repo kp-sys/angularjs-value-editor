@@ -1,4 +1,4 @@
-import TextValueEditorComponent, {TextValueEditorComponentController} from './text.value-editor.component';
+import TextValueEditorComponent, {TextValueEditorComponentController} from '../text.value-editor.component';
 import {IAttributes, IAugmentedJQuery, INgModelController, IScope} from 'angular';
 
 
@@ -42,7 +42,7 @@ export default class PrefixSuffixModelAdderDirective {
             return modelValue;
         }
 
-        ngModelController.$formatters.push(trimPrefixAndSuffix);
-        ngModelController.$parsers.push(addPrefixAndSuffix);
+        ngModelController.$formatters.unshift(trimPrefixAndSuffix);
+        ngModelController.$parsers.unshift(addPrefixAndSuffix);
     }
 }
