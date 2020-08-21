@@ -128,5 +128,7 @@ export const VALUE_EDITOR_ERROR_MESSAGES_DEFAULT_LOCALIZATIONS: Readonly<ValueEd
     maxDate: 'Date is too in future',
     'list-required': 'List cannot be empty',
     'max-count': 'Too many items',
-    'passwords-equals': 'Passwords do not match'
+    'passwords-equals': 'Passwords do not match',
+    email: 'Not a valid e-mail address',
+    url: 'Not a valid URL'
 });

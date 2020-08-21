@@ -115,4 +115,18 @@ describe('date-value-editor', () => {
         expect($scope.model).toBeNull();
     });
 
+    it('should have working onlyDate option', () => {
+        valueEditorMocker.create('date', {options: {onlyDate: true}});
+
+        valueEditorMocker.getInputElement<HTMLInputElement>().value = '22.2.2022';
+        valueEditorMocker.triggerHandlerOnInput('input');
+
+        expect($scope.model).toBe('2022-02-22');
+
+        valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
+        valueEditorMocker.triggerHandlerOnInput('input');
+
+        expect($scope.model).toBeNull();
+    });
+
 });

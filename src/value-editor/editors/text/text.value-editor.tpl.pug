@@ -1,6 +1,6 @@
 // INLINE INPUT WITH PREFIX/SUFFIX
 .input-group(ng-if="$ctrl.isText() && ($ctrl.options.prefix || $ctrl.options.suffix)")
-    .input-group-addon.prefix(ng-show="$ctrl.options.prefix") {{$ctrl.options.prefix}}
+    .input-group-addon.prefix(ng-if="$ctrl.options.prefix") {{$ctrl.options.prefix}}
     input.form-control(
         ng-if="$ctrl.isText()"
 
@@ -36,7 +36,7 @@
 
         novalidate
     )
-    .input-group-addon.suffix(ng-show="$ctrl.options.suffix") {{$ctrl.options.suffix}}
+    .input-group-addon.suffix(ng-if="$ctrl.options.suffix") {{$ctrl.options.suffix}}
 
 
 // INLINE INPUT

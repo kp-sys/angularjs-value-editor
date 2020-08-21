@@ -59,5 +59,5 @@ export interface TextValueEditorLocalizations extends ValueEditorLocalizations, 
  * ```
  */
 export const TEXT_VALUE_EDITOR_DEFAULT_LOCALIZATIONS: Readonly<TextValueEditorLocalizations> = Object.freeze({
-    patternDescription: '',
+    patternDescription: ''
 });

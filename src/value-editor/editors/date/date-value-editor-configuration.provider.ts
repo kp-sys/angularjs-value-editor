@@ -24,17 +24,13 @@ export type TDateValueEditorGranularity = 'minute' | 'hour' | 'day' | 'month' | 
  *
  * @description
  * Extends {@link type:ValueEditorOptions}
- * Default value:
- * ```javascript
- *  {
- *      maximumGranularity: 'day',
- *      viewFormat: 'd.L.y'
- *  }
- * ```
+ *
+ * Defaults: {@link dateValueEditorDefaultOptions}
  */
 export interface DateValueEditorOptions extends ValueEditorOptions {
     maximumGranularity?: TDateValueEditorGranularity;
     viewFormat?: string;
+    onlyDate?: boolean;
 }
 
 /**
@@ -48,13 +44,15 @@ export interface DateValueEditorOptions extends ValueEditorOptions {
  * ```javascript
  *  {
  *      maximumGranularity: 'day',
- *      viewFormat: 'd.L.y'
+ *      viewFormat: 'd.L.y',
+ *      onlyDate: false
  *  }
  * ```
  */
 export const DATE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<DateValueEditorOptions> = {
     maximumGranularity: 'day',
-    viewFormat: 'd.L.y'
+    viewFormat: 'd.L.y',
+    onlyDate: false
 };
 
 /**

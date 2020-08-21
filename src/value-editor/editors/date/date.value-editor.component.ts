@@ -15,6 +15,7 @@ import {DateTime} from 'luxon';
 import {PropertyChangeDetection} from '../../utils/equals';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
+import bind from 'bind-decorator';
 
 export class DateValueEditorComponentController extends AbstractValueEditorComponentController<string, DateValueEditorOptions> implements IOnInit {
     public startView: TDateValueEditorGranularity;
@@ -28,6 +29,9 @@ export class DateValueEditorComponentController extends AbstractValueEditorCompo
     public $onInit(): void {
         super.$onInit();
         this.startView = this.options.maximumGranularity;
+
+        this.ngModelController.$parsers.push(this.onlyDateFormatter);
+        this.ngModelController.$formatters.push(this.onlyDateParser);
     }
 
     protected get emptyModel(): string {
@@ -60,6 +64,20 @@ export class DateValueEditorComponentController extends AbstractValueEditorCompo
                 this.startView = newOptions.maximumGranularity;
             }
         }
+    }
+
+    @bind
+    private onlyDateFormatter(modelValue: string): string {
+        if (!this.options.onlyDate) return modelValue;
+
+        return DateTime.fromISO(modelValue).toISODate();
+    }
+
+    @bind
+    private onlyDateParser(modelValue: string): string {
+        if (!this.options.onlyDate) return modelValue;
+
+        return DateTime.fromISO(modelValue).toISO();
     }
 }
 

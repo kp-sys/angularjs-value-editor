@@ -1,13 +1,13 @@
-import {TextValueEditorOptions} from '../../src/value-editor/editors/text/text-value-editor-configuration.provider';
+import {DateValueEditorOptions} from '../../src/value-editor/editors/date/date-value-editor-configuration.provider';
 
 export default class LabController {
     public static readonly controllerName = 'labController';
 
-    public model: string = '';
+    public model: string = undefined;
 
     public options = {
-        suffix: 'centrum.cz',
-        includePrefixAndSuffixToModel: false,
-        type: 'email'
-    } as TextValueEditorOptions
+        onlyDate: false,
+        maximumGranularity: 'minute',
+        viewFormat: 'd.L.y HH:mm'
+    } as DateValueEditorOptions
 }

@@ -192,6 +192,10 @@ export interface TextValueEditorValidations extends ValueEditorValidations {
     minlength?: number;
     maxlength?: number;
     pattern?: string | RegExp;
+
+    // Only for localizations
+    readonly url?: never;
+    readonly email?: never;
 }
 
 export interface TextValueEditorBindings extends ValueEditorBindings<TextValueEditorOptions, TextValueEditorValidations> {
