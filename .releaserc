@@ -2,9 +2,9 @@
   "plugins": [
     ["@semantic-release/commit-analyzer", {
       "releaseRules": [
-        {"message": "*PATCH*", "release": "patch"},
-        {"message": "*MINOR*", "release": "minor"},
-        {"message": "*MAJOR*", "release": "major"}
+        {"message": "*bump PATCH version*", "release": "patch"},
+        {"message": "*bump MINOR version*", "release": "minor"},
+        {"message": "*bump MAJOR version*", "release": "major"}
       ]
     }],
    "@semantic-release/npm"

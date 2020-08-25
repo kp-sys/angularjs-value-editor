@@ -1,5 +1,4 @@
-/* istanbul ignore file */ // neni cas... :-(
-
+/* istanbul ignore file */  // neni cas... :-(
 import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
 import {
     AcceptableRootValueEditorConfigurationService,
@@ -13,6 +12,7 @@ import AbstractTemplateValueEditor from '../../abstract/abstract-template-value-
 import {PropertyChangeDetection} from '../../utils/equals';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
+import IInjectorService = angular.auto.IInjectorService;
 
 export interface Childrenable {
     children?: Childrenable[];
@@ -34,7 +34,8 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
     constructor(acceptableRootValueEditorConfigurationService: AcceptableRootValueEditorConfigurationService<VALUE>,
                 acceptableRootValueEditorLocalizationsService: AcceptableRootValueEditorLocalizationsService,
                 $interpolate: IInterpolateService,
-                $templateCache: ITemplateCacheService) {
+                $templateCache: ITemplateCacheService,
+                private $injector: IInjectorService) {
         super(
             AcceptableRootValueEditorComponentController.TEMPLATE_URL,
             TEMPLATE_NAME_PREFIX,
@@ -50,7 +51,10 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
         this.internalAcceptableValues = [this.options.acceptableValue];
         this.treeOptions = {
             nodeChildren: 'children',
-            equality: this.options.equalityComparator,
+            equality: ($element1, $element2) => this.$injector.invoke(this.options.equalityComparator, null, {
+                $element1,
+                $element2
+            }),
             multiSelection: this.options.multiselect,
             templateUrl: AcceptableRootValueEditorComponentController.TREECONTROL_TEMPLATE_URL,
             isSelectable: this.isSelectable
@@ -79,7 +83,7 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
             this.model = (selectedNodes as []).slice();
         } else {
             if (selectedNode === undefined && this.options.emptyAsNull) {
-                this.model = null
+                this.model = null;
             } else {
                 this.model = selectedNode;
             }
@@ -88,7 +92,10 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
 
     @bind
     public isSelectable(node: VALUE): boolean {
-        return !this.options.disabledItems.some((disabledItem) => this.options.equalityComparator(disabledItem, node));
+        return !this.options.disabledItems.some((disabledItem) => this.$injector.invoke(this.options.equalityComparator, null, {
+            $element1: disabledItem,
+            $element2: node
+        }));
     }
 
     protected onOptionsChange(newOptions: AcceptableRootValueEditorOptions<VALUE>, oldOptions, whatChanged: PropertyChangeDetection<AcceptableRootValueEditorOptions<VALUE>>) {
@@ -167,7 +174,6 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
 export default class AcceptableRootValueEditorComponent extends AbstractValueEditorComponent {
     public static readonly componentName = 'acceptableRootValueEditor';
     public static readonly valueEditorType: TValueEditorType = 'acceptable-root';
-
 
     public template = AbstractTemplateValueEditor.COMPONENT_TEMPLATE;
 

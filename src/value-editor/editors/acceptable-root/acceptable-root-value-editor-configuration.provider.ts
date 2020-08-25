@@ -1,7 +1,9 @@
+/* tslint:disable:ban-types */
 import {DefaultOptions} from '../../typings';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../abstract/abstract-value-editor-configuration.provider';
 import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
+import {Injectable} from 'angular';
 import {Childrenable} from './acceptable-root.value-editor.component';
 
 /**
@@ -14,7 +16,17 @@ import {Childrenable} from './acceptable-root.value-editor.component';
  * @property {MODEL} acceptableValue Tree of acceptable values. Every node should have array of child nodes in property `children`.
  * @property {boolean} multiselect If `true`, it will be multiselectable.
  * @property {MODEL[]} disabledItems Disabled items.
- * @property {function(MODEL, MODEL): boolean} equalityComparator Same as {@link type:AcceptableValueEditorOptions#equalityComparator}
+ * @property {Injectable<Function>} equalityComparator
+ * ```
+ * function(...args: any[]) => boolean
+ * ```
+ * Custom equality comparator as angularjs injectable function.
+ *
+ * | Injectable&nbsp;argument&nbsp;name | Description  |
+ * | ------------------------ | ---------------------- |
+ * | `$element1`  | Element 1                          |
+ * | `$element2`  | Element 2                          |
+ *
  * @property {string} optionsTemplate Angular template for displaying value in tree. Current option is accessible via `$node` variable name.
  *
  * @description
@@ -26,7 +38,7 @@ export interface AcceptableRootValueEditorOptions<MODEL extends Childrenable> ex
     acceptableValue?: MODEL;
     multiselect?: boolean;
     disabledItems?: MODEL[];
-    equalityComparator?: (element1: MODEL, element2: MODEL) => boolean;
+    equalityComparator?: Injectable<Function | ((...args: any[]) => boolean)>;
     optionsTemplate?: string;
 }
 
@@ -52,7 +64,7 @@ export const ACCEPTABLE_ROOT_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<Accept
     acceptableValue: null,
     multiselect: false,
     disabledItems: [],
-    equalityComparator: angular.equals,
+    equalityComparator: /*@ngInject*/ ($element1, $element2) => angular.equals($element1, $element2),
     optionsTemplate: '{{$node}}'
 };
 

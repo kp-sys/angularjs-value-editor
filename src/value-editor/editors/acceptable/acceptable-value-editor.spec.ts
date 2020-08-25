@@ -1089,6 +1089,4 @@ describe('acceptable-value-editor', () => {
             expect(opacity).toBe('0');
         });
     });
-
-    // TODO: Add some localizations and placeholder tests
 });

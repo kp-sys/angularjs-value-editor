@@ -1,17 +1,28 @@
-import {TextValueEditorOptions} from '../../src/value-editor/editors/text/text-value-editor-configuration.provider';
 import {TextValueEditorValidations} from '../../src/value-editor/editors/text/text.value-editor.component';
+import {AcceptableRootValueEditorOptions} from '../../src/value-editor/editors/acceptable-root/acceptable-root-value-editor-configuration.provider';
 
 export default class LabController {
     public static readonly controllerName = 'labController';
 
-    public model: string = undefined;
+    public model = {id: '1'};
 
     public options = {
-        prefix: 'http://',
-        suffix: '.cz',
-        includePrefixAndSuffixToModel: true,
-        type: 'url'
-    } as TextValueEditorOptions;
+        optionsTemplate: '{{$node.text}}',
+        acceptableValue: {
+            text: '0',
+            id: '0',
+            children: [
+                {
+                    text: '1-1',
+                    id: '1'
+                },
+                {   id: '2',
+                    text: '1-2'
+                }
+            ]
+        },
+        equalityComparator: /*@ngInject*/ ($element1, $element2) => $element1?.id === $element2?.id
+    } as AcceptableRootValueEditorOptions<any>;
 
     public validations = {
         minlength: 12,
