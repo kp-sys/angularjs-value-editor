@@ -1,3 +1,5 @@
+import {ValueEditorValidations} from '../../src/value-editor/kp-value-editor/kp-value-editor.component';
+
 export default class LabController {
     public static readonly controllerName = 'labController';
 
@@ -26,4 +28,10 @@ export default class LabController {
             'editor': {'type': 'year', validations: {required: true}}
         }]
     };
+
+    public validations = {
+        async: {
+            sendWholeForm: true
+        }
+    } as ValueEditorValidations;
 }

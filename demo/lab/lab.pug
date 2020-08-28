@@ -3,9 +3,13 @@ main.container(ng-controller="labController as $ctrl")
     form(name="$ctrl.form" novalidate="novalidate")
 
        kp-value-editor(
-            type="'year'"
+            type="'text'"
+
+            editor-name="'abla'"
 
             ng-model="$ctrl.model"
+
+            validations="$ctrl.validations"
        )
 
     div Model:

@@ -1,6 +1,7 @@
 import KpValueEditorConfigurationServiceProvider
     from '../src/value-editor/kp-value-editor/kp-value-editor-configuration-provider';
 import * as angular from 'angular';
+import {ILogService} from 'angular';
 import TextValueEditorConfigurationServiceProvider
     from '../src/value-editor/editors/text/text-value-editor-configuration.provider';
 import {KpAsyncValidationServiceProvider} from '../src/value-editor/kp-async-validation/kp-async-validation.provider';
@@ -27,8 +28,8 @@ export default function config(
     });
 
     kpAsyncValidationServiceProvider.setValidationFunction(
-        /*@ngInject*/ ($model: string, $formModel: {}) => {
-            console.log($formModel);
+        /*@ngInject*/ ($model: string, $formModel: {}, $log: ILogService) => {
+            $log.log($formModel);
 
             return Promise.resolve();
         }

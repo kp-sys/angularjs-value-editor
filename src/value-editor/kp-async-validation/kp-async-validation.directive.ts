@@ -89,7 +89,7 @@ export default class KpAsyncValidationDirective {
         return ($model) => this.$injector.invoke(this.kpAsyncValidationService.getValidationsFunction(), null, {
             $propertyName,
             $model,
-            $formModel: options?.sendWholeForm ? this.getFormModel(formController) : undefined,
+            $formModel: options?.sendWholeForm ? this.updateCurrentPropertyToCurrentValue(this.getFormModel(formController), $propertyName, $model) : undefined,
             $additionalParameters: options?.additionalParameters
         })
             .catch((errorMessage) => {
@@ -110,6 +110,21 @@ export default class KpAsyncValidationDirective {
         }
 
         return getFormModel(formController);
+    }
+
+    /**
+     * If validation fired, current model contains old currentProperty value, because
+     * validation is fired BEFORE model update.
+     * So I must update validating property current value by myself...
+     */
+    private updateCurrentPropertyToCurrentValue<MODEL extends {}, PROPERTY extends keyof MODEL>(model: MODEL, propertyName: PROPERTY, currentPropertyValue: MODEL[PROPERTY]): MODEL {
+        if (Object.prototype.hasOwnProperty.call(model, propertyName)) {
+            const currentProperty: Pick<MODEL, PROPERTY> = Object.defineProperty({}, propertyName, {value: currentPropertyValue, enumerable: true});
+
+            return Object.assign({}, model, currentProperty);
+        }
+
+        return model;
     }
 }
 
