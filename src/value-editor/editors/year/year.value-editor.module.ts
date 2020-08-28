@@ -1,6 +1,9 @@
+import dateParserModule from '@kpsys/angularjs-date-parser';
+import dateTimePickerModule from '@kpsys/angularjs-bootstrap-datetimepicker';
+
 import register from '@kpsys/angularjs-register';
 import YearValueEditorComponent from './year.value-editor.component';
-import YearValueEditorConfigurationServiceProvider, {YEAR_VALUE_EDITOR_DEFAULT_OPTIONS} from './year-value-editor-configuration.provider';
+import YearParserDirective from './year-parser.directive';
 
 /**
  * @ngdoc module
@@ -11,8 +14,7 @@ import YearValueEditorConfigurationServiceProvider, {YEAR_VALUE_EDITOR_DEFAULT_O
  *
  */
 
-export default register('angularjs-value-editor.year')
-    .constant('yearValueEditorDefaultOptions', YEAR_VALUE_EDITOR_DEFAULT_OPTIONS)
-    .provider(YearValueEditorConfigurationServiceProvider.providerName, YearValueEditorConfigurationServiceProvider)
+export default register('angularjs-value-editor.year', [dateParserModule, dateTimePickerModule])
+    .directive(YearParserDirective.directiveName, YearParserDirective)
     .component(YearValueEditorComponent.componentName, YearValueEditorComponent)
     .name();

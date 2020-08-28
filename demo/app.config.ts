@@ -1,7 +1,6 @@
 import KpValueEditorConfigurationServiceProvider
     from '../src/value-editor/kp-value-editor/kp-value-editor-configuration-provider';
 import * as angular from 'angular';
-import {ITimeoutService} from 'angular';
 import TextValueEditorConfigurationServiceProvider
     from '../src/value-editor/editors/text/text-value-editor-configuration.provider';
 import {KpAsyncValidationServiceProvider} from '../src/value-editor/kp-async-validation/kp-async-validation.provider';
@@ -28,12 +27,10 @@ export default function config(
     });
 
     kpAsyncValidationServiceProvider.setValidationFunction(
-        /*@ngInject*/ ($timeout: ITimeoutService, $model: string) => new Promise((resolve, reject) => $timeout(() => {
-            if ($model === 'hovno') {
-                reject('Dyk je to hovno...');
-            } else {
-                resolve();
-            }
-        }, 1000))
+        /*@ngInject*/ ($model: string, $formModel: {}) => {
+            console.log($formModel);
+
+            return Promise.resolve();
+        }
     );
 }

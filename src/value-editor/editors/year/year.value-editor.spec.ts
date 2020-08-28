@@ -42,8 +42,6 @@ describe('year-value-editor', () => {
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
         valueEditorMocker.triggerHandlerOnInput('input');
 
-        $scope.$apply();
-
         expect($scope.form.year.$error).toEqual({required: true});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().value = '123';

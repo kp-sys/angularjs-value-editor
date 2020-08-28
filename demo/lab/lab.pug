@@ -2,15 +2,11 @@ main.container(ng-controller="labController as $ctrl")
 
     form(name="$ctrl.form" novalidate="novalidate")
 
-        kp-value-editor(
-            type="'acceptable-root'"
-
-            options="$ctrl.options"
-
-            validations="$ctrl.validations"
+       kp-value-editor(
+            type="'year'"
 
             ng-model="$ctrl.model"
-        )
+       )
 
     div Model:
     pre {{$ctrl.model | json}}

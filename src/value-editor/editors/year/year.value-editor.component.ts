@@ -1,30 +1,40 @@
-import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
+import {
+    KpValueEditorComponentController,
+    ValueEditorBindings,
+    ValueEditorOptions,
+    ValueEditorValidations
+} from '../../kp-value-editor/kp-value-editor.component';
+import * as angular from 'angular';
+import {IOnInit} from 'angular';
 import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import {DateTime} from 'luxon';
-import * as angular from 'angular';
-import {YearValueEditorConfigurationService, YearValueEditorOptions} from './year-value-editor-configuration.provider';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
-import bind from 'bind-decorator';
 
-export class YearValueEditorComponentController extends AbstractValueEditorComponentController<number, YearValueEditorOptions> {
+export class YearValueEditorComponentController extends AbstractValueEditorComponentController<string, ValueEditorOptions> implements IOnInit {
+    protected valueEditorController: KpValueEditorComponentController<string, ValueEditorOptions, YearValueEditorValidations>;
 
-    /*@ngInject*/
-    constructor(yearValueEditorConfigurationService: YearValueEditorConfigurationService) {
-        super(yearValueEditorConfigurationService);
-    }
-
-    public $onInit(): void {
-        super.$onInit();
-        this.ngModelController.$parsers.push(this.modelParser);
-        this.ngModelController.$formatters.push(this.modelFormatter);
-    }
-
-    protected get emptyModel(): number {
+    protected get emptyModel(): string {
         return undefined;
     }
 
+    public dateRestriction(dates, view) {
+        if (!this.valueEditorController.validations) {
+            return;
+        }
 
+        const minDate = DateTime.fromFormat(String(this.valueEditorController.validations.minDate), 'y');
+        const maxDate = DateTime.fromFormat(String(this.valueEditorController.validations.maxDate), 'y');
+
+        if (!maxDate.isValid && !minDate.isValid) {
+            return;
+        }
+
+        for (const date of dates) {
+            date.selectable = (!minDate.isValid || minDate.startOf(view) <= date.dateTime.startOf(view)) &&
+                (!maxDate.isValid || date.dateTime.startOf(view) <= maxDate.startOf(view));
+        }
+    }
 
     private convertYearToISO(year: number): string {
         return year ? DateTime.fromFormat(String(year), 'y').toISODate() : undefined;
@@ -33,63 +43,36 @@ export class YearValueEditorComponentController extends AbstractValueEditorCompo
     private convertISOToYear(date: string): number {
         return date ? DateTime.fromISO(date).year : undefined;
     }
-
-    @bind
-    private modelParser(isoDate: string): number {
-        if (isoDate) {
-            return DateTime.fromISO(isoDate).year;
-        }
-
-        if (isoDate === null) {
-            if (this.options.emptyAsNull) {
-                return null;
-            } else {
-                return undefined;
-            }
-        }
-
-        return isoDate as unknown as number;
-    }
-
-    @bind
-    private modelFormatter(year: number): string {
-        if (year) {
-            const parsed = DateTime.fromFormat(String(year), 'y').toISODate();
-            return parsed;
-        }
-
-        return year as unknown as string;
-    }
 }
 
 /**
  * @ngdoc component
- * @name yearValueEditor
- * @module angularjs-value-editor.year
+ * @name dateValueEditor
+ * @module angularjs-value-editor.date
  *
  * @requires ng.type.ngModel.NgModelController
  * @requires component:kpValueEditor
  *
  * @description
- * Model type: `number`
+ * Model type: `string`
  *
- * Value editor for year input.
+ * Value editor for date input.
  *
- * Supported options: {@link type:YearValueEditorOptions}
+ * Supported options: {@link type:DateValueEditorOptions}
  *
- * Supported validations: {@link type:YearValueEditorValidations}
+ * Supported validations: {@link type:DateValueEditorValidations}
  *
  * @example
- * <example name="yearValueEditorExample" module="yearValueEditorExample" frame-no-resize="true">
+ * <example name="dateValueEditorExample" module="dateValueEditorExample" frame-no-resize="true">
  *     <file name="index.html">
  *         <main>
- *              <kp-value-editor type="'year'" ng-model="model"></kp-value-editor>
+ *              <kp-value-editor type="'date'" ng-model="model"></kp-value-editor>
  *              <div>{{model}}</div>
  *         </main>
  *     </file>
  *     <file name="script.js">
  *         luxon.Settings.defaultLocale = luxon.DateTime.local().resolvedLocaleOpts().locale;
- *         angular.module('yearValueEditorExample', ['angularjs-value-editor']);
+ *         angular.module('dateValueEditorExample', ['angularjs-value-editor']);
  *     </file>
  * </example>
  */
@@ -118,5 +101,5 @@ export interface YearValueEditorValidations extends ValueEditorValidations {
     maxDate?: number;
 }
 
-export interface YearValueEditorBindings extends ValueEditorBindings<YearValueEditorOptions, YearValueEditorValidations> {
+export interface YearValueEditorBindings extends ValueEditorBindings<ValueEditorOptions, YearValueEditorValidations> {
 }

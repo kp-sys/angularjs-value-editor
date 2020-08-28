@@ -1,20 +1,52 @@
-kp-value-editor(
-    editor-id="$ctrl.valueEditorController.editorId"
-    editor-name="$ctrl.valueEditorController.editorName"
-    placeholder="$ctrl.valueEditorController.placeholder"
+.input-group(uib-dropdown='' dropdown-append-to-body='' is-open='datePickerOpen')
+    input.form-control(
+        type='text'
 
-    type="'date'"
+        ng-attr-id="{{$ctrl.valueEditorController.editorId}}"
+        ng-attr-name="{{$ctrl.valueEditorController.editorName}}"
+        ng-attr-placeholder="{{$ctrl.valueEditorController.placeholder}}"
 
-    ng-model="$ctrl.model"
-    ng-model-options="{ getterSetter: true}"
+        ng-model="$ctrl.model"
+        ng-model-options="{ getterSetter: true}"
 
-    is-disabled="$ctrl.valueEditorController.isDisabled"
+        ng-disabled="$ctrl.valueEditorController.isDisabled"
 
-    options="{viewFormat: 'y', maximumGranularity: 'year', forceShowErrors: $ctrl.options.forceShowErrors}"
-    validations="{" +
-        "minDate: $ctrl.convertYearToISO($ctrl.valueEditorController.validations.minDate), " +
-        "maxDate: $ctrl.convertYearToISO($ctrl.valueEditorController.validations.maxDate), " +
-        "required: $ctrl.valueEditorController.validations.required," +
-        "async: $ctrl.valueEditorController.validations.async" +
-    "}"
-)
+        ng-required="$ctrl.valueEditorController.validations.required"
+
+        kp-async-validation="$ctrl.valueEditorController.validations.async"
+
+        kp-date-parser
+        min-date="$ctrl.convertYearToISO($ctrl.valueEditorController.validations.minDate)"
+        max-date="$ctrl.convertYearToISO($ctrl.valueEditorController.validations.maxDate)"
+        kp-date-parser-view-format="'y'"
+        kp-date-parser-model-format="'y'"
+
+        year-parser
+
+        error-messages
+
+        data-main-input
+    )
+
+
+    div(uib-dropdown-menu="")
+        datetimepicker(
+            ng-model="$ctrl.model"
+            ng-model-options="{ getterSetter: true}"
+
+            datetimepicker-config="{minView: 'year', startView: 'year'}"
+
+            on-set-time="datePickerOpen = false"
+            before-render="$ctrl.dateRestriction($dates, $view)"
+            view-format="y"
+
+            kp-date-parser
+            kp-date-parser-view-format="'y'"
+            kp-date-parser-model-format="'y'"
+
+            year-parser
+        )
+
+    span.input-group-btn
+        button.btn.btn-default(type='button' ng-disabled="$ctrl.valueEditorController.isDisabled" uib-dropdown-toggle='')
+            span.glyphicon.glyphicon-calendar
