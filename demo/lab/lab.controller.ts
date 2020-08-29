@@ -3,7 +3,12 @@ import {ValueEditorValidations} from '../../src/value-editor/kp-value-editor/kp-
 export default class LabController {
     public static readonly controllerName = 'labController';
 
-    public model: number = undefined;
+    public model = {
+        accessNumber: 'fr',
+        acquisitionYear: 3,
+        bla: 'abl',
+        something: [1, 2, 3, 4, 5]
+    };
 
     public options = {
         'fields': [{
@@ -22,7 +27,7 @@ export default class LabController {
                 },
                 'type': 'access-number'
             }
-        },{
+        }, {
             'label': 'Rok přírůstku',
             'fieldName': 'acquisitionYear',
             'editor': {'type': 'year', validations: {required: true}}

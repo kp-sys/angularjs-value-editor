@@ -40,6 +40,7 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
     public labelsWidth: number;
     public forceShowErrors: boolean;
     public options: KpUniversalFormComponentOptions;
+    public asyncValidationsModel: {};
 
     private uuid: string;
 
@@ -104,6 +105,7 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
  * @param {ObjectValueEditorLabelsWidth=} labelsWidth See {@link ObjectValueEditorOptions}. Default value is `2`.
  * @param {boolean=} forceShowErrors If `true` it displays all validation error messages.
  * @param {KpUniversalFormComponentOptions=} options Specific options for universal form.
+ * @param {{}=} asyncValidationsModel Specify model for async validations. If defined, all async validations with set `wholeForm = true` use this model.
  *
  * @description
  * Component for generating forms by definition passed via `formSettings` attribute.
@@ -184,7 +186,8 @@ export default class KpUniversalFormComponent {
         onSubmit: '&?',
         labelsWidth: '@?',
         forceShowErrors: '<?',
-        options: '<?'
+        options: '<?',
+        asyncValidationsModel: '<?'
     };
 
     public controller = KpUniversalFormComponentController;
@@ -213,6 +216,7 @@ export interface KpUniversalFormComponentBindings {
     labelsWidth?: number;
     forceShowErrors?: boolean;
     options?: KpUniversalFormComponentOptions;
+    asyncValidationsModel?: {};
 
     formController(locals: { $formController: IFormController });
 

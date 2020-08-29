@@ -109,4 +109,48 @@ describe('kp-async-validation', () => {
 
         expect(validationFunction).toHaveBeenCalledWith('hello', {customInput: 'customHello', textEditor: 'hello'});
     });
+
+    it('should trigger validation function with whole form option and specified custom model', () => {
+        const validationFunction = jasmine.createSpy('validationFunction').and.stub();
+
+        angular.mock.module(valueEditorModule, /*@ngInject*/ (kpAsyncValidationServiceProvider: KpAsyncValidationServiceProvider) => {
+            kpAsyncValidationServiceProvider.setValidationFunction(/*@ngInject*/ ($model: string, $formModel: {}) => {
+                validationFunction($model, $formModel);
+
+                return new Promise((resolve) => resolve());
+            });
+        });
+
+        inject();
+
+        const customModel = {
+            a: 'a',
+            b: 123,
+            c: [1, 2, 3],
+            d: {a: 'a'}
+        };
+
+        $scope.model = 'hello';
+        // @ts-ignore
+        $scope.customNgModel = 'customHello';
+
+        valueEditorMocker.setCustomTemplate(`
+            <input type="text" name="customInput" ng-model="customNgModel">
+        `);
+
+        valueEditorMocker.create('text', {
+            editorName: 'textEditor',
+            validations: {
+                async: {
+                    sendWholeForm: true,
+                    customFormModel: customModel
+                }
+            }
+        });
+
+        valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
+        valueEditorMocker.triggerHandlerOnInput('input');
+
+        expect(validationFunction).toHaveBeenCalledWith('hello', customModel);
+    });
 });

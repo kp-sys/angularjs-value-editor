@@ -4,6 +4,8 @@ import * as angular from 'angular';
 import {ICompileService, IFormController, INgModelController, IScope, ITimeoutService} from 'angular';
 import {KpUniversalFormSettings} from './kp-universal-form.component';
 import {ListValueEditorOptions} from '../meta-editors/list/list-value-editor-configuration.provider';
+import {KpAsyncValidationServiceProvider} from '../kp-async-validation/kp-async-validation.provider';
+import {KpAsyncValidationOptions} from '../kp-async-validation/kp-async-validation.directive';
 import objectContaining = jasmine.objectContaining;
 import anything = jasmine.anything;
 
@@ -80,129 +82,187 @@ describe('kp-universal-form', () => {
         return compiledElement[0];
     }
 
-    beforeEach(() => {
-        angular.mock.module(valueEditorModule);
+    describe('common use', () => {
+        beforeEach(() => {
+            angular.mock.module(valueEditorModule);
 
-        inject(/*@ngInject*/ ($compile, $rootScope, $timeout: ITimeoutService) => {
-            $scope = $rootScope.$new();
-            _$compile = $compile;
-            _$timeout = $timeout;
+            inject(/*@ngInject*/ ($compile, $rootScope, $timeout: ITimeoutService) => {
+                $scope = $rootScope.$new();
+                _$compile = $compile;
+                _$timeout = $timeout;
+            });
         });
-    });
 
-    it('should change model on input', () => {
-        $scope.formSettings = FORM_SETTINGS;
+        it('should change model on input', () => {
+            $scope.formSettings = FORM_SETTINGS;
 
-        $scope.model = {
-            number: 10
-        };
+            $scope.model = {
+                number: 10
+            };
 
-        const element = compileTemplate();
+            const element = compileTemplate();
 
-        expect($scope.model).toEqual({number: 10, dates: []});
+            expect($scope.model).toEqual({number: 10, dates: []});
 
-        const numberInput = element.querySelector<HTMLInputElement>('number-value-editor [data-main-input]');
-        numberInput.value = '20';
-        angular.element(numberInput).triggerHandler('input');
+            const numberInput = element.querySelector<HTMLInputElement>('number-value-editor [data-main-input]');
+            numberInput.value = '20';
+            angular.element(numberInput).triggerHandler('input');
 
-        expect($scope.model).toEqual(objectContaining({number: 20, dates: []}));
-    });
+            expect($scope.model).toEqual(objectContaining({number: 20, dates: []}));
+        });
 
-    it('should change value if model is changed', () => {
-        $scope.formSettings = FORM_SETTINGS;
+        it('should change value if model is changed', () => {
+            $scope.formSettings = FORM_SETTINGS;
 
-        $scope.model = {
-            text: 'Hello',
-            number: 20,
-            dates: ['']
-        };
+            $scope.model = {
+                text: 'Hello',
+                number: 20,
+                dates: ['']
+            };
 
-        const element = compileTemplate();
+            const element = compileTemplate();
 
-        const input = element.querySelector<HTMLInputElement>('text-value-editor [data-main-input]');
-        expect(input.value).toBe('Hello');
+            const input = element.querySelector<HTMLInputElement>('text-value-editor [data-main-input]');
+            expect(input.value).toBe('Hello');
 
-        $scope.model = {
-            number: 15,
-            text: 'world'
-        };
-        $scope.$apply();
+            $scope.model = {
+                number: 15,
+                text: 'world'
+            };
+            $scope.$apply();
 
-        expect(input.value).toBe('world');
-    });
+            expect(input.value).toBe('world');
+        });
 
-    it('should assign $formController and form name', () => {
-        $scope.name = 'formName';
-        $scope.formSettings = FORM_SETTINGS;
+        it('should assign $formController and form name', () => {
+            $scope.name = 'formName';
+            $scope.formSettings = FORM_SETTINGS;
 
-        $scope.model = {
-            text: 'Hello',
-            number: 20,
-            dates: ['']
-        };
+            $scope.model = {
+                text: 'Hello',
+                number: 20,
+                dates: ['']
+            };
 
-        const element = compileTemplate();
+            const element = compileTemplate();
 
-        expect($scope.formController).toEqual(objectContaining({$name: 'formName'}));
+            expect($scope.formController).toEqual(objectContaining({$name: 'formName'}));
 
-        const textInput = element.querySelector<HTMLInputElement>('text-value-editor [data-main-input]');
-        textInput.value = 'world';
-        angular.element(textInput).triggerHandler('input');
+            const textInput = element.querySelector<HTMLInputElement>('text-value-editor [data-main-input]');
+            textInput.value = 'world';
+            angular.element(textInput).triggerHandler('input');
 
-        expect(($scope.formController.text as INgModelController).$dirty).toBe(true);
-    });
+            expect(($scope.formController.text as INgModelController).$dirty).toBe(true);
+        });
 
-    it('should correctly set validity', () => {
-        const customizedSettings = Object.assign({}, FORM_SETTINGS);
-        customizedSettings.fields[0].editor.validations = {required: true};
-        $scope.formSettings = customizedSettings;
+        it('should correctly set validity', () => {
+            const customizedSettings = Object.assign({}, FORM_SETTINGS);
+            customizedSettings.fields[0].editor.validations = {required: true};
+            $scope.formSettings = customizedSettings;
 
-        const element = compileTemplate();
+            const element = compileTemplate();
 
-        expect($scope.formController.$valid).toBe(false);
-        expect($scope.formController.text.$error).toEqual(anything());
+            expect($scope.formController.$valid).toBe(false);
+            expect($scope.formController.text.$error).toEqual(anything());
 
-        const textInput = element.querySelector<HTMLInputElement>('text-value-editor [data-main-input]');
-        textInput.value = 'world';
-        angular.element(textInput).triggerHandler('input');
+            const textInput = element.querySelector<HTMLInputElement>('text-value-editor [data-main-input]');
+            textInput.value = 'world';
+            angular.element(textInput).triggerHandler('input');
 
-        expect($scope.formController.$valid).toBe(true);
-    });
+            expect($scope.formController.$valid).toBe(true);
+        });
 
-    it('should call submit function on form submit', () => {
-        const onSubmit = jasmine.createSpy('onSubmit').and.callFake(() => null);
+        it('should call submit function on form submit', () => {
+            const onSubmit = jasmine.createSpy('onSubmit').and.callFake(() => null);
 
-        $scope.onSubmit = onSubmit;
-        $scope.name = 'formName';
-        $scope.formSettings = FORM_SETTINGS;
+            $scope.onSubmit = onSubmit;
+            $scope.name = 'formName';
+            $scope.formSettings = FORM_SETTINGS;
 
-        $scope.model = {
-            text: 'Hello',
-            number: 20,
-            dates: ['']
-        };
+            $scope.model = {
+                text: 'Hello',
+                number: 20,
+                dates: ['']
+            };
 
-        const element = compileTemplate();
+            const element = compileTemplate();
 
-        expect($scope.formController.$submitted).toBe(false);
+            expect($scope.formController.$submitted).toBe(false);
 
-        const submitEvent = new CustomEvent('submit', {'bubbles': true, 'cancelable': true});
-        element.querySelector<HTMLFormElement>('form').dispatchEvent(submitEvent);
-        $scope.$apply();
+            const submitEvent = new CustomEvent('submit', {'bubbles': true, 'cancelable': true});
+            element.querySelector<HTMLFormElement>('form').dispatchEvent(submitEvent);
+            $scope.$apply();
 
-        expect($scope.formController.$submitted).toBe(true);
-        expect(onSubmit).toHaveBeenCalled();
-    });
+            expect($scope.formController.$submitted).toBe(true);
+            expect(onSubmit).toHaveBeenCalled();
+        });
 
-    it('should not throw exception if attribute formController is not defined', () => {
-        $scope.formSettings = FORM_SETTINGS;
+        it('should not throw exception if attribute formController is not defined', () => {
+            $scope.formSettings = FORM_SETTINGS;
 
-        expect(() => compileTemplate(`
+            expect(() => compileTemplate(`
             <kp-universal-form
                 ng-model="model"
                 form-settings="formSettings"
                 on-submit="onSubmit($event)"
             ></kp-universal-form>
         `)).not.toThrow();
+        });
+    });
+
+    describe('async validation', () => {
+        it('should trigger async validation with specified model in universal form attribute', () => {
+            const validationFunction = jasmine.createSpy('validationFunction').and.stub();
+
+            angular.mock.module(valueEditorModule, /*@ngInject*/ (kpAsyncValidationServiceProvider: KpAsyncValidationServiceProvider) => {
+                kpAsyncValidationServiceProvider.setValidationFunction(/*@ngInject*/ ($model: string, $formModel: {}) => {
+                    validationFunction($model, $formModel);
+
+                    return new Promise((resolve) => resolve());
+                });
+            });
+
+            inject(/*@ngInject*/ ($compile, $rootScope, $timeout: ITimeoutService) => {
+                $scope = $rootScope.$new();
+                _$compile = $compile;
+                _$timeout = $timeout;
+            });
+
+            const customTemplate = `
+            <kp-universal-form
+                ng-model="model"
+                form-settings="formSettings"
+                name="{{name}}"
+                async-validations-model="model"
+            ></kp-universal-form>
+        `;
+
+            const customFormSettings = Object.assign({}, FORM_SETTINGS);
+
+            customFormSettings.fields[0].editor.validations = {
+                async: {
+                    sendWholeForm: true
+                } as KpAsyncValidationOptions
+            };
+
+            $scope.name = 'formName';
+            $scope.formSettings = FORM_SETTINGS;
+
+            $scope.model = {
+                text: 'Hello',
+                number: 20,
+                dates: [''],
+                additional: {
+                    a: 'a',
+                    b: 123,
+                    c: [1, 2, 3],
+                    d: {a: 'a'}
+                }
+            };
+
+            const element = compileTemplate(customTemplate);
+
+            expect(validationFunction).toHaveBeenCalledWith('Hello', $scope.model);
+        });
     });
 });

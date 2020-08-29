@@ -1,17 +1,12 @@
 main.container(ng-controller="labController as $ctrl")
 
-    form(name="$ctrl.form" novalidate="novalidate")
+    kp-universal-form(
+        form-settings="$ctrl.options"
 
-       kp-value-editor(
-            type="'text'"
+        ng-model="$ctrl.model"
 
-            editor-name="'abla'"
-
-            ng-model="$ctrl.model"
-
-            validations="$ctrl.validations"
-       )
-
+        async-validations-model="$ctrl.model"
+    )
     div Model:
     pre {{$ctrl.model | json}}
 

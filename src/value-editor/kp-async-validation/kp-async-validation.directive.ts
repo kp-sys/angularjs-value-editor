@@ -80,16 +80,16 @@ export default class KpAsyncValidationDirective {
 
         if (options) {
             options = Object.assign({}, ASYNC_VALIDATION_DEFAULT_OPTIONS, options);
-            ngModelController.$asyncValidators.async = this.validate(options, valueEditorController.formController, errorMessagesController, ngModelController, valueEditorController.editorName);
+            ngModelController.$asyncValidators.async = this.validate(options, valueEditorController.formController, errorMessagesController, ngModelController, valueEditorController.editorName, valueEditorController);
         }
     }
 
     @bind
-    private validate(options: KpAsyncValidationOptions, formController: IFormController, errorMessagesController: ErrorMessagesDirectiveController, ngModelController: INgModelController, $propertyName: string): ($model: any) => IPromise<string> {
+    private validate(options: KpAsyncValidationOptions, formController: IFormController, errorMessagesController: ErrorMessagesDirectiveController, ngModelController: INgModelController, $propertyName: string, valueEditoController: KpValueEditorComponentController): ($model: any) => IPromise<string> {
         return ($model) => this.$injector.invoke(this.kpAsyncValidationService.getValidationsFunction(), null, {
             $propertyName,
             $model,
-            $formModel: options?.sendWholeForm ? this.updateCurrentPropertyToCurrentValue(this.getFormModel(formController), $propertyName, $model) : undefined,
+            $formModel: options?.sendWholeForm ? this.updateCurrentPropertyToCurrentValue(this.getFormModel(options, formController, valueEditoController), $propertyName, $model) : undefined,
             $additionalParameters: options?.additionalParameters
         })
             .catch((errorMessage) => {
@@ -104,7 +104,15 @@ export default class KpAsyncValidationDirective {
             });
     }
 
-    private getFormModel(formController: IFormController): any {
+    private getFormModel(options: KpAsyncValidationOptions, formController: IFormController, valueEditorController: KpValueEditorComponentController): any {
+        if (options?.customFormModel) {
+            return options.customFormModel;
+        }
+
+        if (valueEditorController?.universalFormController?.asyncValidationsModel) {
+            return valueEditorController.universalFormController.asyncValidationsModel;
+        }
+
         if (typeof formController === 'undefined' || formController === null) {
             throw new TypeError(`KpAsyncValidationDirective: formController is null or undefined. You have to wrap your value-editor into form element or ng-form attribute.`);
         }
@@ -142,6 +150,7 @@ export default class KpAsyncValidationDirective {
 export interface KpAsyncValidationOptions {
     sendWholeForm?: boolean;
     additionalParameters?: any;
+    customFormModel?: {};
 }
 
 /**
@@ -161,5 +170,6 @@ export interface KpAsyncValidationOptions {
  */
 const ASYNC_VALIDATION_DEFAULT_OPTIONS: KpAsyncValidationOptions = {
     additionalParameters: undefined,
-    sendWholeForm: false
+    sendWholeForm: false,
+    customFormModel: undefined
 };
