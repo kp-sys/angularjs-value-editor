@@ -47,6 +47,7 @@ export default class ErrorMessagesDirective {
 
     public link($scope: IScope, $element: IAugmentedJQuery, $attrs: IAttributes, [errorMessagesController, ngModelController, kpValueEditorController]: [ErrorMessagesDirectiveController, INgModelController, KpValueEditorComponentController]) {
         errorMessagesController.setControllers(kpValueEditorController, ngModelController);
+        errorMessagesController.getAlreadyAppendedErrors();
 
         if (!this.kpValueEditorConfigurationService.disableAutoWrapping && !this.hasRelativePositionedParent(kpValueEditorController.$element[0])) {
             kpValueEditorController.$element.wrap('<div class="error-message-relative-position-wrapper"></div>');
@@ -60,6 +61,10 @@ export default class ErrorMessagesDirective {
         });
 
         ngModelController.$validators.__validationMessageListener = errorMessagesController.processErrors;
+
+        $scope.$on('$destroy', () => {
+            kpValueEditorController.$element[0].parentElement.querySelectorAll('.error-message').forEach((element) => element.remove());
+        });
     }
 
     private hasRelativePositionedParent(element: HTMLElement): boolean {
@@ -96,14 +101,14 @@ export class ErrorMessagesDirectiveController {
 
             errorsToRemove.forEach((error) => {
                 this.appendedElements[error].classList.add('not-visible');
-                this.$timeout(() => {
-                    this.appendedElements[error]?.remove();
-                    delete this.appendedElements[error];
-                }, 150);
+                this.$timeout((appendedElements) => {
+                    appendedElements[error]?.remove();
+                    delete appendedElements[error];
+                }, 150, true, this.appendedElements);
             });
 
             errorsToAdd.forEach((error, index) => {
-                const element = angular.element(template`custom class: ${this.$attrs.errorMessagesCustomClass ?? ''}, right position: ${20 * index}, message: ${this.localize(error)}`);
+                const element = angular.element(template`custom class: ${this.$attrs.errorMessagesCustomClass ?? ''}, right position: ${20 * index}, message: ${this.localize(error)}, error: ${error}`);
                 this.appendedElements[error] = element[0];
                 this.kpValueEditorController.$element.after(element);
                 this.$timeout(() => element.removeClass('not-visible'));
@@ -112,6 +117,14 @@ export class ErrorMessagesDirectiveController {
 
         return true;
     };
+
+    public getAlreadyAppendedErrors() {
+        this.appendedElements = Array.from(this.kpValueEditorController.$element[0].querySelectorAll('.error-message'))
+                    .reduce(((errorsObject, currentErrorElement) => {
+                        errorsObject[currentErrorElement.getAttribute('data-error')] = currentErrorElement;
+                        return errorsObject;
+                    }), {});
+    }
 }
 
 function getErrorType(index: number, errorsObject: {}): string {
@@ -143,6 +156,6 @@ function arraySubtraction<T>(from: T[], what: T[]): T[] {
         }, []);
 }
 
-function template(strings, customClass: string, rightPosition: number, message: string) {
-    return `<div class="error-message not-visible ${customClass}" style="right: calc(10% + ${rightPosition}px)">${message}</div>`;
+function template(strings, customClass: string, rightPosition: number, message: string, error: string) {
+    return `<div class="error-message not-visible ${customClass}" style="right: calc(10% + ${rightPosition}px)" data-error="${error}">${message}</div>`;
 }
