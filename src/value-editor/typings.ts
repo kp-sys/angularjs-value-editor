@@ -28,14 +28,13 @@ export type TMetaValueEditor =
  *
  * ```
  * type TValueEditorTypeAliases =
- *  'exemplar-bar-code' |
- *  'single-acceptable-root' |
+ *   'single-acceptable' |
+ *   'multiple-acceptable' |
  *  'multiple-acceptable-root' |
  *  'velocity-template';
  * ```
  */
 export type TValueEditorTypeAliases =
-    'exemplar-bar-code' |
     'single-acceptable' |
     'multiple-acceptable' |
     'single-acceptable-root' |
@@ -63,14 +62,10 @@ export type TValueEditorTypeAliases =
  *      'date' |
  *      'acceptable' |
  *      'year' |
- *      'card-number' |
  *      'autocomplete' |
  *      'password' |
- *      'signature' |
- *      'access-number' |
  *      'number-range' |
  *      'acceptable-root' |
- *      'search-text' |
  *      'searchable' |
  *      'range';
  * ```
@@ -84,14 +79,10 @@ export type TValueEditorType = TValueEditorTypeAliases | TMetaValueEditor |
     'date' |
     'acceptable' |
     'year' |
-    'card-number' |
     'autocomplete' |
     'password' |
-    'signature' |
-    'access-number' |
     'number-range' |
     'acceptable-root' |
-    'search-text' |
     'searchable' |
     'range';
 

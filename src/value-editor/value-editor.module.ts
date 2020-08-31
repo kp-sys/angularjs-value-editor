@@ -11,15 +11,10 @@ import htmlValueEditorModule from './editors/html/html.value-editor.module';
 import numberValueEditorModule from './editors/number/number.value-editor.module';
 import textValueEditorModule from './editors/text/text.value-editor.module';
 import yearValueEditorModule from './editors/year/year.value-editor.module';
-import cardNumberValueEditorModule from './editors/card-number/card-number.value-editor.module';
 import autocompleteValueEditorModule from './editors/autocomplete/autocomplete.value-editor.module';
 import passwordValueEditorModule from './editors/password/password.value-editor.module';
-import signatureValueEditorModule from './editors/signature/signature.value-editor.module';
-import accessNumberValueEditorModule from './editors/access-number/access-number.value-editor.module';
 import numberRangeValueEditorModule from './editors/number-range/number-range.value-editor.module';
-import exemplarBarCodeValueEditorModule from './editors/exemplar-bar-code/exemplar-bar-code.value-editor.module';
 import acceptableRootValueEditorModule from './editors/acceptable-root/acceptable-root.value-editor.module';
-import searchTextValueEditorModule from './editors/search-text/search-text.value-editor.module';
 import searchableValueEditorModule from './editors/searchable/searchable.value-editor.module';
 import velocityTemplateValueEditorModule from './editors/velocity-template/velocity-template.value-editor.module';
 import rangeValueEditorModule from './editors/range/range.value-editor.module';
@@ -73,15 +68,10 @@ export default register('angularjs-value-editor', [
     numberValueEditorModule,
     textValueEditorModule,
     yearValueEditorModule,
-    cardNumberValueEditorModule,
     autocompleteValueEditorModule,
     passwordValueEditorModule,
-    signatureValueEditorModule,
-    accessNumberValueEditorModule,
     numberRangeValueEditorModule,
-    exemplarBarCodeValueEditorModule,
     acceptableRootValueEditorModule,
-    searchTextValueEditorModule,
     searchableValueEditorModule,
     velocityTemplateValueEditorModule,
     rangeValueEditorModule,

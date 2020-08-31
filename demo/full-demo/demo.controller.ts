@@ -3,8 +3,6 @@ import {TextValueEditorOptions} from '../../src/value-editor/editors/text/text-v
 import {TextValueEditorValidations} from '../../src/value-editor/editors/text/text.value-editor.component';
 import {AcceptableValueEditorOptions} from '../../src/value-editor/editors/acceptable/acceptable-value-editor-configuration.provider';
 import {PasswordValueEditorOptions} from '../../src/value-editor/editors/password/password-value-editor-configuration.provider';
-import {SignatureValueEditorOptions} from '../../src/value-editor/editors/signature/signature-value-editor-configuration.provider';
-import {AccessNumberValueEditorOptions} from '../../src/value-editor/editors/access-number/access-number-value-editor-configuration.provider';
 import {AcceptableRootValueEditorOptions} from '../../src/value-editor/editors/acceptable-root/acceptable-root-value-editor-configuration.provider';
 import {SearchableValueEditorOptions} from '../../src/value-editor/editors/searchable/searchable-value-editor-configuration.provider';
 import {ITimeoutService} from 'angular';
@@ -225,18 +223,6 @@ export default class DemoController {
             }
         },
         {
-            label: 'card-number',
-            fieldName: 'card-number',
-            editor: {
-                type: 'card-number',
-                editorName: 'card-number',
-
-                validations: {
-                    required: true
-                }
-            }
-        },
-        {
             label: 'autocomplete',
             fieldName: 'autocomplete',
             editor: {
@@ -276,38 +262,6 @@ export default class DemoController {
                 localizations: {
                     patternDescription: 'Patern description'
                 } as PasswordValueEditorLocalizations
-            }
-        },
-        {
-            label: 'signature',
-            fieldName: 'signature',
-            editor: {
-                type: 'signature',
-                editorName: 'signature',
-
-                validations: {
-                    required: true
-                },
-                options: {
-                    dataSource: () => Promise.resolve(['one', 'two', 'three']),
-                    canDoAction: true
-                } as SignatureValueEditorOptions
-            }
-        },
-        {
-            label: 'access-number',
-            fieldName: 'access-number',
-            editor: {
-                type: 'access-number',
-                editorName: 'access-number',
-
-                validations: {
-                    required: true
-                },
-                options: {
-                    dataSource: () => Promise.resolve(['one', 'two', 'three']),
-                    canDoAction: true
-                } as AccessNumberValueEditorOptions
             }
         },
         {
@@ -375,18 +329,6 @@ export default class DemoController {
             }
         },
         {
-            label: 'search-text',
-            fieldName: 'search-text',
-            editor: {
-                type: 'search-text',
-                editorName: 'search-text',
-
-                validations: {
-                    required: true
-                }
-            }
-        },
-        {
             label: 'searchable',
             fieldName: 'searchable',
             editor: {
@@ -407,18 +349,6 @@ export default class DemoController {
             editor: {
                 type: 'range',
                 editorName: 'range',
-
-                validations: {
-                    required: true
-                }
-            }
-        },
-        {
-            label: 'exemplar-bar-code',
-            fieldName: 'exemplar-bar-code',
-            editor: {
-                type: 'exemplar-bar-code',
-                editorName: 'exemplar-bar-code',
 
                 validations: {
                     required: true

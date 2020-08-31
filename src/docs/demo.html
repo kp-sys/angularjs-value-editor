@@ -7,18 +7,24 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/@kpsys/angular-ui-bootstrap@2.5.5/dist/ui-bootstrap-csp.css">
-    <link rel="stylesheet" href="https://unpkg.com/@kpsys/angularjs-bootstrap-datetimepicker@2.1.1/dist/angularjs-bootstrap-datetimepicker.css">
+    <link rel="stylesheet"
+          href="https://unpkg.com/@kpsys/angularjs-bootstrap-datetimepicker@2.1.1/dist/angularjs-bootstrap-datetimepicker.css">
     <link rel="stylesheet" href="https://unpkg.com/@kpsys/angularjs-histogram-slider@1.3.1/dist/slider.css">
     <link rel="stylesheet" href="https://unpkg.com/ui-select@0.19.8/dist/select.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/ui/trumbowyg.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/colors/ui/trumbowyg.colors.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/table/ui/trumbowyg.table.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/colors/ui/trumbowyg.colors.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/table/ui/trumbowyg.table.min.css">
     <link rel="stylesheet" href="https://unpkg.com/@kpsys/angularjs-value-editor/dist/angularjs-value-editor.css">
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/trumbowyg.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/colors/trumbowyg.colors.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/table/trumbowyg.table.min.js"></script>    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.8.7/polyfill.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/table/trumbowyg.table.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.8.7/polyfill.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.7/angular.js"></script>
     <script src="https://unpkg.com/@kpsys/angularjs-register@1.1.4/dist/register.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js"></script>
@@ -37,10 +43,10 @@
         luxon.Settings.defaultLocale = luxon.DateTime.local().resolvedLocaleOpts().locale;
 
         angular.module('app', ['angularjs-value-editor'])
-            .config(['kpValueEditorConfigurationServiceProvider', function(kpValueEditorConfigurationServiceProvider) {
-                kpValueEditorConfigurationServiceProvider.setDebugMode(true)
+            .config(['kpValueEditorConfigurationServiceProvider', function (kpValueEditorConfigurationServiceProvider) {
+                kpValueEditorConfigurationServiceProvider.setDebugMode(true);
             }])
-            .controller('demoController', function() {
+            .controller('demoController', function () {
                 this.model = {};
 
                 this.fields = [
@@ -55,6 +61,9 @@
                                 required: true,
                                 pattern: 'abc',
                                 minlength: 5
+                            },
+                            localizations: {
+                                patternDescription: 'pattern'
                             }
                         }
                     },
@@ -82,6 +91,23 @@
 
                             options: {
                                 type: 'rich-textarea'
+                            },
+                            validations: {
+                                required: true
+                            }
+                        }
+                    },
+                    {
+                        label: 'text:prefixed-text',
+                        fieldName: 'prefixedText',
+                        editor: {
+                            type: 'text',
+                            editorName: 'prefixedText',
+
+                            options: {
+                                prefix: 'Prefix',
+                                postfix: 'Postfix',
+                                includePrefixAndPostfixToModel: true
                             },
                             validations: {
                                 required: true
@@ -137,11 +163,11 @@
                         }
                     },
                     {
-                        label: 'acceptable:select',
-                        fieldName: 'acceptable-select',
+                        label: 'acceptable:inline:single',
+                        fieldName: 'acceptable-inline-single',
                         editor: {
-                            type: 'acceptable',
-                            editorName: 'acceptable-select',
+                            type: 'single-acceptable',
+                            editorName: 'acceptable-inline-single',
 
                             validations: {
                                 required: true
@@ -151,15 +177,56 @@
                                     'one',
                                     'two',
                                     'three'
-                                ]
+                                ],
+                                __forceDisableNgAnimate: true
                             }
                         }
                     },
                     {
-                        label: 'acceptable:checkboxes',
-                        fieldName: 'acceptableCheckboxes',
+                        label: 'acceptable:block:single',
+                        fieldName: 'acceptable-block-single',
+                        editor: {
+                            type: 'single-acceptable',
+                            editorName: 'acceptable-block-single',
+
+                            options: {
+                                acceptableValues: [
+                                    'one',
+                                    'two',
+                                    'three'
+                                ],
+                                switchToBlockModeThreshold: 0,
+                                allowSelectNull: true,
+                                __forceDisableNgAnimate: true
+                            }
+                        }
+                    },
+                    {
+                        label: 'acceptable:inline:multiple',
+                        fieldName: 'acceptable-inline-multiple',
                         editor: {
                             type: 'acceptable',
+                            editorName: 'acceptable-inline-multiple',
+
+                            validations: {
+                                required: true
+                            },
+                            options: {
+                                acceptableValues: [
+                                    'one',
+                                    'two',
+                                    'three'
+                                ],
+                                multiselectable: true,
+                                __forceDisableNgAnimate: true
+                            }
+                        }
+                    },
+                    {
+                        label: 'acceptable:block:multiple',
+                        fieldName: 'acceptable-block-multiple',
+                        editor: {
+                            type: 'multiple-acceptable',
                             editorName: 'acceptableCheckboxes',
 
                             validations: {
@@ -171,8 +238,7 @@
                                     'two',
                                     'three'
                                 ],
-                                switchToCheckboxesThreshold: 1,
-                                multiselectable: true,
+                                switchToBlockModeThreshold: 1,
                                 showFirstCount: 2
                             }
                         }
@@ -183,18 +249,6 @@
                         editor: {
                             type: 'year',
                             editorName: 'year',
-
-                            validations: {
-                                required: true
-                            }
-                        }
-                    },
-                    {
-                        label: 'card-number',
-                        fieldName: 'card-number',
-                        editor: {
-                            type: 'card-number',
-                            editorName: 'card-number',
 
                             validations: {
                                 required: true
@@ -237,38 +291,9 @@
                             },
                             options: {
                                 withConfirmation: true
-                            }
-                        }
-                    },
-                    {
-                        label: 'signature',
-                        fieldName: 'signature',
-                        editor: {
-                            type: 'signature',
-                            editorName: 'signature',
-
-                            validations: {
-                                required: true
                             },
-                            options: {
-                                dataSource: () => Promise.resolve(['one', 'two', 'three']),
-                                canDoAction: true
-                            }
-                        }
-                    },
-                    {
-                        label: 'access-number',
-                        fieldName: 'access-number',
-                        editor: {
-                            type: 'access-number',
-                            editorName: 'access-number',
-
-                            validations: {
-                                required: true
-                            },
-                            options: {
-                                dataSource: () => Promise.resolve(['one', 'two', 'three']),
-                                canDoAction: true
+                            localizations: {
+                                patternDescription: 'Patern description'
                             }
                         }
                     },
@@ -333,18 +358,7 @@
                                         }
                                     ]
                                 }
-                            }
-                        }
-                    },
-                    {
-                        label: 'search-text',
-                        fieldName: 'search-text',
-                        editor: {
-                            type: 'search-text',
-                            editorName: 'search-text',
 
-                            validations: {
-                                required: true
                             }
                         }
                     },
@@ -374,21 +388,8 @@
                                 required: true
                             }
                         }
-                    },
-                    {
-                        label: 'exemplar-bar-code',
-                        fieldName: 'exemplar-bar-code',
-                        editor: {
-                            type: 'exemplar-bar-code',
-                            editorName: 'exemplar-bar-code',
-
-                            validations: {
-                                required: true
-                            }
-                        }
                     }
                 ];
-
             });
     </script>
 </head>
@@ -396,7 +397,12 @@
 <body ng-app="app" ng-strict-di="ng-strict-di">
 <h1>Value Editor Demo</h1>
 <main class="container" ng-controller="demoController as $ctrl">
-    <kp-universal-form name="myForm" form-settings="{fields: $ctrl.fields}" form-controller="formController = $formController" submit-function="$ctrl.submit()" labels-width="2" ng-model="$ctrl.model"></kp-universal-form>
+    <kp-universal-form name="myForm"
+                       form-settings="{fields: $ctrl.fields}"
+                       form-controller="formController = $formController"
+                       submit-function="$ctrl.submit()"
+                       labels-width="2"
+                       ng-model="$ctrl.model"></kp-universal-form>
 </main>
 </body>
 

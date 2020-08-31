@@ -3,10 +3,8 @@ import KpValueEditorRegistrationServiceProvider from './kp-value-editor/kp-value
 
 import AcceptableValueEditorComponent from './editors/acceptable/acceptable.value-editor.component';
 import AcceptableRootValueEditorComponent from './editors/acceptable-root/acceptable-root.value-editor.component';
-import AccessNumberValueEditorComponent from './editors/access-number/access-number.value-editor.component';
 import AutocompleteValueEditorComponent from './editors/autocomplete/autocomplete.value-editor.component';
 import BooleanValueEditorComponent from './editors/boolean/boolean.value-editor.component';
-import CardNumberValueEditorComponent from './editors/card-number/card-number.value-editor.component';
 import DateValueEditorComponent from './editors/date/date.value-editor.component';
 import HiddenValueEditorComponent from './editors/hidden/hidden.value-editor.component';
 import HtmlValueEditorComponent from './editors/html/html.value-editor.component';
@@ -14,9 +12,7 @@ import NumberValueEditorComponent from './editors/number/number.value-editor.com
 import NumberRangeValueEditorComponent from './editors/number-range/number-range.value-editor.component';
 import PasswordValueEditorComponent from './editors/password/password.value-editor.component';
 import RangeValueEditorComponent from './editors/range/range.value-editor.component';
-import SearchTextValueEditorComponent from './editors/search-text/search-text.value-editor.component';
 import SearchableValueEditorComponent from './editors/searchable/searchable.value-editor.component';
-import SignatureValueEditorComponent from './editors/signature/signature.value-editor.component';
 import TextValueEditorComponent from './editors/text/text.value-editor.component';
 import YearValueEditorComponent from './editors/year/year.value-editor.component';
 import ListValueEditorComponent from './meta-editors/list/list.value-editor.component';
@@ -39,12 +35,6 @@ export default function valueEditorsConfig(kpValueEditorRegistrationServiceProvi
     kpValueEditorRegistrationServiceProvider.registerEditor(SearchableValueEditorComponent.valueEditorType, camelCaseToKebabCase(SearchableValueEditorComponent.componentName));
     kpValueEditorRegistrationServiceProvider.registerEditor(TextValueEditorComponent.valueEditorType, camelCaseToKebabCase(TextValueEditorComponent.componentName));
     kpValueEditorRegistrationServiceProvider.registerEditor(YearValueEditorComponent.valueEditorType, camelCaseToKebabCase(YearValueEditorComponent.componentName));
-
-    // TODO: Move outside of this library - too specific editors
-    kpValueEditorRegistrationServiceProvider.registerEditor(AccessNumberValueEditorComponent.valueEditorType, camelCaseToKebabCase(AccessNumberValueEditorComponent.componentName));
-    kpValueEditorRegistrationServiceProvider.registerEditor(CardNumberValueEditorComponent.valueEditorType, camelCaseToKebabCase(CardNumberValueEditorComponent.componentName));
-    kpValueEditorRegistrationServiceProvider.registerEditor(SearchTextValueEditorComponent.valueEditorType, camelCaseToKebabCase(SearchTextValueEditorComponent.componentName));
-    kpValueEditorRegistrationServiceProvider.registerEditor(SignatureValueEditorComponent.valueEditorType, camelCaseToKebabCase(SignatureValueEditorComponent.componentName));
 
     // Meta editors
     kpValueEditorRegistrationServiceProvider.registerEditor(ListValueEditorComponent.valueEditorType, camelCaseToKebabCase(ListValueEditorComponent.componentName));
