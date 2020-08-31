@@ -4,6 +4,7 @@ import * as angular from 'angular';
 import {ITimeoutService} from 'angular';
 import valueEditorModule from '../value-editor.module';
 import {KpAsyncValidationServiceProvider} from './kp-async-validation.provider';
+import TextValueEditorConfigurationServiceProvider from '../editors/text/text-value-editor-configuration.provider';
 
 describe('kp-async-validation', () => {
 
@@ -152,5 +153,56 @@ describe('kp-async-validation', () => {
         valueEditorMocker.triggerHandlerOnInput('input');
 
         expect(validationFunction).toHaveBeenCalledWith('hello', customModel);
+    });
+
+    it('should trigger validation function with whole form option and specified custom model and reflecting emptyAsNull option', () => {
+        const validationFunction = jasmine.createSpy('validationFunction').and.stub();
+
+        angular.mock.module(valueEditorModule, /*@ngInject*/ (kpAsyncValidationServiceProvider: KpAsyncValidationServiceProvider, textValueEditorConfigurationServiceProvider: TextValueEditorConfigurationServiceProvider) => {
+            kpAsyncValidationServiceProvider.setValidationFunction(/*@ngInject*/ ($model: string, $formModel: {}) => {
+                validationFunction($model, $formModel);
+
+                return new Promise((resolve) => resolve());
+            });
+
+            textValueEditorConfigurationServiceProvider.setConfiguration({
+                emptyAsNull: true
+            });
+        });
+
+        inject();
+
+        const customModel = {
+            a: 'a',
+            b: 123,
+            c: [1, 2, 3],
+            d: {a: 'a'},
+            textEditor: 'hi'
+        };
+
+        $scope.model = 'hello';
+        // @ts-ignore
+        $scope.customNgModel = 'customHello';
+
+        valueEditorMocker.setCustomTemplate(`
+            <input type="text" name="customInput" ng-model="customNgModel">
+        `);
+
+        valueEditorMocker.create('text', {
+            editorName: 'textEditor',
+            validations: {
+                async: {
+                    sendWholeForm: true,
+                    customFormModel: customModel
+                }
+            }
+        });
+
+        valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
+        valueEditorMocker.triggerHandlerOnInput('input');
+
+        const newCustomModel = Object.assign({}, customModel, {textEditor: null});
+
+        expect(validationFunction).toHaveBeenCalledWith(null, newCustomModel);
     });
 });

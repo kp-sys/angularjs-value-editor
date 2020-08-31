@@ -85,11 +85,11 @@ export default class KpAsyncValidationDirective {
     }
 
     @bind
-    private validate(options: KpAsyncValidationOptions, formController: IFormController, errorMessagesController: ErrorMessagesDirectiveController, ngModelController: INgModelController, $propertyName: string, valueEditoController: KpValueEditorComponentController): ($model: any) => IPromise<string> {
+    private validate(options: KpAsyncValidationOptions, formController: IFormController, errorMessagesController: ErrorMessagesDirectiveController, ngModelController: INgModelController, $propertyName: string, valueEditorController: KpValueEditorComponentController): ($model: any) => IPromise<string> {
         return ($model) => this.$injector.invoke(this.kpAsyncValidationService.getValidationsFunction(), null, {
             $propertyName,
-            $model,
-            $formModel: options?.sendWholeForm ? this.updateCurrentPropertyToCurrentValue(this.getFormModel(options, formController, valueEditoController), $propertyName, $model) : undefined,
+            $model: (valueEditorController.valueEditorInstance.isEmpty($model) && valueEditorController.valueEditorInstance.options.emptyAsNull) ? null : $model,
+            $formModel: options?.sendWholeForm ? this.updateCurrentPropertyToCurrentValue(this.getFormModel(options, formController, valueEditorController), $propertyName, $model, valueEditorController) : undefined,
             $additionalParameters: options?.additionalParameters
         })
             .catch((errorMessage) => {
@@ -125,9 +125,18 @@ export default class KpAsyncValidationDirective {
      * validation is fired BEFORE model update.
      * So I must update validating property current value by myself...
      */
-    private updateCurrentPropertyToCurrentValue<MODEL extends {}, PROPERTY extends keyof MODEL>(model: MODEL, propertyName: PROPERTY, currentPropertyValue: MODEL[PROPERTY]): MODEL {
+    private updateCurrentPropertyToCurrentValue<MODEL extends {}, PROPERTY extends keyof MODEL>(model: MODEL, propertyName: PROPERTY, currentPropertyValue: MODEL[PROPERTY], valueEditorController: KpValueEditorComponentController): MODEL {
         if (Object.prototype.hasOwnProperty.call(model, propertyName)) {
-            const currentProperty: Pick<MODEL, PROPERTY> = Object.defineProperty({}, propertyName, {value: currentPropertyValue, enumerable: true});
+            let value = currentPropertyValue;
+
+            if (valueEditorController.valueEditorInstance.isEmpty(value) && valueEditorController.valueEditorInstance.options.emptyAsNull) {
+                value = null;
+            }
+
+            const currentProperty: Pick<MODEL, PROPERTY> = Object.defineProperty({}, propertyName, {
+                value,
+                enumerable: true
+            });
 
             return Object.assign({}, model, currentProperty);
         }

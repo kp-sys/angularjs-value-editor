@@ -76,6 +76,22 @@ export default abstract class AbstractValueEditorComponentController<MODEL, OPTI
     }
 
     /**
+     * Return `true` if model is empty.
+     *
+     * @template MODEL
+     *
+     * @param {MODEL=} modelValue You can insert custom model value. If not specified, internal model used.
+     * @return {boolean}
+     */
+    public isEmpty(modelValue: MODEL = this.model): boolean {
+        if (this.options.customEmptyAsNullCheck) {
+            return this.valueEditorController.$element.injector().invoke(this.options.customEmptyAsNullCheck, this, {$value: modelValue});
+        }
+
+        return customEquals(modelValue, this.emptyModel)
+    }
+
+    /**
      * This method is called always, when value editor options is changed with old and new options object merged with default options.
      * @param {OPTIONS} newOptions New options.
      * @param {OPTIONS} oldOptions Old options.
@@ -106,15 +122,7 @@ export default abstract class AbstractValueEditorComponentController<MODEL, OPTI
             return modelValue;
         }
 
-        if (this.options.customEmptyAsNullCheck) {
-            const isEmpty = this.valueEditorController.$element.injector().invoke(this.options.customEmptyAsNullCheck, this, {$value: modelValue});
-
-            if (isEmpty) {
-                return null;
-            }
-        }
-
-        if (customEquals(modelValue, this.emptyModel)) {
+        if (this.isEmpty(modelValue)) {
             return null;
         }
 
