@@ -50,6 +50,8 @@ module.exports = (grunt) => {
                                 'https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.8.7/polyfill.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.7/angular.js',
                                 'https://unpkg.com/@kpsys/angularjs-register@1.1.4/dist/register.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js',
+                                'https://unpkg.com/angular-ui-ace@0.2.3/src/ui-ace.js',
                                 'https://unpkg.com/luxon@1.22.0/build/global/luxon.min.js',
                                 'https://unpkg.com/@kpsys/angularjs-date-parser@1.1.2/dist/angularjs-date-parser.js',
                                 'https://unpkg.com/@kpsys/angularjs-bootstrap-datetimepicker@2.1.1/dist/angularjs-bootstrap-datetimepicker.js',

@@ -24,6 +24,7 @@ module.exports = (env, {mode}) => ({
     externals: {
         angular: 'angular',
         '@kpsys/angularjs-register': '@kpsys/angularjs-register',
+        'angular-ui-ace': 'angular-ui-ace',
         'luxon': 'luxon',
         '@kpsys/angular-ui-bootstrap': '@kpsys/angular-ui-bootstrap',
         '@kpsys/angularjs-date-parser': '@kpsys/angularjs-date-parser',
