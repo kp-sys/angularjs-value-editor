@@ -2171,6 +2171,13 @@
  * Prefix and suffix aware minlength validation.
  */
 /*@ngInject*//**
+ * @ngdoc directive
+ * @name textValidations
+ * @module angularjs-value-editor.text
+ *
+ * @description
+ *
+ *//**
  * @ngdoc type
  * @name TTextValueEditorType
  * @module angularjs-value-editor.text
@@ -2355,6 +2362,7 @@
  * @property {number=} minlength Min length.
  * @property {number=} maxlength Max length.
  * @property {string=} pattern Regexp pattern.
+ * @property {boolean=} notBlank Not blank (only whitespace) validation
  *
  * @description
  * Extends {@link type:ValueEditorValidations}
@@ -2486,6 +2494,11 @@
  * @property {string} minDate
  * @property {string} maxDate
  * @property {string} 'list-required'
+ * @property {string} 'max-count'
+ * @property {string} 'passwords-equals'
+ * @property {string}  email
+ * @property {string}  url
+ * @property {string}  notBlank
  *
  * @description
  * Default localizations: {@link valueEditorErrorMessagesDefaultLocalizations}
@@ -2499,6 +2512,7 @@
  * ```
  * {
  *  required: 'This field is required',
+ *  async: 'Error',
  *  minlength: 'Too short',
  *  maxlength: 'Too long',
  *  pattern: 'Input does not match pattern',
@@ -2509,7 +2523,12 @@
  *  toBiggerThanFrom: 'To is higher than from',
  *  minDate: 'Date is too in past',
  *  maxDate: 'Date is too in future',
- *  'list-required': 'List cannot be empty'
+ *  'list-required': 'List cannot be empty',
+ *  'max-count': 'Too many items',
+ *  'passwords-equals': 'Passwords do not match',
+ *  email: 'Not a valid e-mail address',
+ *  url: 'Not a valid URL',
+ *  notBlank: 'Input can not have only blank characters'
  * }
  * ```
  *//**
