@@ -48,10 +48,6 @@ export class TextValueEditorComponentController extends AbstractValueEditorCompo
         }
     }
 
-    public get validations(): TextValueEditorValidations {
-        return this.valueEditorController.validations;
-    }
-
     protected get emptyModel(): string {
         return '';
     }
