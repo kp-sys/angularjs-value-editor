@@ -1614,6 +1614,11 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
             "href": "api/angularjs-value-editor.text/directive",
             "navItems": [
               {
+                "name": "kpAdditionalTextValidations",
+                "type": "directive",
+                "href": "api/angularjs-value-editor.text/directive/kpAdditionalTextValidations"
+              },
+              {
                 "name": "prefixSuffixModelAdder",
                 "type": "directive",
                 "href": "api/angularjs-value-editor.text/directive/prefixSuffixModelAdder"
@@ -1627,11 +1632,6 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
                 "name": "prefixedMinlength",
                 "type": "directive",
                 "href": "api/angularjs-value-editor.text/directive/prefixedMinlength"
-              },
-              {
-                "name": "textValidations",
-                "type": "directive",
-                "href": "api/angularjs-value-editor.text/directive/textValidations"
               }
             ]
           },

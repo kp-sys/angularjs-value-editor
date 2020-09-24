@@ -2145,6 +2145,13 @@
 /*@ngInject*/
 /*@ngInject*//**
  * @ngdoc directive
+ * @name kpAdditionalTextValidations
+ * @module angularjs-value-editor.text
+ *
+ * @description
+ *
+ *//**
+ * @ngdoc directive
  * @name prefixSuffixModelAdder
  * @module angularjs-value-editor.text
  *
@@ -2171,13 +2178,6 @@
  * Prefix and suffix aware minlength validation.
  */
 /*@ngInject*//**
- * @ngdoc directive
- * @name textValidations
- * @module angularjs-value-editor.text
- *
- * @description
- *
- *//**
  * @ngdoc type
  * @name TTextValueEditorType
  * @module angularjs-value-editor.text
