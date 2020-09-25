@@ -62,7 +62,7 @@ export class AutocompleteValueEditorComponentController<PARAMS> extends Abstract
                 this.$log.error('Cannot load items, error:', e);
             }
         } else {
-            this.asyncCall();
+            this.$timeout();
         }
     }
 
@@ -70,17 +70,15 @@ export class AutocompleteValueEditorComponentController<PARAMS> extends Abstract
         await this.fetchItemsIfNeed();
 
         this.minLength = 0;
-        this.asyncCall(() => this.inputNgModelController.$parsers.forEach((parser) => parser(this.model)));
+        this.$timeout(() => this.inputNgModelController.$parsers.forEach((parser) => parser(this.model)));
     }
 
     public resetMinLength() {
-        this.asyncCall(() => this.minLength = this.options.minLength);
+        this.$timeout(() => this.minLength = this.options.minLength);
     }
 
-
-
     private async fetchItems(): Promise<string[]> {
-        this.asyncCall(() => this.loading = true);
+        this.$timeout(() => this.loading = true);
 
         let items: string[];
         try {
@@ -94,7 +92,7 @@ export class AutocompleteValueEditorComponentController<PARAMS> extends Abstract
             this.$log.error('kp-autocomplete: Loading items failed, setting []: ', e);
             items = [];
         } finally {
-            this.asyncCall(() => this.loading = false);
+            this.$timeout(() => this.loading = false);
         }
 
         if (items.some((item) => typeof item !== 'string')) {
@@ -102,10 +100,6 @@ export class AutocompleteValueEditorComponentController<PARAMS> extends Abstract
         }
 
         return items;
-    }
-
-    private asyncCall(func?: () => void) {
-        this.$timeout(func ? func.bind(this) : /* istanbul ignore next */ () => void 0, 0);
     }
 }
 
