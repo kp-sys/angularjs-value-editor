@@ -7,6 +7,8 @@ import {IAttributes, IAugmentedJQuery, INgModelController, IScope} from 'angular
  * @name prefixSuffixModelAdder
  * @module angularjs-value-editor.text
  *
+ * @restrict A
+ *
  * @description
  * This directive adds prefix and suffix to model if they are set together with `includePrefixAndSuffixToModel`.
  */

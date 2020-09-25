@@ -1,5 +1,5 @@
 import {IAttributes, IAugmentedJQuery, INgModelController, IParseService, IScope} from 'angular';
-import {
+import NumberRangeValueEditorComponent, {
     NumberRangeValueEditorComponentController,
     NumberRangeValueEditorModel
 } from './number-range.value-editor.component';
@@ -13,15 +13,23 @@ interface NumberRangeValidationsDirectiveScope extends IScope {
  * @name numberRangeValidations
  * @module angularjs-value-editor.number-range
  *
- * @description
+ * @restrict A
  *
+ * @description
+ * Directive adding followed validation to {@link numberRangeValueEditor}.
+ * - required
+ * - min
+ * - max
+ * - fromBiggerThanTo
+ * - toBiggerThanFrom
+ * - number
  */
 export default class NumberRangeValidationsDirective {
     public static readonly directiveName = 'numberRangeValidations';
 
     public restrict = 'A';
 
-    public require = ['ngModel', '^numberRangeValueEditor'];
+    public require = ['ngModel', `^${NumberRangeValueEditorComponent.componentName}`];
 
     /*@ngInject*/
     constructor(private $parse: IParseService) {

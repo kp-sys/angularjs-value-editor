@@ -1,6 +1,6 @@
 import {IAttributes, IAugmentedJQuery, ICompileService, IScope} from 'angular';
 import {ValueEditorLocalizations} from '../abstract/abstract-value-editor-localization.provider';
-import {KpValueEditorComponentController} from '../kp-value-editor/kp-value-editor.component';
+import KpValueEditorComponent, {KpValueEditorComponentController} from '../kp-value-editor/kp-value-editor.component';
 
 export interface PatternDescriptionLocalization extends ValueEditorLocalizations {
     patternDescription?;
@@ -10,6 +10,9 @@ export interface PatternDescriptionLocalization extends ValueEditorLocalizations
  * @ngdoc directive
  * @name patternDescriptionTooltip
  * @module angularjs-value-editor
+ *
+ * @restrict A
+ * @priority 800
  *
  * @requires ^^kpValueEditor
  *
@@ -23,7 +26,7 @@ export default class PatternDescriptionTooltipDirective {
     public terminal = true;
     public priority = 800;
 
-    public require = '^^kpValueEditor';
+    public require = `^^${KpValueEditorComponent.componentName}`;
 
     /*@ngInject*/
     constructor(private $compile: ICompileService) {

@@ -8,6 +8,8 @@ import {parseLength} from './prefixed-minlength.directive';
  *
  * @param {number} prefixedMaxlength Length
  *
+ * @restrict A
+ *
  * @description
  * Prefix and suffix aware maxlength validation.
  */

@@ -47,32 +47,32 @@ export class YearValueEditorComponentController extends AbstractValueEditorCompo
 
 /**
  * @ngdoc component
- * @name dateValueEditor
- * @module angularjs-value-editor.date
+ * @name yearValueEditor
+ * @module angularjs-value-editor.year
  *
  * @requires ng.type.ngModel.NgModelController
  * @requires component:kpValueEditor
  *
  * @description
- * Model type: `string`
+ * Model type: `nuber`
  *
- * Value editor for date input.
+ * Value editor for year input.
  *
- * Supported options: {@link type:DateValueEditorOptions}
+ * Supported options: {@link type:ValueEditorOptions}
  *
- * Supported validations: {@link type:DateValueEditorValidations}
+ * Supported validations: {@link type:YearValueEditorValidations}
  *
  * @example
- * <example name="dateValueEditorExample" module="dateValueEditorExample" frame-no-resize="true">
+ * <example name="yearValueEditorExample" module="yearValueEditorExample" frame-no-resize="true">
  *     <file name="index.html">
  *         <main>
- *              <kp-value-editor type="'date'" ng-model="model"></kp-value-editor>
+ *              <kp-value-editor type="'year'" ng-model="model"></kp-value-editor>
  *              <div>{{model}}</div>
  *         </main>
  *     </file>
  *     <file name="script.js">
  *         luxon.Settings.defaultLocale = luxon.DateTime.local().resolvedLocaleOpts().locale;
- *         angular.module('dateValueEditorExample', ['angularjs-value-editor']);
+ *         angular.module('yearValueEditorExample', ['angularjs-value-editor']);
  *     </file>
  * </example>
  */

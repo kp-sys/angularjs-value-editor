@@ -1,10 +1,12 @@
 import {IAttributes, IAugmentedJQuery, INgModelController, IScope} from 'angular';
-import {KpValueEditorComponentController} from '../../kp-value-editor/kp-value-editor.component';
+import KpValueEditorComponent, {KpValueEditorComponentController} from '../../kp-value-editor/kp-value-editor.component';
 
 /**
  * @ngdoc directive
  * @name checkboxesValidations
  * @module angularjs-value-editor.acceptable
+ *
+ * @restrict A
  *
  * @description
  * Validation helper for acceptable value editor.
@@ -16,7 +18,7 @@ export default class CheckboxesValidationsDirective<MODEL> {
 
     public restrict = 'A';
 
-    public require = ['ngModel', '^^kpValueEditor'];
+    public require = ['ngModel', `^^${KpValueEditorComponent.componentName}`];
 
     public link($scope: IScope, $element: IAugmentedJQuery, $attrs: IAttributes, [ngModelController, valueEditorController]: [INgModelController, KpValueEditorComponentController]) {
         ngModelController.$validators.required = this.requiredValidationFactory(valueEditorController);
