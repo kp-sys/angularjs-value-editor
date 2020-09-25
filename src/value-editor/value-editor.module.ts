@@ -27,8 +27,8 @@ import valueEditorForceSettingsModule from './kp-value-editor-force-settings/kp-
 import KpUniversalFormComponent from './kp-universal-form/kp-universal-form.component';
 // DIRECTIVES
 import errorMessagesModule from './error-messages/error-messages.module';
-import PatternDescriptionTooltipDirective from './common-directives/pattern-description-tooltip.directive';
-import DisableNgAnimateDirective from './common-directives/disable-ngAnimate.directive';
+import PatternDescriptionTooltipDirective from './common/directives/pattern-description-tooltip.directive';
+import DisableNgAnimateDirective from './common/directives/disable-ngAnimate.directive';
 import asyncValidationsModule from './kp-async-validation/kp-async-validation.module';
 // COMMON SERVICES AND PROVIDERS
 import {EmptyConfigurationService} from './abstract/abstract-value-editor-component-controller';
@@ -37,6 +37,7 @@ import KpValueEditorConfigurationServiceProvider from './kp-value-editor/kp-valu
 import KpValueEditorRegistrationServiceProvider from './kp-value-editor/kp-value-editor-registration.provider';
 // CONFIG
 import valueEditorsConfig from './value-editor.config';
+import nullAwareFilter from './common/null-aware-filter.filter';
 
 /**
  * @ngdoc constant
@@ -86,6 +87,7 @@ export default register('angularjs-value-editor', [
     .provider(EmptyConfigurationService.serviceName, EmptyConfigurationService)
     .provider(KpValueEditorConfigurationServiceProvider.providerName, KpValueEditorConfigurationServiceProvider)
     .provider(KpValueEditorRegistrationServiceProvider.providerName, KpValueEditorRegistrationServiceProvider)
+    .filter(nullAwareFilter.filterName, nullAwareFilter)
     .directive(PatternDescriptionTooltipDirective.directiveName, PatternDescriptionTooltipDirective)
     .directive(DisableNgAnimateDirective.directiveName, DisableNgAnimateDirective)
     .component(KpValueEditorComponent.componentName, KpValueEditorComponent)

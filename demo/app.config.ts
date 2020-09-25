@@ -1,37 +1,40 @@
 import KpValueEditorConfigurationServiceProvider
     from '../src/value-editor/kp-value-editor/kp-value-editor-configuration-provider';
 import * as angular from 'angular';
-import {ILogService} from 'angular';
-import TextValueEditorConfigurationServiceProvider
-    from '../src/value-editor/editors/text/text-value-editor-configuration.provider';
-import {KpAsyncValidationServiceProvider} from '../src/value-editor/kp-async-validation/kp-async-validation.provider';
+import {IHttpService, ITimeoutService} from 'angular';
 import PasswordValueEditorLocalizationsServiceProvider
     from '../src/value-editor/editors/password/password-value-editor-localization.provider';
+import AutocompleteValueEditorConfigurationServiceProvider
+    from '../src/value-editor/editors/autocomplete/autocomplete-value-editor-configuration.provider';
+
+interface ResponseContent {
+    value: string;
+}
+
+interface Response {
+    totalElements: number;
+    content: ResponseContent[];
+}
 
 /*@ngInject*/
 export default function config(
     kpValueEditorConfigurationServiceProvider: KpValueEditorConfigurationServiceProvider,
     passwordValueEditorLocalizationsServiceProvider: PasswordValueEditorLocalizationsServiceProvider,
     $animateProvider: angular.animate.IAnimateProvider,
-    textValueEditorConfigurationServiceProvider: TextValueEditorConfigurationServiceProvider,
-    kpAsyncValidationServiceProvider: KpAsyncValidationServiceProvider
+    autocompleteValueEditorConfigurationServiceProvider: AutocompleteValueEditorConfigurationServiceProvider<string>
 ) {
     kpValueEditorConfigurationServiceProvider.setDebugMode(true);
     kpValueEditorConfigurationServiceProvider.setPreciseWatchForOptionsChanges(false);
 
-    passwordValueEditorLocalizationsServiceProvider.setLocalization('confirmPassword', 'Heslo znovu');
-
-    $animateProvider.classNameFilter(/ng-animate-enabled/);
-
-    textValueEditorConfigurationServiceProvider.setConfiguration({
-        customEmptyAsNullCheck: /*@ngInject*/ ($value) => $value === 'hovno'
+    autocompleteValueEditorConfigurationServiceProvider.setConfiguration({
+        emptyAsNull: false,
+        dataSource: /*@ngInject*/ ($timeout: ITimeoutService, $http: IHttpService) => {
+            return $http.get<Response>('https://develop.kpsys.cz/api/autocomplete/FRZ264_b')
+                .then((response) => response.data)
+                .then((response) => response.content)
+                .then((listResult) => listResult.map((item) => item.value));
+        }
     });
 
-    kpAsyncValidationServiceProvider.setValidationFunction(
-        /*@ngInject*/ ($model: string, $formModel: {}, $log: ILogService) => {
-            $log.log($formModel);
-
-            return Promise.resolve();
-        }
-    );
+    $animateProvider.classNameFilter(/ng-animate-enabled/);
 }

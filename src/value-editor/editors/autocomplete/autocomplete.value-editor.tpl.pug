@@ -9,7 +9,7 @@ div.kp-autocomplete.input-group
 
         ng-focus="$ctrl.fetchItemsIfNeed()"
 
-        uib-typeahead="item for item in $ctrl.items | filter : $viewValue"
+        uib-typeahead="item for item in $ctrl.items | nullAwareFilter : $viewValue"
         typeahead-min-length="$ctrl.minLength"
 
         ng-disabled="$ctrl.valueEditorController.isDisabled"

@@ -1,4 +1,15 @@
-const path = require('path');
+/* tslint:disable:no-var-requires */
+const nodejsPath = require('path');
+
+declare module 'process' {
+    global {
+        namespace NodeJS {
+            interface Process {
+                binding: (...args: any[]) => any;
+            }
+        }
+    }
+}
 
 const isDebugging = (() => {
     const TCPWrap = process.binding('tcp_wrap');
@@ -29,7 +40,7 @@ const isDebugging = (() => {
 
 module.exports = (config) => {
     config.set({
-        basePath: path.resolve(__dirname, '..'),
+        basePath: nodejsPath.resolve(__dirname, '..'),
 
         frameworks: ['jasmine'],
 
@@ -40,9 +51,9 @@ module.exports = (config) => {
         },
 
         files: [
-            path.resolve(__dirname, '..', 'node_modules', 'jquery', 'dist', 'jquery.js'),
-            path.resolve(__dirname, '..', 'node_modules', 'angular', 'angular.js'),
-            path.resolve(__dirname, '..', 'node_modules', 'angular-mocks', 'angular-mocks.js'),
+            nodejsPath.resolve(__dirname, '..', 'node_modules', 'jquery', 'dist', 'jquery.js'),
+            nodejsPath.resolve(__dirname, '..', 'node_modules', 'angular', 'angular.js'),
+            nodejsPath.resolve(__dirname, '..', 'node_modules', 'angular-mocks', 'angular-mocks.js'),
             './test/all-tests.spec.ts'
         ],
 
@@ -92,7 +103,7 @@ module.exports = (config) => {
 
         coverageIstanbulReporter: {
             reports: ['text-summary', 'html'],
-            dir: path.resolve(__dirname, '..', 'reports', 'coverage'),
+            dir: nodejsPath.resolve(__dirname, '..', 'reports', 'coverage'),
             fixWebpackSourcePaths: true,
             combineBrowserReports: true,
             'es-modules': true,

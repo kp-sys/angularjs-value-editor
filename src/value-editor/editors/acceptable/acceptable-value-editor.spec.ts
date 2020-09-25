@@ -6,7 +6,7 @@ import {AcceptableValueEditorBindings} from './acceptable.value-editor.component
 import {AcceptableValueEditorOptions} from './acceptable-value-editor-configuration.provider';
 import KpValueEditorConfigurationServiceProvider from '../../kp-value-editor/kp-value-editor-configuration-provider';
 import * as ngAnimateModule from 'angular-animate';
-import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../common-directives/disable-ngAnimate.directive';
+import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../common/directives/disable-ngAnimate.directive';
 import UISelectController from '../../../../test/utils/ui-select-controller';
 
 interface AcceptableValueEditorModel {

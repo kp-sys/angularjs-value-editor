@@ -4,7 +4,7 @@ import AbstractValueEditorConfigurationServiceProvider, {AbstractValueEditorConf
 import {ValueEditorOptions} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
 import {Injectable} from 'angular';
-import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../common-directives/disable-ngAnimate.directive';
+import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../common/directives/disable-ngAnimate.directive';
 
 /**
  * @ngdoc type
