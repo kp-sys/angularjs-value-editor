@@ -1,6 +1,5 @@
 import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
-import {ITimeoutService} from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {ObjectValueEditorBindings} from './object.value-editor.component';
 import {
@@ -57,11 +56,11 @@ describe('object-value-editor', () => {
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
-        inject(/*@ngInject*/ ($compile, $rootScope, $timeout: ITimeoutService) => {
+        inject(/*@ngInject*/ ($compile, $rootScope, $flushPendingTasks) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<ObjectValueEditorBindings>($compile, $scope);
 
-            valueEditorMocker.setPostConstructHook(() => $timeout.flush());
+            valueEditorMocker.setPostConstructHook(() => $flushPendingTasks());
         });
     });
 
@@ -217,5 +216,55 @@ describe('object-value-editor', () => {
         expect(textValueEditorName).toBe('texttext');
         expect(numberValueEditorName).toBe('number');
         expect(listValueEditorName).toBe('dates');
+    });
+
+    it('should focus first nested editor when no editor is specified', () => {
+        
+        const valueEditorElement = valueEditorMocker.create('object', {
+            options: {
+                fields: FIELDS
+            },
+            isFocused: true
+        }, true);
+
+        const textValueEditor = valueEditorMocker.getInputElement<HTMLInputElement>('text-value-editor');
+        expect(document.activeElement).toBe(textValueEditor);
+
+        valueEditorMocker.detachElementFromDocument();
+    });
+
+    it('should focus specified nested editor', () => {
+
+        const editedFields = angular.copy(FIELDS);
+        editedFields[1].editor.isFocused = true;
+
+        const valueEditorElement = valueEditorMocker.create('object', {
+            options: {
+                fields: editedFields
+            },
+            isFocused: true
+        }, true);
+        
+        const numberValueEditor = valueEditorMocker.getInputElement<HTMLInputElement>('number-value-editor');
+        expect(document.activeElement).toBe(numberValueEditor);
+
+        valueEditorMocker.detachElementFromDocument();
+    });
+
+    it('should focus specified nested editor even when not focused itself', () => {
+
+        const editedFields = angular.copy(FIELDS);
+        editedFields[1].editor.isFocused = true;
+        
+        const valueEditorElement = valueEditorMocker.create('object', {
+            options: {
+                fields: editedFields
+            },
+        }, true);
+
+        const numberValueEditor = valueEditorMocker.getInputElement<HTMLInputElement>('number-value-editor');
+        expect(document.activeElement).toBe(numberValueEditor);
+
+        valueEditorMocker.detachElementFromDocument();
     });
 });

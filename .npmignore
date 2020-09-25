@@ -1,5 +1,6 @@
 node_modules
 .idea
+.vscode
 .travis.yml
 source
 docs

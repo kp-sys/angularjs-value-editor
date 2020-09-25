@@ -4,12 +4,14 @@ import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value
 import {NumberRangeValueEditorBindings, NumberRangeValueEditorModel} from './number-range.value-editor.component';
 import {patchAngularElementToReturnInjector} from '../../../../test/utils/test-utils';
 import objectContaining = jasmine.objectContaining;
+import { IFlushPendingTasksService } from 'angular';
 
 describe('number-range-value-editor', () => {
 
     let valueEditorMocker: ValueEditorMocker<NumberRangeValueEditorBindings>;
     let $scope: ScopeWithBindings<Partial<NumberRangeValueEditorModel>, NumberRangeValueEditorBindings>;
-
+    let ngFlushPendingTasks: IFlushPendingTasksService;
+    
     function getFrom(): HTMLInputElement {
         return valueEditorMocker.getInputElement().parentElement.querySelector<HTMLInputElement>('.from input');
     }
@@ -21,10 +23,11 @@ describe('number-range-value-editor', () => {
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
-        inject(/*@ngInject*/ ($compile, $rootScope, $injector) => {
+        inject(/*@ngInject*/ ($compile, $rootScope, $injector, $flushPendingTasks) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<NumberRangeValueEditorBindings>($compile, $scope);
             patchAngularElementToReturnInjector($injector);
+            ngFlushPendingTasks = $flushPendingTasks;
         });
     });
 
@@ -189,6 +192,16 @@ describe('number-range-value-editor', () => {
         valueEditorMocker.triggerHandlerOnInput('input', getTo());
 
         expect($scope.model).toBeNull();
+    });
+
+    it('should be focused', () => {
+        valueEditorMocker.create('number-range', {isFocused: true}, true);
+
+        ngFlushPendingTasks();
+        $scope.$apply();
+
+        expect(document.activeElement).toEqual(getFrom());
+        valueEditorMocker.detachElementFromDocument();
     });
 
 });

@@ -201,6 +201,7 @@ export default class KpUniversalFormComponent {
  * @module angularjs-value-editor
  *
  * @property {boolean} preciseWatchForOptionsChanges {@link kpValueEditorConfigurationServiceProvider}
+ * @property {boolean} autofocusFirstField {@link kpValueEditorConfigurationServiceProvider}
  *
  * @description
  * Options for {@link kpUniversalForm}
@@ -208,6 +209,7 @@ export default class KpUniversalFormComponent {
  */
 export interface KpUniversalFormComponentOptions {
     preciseWatchForOptionsChanges?: boolean;
+    autofocusFirstField?: boolean;
 }
 
 export interface KpUniversalFormComponentBindings {

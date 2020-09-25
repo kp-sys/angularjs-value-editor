@@ -1,6 +1,6 @@
 import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
-import {ICompileService, ITimeoutService} from 'angular';
+import {ICompileService, IFlushPendingTasksService} from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {ListValueEditorBindings} from './list.value-editor.component';
 import {TextValueEditorOptions} from '../../editors/text/text-value-editor-configuration.provider';
@@ -13,11 +13,8 @@ describe('list-value-editor', () => {
 
     let valueEditorMocker: ValueEditorMocker<ListValueEditorBindings<string, TextValueEditorOptions, TextValueEditorValidations>>;
     let $scope: ScopeWithBindings<string[], ListValueEditorBindings>;
-    // tslint:disable-next-line:variable-name
-    let $_timeout: ITimeoutService;
-    // tslint:disable-next-line:variable-name
-    let $_compile: ICompileService;
-
+    let ngFlushPendingTasks: IFlushPendingTasksService;
+    let ngCompile: ICompileService;
     /**
      * Simulates click on add button
      * @returns {HTMLElement}
@@ -57,13 +54,13 @@ describe('list-value-editor', () => {
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
-        inject(/*@ngInject*/ ($compile, $rootScope, $timeout: ITimeoutService) => {
+        inject(/*@ngInject*/ ($compile, $rootScope, $flushPendingTasks) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<ListValueEditorBindings>($compile, $scope);
-            $_timeout = $timeout;
-            $_compile = $compile;
-
-            valueEditorMocker.setPostConstructHook(() => $timeout.flush());
+            ngFlushPendingTasks = $flushPendingTasks;
+            ngCompile = $compile;
+            
+            valueEditorMocker.setPostConstructHook(() => $flushPendingTasks());
         });
     });
 
@@ -313,7 +310,7 @@ describe('list-value-editor', () => {
         });
 
         addItem();
-        $_timeout.flush();
+        ngFlushPendingTasks();
 
         new Promise((resolve) => {
             setTimeout(() => {
@@ -367,14 +364,14 @@ describe('list-value-editor', () => {
             ]
         } as KpUniversalFormSettings;
 
-        const element = $_compile(template)($scope);
+        const element = ngCompile(template)($scope);
 
         $scope.$apply();
 
         // add input
         element[0].querySelector<HTMLButtonElement>('button.add').click();
 
-        $_timeout.flush();
+        ngFlushPendingTasks();
 
         new Promise((resolve) => {
             setTimeout(() => {
@@ -406,7 +403,7 @@ describe('list-value-editor', () => {
         });
 
         addItem();
-        $_timeout.flush();
+        ngFlushPendingTasks();
 
         new Promise((resolve) => {
             setTimeout(() => {
@@ -417,4 +414,20 @@ describe('list-value-editor', () => {
 
     });
 
+    it('should focus first item', () => {
+        $scope.model = ['hello', 'world'];
+
+        valueEditorMocker.create('list', {
+            options: {
+                newItemPrototype: '',
+                subEditor: {type: 'text'}
+            },
+            isFocused: true
+        }, true);
+
+        const editorInput = getEditorOnIndex(0).querySelector<HTMLInputElement>('[data-main-input]');
+        expect(document.activeElement).toBe(editorInput);
+
+        valueEditorMocker.detachElementFromDocument();
+    });
 });

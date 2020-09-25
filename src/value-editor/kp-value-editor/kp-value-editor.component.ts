@@ -8,7 +8,8 @@ import {
     IOnChanges,
     IOnDestroy,
     IOnInit,
-    ITemplateCacheService
+    ITemplateCacheService,
+    ITimeoutService
 } from 'angular';
 import NgModelConnector from '../utils/ng-model-connector';
 import {generateUuid} from '../utils/uuid-generator';
@@ -37,6 +38,7 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
     public placeholder: string;
     public isDisabled: boolean;
     public isVisible: boolean = true;
+    public isFocused;
     public validations: EDITORVALIDATIONS;
     // settings for specific value editor sub-component
     public options: EDITOROPTS;
@@ -61,7 +63,8 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
                 public $element: IAugmentedJQuery,
                 private $templateCache: ITemplateCacheService,
                 private kpValueEditorRegistrationService: KpValueEditorRegistrationService,
-                private $document: IDocumentService) {
+                private $document: IDocumentService,
+                private $timeout: ITimeoutService) {
         super();
         this.configuration = kpValueEditorConfigurationService;
         this.uuid = generateUuid();
@@ -104,6 +107,15 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
 
     public registerValueEditor<CONTROLLER extends AbstractValueEditorComponentController<MODEL, EDITOROPTS>>(editorController: CONTROLLER) {
         this.valueEditorInstance = editorController;
+    }
+
+    /**
+     * This methods is called when dynamically loaded editor instance is linked
+     */
+    public onValueEditorPostLink(): void {
+        if (this.isFocused) {
+            this.$timeout(() => this.valueEditorInstance.focus(), 100);
+        }
     }
 
     public resolveAlias(): CustomValueEditorType {
@@ -187,6 +199,7 @@ export default class KpValueEditorComponent implements Component<ValueEditorBind
         placeholder: '<?',
         isDisabled: '<?',
         isVisible: '<?',
+        isFocused: '<?',
         validations: '<?',
         options: '<?',
         localizations: '<?'
@@ -243,8 +256,9 @@ export interface ValueEditorOptions {
  * @property {string} editorName Input name.
  * @property {string} placeholder Placeholder.
  * @property {string} type ValueEditor type.
- * @property {boolean} disabled If input is disabled.
- * @property {boolean} visible If input is visible.
+ * @property {boolean} isDisabled If input is disabled.
+ * @property {boolean} isVisible If input is visible.
+ * @property {boolean} isFocused If input should be focused.
  * @property {ValueEditorValidations} validations ValueEditor validations.
  * @property {ValueEditorOptions} options ValueEditor options. Type depends on ValueEditor type.
  * @property {ValueEditorLocalizations} localizations Custom localizations overriding default ones.
@@ -259,6 +273,7 @@ export interface ValueEditorBindings<EDITOROPTS extends ValueEditorOptions = Val
     placeholder?: string;
     isDisabled?: boolean;
     isVisible?: boolean;
+    isFocused?: boolean;
     validations?: EDITORVALIDATIONS;
     options?: EDITOROPTS;
     localizations?: ValueEditorLocalizations;

@@ -1,7 +1,6 @@
-/* tslint:disable:variable-name */
 import valueEditorModule from '../value-editor.module';
 import * as angular from 'angular';
-import {ITimeoutService} from 'angular';
+import {IFlushPendingTasksService} from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../test/utils/value-editor-mocker';
 import {TextValueEditorBindings} from '../editors/text/text.value-editor.component';
 import objectContaining = jasmine.objectContaining;
@@ -12,15 +11,15 @@ describe('error-messages', () => {
 
     let valueEditorMocker: ValueEditorMocker<TextValueEditorBindings>;
     let $scope: ScopeWithBindings<string, TextValueEditorBindings>;
-    let $_timeout: ITimeoutService;
+    let ngFlushPendingTasks: IFlushPendingTasksService
 
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
-        inject(/*@ngInject*/ ($compile, $rootScope, $timeout) => {
+        inject(/*@ngInject*/ ($compile, $rootScope, $flushPendingTasks) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
-            $_timeout = $timeout;
+            ngFlushPendingTasks = $flushPendingTasks;
         });
     });
 
@@ -44,7 +43,7 @@ describe('error-messages', () => {
             validations: {required: true}
         }, true);
 
-        $_timeout.flush();
+        ngFlushPendingTasks();
 
         expect($scope.form.text.$error).toEqual(objectContaining({
             required: true
@@ -58,7 +57,7 @@ describe('error-messages', () => {
             validations: {required: true}
         }, true);
 
-        $_timeout.flush();
+        ngFlushPendingTasks();
 
         expect($scope.form.text.$error).toEqual(objectContaining({
             required: true
@@ -86,7 +85,7 @@ describe('error-messages', () => {
         valueEditorMocker.getInputElement<HTMLInputElement>().value = 'uhguhg';
         valueEditorMocker.triggerHandlerOnInput('input');
 
-        $_timeout.flush();
+        ngFlushPendingTasks();
 
         setTimeout(() => {
             expect($scope.form.text.$error).toEqual({

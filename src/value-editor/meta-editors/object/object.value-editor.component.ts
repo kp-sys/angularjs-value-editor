@@ -19,6 +19,7 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
     public static readonly TEMPLATE_URL = require('./object.value-editor.tpl.pug');
 
     private formController: IFormController | undefined;
+    private shouldFocusSpecificEditor: boolean;
 
     /*@ngInject*/
     constructor(
@@ -46,6 +47,12 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
                 this.form = {};
             }
         }
+
+        const focusedFileds = this.options.fields.filter((field) => field.editor.isFocused);
+        if (focusedFileds.length > 1) {
+            focusedFileds.slice(1).forEach((field) => field.editor.isFocused = false); // only 1 field can be focused, unset focus from others
+        }
+        this.shouldFocusSpecificEditor = focusedFileds.length > 0;
     }
 
     protected get emptyModel(): MODEL {
@@ -76,6 +83,18 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
         }
 
         return fieldEditor;
+    }
+
+    public resolveIsFocused(fieldEditor: ValueEditorBindings, isFirstField: boolean): boolean {
+        if (this.shouldFocusSpecificEditor && fieldEditor.isFocused) {
+            return true;
+        }
+
+        if (!this.shouldFocusSpecificEditor && this.valueEditorController.isFocused && isFirstField) {
+            return true;
+        }
+
+        return false;
     }
 
     protected onOptionsChange(newOptions: ObjectValueEditorOptions, oldOptions: ObjectValueEditorOptions | undefined, optionsChangeDetection: PropertyChangeDetection<ObjectValueEditorOptions> | undefined) {

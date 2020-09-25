@@ -1,6 +1,6 @@
 import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
-import {ITimeoutService} from 'angular';
+import {IFlushPendingTasksService} from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {AutocompleteValueEditorBindings} from './autocomplete.value-editor.component';
 
@@ -15,17 +15,17 @@ describe('autocomplete-value-editor', () => {
 
     let valueEditorMocker: ValueEditorMocker<AutocompleteValueEditorBindings<any>>;
     let $scope: ScopeWithBindings<string, AutocompleteValueEditorBindings<any>>;
-    let _$timeout: ITimeoutService;
+    let ngFlushPendingTasks: IFlushPendingTasksService;
     let dataSourceSpy;
     let annotatedDataSourceSpy;
 
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
-        inject(/*@ngInject*/ ($compile, $rootScope, $timeout) => {
+        inject(/*@ngInject*/ ($compile, $rootScope, $flushPendingTasks) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<AutocompleteValueEditorBindings<any>>($compile, $scope);
-            _$timeout = $timeout;
+            ngFlushPendingTasks = $flushPendingTasks;
         });
 
         dataSourceSpy = jasmine.createSpy('dataSource').and.returnValue(Promise.resolve(ITEMS));
@@ -98,7 +98,7 @@ describe('autocomplete-value-editor', () => {
         const input = valueEditorMocker.getInputElement<HTMLInputElement>();
 
         angular.element(input).triggerHandler('focus');
-        _$timeout.flush();
+        ngFlushPendingTasks();
 
         expect(dataSourceSpy).toHaveBeenCalledWith(MODEL, {hello: 'world'});
         done();
@@ -110,12 +110,12 @@ describe('autocomplete-value-editor', () => {
         const parentElement = valueEditorMocker.getInputElement<HTMLInputElement>().parentElement;
         parentElement.querySelector<HTMLButtonElement>('button').click();
 
-        _$timeout.flush();
+        ngFlushPendingTasks();
 
         expect(dataSourceSpy).toHaveBeenCalled();
 
         setTimeout(() => {
-            _$timeout.flush();
+            ngFlushPendingTasks();
             $scope.$apply();
 
             const liElements = parentElement.querySelectorAll<HTMLUListElement>('li');
@@ -153,12 +153,12 @@ describe('autocomplete-value-editor', () => {
         const parentElement = valueEditorMocker.getInputElement<HTMLInputElement>().parentElement;
         parentElement.querySelector<HTMLButtonElement>('button').click();
 
-        _$timeout.flush();
+        ngFlushPendingTasks();
 
         expect(dataSourceSpy).toHaveBeenCalled();
 
         setTimeout(() => {
-            _$timeout.flush();
+            ngFlushPendingTasks();
             $scope.$apply();
 
             const liElements = parentElement.querySelectorAll<HTMLUListElement>('li');
@@ -168,6 +168,17 @@ describe('autocomplete-value-editor', () => {
 
             done();
         }, 0);
+    });
+
+    it('should be focused', () => {
+        valueEditorMocker.create('autocomplete', {isFocused: true}, true);
+
+        ngFlushPendingTasks();
+        $scope.$apply();
+
+
+        expect(document.activeElement).toEqual(valueEditorMocker.getInputElement<HTMLInputElement>());
+        valueEditorMocker.detachElementFromDocument();
     });
 
 });

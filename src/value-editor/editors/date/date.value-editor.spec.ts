@@ -1,6 +1,5 @@
-/* tslint:disable:variable-name */
 import * as angular from 'angular';
-import {IDocumentService} from 'angular';
+import {IDocumentService, IFlushPendingTasksService} from 'angular';
 import {DateTime, FixedOffsetZone, Settings} from 'luxon';
 import valueEditorModule from '../../value-editor.module';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
@@ -35,21 +34,23 @@ describe('date-value-editor', () => {
 
     let valueEditorMocker: ValueEditorMocker<DateValueEditorBindings>;
     let $scope: ScopeWithBindings<string, DateValueEditorBindings>;
-    let $_document: IDocumentService;
+    let ngDocument: IDocumentService;
+    let ngFlushPendingTasks: IFlushPendingTasksService;
 
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
-        inject(/*@ngInject*/ ($compile, $rootScope, $document) => {
+        inject(/*@ngInject*/ ($compile, $rootScope, $document, $flushPendingTasks) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<DateValueEditorBindings>($compile, $scope);
-            $_document = $document;
+            ngDocument = $document;
+            ngFlushPendingTasks = $flushPendingTasks;
         });
     });
 
     it('should render value editor', () => {
         const element = valueEditorMocker.create('date');
-        angular.element($_document[0].body).append(element);
+        angular.element(ngDocument[0].body).append(element);
 
         $scope.$apply();
     });
@@ -137,5 +138,16 @@ describe('date-value-editor', () => {
 
         expect($scope.form.$error).toEqual({});
     });
+
+    it('should be focused', () => {
+        valueEditorMocker.create('date', {isFocused: true}, true);
+
+        ngFlushPendingTasks();
+        $scope.$apply();
+
+        expect(document.activeElement).toEqual(valueEditorMocker.getInputElement<HTMLInputElement>());
+        valueEditorMocker.detachElementFromDocument();
+    });
+
 
 });

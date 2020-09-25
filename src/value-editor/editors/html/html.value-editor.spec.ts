@@ -1,6 +1,6 @@
 import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
-import {ITimeoutService} from 'angular';
+import {IFlushPendingTasksService} from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {HtmlValueEditorBindings} from './html.value-editor.component';
 import 'trumbowyg/dist/trumbowyg';
@@ -12,21 +12,21 @@ describe('html-value-editor', () => {
 
     let valueEditorMocker: ValueEditorMocker<HtmlValueEditorBindings>;
     let $scope: ScopeWithBindings<string, HtmlValueEditorBindings>;
-    let $_timeout: ITimeoutService;
+    let ngFlushPendingTasks: IFlushPendingTasksService
 
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
-        inject(/*@ngInject*/ ($compile, $rootScope, $timeout) => {
+        inject(/*@ngInject*/ ($compile, $rootScope, $flushPendingTasks) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<HtmlValueEditorBindings>($compile, $scope);
-            $_timeout = $timeout;
+            ngFlushPendingTasks = $flushPendingTasks;
         });
     });
 
     it('should change model on input', (done) => {
         valueEditorMocker.create('html');
-        $_timeout.flush();
+        ngFlushPendingTasks();
         $scope.$apply();
 
         setTimeout(() => {
@@ -55,7 +55,7 @@ describe('html-value-editor', () => {
 
     it('should have working input disabling', (done) => {
         valueEditorMocker.create('html', {isDisabled: true});
-        $_timeout.flush();
+        ngFlushPendingTasks();
         $scope.$apply();
 
         setTimeout(() => {
@@ -69,7 +69,7 @@ describe('html-value-editor', () => {
 
     it('should have working required validation', (done) => {
         valueEditorMocker.create('html', {editorName: 'html', validations: {required: true}});
-        $_timeout.flush();
+        ngFlushPendingTasks();
         $scope.$apply();
 
         setTimeout(() => {
@@ -89,7 +89,7 @@ describe('html-value-editor', () => {
 
     it('should have working emptyAsNull option', (done) => {
         valueEditorMocker.create('html', {options: {emptyAsNull: true}});
-        $_timeout.flush();
+        ngFlushPendingTasks();
         $scope.$apply();
 
         setTimeout(() => {
@@ -103,6 +103,18 @@ describe('html-value-editor', () => {
 
             done();
         }, 0);
+
+    });
+
+    it('should be focused', () => {
+        valueEditorMocker.create('html', {isFocused: true}, true);
+        ngFlushPendingTasks();
+        $scope.$apply();
+
+        expect(document.activeElement).toEqual(valueEditorMocker.getInputElement<HTMLTextAreaElement>());
+        valueEditorMocker.detachElementFromDocument();
+
+        
 
     });
 });
