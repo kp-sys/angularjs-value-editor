@@ -2,7 +2,7 @@ import AbstractValueEditorLocalizationProvider, {
     AbstractValueEditorLocalizationService,
     ValueEditorLocalizations
 } from '../../abstract/abstract-value-editor-localization.provider';
-import {PatternDescriptionLocalization} from '../../common-directives/pattern-description-tooltip.directive';
+import {PatternDescriptionLocalization} from '../../common/directives/pattern-description-tooltip.directive';
 
 /**
  * @ngdoc provider

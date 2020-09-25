@@ -1,7 +1,7 @@
-const path = require('path');
+import * as path from 'path';
 
 module.exports = ({
-    mode: 'production',
+    mode: getMode(),
 
     externals: {
         angular: 'angular'
@@ -120,7 +120,7 @@ module.exports = ({
             },
             {
                 test: /\.woff/,
-                loader: "url-loader?limit=10000&mimetype=application/font-woff"
+                loader: 'url-loader?limit=10000&mimetype=application/font-woff'
             }
         ]
     },
@@ -134,3 +134,14 @@ module.exports = ({
 
     devtool: 'inline-source-map'
 });
+
+function getMode() {
+    if (process.env.DEVELOPMENT_MODE === 'true') {
+        // tslint:disable-next-line:no-console
+        console.warn('Forcing webpack mode to development!');
+
+        return 'development';
+    } else {
+        return 'production';
+    }
+}

@@ -1,6 +1,6 @@
 import * as angular from 'angular';
 import {IAttributes, IAugmentedJQuery, IScope} from 'angular';
-import KpValueEditorComponent, {KpValueEditorComponentController} from '../kp-value-editor/kp-value-editor.component';
+import KpValueEditorComponent, {KpValueEditorComponentController} from '../../kp-value-editor/kp-value-editor.component';
 
 /**
  * @ngdoc directive

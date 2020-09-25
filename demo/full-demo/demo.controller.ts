@@ -8,7 +8,7 @@ import {SearchableValueEditorOptions} from '../../src/value-editor/editors/searc
 import {ITimeoutService} from 'angular';
 import {PasswordValueEditorLocalizations} from '../../src/value-editor/editors/password/password-value-editor-localization.provider';
 import {TextValueEditorLocalizations} from '../../src/value-editor/editors/text/text-value-editor-localization.provider';
-import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../src/value-editor/common-directives/disable-ngAnimate.directive';
+import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../src/value-editor/common/directives/disable-ngAnimate.directive';
 
 export default class DemoController {
     public static readonly controllerName = 'demoController';

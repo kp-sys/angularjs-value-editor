@@ -1,21 +1,17 @@
 main.container(ng-controller="labController as $ctrl")
 
-    kp-universal-form(
-        form-settings="$ctrl.options"
+    kp-value-editor-force-settings
+        kp-value-editor-force-setting(type="acceptable" options="{switchToInlineModeThreshold: 1}")
 
-        ng-model="$ctrl.model"
+        kp-value-editor(
+            type="'autocomplete'"
 
-        form-controller="$ctrl.form = $formController"
+            ng-model="$ctrl.model"
 
-        async-validations-model="$ctrl.model"
-    )
-    .row
-        .col-lg-6
-            div Input
-            pre {{$ctrl.form.personBirthDate | json}}
-        .col-lg-6
-            div Datepicker
-            pre {{$ctrl.form.pica | json}}
+            options=""
+
+            validations=""
+        )
 
     div Model:
     pre {{$ctrl.model | json}}

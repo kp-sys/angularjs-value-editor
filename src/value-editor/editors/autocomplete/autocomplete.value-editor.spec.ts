@@ -89,7 +89,12 @@ describe('autocomplete-value-editor', () => {
 
         $scope.model = MODEL;
 
-        valueEditorMocker.create('autocomplete', {options: {dataSource: annotatedDataSourceSpy, staticParams: {hello: 'world'}}});
+        valueEditorMocker.create('autocomplete', {
+            options: {
+                dataSource: annotatedDataSourceSpy,
+                staticParams: {hello: 'world'}
+            }
+        });
         const input = valueEditorMocker.getInputElement<HTMLInputElement>();
 
         angular.element(input).triggerHandler('focus');
@@ -134,6 +139,35 @@ describe('autocomplete-value-editor', () => {
         valueEditorMocker.triggerHandlerOnInput('input');
 
         expect($scope.model).toBeNull();
-
     });
+
+    it('should open dropdown if emptyAsNull is disabled and model is null', (done) => {
+        $scope.model = null;
+
+        valueEditorMocker.create('autocomplete', {
+            options: {
+                dataSource: annotatedDataSourceSpy
+            }
+        });
+
+        const parentElement = valueEditorMocker.getInputElement<HTMLInputElement>().parentElement;
+        parentElement.querySelector<HTMLButtonElement>('button').click();
+
+        _$timeout.flush();
+
+        expect(dataSourceSpy).toHaveBeenCalled();
+
+        setTimeout(() => {
+            _$timeout.flush();
+            $scope.$apply();
+
+            const liElements = parentElement.querySelectorAll<HTMLUListElement>('li');
+
+            expect(liElements.length).toBe(4);
+            expect(liElements[2].textContent.trim()).toBe('three');
+
+            done();
+        }, 0);
+    });
+
 });

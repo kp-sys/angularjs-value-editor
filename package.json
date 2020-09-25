@@ -64,7 +64,7 @@
     "@types/jasmine": "^3.5.11",
     "@types/jquery": "^3.5.0",
     "@types/luxon": "^1.24.1",
-    "@types/node": "^12.12.47",
+    "@types/node": "^14.11.2",
     "@types/semantic-release": "^17.0.1",
     "@types/webpack": "^4.41.17",
     "@types/webpack-env": "latest",
@@ -120,6 +120,7 @@
     "style-loader": "^1.2.1",
     "trumbowyg": "latest",
     "ts-loader": "^6.2.2",
+    "ts-node": "^9.0.0",
     "tslint": "^6.1.2",
     "tslint-loader": "latest",
     "typescript": "^4.0.2",
@@ -141,7 +142,7 @@
     "docs:build": "grunt docs:build",
     "docs:watch": "grunt docs:watch",
     "docs:serve": "http-server docs -p 3001 ",
-    "test": "karma start test/karma.conf.js",
+    "test": "karma start test/karma.conf.ts",
     "test:watch": "karma start test/karma.conf.js --no-single-run",
     "semantic-release": "semantic-release"
   }
