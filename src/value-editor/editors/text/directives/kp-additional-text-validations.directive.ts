@@ -8,8 +8,10 @@ import {TextValueEditorValidations} from '../text.value-editor.component';
  * @name kpAdditionalTextValidations
  * @module angularjs-value-editor.text
  *
- * @description
+ * @restrict A
  *
+ * @description
+ * TODO: Add some short description.
  */
 export default class KpAdditionalTextValidationsDirective {
     public static readonly directiveName = 'kpAdditionalTextValidations';

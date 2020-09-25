@@ -49,25 +49,25 @@ module.exports = (grunt) => {
                             scripts: [
                                 'https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.8.7/polyfill.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.7/angular.js',
-                                'https://unpkg.com/@kpsys/angularjs-register@1.1.4/dist/register.js',
+                                'https://unpkg.com/@kpsys/angularjs-register/dist/register.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js',
-                                'https://unpkg.com/angular-ui-ace@0.2.3/src/ui-ace.js',
-                                'https://unpkg.com/luxon@1.22.0/build/global/luxon.min.js',
-                                'https://unpkg.com/@kpsys/angularjs-date-parser@1.1.2/dist/angularjs-date-parser.js',
-                                'https://unpkg.com/@kpsys/angularjs-bootstrap-datetimepicker@2.1.1/dist/angularjs-bootstrap-datetimepicker.js',
-                                'https://unpkg.com/@kpsys/angular-ui-bootstrap@2.5.5/dist/ui-bootstrap-tpls.js',
-                                'https://unpkg.com/@kpsys/angularjs-histogram-slider@1.3.1/dist/slider.js',
-                                'https://unpkg.com/angular-sanitize@1.7.9/angular-sanitize.js',
-                                'https://unpkg.com/ui-select@0.19.8/dist/select.js',
-                                'https://unpkg.com/regenerator-runtime@0.13.5/runtime.js',
+                                'https://unpkg.com/angular-ui-ace/src/ui-ace.js',
+                                'https://unpkg.com/luxon/build/global/luxon.min.js',
+                                'https://unpkg.com/@kpsys/angularjs-date-parser/dist/angularjs-date-parser.js',
+                                'https://unpkg.com/@kpsys/angularjs-bootstrap-datetimepicker/dist/angularjs-bootstrap-datetimepicker.js',
+                                'https://unpkg.com/@kpsys/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
+                                'https://unpkg.com/@kpsys/angularjs-histogram-slider/dist/slider.js',
+                                'https://unpkg.com/angular-sanitize/angular-sanitize.js',
+                                'https://unpkg.com/ui-select/dist/select.js',
+                                'https://unpkg.com/regenerator-runtime/runtime.js',
                                 `${process.env.EXAMPLES_SCRIPTS_URL_PREFIX || ''}/angularjs-value-editor.js`
                             ],
                             stylesheets: [
                                 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
                                 'https://unpkg.com/@kpsys/angular-ui-bootstrap@2.5.5/dist/ui-bootstrap-csp.css',
-                                'https://unpkg.com/@kpsys/angularjs-bootstrap-datetimepicker@2.1.1/dist/angularjs-bootstrap-datetimepicker.css',
-                                'https://unpkg.com/@kpsys/angularjs-histogram-slider@1.3.1/dist/slider.css',
-                                'https://unpkg.com/ui-select@0.19.8/dist/select.css',
+                                'https://unpkg.com/@kpsys/angularjs-bootstrap-datetimepicker/dist/angularjs-bootstrap-datetimepicker.css',
+                                'https://unpkg.com/@kpsys/angularjs-histogram-slider/dist/slider.css',
+                                'https://unpkg.com/ui-select/dist/select.css',
                                 `${process.env.EXAMPLES_SCRIPTS_URL_PREFIX || ''}/angularjs-value-editor.css`
                             ]
                         }

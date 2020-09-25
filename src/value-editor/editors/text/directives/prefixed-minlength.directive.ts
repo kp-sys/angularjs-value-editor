@@ -5,6 +5,8 @@ import {IAttributes, IAugmentedJQuery, INgModelController, IParseService, IScope
  * @name prefixedMinlength
  * @module angularjs-value-editor.text
  *
+ * @restrict A
+ *
  * @param {number} prefixedMinlength Length
  *
  * @description
