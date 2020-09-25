@@ -48,7 +48,7 @@ export class SearchableValueEditorComponentController<MODEL = any> extends Abstr
     }
 
     public async search() {
-        this.asyncCall(() => this.searching = true);
+        this.$timeout(() => this.searching = true);
 
         try {
             this.model = await this.$injector.invoke(this.options.searchModelFunction, null, {
@@ -56,12 +56,12 @@ export class SearchableValueEditorComponentController<MODEL = any> extends Abstr
                 $additionalParameters: this.options.additionalParameters
             });
         } finally {
-            this.asyncCall(() => this.searching = false);
+            this.$timeout(() => this.searching = false);
         }
     }
 
     public async edit() {
-        this.asyncCall(() => this.editing = true);
+        this.$timeout(() => this.editing = true);
 
         try {
             this.model = await this.$injector.invoke(this.options.editModelFunction, null, {
@@ -69,7 +69,7 @@ export class SearchableValueEditorComponentController<MODEL = any> extends Abstr
                 $additionalParameters: this.options.additionalParameters
             });
         } finally {
-            this.asyncCall(() => this.editing = false);
+            this.$timeout(() => this.editing = false);
         }
     }
 
@@ -83,10 +83,6 @@ export class SearchableValueEditorComponentController<MODEL = any> extends Abstr
         return {
             modelTemplate: this.options.modelTemplate
         };
-    }
-
-    private asyncCall(func?: () => void) {
-        this.$timeout(func ? func.bind(this) : /* istanbul ignore next */ () => void 0, 0);
     }
 }
 
