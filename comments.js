@@ -372,6 +372,9 @@
  * @name patternDescriptionTooltip
  * @module angularjs-value-editor
  *
+ * @restrict A
+ * @priority 800
+ *
  * @requires ^^kpValueEditor
  *
  * @description
@@ -382,8 +385,10 @@
  * @name acceptableRootRequiredValidations
  * @module angularjs-value-editor.acceptable-root
  *
- * @description
+ * @restrict A
  *
+ * @description
+ * Directive adding required validation to {@link acceptableRootValueEditor}.
  *//* tslint:disable:ban-types */
 /**
  * @ngdoc type
@@ -873,6 +878,8 @@
  * @name checkboxesValidations
  * @module angularjs-value-editor.acceptable
  *
+ * @restrict A
+ *
  * @description
  * Validation helper for acceptable value editor.
  *
@@ -980,7 +987,6 @@
  * ```
  */
 /*@ngInject*/
-/* istanbul ignore next */
 /**
  * @ngdoc component
  * @name autocompleteValueEditor
@@ -1423,8 +1429,16 @@
  * @name numberRangeValidations
  * @module angularjs-value-editor.number-range
  *
- * @description
+ * @restrict A
  *
+ * @description
+ * Directive adding followed validation to {@link numberRangeValueEditor}.
+ * - required
+ * - min
+ * - max
+ * - fromBiggerThanTo
+ * - toBiggerThanFrom
+ * - number
  */
 /*@ngInject*//**
  * @ngdoc type
@@ -2096,7 +2110,6 @@
  * }
  * ```
  *//*@ngInject*/
-/* istanbul ignore next */
 /**
  * @ngdoc component
  * @name searchableValueEditor
@@ -2148,12 +2161,16 @@
  * @name kpAdditionalTextValidations
  * @module angularjs-value-editor.text
  *
- * @description
+ * @restrict A
  *
+ * @description
+ * TODO: Add some short description.
  *//**
  * @ngdoc directive
  * @name prefixSuffixModelAdder
  * @module angularjs-value-editor.text
+ *
+ * @restrict A
  *
  * @description
  * This directive adds prefix and suffix to model if they are set together with `includePrefixAndSuffixToModel`.
@@ -2164,6 +2181,8 @@
  *
  * @param {number} prefixedMaxlength Length
  *
+ * @restrict A
+ *
  * @description
  * Prefix and suffix aware maxlength validation.
  */
@@ -2171,6 +2190,8 @@
  * @ngdoc directive
  * @name prefixedMinlength
  * @module angularjs-value-editor.text
+ *
+ * @restrict A
  *
  * @param {number} prefixedMinlength Length
  *
@@ -2414,32 +2435,32 @@
  * Directive transforms text value to number.
  *//**
  * @ngdoc component
- * @name dateValueEditor
- * @module angularjs-value-editor.date
+ * @name yearValueEditor
+ * @module angularjs-value-editor.year
  *
  * @requires ng.type.ngModel.NgModelController
  * @requires component:kpValueEditor
  *
  * @description
- * Model type: `string`
+ * Model type: `nuber`
  *
- * Value editor for date input.
+ * Value editor for year input.
  *
- * Supported options: {@link type:DateValueEditorOptions}
+ * Supported options: {@link type:ValueEditorOptions}
  *
- * Supported validations: {@link type:DateValueEditorValidations}
+ * Supported validations: {@link type:YearValueEditorValidations}
  *
  * @example
- * <example name="dateValueEditorExample" module="dateValueEditorExample" frame-no-resize="true">
+ * <example name="yearValueEditorExample" module="yearValueEditorExample" frame-no-resize="true">
  *     <file name="index.html">
  *         <main>
- *              <kp-value-editor type="'date'" ng-model="model"></kp-value-editor>
+ *              <kp-value-editor type="'year'" ng-model="model"></kp-value-editor>
  *              <div>{{model}}</div>
  *         </main>
  *     </file>
  *     <file name="script.js">
  *         luxon.Settings.defaultLocale = luxon.DateTime.local().resolvedLocaleOpts().locale;
- *         angular.module('dateValueEditorExample', ['angularjs-value-editor']);
+ *         angular.module('yearValueEditorExample', ['angularjs-value-editor']);
  *     </file>
  * </example>
  */

@@ -1,0 +1,93 @@
+
+
+
+
+<header class="api-profile-header">
+  <h1 class="api-profile-header-heading">yearValueEditor</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - component in module <a href="api/angularjs-value-editor.year">angularjs-value-editor.year</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description">
+  <p>Model type: <code>nuber</code></p>
+<p>Value editor for year input.</p>
+<p>Supported options: <a href="api/angularjs-value-editor/type/ValueEditorOptions">ValueEditorOptions</a></p>
+<p>Supported validations: <a href="api/angularjs-value-editor.year/type/YearValueEditorValidations">YearValueEditorValidations</a></p>
+
+</div>
+
+
+
+
+
+
+<div>
+  
+  <h2 id="dependencies">Dependencies</h2>
+  <ul>
+    <li><a href="https://docs.angularjs.org/api/ng/type/ngModel.NgModelController" _target="blank">ngModel.NgModelController</a></li><li><a href="api/angularjs-value-editor/component/kpValueEditor">kpValueEditor</a></li>
+  </ul>
+  
+
+  
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+
+  
+  <pre><code>&lt;year-value-editor&gt;&#10;&lt;/year-value-editor&gt;</code></pre>
+  </div>
+  
+  
+  
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+<plnkr-opener example-path="examples/example-yearValueEditorExample"></plnkr-opener>
+<div class="runnable-example"
+    path="examples/example-yearValueEditorExample"
+    frame-id="example-yearValueEditorExample"
+    name="yearValueEditorExample"
+    module="yearValueEditorExample"
+    frame-no-resize="true">
+
+  <md-content>
+    <md-tabs md-dynamic-height="false" md-border-bottom>
+    
+      <md-tab label="index.html">
+        <md-content class="md-padding">
+          <div class="runnable-example-file" name="index.html"language="html"type="html">
+          <pre><code>&lt;main&gt;&#10;     &lt;kp-value-editor type=&quot;&#39;year&#39;&quot; ng-model=&quot;model&quot;&gt;&lt;/kp-value-editor&gt;&#10;     &lt;div&gt;{{model}}&lt;/div&gt;&#10;&lt;/main&gt;</code></pre>
+          </div>
+        </md-content>
+      </md-tab>
+    
+      <md-tab label="script.js">
+        <md-content class="md-padding">
+          <div class="runnable-example-file" name="script.js"language="js"type="js">
+          <pre><code>luxon.Settings.defaultLocale = luxon.DateTime.local().resolvedLocaleOpts().locale;&#10;angular.module(&#39;yearValueEditorExample&#39;, [&#39;angularjs-value-editor&#39;]);</code></pre>
+          </div>
+        </md-content>
+      </md-tab>
+    
+    </md-tabs>
+  </md-content>
+  <iframe class="runnable-example-frame" src="examples/example-yearValueEditorExample/index.html" name="example-yearValueEditorExample" id="example-yearValueEditorExample"></iframe>
+</div>
+
+
+
+</p>
+
+</div>
+
+

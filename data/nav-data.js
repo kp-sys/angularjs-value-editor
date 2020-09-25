@@ -675,11 +675,6 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
                 "name": "dateValueEditor",
                 "type": "component",
                 "href": "api/angularjs-value-editor.date/component/dateValueEditor"
-              },
-              {
-                "name": "dateValueEditor",
-                "type": "component",
-                "href": "api/angularjs-value-editor.date/component/dateValueEditor"
               }
             ]
           },
@@ -1709,6 +1704,18 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
         "type": "groups",
         "href": "api/angularjs-value-editor.year",
         "navItems": [
+          {
+            "name": "component",
+            "type": "section",
+            "href": "api/angularjs-value-editor.year/component",
+            "navItems": [
+              {
+                "name": "yearValueEditor",
+                "type": "component",
+                "href": "api/angularjs-value-editor.year/component/yearValueEditor"
+              }
+            ]
+          },
           {
             "name": "directive",
             "type": "section",

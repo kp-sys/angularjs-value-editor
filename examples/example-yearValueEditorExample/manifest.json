@@ -1,5 +1,5 @@
 {
-  "name": "example-dateValueEditorExample1",
+  "name": "example-yearValueEditorExample",
   "files": [
     "index-production.html",
     "script.js"
