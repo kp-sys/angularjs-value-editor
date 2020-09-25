@@ -38,6 +38,7 @@ import KpValueEditorRegistrationServiceProvider from './kp-value-editor/kp-value
 // CONFIG
 import valueEditorsConfig from './value-editor.config';
 import nullAwareFilter from './common/null-aware-filter.filter';
+import KpFocusableInputDirective from './common/directives/kp-focusable-input.directive';
 
 /**
  * @ngdoc constant
@@ -90,6 +91,7 @@ export default register('angularjs-value-editor', [
     .filter(nullAwareFilter.filterName, nullAwareFilter)
     .directive(PatternDescriptionTooltipDirective.directiveName, PatternDescriptionTooltipDirective)
     .directive(DisableNgAnimateDirective.directiveName, DisableNgAnimateDirective)
+    .directive(KpFocusableInputDirective.directiveName, KpFocusableInputDirective)
     .component(KpValueEditorComponent.componentName, KpValueEditorComponent)
     .component(KpUniversalFormComponent.componentName, KpUniversalFormComponent)
     .name();

@@ -93,8 +93,6 @@ export class NumberRangeValueEditorComponentController extends AbstractValueEdit
             this.touched = true;
         }
     }
-
-
 }
 
 /**

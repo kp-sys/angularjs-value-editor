@@ -2,18 +2,21 @@ import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {NumberValueEditorBindings} from './number.value-editor.component';
+import { IFlushPendingTasksService } from 'angular';
 
 describe('number-value-editor', () => {
 
     let valueEditorMocker: ValueEditorMocker<NumberValueEditorBindings>;
     let $scope: ScopeWithBindings<number, NumberValueEditorBindings>;
-
+    let ngFlushPendingTasks: IFlushPendingTasksService;
+    
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
-        inject(/*@ngInject*/ ($compile, $rootScope) => {
+        inject(/*@ngInject*/ ($compile, $rootScope, $flushPendingTasks) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<NumberValueEditorBindings>($compile, $scope);
+            ngFlushPendingTasks = $flushPendingTasks;
         });
     });
 
@@ -132,6 +135,16 @@ describe('number-value-editor', () => {
         valueEditorMocker.triggerHandlerOnInput('input');
 
         expect($scope.model).toBeNull();
+    });
+
+    it('should be focused', () => {
+        valueEditorMocker.create('number', {isFocused: true}, true);
+
+        ngFlushPendingTasks();
+        $scope.$apply();
+
+        expect(document.activeElement).toEqual(valueEditorMocker.getInputElement<HTMLInputElement>());
+        valueEditorMocker.detachElementFromDocument();
     });
 
 });

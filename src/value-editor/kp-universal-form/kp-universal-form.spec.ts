@@ -1,7 +1,7 @@
 /* tslint:disable:prefer-const */
 import valueEditorModule from '../value-editor.module';
 import * as angular from 'angular';
-import {ICompileService, IFormController, INgModelController, IScope, ITimeoutService} from 'angular';
+import {ICompileService, IFlushPendingTasksService, IFormController, INgModelController, IScope} from 'angular';
 import {KpUniversalFormSettings} from './kp-universal-form.component';
 import {ListValueEditorOptions} from '../meta-editors/list/list-value-editor-configuration.provider';
 import {KpAsyncValidationServiceProvider} from '../kp-async-validation/kp-async-validation.provider';
@@ -70,26 +70,35 @@ type MockModel = {
 describe('kp-universal-form', () => {
 
     let $scope: UniversalFormScope;
-    let _$compile: ICompileService;
-    let _$timeout: ITimeoutService;
+    let ngCompile: ICompileService;
+    let ngFlushPendingTasks: IFlushPendingTasksService;
 
-    function compileTemplate(customTemplate?: string): HTMLElement {
+    function compileTemplate(customTemplate?: string, attachToBody?: boolean): HTMLElement {
         const element = angular.element(customTemplate ?? TEMPLATE);
-        const compiledElement = _$compile(element)($scope);
+
+        if (attachToBody) {
+            angular.element(document.body).append(element);
+        }
+
+        const compiledElement = ngCompile(element)($scope);
         $scope.$apply();
-        _$timeout.flush();
+        ngFlushPendingTasks();
 
         return compiledElement[0];
+    }
+
+    function detachElementFromDocument(compiledElement) {
+        angular.element(compiledElement).remove();
     }
 
     describe('common use', () => {
         beforeEach(() => {
             angular.mock.module(valueEditorModule);
 
-            inject(/*@ngInject*/ ($compile, $rootScope, $timeout: ITimeoutService) => {
+            inject(/*@ngInject*/ ($compile, $rootScope, $flushPendingTasks) => {
                 $scope = $rootScope.$new();
-                _$compile = $compile;
-                _$timeout = $timeout;
+                ngCompile = $compile;
+                ngFlushPendingTasks = $flushPendingTasks;
             });
         });
 
@@ -201,12 +210,39 @@ describe('kp-universal-form', () => {
             $scope.formSettings = FORM_SETTINGS;
 
             expect(() => compileTemplate(`
-            <kp-universal-form
-                ng-model="model"
-                form-settings="formSettings"
-                on-submit="onSubmit($event)"
-            ></kp-universal-form>
-        `)).not.toThrow();
+                <kp-universal-form
+                    ng-model="model"
+                    form-settings="formSettings"
+                    on-submit="onSubmit($event)"
+                ></kp-universal-form>
+            `)).not.toThrow();
+        });
+        
+        it('should autofocus fist form field', () => {
+
+            $scope.formSettings = FORM_SETTINGS;
+
+            $scope.model = {
+                text: 'Hello',
+                number: 20,
+                dates: ['']
+            };
+
+            const element = compileTemplate(`
+                <kp-universal-form
+                    ng-model="model"
+                    form-settings="formSettings"
+                    name="{{name}}"
+                    form-controller="formController = $formController"
+                    on-submit="onSubmit($event)"
+                    options="::{autofocusFirstField: true}"
+                ></kp-universal-form>
+            `, true);
+
+            const input = element.querySelector<HTMLInputElement>('text-value-editor [data-main-input]');
+            
+            expect(document.activeElement).toBe(input);
+            detachElementFromDocument(element);
         });
     });
 
@@ -222,10 +258,10 @@ describe('kp-universal-form', () => {
                 });
             });
 
-            inject(/*@ngInject*/ ($compile, $rootScope, $timeout: ITimeoutService) => {
+            inject(/*@ngInject*/ ($compile, $rootScope, $flushPendingTasks) => {
                 $scope = $rootScope.$new();
-                _$compile = $compile;
-                _$timeout = $timeout;
+                ngCompile = $compile;
+                ngFlushPendingTasks = $flushPendingTasks;
             });
 
             const customTemplate = `

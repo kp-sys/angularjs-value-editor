@@ -11,6 +11,7 @@ import {AbstractValueEditorLocalizationService} from './abstract-value-editor-lo
 import {KpValueEditorAliasesServiceProvider} from '../aliases/kp-value-editor-aliases.service';
 import {customEquals, PropertyChangeDetection, whichPropertiesAreNotEqual} from '../utils/equals';
 import bind from 'bind-decorator';
+import { FocusableInputAPI } from '../common/directives/kp-focusable-input.directive';
 
 /**
  * Abstract base class for general value-editor features.
@@ -22,6 +23,7 @@ export default abstract class AbstractValueEditorComponentController<MODEL, OPTI
 
     public options: OPTIONS;
     protected valueEditorController: KpValueEditorComponentController<MODEL, OPTIONS, VALIDATIONS>;
+    protected focusApi: FocusableInputAPI = null;
 
     constructor(protected configurationService: AbstractValueEditorConfigurationService<OPTIONS>, protected localizationService?: AbstractValueEditorLocalizationService<any>) {
         super();
@@ -43,6 +45,7 @@ export default abstract class AbstractValueEditorComponentController<MODEL, OPTI
 
         this.ngModelController.$parsers.push(this.emptyAsNullParser);
         this.ngModelController.$formatters.push(this.emptyAsNullFormatter);
+        this.valueEditorController.onValueEditorPostLink();
     }
 
     /**
@@ -89,6 +92,25 @@ export default abstract class AbstractValueEditorComponentController<MODEL, OPTI
         }
 
         return customEquals(modelValue, this.emptyModel)
+    }
+
+    /**
+     * Focus input inside editor.
+     *
+     */
+    public focus(): void  {
+        if (this.focusApi) {
+           this.focusApi.focusInput();
+        }
+    }
+
+    /**
+     * This method is called from template during editors initialization if there is focusable input.
+     * 
+     * @param {FocusableInputAPI} $api Exposed API object of {@link KpFocusableInputDirective}
+     */
+    protected connectToFocusApi($api: FocusableInputAPI) {
+        this.focusApi = $api;
     }
 
     /**

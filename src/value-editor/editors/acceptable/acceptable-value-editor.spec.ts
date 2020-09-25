@@ -1,6 +1,6 @@
 import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
-import {ITimeoutService} from 'angular';
+import {IFlushPendingTasksService} from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {AcceptableValueEditorBindings} from './acceptable.value-editor.component';
 import {AcceptableValueEditorOptions} from './acceptable-value-editor-configuration.provider';
@@ -1085,14 +1085,13 @@ describe('acceptable-value-editor', () => {
                 kpValueEditorConfigurationServiceProvider.setPreciseWatchForOptionsChanges(true);
             });
 
-            // tslint:disable-next-line:variable-name
-            let $_timeout: ITimeoutService;
+            let ngFlushPendingTasks: IFlushPendingTasksService;
 
-            inject(/*@ngInject*/ ($compile, $rootScope, acceptableValueEditorDefaultOptions, $timeout: ITimeoutService) => {
+            inject(/*@ngInject*/ ($compile, $rootScope, acceptableValueEditorDefaultOptions, $flushPendingTasks) => {
                 $scope = $rootScope.$new();
                 valueEditorMocker = new ValueEditorMocker<AcceptableValueEditorBindings<AcceptableValueEditorModel>>($compile, $scope);
                 defaultOptions = acceptableValueEditorDefaultOptions;
-                $_timeout = $timeout;
+                ngFlushPendingTasks = $flushPendingTasks;
             });
 
             valueEditorMocker.create('acceptable', {
@@ -1110,7 +1109,7 @@ describe('acceptable-value-editor', () => {
             controller.openUiSelect();
 
             // noinspection JSUnusedAssignment
-            $_timeout.flush();
+            ngFlushPendingTasks();
 
             let opacity = uiSelect.querySelector<HTMLDivElement>('.ui-select-choices').style.opacity;
 

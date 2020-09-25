@@ -1,7 +1,6 @@
 import ValueEditorMocker, {ScopeWithBindings} from '../../../test/utils/value-editor-mocker';
 import {TextValueEditorBindings} from '../editors/text/text.value-editor.component';
 import * as angular from 'angular';
-import {ITimeoutService} from 'angular';
 import valueEditorModule from '../value-editor.module';
 import {KpAsyncValidationServiceProvider} from './kp-async-validation.provider';
 import TextValueEditorConfigurationServiceProvider from '../editors/text/text-value-editor-configuration.provider';
@@ -10,14 +9,11 @@ describe('kp-async-validation', () => {
 
     let valueEditorMocker: ValueEditorMocker<TextValueEditorBindings>;
     let $scope: ScopeWithBindings<string, TextValueEditorBindings>;
-    // tslint:disable-next-line:variable-name
-    let $_timeout: ITimeoutService;
 
     function inject() {
-        angular.mock.inject(/*@ngInject*/ ($compile, $rootScope, $timeout) => {
+        angular.mock.inject(/*@ngInject*/ ($compile, $rootScope) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
-            $_timeout = $timeout;
         });
     }
 

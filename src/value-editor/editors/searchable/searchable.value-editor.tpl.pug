@@ -3,7 +3,7 @@
 span.model-value(ng-if="$ctrl.model") {{modelTemplate}}
 span.text-muted(ng-if="!$ctrl.model" ng-bind="$ctrl.valueEditorController.placeholder")
 
-button.search-button.btn.btn-default(type="button" ng-disabled="$ctrl.valueEditorController.isDisabled || $ctrl.searching" ng-click="$ctrl.search()")
+button.search-button.btn.btn-default(type="button" ng-disabled="$ctrl.valueEditorController.isDisabled || $ctrl.searching" ng-click="$ctrl.search()" kp-focusable-input="$ctrl.connectToFocusApi($api)")
     span.glyphicon.glyphicon-search(ng-show="!$ctrl.searching")
     ng-include.glyphicon.searchable-loading-svg(src="$ctrl.loadingSpinnerTemplateUrl" ng-show="$ctrl.searching")
     span(ng-if="$ctrl.model" ng-bind="$ctrl.localize('searchOther')")

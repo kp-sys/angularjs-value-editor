@@ -4,18 +4,21 @@ import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value
 import {TextValueEditorBindings} from './text.value-editor.component';
 import 'ace-builds';
 import objectContaining = jasmine.objectContaining;
+import { IFlushPendingTasksService } from 'angular';
 
 describe('text-value-editor', () => {
 
     let valueEditorMocker: ValueEditorMocker<TextValueEditorBindings>;
     let $scope: ScopeWithBindings<string, TextValueEditorBindings>;
-
+    let ngFlushPendingTasks: IFlushPendingTasksService;
+    
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
-        inject(/*@ngInject*/ ($compile, $rootScope) => {
+        inject(/*@ngInject*/ ($compile, $rootScope, $flushPendingTasks) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<TextValueEditorBindings>($compile, $scope);
+            ngFlushPendingTasks = $flushPendingTasks;
         });
     });
 
@@ -295,6 +298,16 @@ describe('text-value-editor', () => {
             expect($scope.form.text.$error).toEqual({});
         });
 
+        it('should be focused', () => {
+            valueEditorMocker.create('text', {editorName: 'text', isFocused: true}, true);
+
+            $scope.$apply();
+            ngFlushPendingTasks();
+
+            expect(document.activeElement).toEqual(valueEditorMocker.getInputElement<HTMLInputElement>());
+            valueEditorMocker.detachElementFromDocument();
+        });
+
     });
 
     describe('type: textarea', () => {
@@ -469,6 +482,16 @@ describe('text-value-editor', () => {
             expect($scope.form.text.$error).toEqual({});
         });
 
+        it('should be focused', () => {
+            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'textarea'}, isFocused: true}, true);
+
+            $scope.$apply();
+            ngFlushPendingTasks();
+
+            expect(document.activeElement).toEqual(valueEditorMocker.getInputElement<HTMLInputElement>());
+            valueEditorMocker.detachElementFromDocument();
+        });
+
     });
 
     describe('type: rich-textarea', () => {
@@ -630,6 +653,17 @@ describe('text-value-editor', () => {
 
             expect($scope.form.text.$error).toEqual({});
         });
+
+        it('should be focused', () => {
+            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'rich-textarea'}, isFocused: true}, true);
+
+            $scope.$apply();
+            ngFlushPendingTasks();
+
+            expect(document.activeElement).toEqual(valueEditorMocker.getInputElement<HTMLDivElement>().querySelector('textarea'));
+            valueEditorMocker.detachElementFromDocument();
+        });
+
     });
 
     describe('transition between types', () => {

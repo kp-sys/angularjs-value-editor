@@ -6,8 +6,6 @@ import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-c
 
 export class HiddenValueEditorComponentController extends AbstractValueEditorComponentController<any, ValueEditorOptions> {
 
-    
-
     protected get emptyModel(): any {
         return null;
     }

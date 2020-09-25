@@ -39,8 +39,6 @@ export class HtmlValueEditorComponentController extends AbstractValueEditorCompo
         }
     }
 
-    
-
     @bind
     private initTrumbowyg() {
         const options = {...this.options.editorOptions, disabled: this.valueEditorController.isDisabled};

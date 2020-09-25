@@ -1,7 +1,7 @@
 import './text.value-editor.less';
 import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
-import {IDoCheck, INgModelController, IOnInit} from 'angular';
+import {IDoCheck, INgModelController, IOnInit, IPostLink} from 'angular';
 import {Ace} from 'ace-builds';
 import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import {
@@ -50,6 +50,18 @@ export class TextValueEditorComponentController extends AbstractValueEditorCompo
 
     protected get emptyModel(): string {
         return '';
+    }
+
+    /**
+     * Focus input inside editor.
+     * Special case for ACE editor
+     */
+    public focus(): void {
+        if (this.options.type === 'rich-textarea') {
+            this.aceEditor.focus();
+        } else {
+            super.focus();
+        }
     }
 
     /**

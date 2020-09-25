@@ -1,6 +1,6 @@
 import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
-import {ITimeoutService} from 'angular';
+import {IFlushPendingTasksService, ITimeoutService} from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {SearchableValueEditorBindings} from './searchable.value-editor.component';
 import SearchableValueEditorConfigurationServiceProvider from './searchable-value-editor-configuration.provider';
@@ -17,8 +17,7 @@ describe('searchable-value-editor', () => {
 
     let valueEditorMocker: ValueEditorMocker<SearchableValueEditorBindings<string>>;
     let $scope: ScopeWithBindings<string, SearchableValueEditorBindings<string>>;
-    // tslint:disable-next-line:variable-name
-    let $_timeout: ITimeoutService;
+    let ngFlushPendingTasks: IFlushPendingTasksService;
 
     let searchFunction: (...args: any[]) => Promise<string>;
     let editFunction: (...args: any[]) => Promise<string>;
@@ -44,10 +43,10 @@ describe('searchable-value-editor', () => {
             });
         });
 
-        inject(/*@ngInject*/ ($compile, $rootScope, $timeout) => {
+        inject(/*@ngInject*/ ($compile, $rootScope, $flushPendingTasks) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<SearchableValueEditorBindings<string>>($compile, $scope);
-            $_timeout = $timeout;
+            ngFlushPendingTasks = $flushPendingTasks;
         });
     });
 
@@ -63,7 +62,7 @@ describe('searchable-value-editor', () => {
 
         valueEditorMocker.getInputElement<HTMLInputElement>().parentElement.querySelector<HTMLButtonElement>('.search-button').click();
 
-        $_timeout.flush();
+        ngFlushPendingTasks();
 
         new Promise((resolve) => {
             setTimeout(() => {
@@ -83,7 +82,7 @@ describe('searchable-value-editor', () => {
 
         valueEditorMocker.getInputElement<HTMLInputElement>().parentElement.querySelector<HTMLButtonElement>('.edit-button').click();
 
-        $_timeout.flush();
+        ngFlushPendingTasks();
 
         new Promise((resolve) => {
             setTimeout(() => {
@@ -114,7 +113,7 @@ describe('searchable-value-editor', () => {
         expect($scope.form.searchable.$error).toEqual({required: true});
 
         valueEditorMocker.getInputElement<HTMLInputElement>().parentElement.querySelector<HTMLButtonElement>('.search-button').click();
-        $_timeout.flush();
+        ngFlushPendingTasks();
 
         setTimeout(() => {
             expect($scope.form.searchable.$error).toEqual({});
@@ -134,6 +133,16 @@ describe('searchable-value-editor', () => {
 
         expect(isVisibleInDOM(editButtonElement)).toBe(true);
 
+        valueEditorMocker.detachElementFromDocument();
+    });
+
+    it('should be focused', () => {
+        valueEditorMocker.create('searchable', {isFocused: true}, true);
+
+        ngFlushPendingTasks();
+        $scope.$apply();
+
+        expect(document.activeElement).toEqual(valueEditorMocker.getInputElement<HTMLInputElement>().parentElement.querySelector<HTMLButtonElement>('.search-button'));
         valueEditorMocker.detachElementFromDocument();
     });
 });

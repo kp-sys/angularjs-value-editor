@@ -3,12 +3,14 @@ import * as angular from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {PasswordValueEditorBindings} from './password.value-editor.component';
 import objectContaining = jasmine.objectContaining;
+import { IFlushPendingTasksService } from 'angular';
 
 describe('password-value-editor', () => {
 
     let valueEditorMocker: ValueEditorMocker<PasswordValueEditorBindings>;
     let $scope: ScopeWithBindings<string, PasswordValueEditorBindings>;
-
+    let ngFlushPendingTasks: IFlushPendingTasksService;
+    
     function fillBothInputs(text: string) {
         const inputElement = valueEditorMocker.getInputElement<HTMLInputElement>();
         const confirmationInputElement = inputElement.closest('.with-confirmation').querySelector<HTMLInputElement>('input.confirmation[type="password"]');
@@ -22,9 +24,10 @@ describe('password-value-editor', () => {
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
-        inject(/*@ngInject*/ ($compile, $rootScope) => {
+        inject(/*@ngInject*/ ($compile, $rootScope, $flushPendingTasks) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<PasswordValueEditorBindings>($compile, $scope);
+            ngFlushPendingTasks = $flushPendingTasks;
         });
     });
 
@@ -197,6 +200,16 @@ describe('password-value-editor', () => {
             expect($scope.form.password.$error).toEqual({});
         });
 
+        it('should be focused', () => {
+            valueEditorMocker.create('password', {isFocused: true}, true);
+    
+            ngFlushPendingTasks();
+            $scope.$apply();
+    
+            expect(document.activeElement).toEqual(valueEditorMocker.getInputElement<HTMLInputElement>());
+            valueEditorMocker.detachElementFromDocument();
+        });
+
     });
 
     describe('with confirmation', () => {
@@ -355,6 +368,15 @@ describe('password-value-editor', () => {
             expect($scope.form.password.$error).toEqual({});
         });
 
+        it('should be focused', () => {
+            valueEditorMocker.create('password', {isFocused: true}, true);
+    
+            ngFlushPendingTasks();
+            $scope.$apply();
+    
+            expect(document.activeElement).toEqual(valueEditorMocker.getInputElement<HTMLInputElement>());
+            valueEditorMocker.detachElementFromDocument();
+        });
     });
 
 });

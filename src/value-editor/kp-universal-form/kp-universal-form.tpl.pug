@@ -7,6 +7,8 @@ form(name="{{name}}" ng-submit="$ctrl.onSubmit({$event: $event})" novalidate)
         ng-model="$ctrl.model"
         ng-model-options="{getterSetter: true}"
 
+        is-focused="$ctrl.options.autofocusFirstField"
+
         options="{" +
             "fields: $ctrl.formSettings.fields, " +
             "__withoutNgForm: true, " +

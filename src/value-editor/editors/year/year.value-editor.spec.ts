@@ -2,18 +2,21 @@ import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {YearValueEditorBindings} from './year.value-editor.component';
+import { IFlushPendingTasksService } from 'angular';
 
 describe('year-value-editor', () => {
 
     let valueEditorMocker: ValueEditorMocker<YearValueEditorBindings>;
     let $scope: ScopeWithBindings<number, YearValueEditorBindings>;
-
+    let ngFlushPendingTasks: IFlushPendingTasksService;
+    
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
-        inject(/*@ngInject*/ ($compile, $rootScope) => {
+        inject(/*@ngInject*/ ($compile, $rootScope, $flushPendingTasks) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<YearValueEditorBindings>($compile, $scope);
+            ngFlushPendingTasks = $flushPendingTasks;
         });
     });
 
@@ -94,6 +97,16 @@ describe('year-value-editor', () => {
         valueEditorMocker.triggerHandlerOnInput('input');
 
         expect($scope.model).toBeNull();
+    });
+
+    it('should be focused', () => {
+        valueEditorMocker.create('year', {isFocused: true}, true);
+
+        ngFlushPendingTasks();
+        $scope.$apply();
+
+        expect(document.activeElement).toEqual(valueEditorMocker.getInputElement<HTMLInputElement>());
+        valueEditorMocker.detachElementFromDocument();
     });
 
 });

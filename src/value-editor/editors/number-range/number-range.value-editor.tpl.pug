@@ -14,6 +14,8 @@
             ng-disabled="$ctrl.valueEditorController.isDisabled"
 
             ng-blur="$ctrl.setTouched()"
+
+            kp-focusable-input="$ctrl.connectToFocusApi($api)"
         )
 
     .input-group.to

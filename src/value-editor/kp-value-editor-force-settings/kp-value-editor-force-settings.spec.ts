@@ -11,15 +11,14 @@ describe('kp-value-editor-force-settings', () => {
     }
 
     let $scope: Scope;
-    // tslint:disable-next-line:variable-name
-    let $_compile: ICompileService;
+    let ngCompile: ICompileService;
 
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
         inject(/*@ngInject*/ ($compile, $rootScope) => {
             $scope = $rootScope.$new();
-            $_compile = $compile;
+            ngCompile = $compile;
         });
     });
 
@@ -40,7 +39,7 @@ describe('kp-value-editor-force-settings', () => {
             </kp-value-editor-force-settings>
         `;
 
-        const compiledElement = $_compile(template)($scope);
+        const compiledElement = ngCompile(template)($scope);
         $scope.$apply();
 
         const inputElement = compiledElement[0].querySelector('[data-main-input]');
@@ -73,7 +72,7 @@ describe('kp-value-editor-force-settings', () => {
             </kp-value-editor-force-settings>
         `;
 
-        const compiledElement = $_compile(template)($scope);
+        const compiledElement = ngCompile(template)($scope);
         $scope.$apply();
 
         const inputElements = compiledElement[0].querySelectorAll('[data-main-input]');
@@ -101,7 +100,7 @@ describe('kp-value-editor-force-settings', () => {
             </kp-value-editor-force-settings>
         `;
 
-        const compiledElement = $_compile(template)($scope);
+        const compiledElement = ngCompile(template)($scope);
         $scope.$apply();
 
         const inputElements = compiledElement[0].querySelector('[data-main-input]');
@@ -125,7 +124,7 @@ describe('kp-value-editor-force-settings', () => {
                 </kp-value-editor-force-settings>
             `;
 
-        const compiledTemplate = $_compile(template)($scope);
+        const compiledTemplate = ngCompile(template)($scope);
         $scope.$apply();
         const inputElement = compiledTemplate[0].querySelector<HTMLInputElement>('[data-main-input]');
 
@@ -154,7 +153,7 @@ describe('kp-value-editor-force-settings', () => {
                 </kp-value-editor-force-settings>
             `;
 
-        const compiledTemplate = $_compile(template)($scope);
+        const compiledTemplate = ngCompile(template)($scope);
         $scope.$apply();
         const inputElement = compiledTemplate[0].querySelector<HTMLInputElement>('[data-main-input]');
 
@@ -196,7 +195,7 @@ describe('kp-value-editor-force-settings', () => {
                 </kp-value-editor-force-settings>
             `;
 
-        const compiledTemplate = $_compile(template)($scope);
+        const compiledTemplate = ngCompile(template)($scope);
         $scope.$apply();
         compiledTemplate[0].querySelector<HTMLButtonElement>('.search-button').click();
 
@@ -232,7 +231,7 @@ describe('kp-value-editor-force-settings', () => {
                 </kp-value-editor-force-settings>
             `;
 
-        const compiledTemplate = $_compile(template)($scope);
+        const compiledTemplate = ngCompile(template)($scope);
         $scope.$apply();
         compiledTemplate[0].querySelector<HTMLButtonElement>('.search-button').click();
 
@@ -269,7 +268,7 @@ describe('kp-value-editor-force-settings', () => {
                 </kp-value-editor-force-settings>
             `;
 
-        const compiledTemplate = $_compile(template)($scope);
+        const compiledTemplate = ngCompile(template)($scope);
         $scope.$apply();
         compiledTemplate[0].querySelector<HTMLButtonElement>('.search-button').click();
 
@@ -306,7 +305,7 @@ describe('kp-value-editor-force-settings', () => {
                 </kp-value-editor-force-settings>
             `;
 
-        const compiledTemplate = $_compile(template)($scope);
+        const compiledTemplate = ngCompile(template)($scope);
         $scope.$apply();
         compiledTemplate[0].querySelector<HTMLButtonElement>('.search-button').click();
 
