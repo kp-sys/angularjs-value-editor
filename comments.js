@@ -381,6 +381,19 @@
  * This directive adds tooltip on input, if valueEditor has defined non-empty localization named `patternDescription`.
  */
 /*@ngInject*//**
+ * @ngdoc filter
+ * @name nullAwareFilter
+ * @module angularjs-value-editor.acceptable
+ *
+ * @template T
+ *
+ * @param {T[]} items Array of items
+ * @param {string} search Filter expression
+ *
+ * @description
+ * It is almost classic angular filter `filter`, but if search is null it returns original data.
+ */
+/*@ngInject*//**
  * @ngdoc directive
  * @name acceptableRootRequiredValidations
  * @module angularjs-value-editor.acceptable-root
@@ -885,19 +898,6 @@
  *
  * It adds right version of required validation to acceptable value editor - checkboxes mode.
  *//**
- * @ngdoc filter
- * @name nullAwareFilter
- * @module angularjs-value-editor.acceptable
- *
- * @template T
- *
- * @param {T[]} items Array of items
- * @param {string} search Filter expression
- *
- * @description
- * It is almost classic angular filter `filter`, but if search is null it returns original data.
- */
-/*@ngInject*//**
  * @ngdoc service
  * @name uiSelectDecorator
  * @module angularjs-value-editor.acceptable
