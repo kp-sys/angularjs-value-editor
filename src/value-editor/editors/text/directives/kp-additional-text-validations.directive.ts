@@ -11,7 +11,8 @@ import {TextValueEditorValidations} from '../text.value-editor.component';
  * @restrict A
  *
  * @description
- * TODO: Add some short description.
+ * Directive adding followed additional validation to editors that supports {@link TextValueEditorValidations}.
+ * - notBlank
  */
 export default class KpAdditionalTextValidationsDirective {
     public static readonly directiveName = 'kpAdditionalTextValidations';

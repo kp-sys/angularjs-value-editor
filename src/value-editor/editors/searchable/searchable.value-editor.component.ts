@@ -101,7 +101,7 @@ export class SearchableValueEditorComponentController<MODEL = any> extends Abstr
  *
  * Supported options: {@link type:SearchableValueEditorOptions}
  *
- * Supported validations: {@link type:TextValueEditorValidations}
+ * Supported validations: {@link type:ValueEditorValidations}
  *
  * @example
  * <example name="searchableValueEditorExample" module="searchableValueEditorExample" frame-no-resize="true">
