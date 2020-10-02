@@ -126,7 +126,7 @@ export class RangeValueEditorComponentController extends AbstractTemplateValueEd
  *
  * Supported options: {@link type:RangeValueEditorOptions}
  *
- * Supported validations: {@link type:TextValueEditorValidations}
+ * Supported validations: {@link type:ValueEditorValidations}
  *
  * @example
  * <example name="rangeValueEditorExample" module="rangeValueEditorExample" frame-no-resize="true">

@@ -166,6 +166,37 @@ describe('password-value-editor', () => {
             expect($scope.model).toBeNull();
         });
 
+        it('should have working notBlank validation', () => {
+            valueEditorMocker.create('password', {editorName: 'password', validations: {notBlank: true}});
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = '   ';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            $scope.$apply();
+
+            expect($scope.form.password.$error).toEqual({notBlank: true});
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = '    hello';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.password.$error).toEqual({});
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello     ';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.password.$error).toEqual({});
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = '   hello     hi';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.password.$error).toEqual({});
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = '';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.password.$error).toEqual({});
+        });
+
     });
 
     describe('with confirmation', () => {
@@ -291,6 +322,37 @@ describe('password-value-editor', () => {
             valueEditorMocker.triggerHandlerOnInput('input');
 
             expect($scope.model).toBeNull();
+        });
+
+        it('should have working notBlank validation', () => {
+            valueEditorMocker.create('password', {editorName: 'password', options: {withConfirmation: true}, validations: {notBlank: true}});
+
+            fillBothInputs('   ');
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            $scope.$apply();
+
+            expect($scope.form.password.$error).toEqual(objectContaining({notBlank: true}));
+
+            fillBothInputs('    hello');
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.password.$error).toEqual({});
+
+            fillBothInputs('hello     ');
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.password.$error).toEqual({});
+
+            fillBothInputs('   hello     hi');
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.password.$error).toEqual({});
+
+            fillBothInputs('');
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.password.$error).toEqual({});
         });
 
     });
