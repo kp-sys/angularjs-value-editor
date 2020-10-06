@@ -3120,12 +3120,20 @@
  * @property {MODEL} newItemPrototype
  * @property {OPTIONS=} subEditorOptions
  * @property {VALIDATIONS=} subEditorValidations
+ * @property {function()=} onAddItem Async hook called if 'add' button clicked. It waits for resolving of promise and then fill a created record with given model.
+ * | Injectable&nbsp;argument&nbsp;name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description                                                                           |
+ * | ------------------------ | ----------------------------------------------------------------------------------------------- |
+ * | `$propertyName`          | Property name passed from `editorName` attribute of kpValueEditor component                     |
+ * | `$model`                 | Current model                                                                                   |
+ * | `$formModel`             | If `sendWholeForm` {@link type:KpAsyncValidationOptions option} is true, it contains form model |
  *
+ * @property {boolean} sendWholeForm
  * @description
  * Extends {@link type:ValueEditorOptions}
  *
  * Default value: {@link listValueEditorDefaultOptions}
  */
+/* tslint:disable-next-line:ban-types*/
 /**
  * @ngdoc constant
  * @name listValueEditorDefaultOptions
@@ -3261,7 +3269,8 @@
  *
  * @description
  *
- *//**
+ *//* tslint:disable-next-line:variable-name*/
+/**
      * Simulates click on add button
      * @returns {HTMLElement}
      */
@@ -3272,7 +3281,8 @@
      * @param {number} index
      */
 /*@ngInject*/
-/* expect(() => removeItemOnIndex(0)).toThrow();*//**
+/* expect(() => removeItemOnIndex(0)).toThrow();*/
+/*@ngInject*//**
  * @ngdoc type
  * @name ObjectValueEditorField
  * @module angularjs-value-editor.object
