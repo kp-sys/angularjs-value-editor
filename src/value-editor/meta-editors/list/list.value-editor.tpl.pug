@@ -52,11 +52,13 @@
     .panel-footer
         button.btn.btn-default.btn-block.btn-xs.add(
             type="button"
-            ng-disabled="$ctrl.valueEditorController.isDisabled"
+            ng-disabled="$ctrl.valueEditorController.isDisabled || $ctrl.waitingForPrototype"
             ng-show="$ctrl.canAddItem()"
             ng-click="$ctrl.addItem()"
         )
             i.glyphicon.glyphicon-plus
             span(ng-bind="$ctrl.localize('add')")
+            span.glyphicon.spinner(ng-include="$ctrl.loadingSpinnerTemplateUrl" ng-show="$ctrl.waitingForPrototype")
+
 
 | \{\{$ctrl.form = {{name}}; ''\}\}

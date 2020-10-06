@@ -11,6 +11,8 @@ describe('list-value-editor', () => {
 
     let valueEditorMocker: ValueEditorMocker<ListValueEditorBindings<string, TextValueEditorOptions, TextValueEditorValidations>>;
     let $scope: ScopeWithBindings<string[], ListValueEditorBindings>;
+    // tslint:disable-next-line:variable-name
+    let $_timeout: ITimeoutService;
 
     /**
      * Simulates click on add button
@@ -54,6 +56,7 @@ describe('list-value-editor', () => {
         inject(/*@ngInject*/ ($compile, $rootScope, $timeout: ITimeoutService) => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<ListValueEditorBindings>($compile, $scope);
+            $_timeout = $timeout;
 
             valueEditorMocker.setPostConstructHook(() => $timeout.flush());
         });
@@ -78,7 +81,7 @@ describe('list-value-editor', () => {
         expect($scope.model).toEqual(['world']);
     });
 
-    it('should change value if model is changed', () => {
+    it('should change value if model changed', () => {
         $scope.model = ['hello'];
 
         valueEditorMocker.create('list', {
@@ -278,6 +281,40 @@ describe('list-value-editor', () => {
         $scope.$apply();
 
         expect($scope.model).toBeNull();
+    });
+
+    it('should call onAddItem and pass new prototype', (done) => {
+
+        const NEW_PROTO = 'blablabla';
+
+        const onAddItemFunction = jasmine.createSpy('onAddItemFunction', (model, propertyName, timeout) => {
+            return new Promise<string>((resolve) => timeout(() => resolve(NEW_PROTO), 10));
+        }).and.callThrough();
+
+        $scope.model = ['hello'];
+
+        valueEditorMocker.create('list', {
+            editorName: 'listEditor',
+            options: {
+                newItemPrototype: '',
+                subEditorType: 'text',
+                onAddItem: /*@ngInject*/ ($model, $propertyName, $timeout) => onAddItemFunction($model, $propertyName, $timeout)
+            }
+        });
+
+        addItem();
+        $_timeout.flush();
+
+        new Promise((resolve) => {
+            setTimeout(() => {
+                expect(onAddItemFunction).toHaveBeenCalledWith(jasmine.arrayContaining(['hello']), 'listEditor', jasmine.anything());
+
+                expect($scope.model).toEqual(['hello', NEW_PROTO]);
+
+                resolve();
+            }, 20);
+        }).then(done);
+
     });
 
 });

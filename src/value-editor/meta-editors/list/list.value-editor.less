@@ -20,8 +20,22 @@ list-value-editor {
         }
     }
 
-    .btn.add span {
-        margin-left: 5px;
+    .btn.add {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .glyphicon {
+            top: 0;
+        }
+
+        span {
+            margin-left: 5px;
+        }
+    }
+
+    .spinner {
+        width: 17px;
     }
 
     .list-item {
@@ -40,8 +54,8 @@ list-value-editor {
 
     .has-not-error .form-control {
         border-color: @input-border;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
     }
 }
 

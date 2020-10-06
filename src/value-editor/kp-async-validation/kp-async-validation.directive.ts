@@ -113,10 +113,6 @@ export default class KpAsyncValidationDirective {
             return valueEditorController.universalFormController.asyncValidationsModel;
         }
 
-        if (typeof formController === 'undefined' || formController === null) {
-            throw new TypeError(`KpAsyncValidationDirective: formController is null or undefined. You have to wrap your value-editor into form element or ng-form attribute.`);
-        }
-
         return getFormModel(formController);
     }
 
