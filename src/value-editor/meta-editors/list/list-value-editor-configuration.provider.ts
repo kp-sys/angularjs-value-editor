@@ -4,6 +4,7 @@ import {ValueEditorOptions, ValueEditorValidations} from '../../kp-value-editor/
 import {CustomValueEditorType} from '../../aliases/kp-value-editor-aliases.service';
 import {TextValueEditorOptions} from '../../editors/text/text-value-editor-configuration.provider';
 import {TextValueEditorValidations} from '../../editors/text/text.value-editor.component';
+import {Injectable, IPromise} from 'angular';
 
 /**
  * @ngdoc type
@@ -18,7 +19,14 @@ import {TextValueEditorValidations} from '../../editors/text/text.value-editor.c
  * @property {MODEL} newItemPrototype
  * @property {OPTIONS=} subEditorOptions
  * @property {VALIDATIONS=} subEditorValidations
+ * @property {function()=} onAddItem Async hook called if 'add' button clicked. It waits for resolving of promise and then fill a created record with given model.
+ * | Injectable&nbsp;argument&nbsp;name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description                                                                           |
+ * | ------------------------ | ----------------------------------------------------------------------------------------------- |
+ * | `$propertyName`          | Property name passed from `editorName` attribute of kpValueEditor component                     |
+ * | `$model`                 | Current model                                                                                   |
+ * | `$formModel`             | If `sendWholeForm` {@link type:KpAsyncValidationOptions option} is true, it contains form model |
  *
+ * @property {boolean} sendWholeForm
  * @description
  * Extends {@link type:ValueEditorOptions}
  *
@@ -29,6 +37,9 @@ export interface ListValueEditorOptions<MODEL = any, OPTIONS extends ValueEditor
     newItemPrototype: MODEL;
     subEditorOptions?: OPTIONS;
     subEditorValidations?: VALIDATIONS;
+    // tslint:disable-next-line:ban-types
+    onAddItem?: Injectable<Function | ((...args: any[]) => (Promise<MODEL> | IPromise<MODEL>))>;
+    sendWholeForm?: boolean;
 }
 
 /**
@@ -52,7 +63,9 @@ export const LIST_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<ListValueEditorOp
     subEditorType: 'text',
     newItemPrototype: '',
     subEditorOptions: undefined,
-    subEditorValidations: undefined
+    subEditorValidations: undefined,
+    onAddItem: undefined,
+    sendWholeForm: false
 };
 
 /**

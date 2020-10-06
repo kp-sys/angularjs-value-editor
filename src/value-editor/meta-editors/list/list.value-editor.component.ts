@@ -19,14 +19,20 @@ import AbstractTemplateValueEditor from '../../abstract/abstract-template-value-
 import {AbstractMetaValueEditorComponentController} from '../abstract-meta-value-editor.component';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
+import {isInjectableOrFunction} from '../../utils/injectables';
+import {getFormModel} from '../../utils/forms';
+import IInjectorService = angular.auto.IInjectorService;
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.listValueEditor';
+
+const WAITING_FOR_SHOW_SPINNER_MS = 100;
 
 export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEditorOptions> extends AbstractMetaValueEditorComponentController<MODEL[], ListValueEditorOptions<MODEL, OPTIONS>, ListValueEditorValidations> implements IOnInit, IDoCheck {
     public static readonly TEMPLATE_URL = require('./list.value-editor.tpl.pug');
 
     public form: IFormController;
     public validationHelperNgModelController: INgModelController;
+    public waitingForPrototype: boolean;
 
     /*@ngInject*/
     constructor(
@@ -34,7 +40,9 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
         $templateCache: ITemplateCacheService,
         listValueEditorConfigurationService: ListValueEditorConfigurationService<MODEL, OPTIONS>,
         listValueEditorLocalizationsService: ListValueEditorLocalizationsService,
-        private $timeout: ITimeoutService
+        private $timeout: ITimeoutService,
+        private $injector: IInjectorService,
+        public loadingSpinnerTemplateUrl: string
     ) {
         super(
             ListValueEditorComponentController.TEMPLATE_URL,
@@ -58,7 +66,7 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
     }
 
     public $doCheck(): void {
-        if(this.validationHelperNgModelController?.$untouched && this.hasTouchedItem()) {
+        if (this.validationHelperNgModelController?.$untouched && this.hasTouchedItem()) {
             this.validationHelperNgModelController.$setTouched();
         }
     }
@@ -67,14 +75,33 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
         return null;
     }
 
-    public addItem() {
+    public async addItem() {
         this.normalizeModelIfNeeded();
 
         if (this.model === null) {
             this.model = [];
         }
 
-        this.model.push(angular.fromJson(angular.toJson(this.options.newItemPrototype)));
+        let prototype;
+
+        if (isInjectableOrFunction(this.options.onAddItem)) {
+            const showSpinnerTimeoutPromise = this.$timeout(() => this.waitingForPrototype = true, WAITING_FOR_SHOW_SPINNER_MS);
+
+            try {
+                prototype = await this.$injector.invoke(this.options.onAddItem, null, {
+                    $model: this.model,
+                    $propertyName: this.valueEditorController.editorName,
+                    $formModel: this.options.sendWholeForm ? getFormModel(this.valueEditorController.formController) : undefined
+                });
+            } finally {
+                this.$timeout.cancel(showSpinnerTimeoutPromise);
+                this.$timeout(() => this.waitingForPrototype = false);
+            }
+        } else {
+            prototype = this.options.newItemPrototype;
+        }
+
+        this.model.push(angular.fromJson(angular.toJson(prototype)));
     }
 
     public removeItem(index) {

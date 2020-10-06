@@ -1,9 +1,14 @@
 import {IFormController, INgModelController} from 'angular';
 
-export function getFormModel(form: IFormController): {[name: string]: any} {
+export function getFormModel(formController: IFormController): {[name: string]: any} {
+
+    if (typeof formController === 'undefined' || formController === null) {
+        throw new TypeError(`formController is null or undefined. Probably, You have to wrap your value-editor into form element or ng-form attribute.`);
+    }
+
     const model = {};
 
-    for(const control of form.$getControls()) {
+    for(const control of formController.$getControls()) {
         if (isNgModelController(control)) {
             if (control.$name) {
                 model[control.$name] = control.$modelValue;
