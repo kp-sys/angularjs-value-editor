@@ -287,7 +287,7 @@ describe('list-value-editor', () => {
 
         const NEW_PROTO = 'blablabla';
 
-        const onAddItemFunction = jasmine.createSpy('onAddItemFunction', (model, propertyName, timeout) => {
+        const onAddItemFunction = jasmine.createSpy('onAddItemFunction', (model, propertyName, additionalParameters, timeout) => {
             return new Promise<string>((resolve) => timeout(() => resolve(NEW_PROTO), 10));
         }).and.callThrough();
 
@@ -298,7 +298,10 @@ describe('list-value-editor', () => {
             options: {
                 newItemPrototype: '',
                 subEditorType: 'text',
-                onAddItem: /*@ngInject*/ ($model, $propertyName, $timeout) => onAddItemFunction($model, $propertyName, $timeout)
+                onAddItem: /*@ngInject*/ ($model, $propertyName, $additionalParameters, $timeout) => onAddItemFunction($model, $propertyName, $additionalParameters, $timeout),
+                additionalParameters: {
+                    blabla: 'ughugh'
+                }
             }
         });
 
@@ -307,7 +310,7 @@ describe('list-value-editor', () => {
 
         new Promise((resolve) => {
             setTimeout(() => {
-                expect(onAddItemFunction).toHaveBeenCalledWith(jasmine.arrayContaining(['hello']), 'listEditor', jasmine.anything());
+                expect(onAddItemFunction).toHaveBeenCalledWith(jasmine.arrayContaining(['hello']), 'listEditor', {blabla: 'ughugh'}, jasmine.anything());
 
                 expect($scope.model).toEqual(['hello', NEW_PROTO]);
 

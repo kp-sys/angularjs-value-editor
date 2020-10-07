@@ -25,8 +25,12 @@ import {Injectable, IPromise} from 'angular';
  * | `$propertyName`          | Property name passed from `editorName` attribute of kpValueEditor component                     |
  * | `$model`                 | Current model                                                                                   |
  * | `$formModel`             | If `sendWholeForm` {@link type:KpAsyncValidationOptions option} is true, it contains form model |
+ * | `$additionalParameters`  | Some static parameters passed from `additionalParameters` in options.                           |
  *
- * @property {boolean} sendWholeForm
+ * @property {boolean} sendWholeForm If `true`, `onAddItem` hook will contain whole form.
+ * @property {{}} additionalParameters Some static parameters passed from definition.
+ *
+ *
  * @description
  * Extends {@link type:ValueEditorOptions}
  *
@@ -40,6 +44,7 @@ export interface ListValueEditorOptions<MODEL = any, OPTIONS extends ValueEditor
     // tslint:disable-next-line:ban-types
     onAddItem?: Injectable<Function | ((...args: any[]) => (Promise<MODEL> | IPromise<MODEL>))>;
     sendWholeForm?: boolean;
+    additionalParameters?: {};
 }
 
 /**
@@ -65,7 +70,8 @@ export const LIST_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<ListValueEditorOp
     subEditorOptions: undefined,
     subEditorValidations: undefined,
     onAddItem: undefined,
-    sendWholeForm: false
+    sendWholeForm: false,
+    additionalParameters: undefined
 };
 
 /**
