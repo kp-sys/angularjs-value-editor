@@ -91,7 +91,8 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
                 prototype = await this.$injector.invoke(this.options.onAddItem, null, {
                     $model: this.model,
                     $propertyName: this.valueEditorController.editorName,
-                    $formModel: this.options.sendWholeForm ? getFormModel(this.valueEditorController.formController) : undefined
+                    $formModel: this.options.sendWholeForm ? getFormModel(this.valueEditorController.formController) : undefined,
+                    $additionalParameters: this.options.additionalParameters
                 });
             } finally {
                 this.$timeout.cancel(showSpinnerTimeoutPromise);
