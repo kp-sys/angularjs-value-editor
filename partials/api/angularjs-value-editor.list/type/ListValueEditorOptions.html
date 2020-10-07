@@ -106,7 +106,8 @@
 | ------------------------ | ----------------------------------------------------------------------------------------------- |
 | <code>$propertyName</code>          | Property name passed from <code>editorName</code> attribute of kpValueEditor component                     |
 | <code>$model</code>                 | Current model                                                                                   |
-| <code>$formModel</code>             | If <code>sendWholeForm</code> <a href="api/angularjs-value-editor.async-validation/type/KpAsyncValidationOptions">option</a> is true, it contains form model |</p>
+| <code>$formModel</code>             | If <code>sendWholeForm</code> <a href="api/angularjs-value-editor.async-validation/type/KpAsyncValidationOptions">option</a> is true, it contains form model |
+| <code>$additionalParameters</code>  | Some static parameters passed from <code>additionalParameters</code> in options.                           |</p>
 </td>
   </tr>
 </table>
@@ -122,7 +123,24 @@
     <table class="variables-matrix return-arguments">
   <tr>
     <td><span class="label type-hint type-hint-boolean"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" _target="blank">Boolean</a></span></td>
-    <td></td>
+    <td><p>If <code>true</code>, <code>onAddItem</code> hook will contain whole form.</p>
+</td>
+  </tr>
+</table>
+  </li>
+  
+  <li id="additionalParameters">
+    <h3 class="">
+      <span class="title"><code>additionalParameters</code></span>
+      
+      
+  
+    </h3>
+    <table class="variables-matrix return-arguments">
+  <tr>
+    <td><span class="label type-hint type-hint-object"><a href="{">{</a> {}}</span></td>
+    <td><p>Some static parameters passed from definition.</p>
+</td>
   </tr>
 </table>
   </li>

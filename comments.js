@@ -3126,8 +3126,12 @@
  * | `$propertyName`          | Property name passed from `editorName` attribute of kpValueEditor component                     |
  * | `$model`                 | Current model                                                                                   |
  * | `$formModel`             | If `sendWholeForm` {@link type:KpAsyncValidationOptions option} is true, it contains form model |
+ * | `$additionalParameters`  | Some static parameters passed from `additionalParameters` in options.                           |
  *
- * @property {boolean} sendWholeForm
+ * @property {boolean} sendWholeForm If `true`, `onAddItem` hook will contain whole form.
+ * @property {{}} additionalParameters Some static parameters passed from definition.
+ *
+ *
  * @description
  * Extends {@link type:ValueEditorOptions}
  *
