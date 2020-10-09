@@ -1957,7 +1957,7 @@
  *
  * Supported options: {@link type:RangeValueEditorOptions}
  *
- * Supported validations: {@link type:TextValueEditorValidations}
+ * Supported validations: {@link type:ValueEditorValidations}
  *
  * @example
  * <example name="rangeValueEditorExample" module="rangeValueEditorExample" frame-no-resize="true">
@@ -2125,7 +2125,7 @@
  *
  * Supported options: {@link type:SearchableValueEditorOptions}
  *
- * Supported validations: {@link type:TextValueEditorValidations}
+ * Supported validations: {@link type:ValueEditorValidations}
  *
  * @example
  * <example name="searchableValueEditorExample" module="searchableValueEditorExample" frame-no-resize="true">
@@ -2164,7 +2164,8 @@
  * @restrict A
  *
  * @description
- * TODO: Add some short description.
+ * Directive adding followed additional validation to editors that supports {@link TextValueEditorValidations}.
+ * - notBlank
  *//**
  * @ngdoc directive
  * @name prefixSuffixModelAdder
