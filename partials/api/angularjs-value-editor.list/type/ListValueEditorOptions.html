@@ -103,11 +103,12 @@
     <td><span class="label type-hint type-hint-function"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" _target="blank">function()=</a></span></td>
     <td><p>Async hook called if &#39;add&#39; button clicked. It waits for resolving of promise and then fill a created record with given model.
 | Injectable&nbsp;argument&nbsp;name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description                                                                           |
-| ------------------------ | ----------------------------------------------------------------------------------------------- |
-| <code>$propertyName</code>          | Property name passed from <code>editorName</code> attribute of kpValueEditor component                     |
-| <code>$model</code>                 | Current model                                                                                   |
-| <code>$formModel</code>             | If <code>sendWholeForm</code> <a href="api/angularjs-value-editor.async-validation/type/KpAsyncValidationOptions">option</a> is true, it contains form model |
-| <code>$additionalParameters</code>  | Some static parameters passed from <code>additionalParameters</code> in options.                           |</p>
+| ------------------------ | ------------------------------------------------------------------------------------------------------- |
+| <code>$propertyName</code>          | Property name passed from <code>editorName</code> attribute of kpValueEditor component                             |
+| <code>$model</code>                 | Current model                                                                                           |
+| <code>$formModel</code>             | If <code>sendWholeForm</code> <a href="api/angularjs-value-editor.async-validation/type/KpAsyncValidationOptions">option</a> is true, it contains form model         |
+| <code>$additionalParameters</code>  | Some static parameters passed from <code>additionalParameters</code> in options.                                   |
+| <code>$universalFormModel</code>  | If editor is member of <a href="api/angularjs-value-editor/component/kpUniversalForm">kpUniversalForm</a>, model from this form passed else <code>undefined</code>. |</p>
 </td>
   </tr>
 </table>
