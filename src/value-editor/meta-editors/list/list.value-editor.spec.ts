@@ -1,10 +1,12 @@
 import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
-import {ITimeoutService} from 'angular';
+import {ICompileService, ITimeoutService} from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {ListValueEditorBindings} from './list.value-editor.component';
 import {TextValueEditorOptions} from '../../editors/text/text-value-editor-configuration.provider';
 import {TextValueEditorValidations} from '../../editors/text/text.value-editor.component';
+import {KpUniversalFormSettings} from '../../kp-universal-form/kp-universal-form.component';
+import {ListValueEditorOptions} from './list-value-editor-configuration.provider';
 import anything = jasmine.anything;
 
 describe('list-value-editor', () => {
@@ -13,6 +15,8 @@ describe('list-value-editor', () => {
     let $scope: ScopeWithBindings<string[], ListValueEditorBindings>;
     // tslint:disable-next-line:variable-name
     let $_timeout: ITimeoutService;
+    // tslint:disable-next-line:variable-name
+    let $_compile: ICompileService;
 
     /**
      * Simulates click on add button
@@ -57,6 +61,7 @@ describe('list-value-editor', () => {
             $scope = $rootScope.$new();
             valueEditorMocker = new ValueEditorMocker<ListValueEditorBindings>($compile, $scope);
             $_timeout = $timeout;
+            $_compile = $compile;
 
             valueEditorMocker.setPostConstructHook(() => $timeout.flush());
         });
@@ -314,6 +319,96 @@ describe('list-value-editor', () => {
 
                 expect($scope.model).toEqual(['hello', NEW_PROTO]);
 
+                resolve();
+            }, 20);
+        }).then(done);
+
+    });
+
+    it('should call onAddItem with universal-form model if editor is a member of universal-form', (done) => {
+
+        const NEW_PROTO = 'blablabla';
+
+        const onAddItemFunction = jasmine.createSpy('onAddItemFunction', (universalFormModel, timeout) => {
+            return new Promise<string>((resolve) => timeout(() => resolve(NEW_PROTO), 10));
+        }).and.callThrough();
+
+        $scope.model = {
+            // @ts-ignore
+            texts: [],
+            someAdditionalProperties: true
+        };
+
+        const template = `
+            <kp-universal-form
+                ng-model="model"
+                form-settings="formSettings"
+            >
+            </kp-universal-form>
+        `;
+
+        // @ts-ignore
+        $scope.formSettings = {
+            fields: [
+                {
+                    label: '',
+                    fieldName: 'texts',
+                    editor: {
+                        type: 'list',
+                        options: {
+                            newItemPrototype: '',
+                            subEditorType: 'text',
+                            onAddItem: /*@ngInject*/ ($universalFormModel, $timeout) => onAddItemFunction($universalFormModel, $timeout)
+                        } as ListValueEditorOptions
+                    }
+                }
+            ]
+        } as KpUniversalFormSettings;
+
+        const element = $_compile(template)($scope);
+
+        $scope.$apply();
+
+        // add input
+        element[0].querySelector<HTMLButtonElement>('button.add').click();
+
+        $_timeout.flush();
+
+        new Promise((resolve) => {
+            setTimeout(() => {
+                expect(onAddItemFunction).toHaveBeenCalledWith({
+                    texts: [],
+                    someAdditionalProperties: true
+                }, jasmine.anything());
+
+                resolve();
+            }, 20);
+        }).then(done);
+    });
+
+    it('should call onAddItem with universal-form model if editor is not a member of universal-form', (done) => {
+
+        const onAddItemFunction = jasmine.createSpy('onAddItemFunction', ($universalFormModel, timeout) => {
+            return new Promise<string>((resolve) => timeout(() => resolve(''), 10));
+        }).and.callThrough();
+
+        $scope.model = [''];
+
+        valueEditorMocker.create('list', {
+            editorName: 'listEditor',
+            options: {
+                newItemPrototype: '',
+                subEditorType: 'text',
+                onAddItem: /*@ngInject*/ ($universalFormModel, $timeout) => onAddItemFunction($universalFormModel, $timeout)
+            }
+        });
+
+        addItem();
+        $_timeout.flush();
+
+        new Promise((resolve) => {
+            setTimeout(() => {
+                expect(onAddItemFunction).toHaveBeenCalledWith(undefined, jasmine.anything());
                 resolve();
             }, 20);
         }).then(done);
