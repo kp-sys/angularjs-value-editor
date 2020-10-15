@@ -21,11 +21,12 @@ import {Injectable, IPromise} from 'angular';
  * @property {VALIDATIONS=} subEditorValidations
  * @property {function()=} onAddItem Async hook called if 'add' button clicked. It waits for resolving of promise and then fill a created record with given model.
  * | Injectable&nbsp;argument&nbsp;name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description                                                                           |
- * | ------------------------ | ----------------------------------------------------------------------------------------------- |
- * | `$propertyName`          | Property name passed from `editorName` attribute of kpValueEditor component                     |
- * | `$model`                 | Current model                                                                                   |
- * | `$formModel`             | If `sendWholeForm` {@link type:KpAsyncValidationOptions option} is true, it contains form model |
- * | `$additionalParameters`  | Some static parameters passed from `additionalParameters` in options.                           |
+ * | ------------------------ | ------------------------------------------------------------------------------------------------------- |
+ * | `$propertyName`          | Property name passed from `editorName` attribute of kpValueEditor component                             |
+ * | `$model`                 | Current model                                                                                           |
+ * | `$formModel`             | If `sendWholeForm` {@link type:KpAsyncValidationOptions option} is true, it contains form model         |
+ * | `$additionalParameters`  | Some static parameters passed from `additionalParameters` in options.                                   |
+ * | `$universalFormModel  `  | If editor is member of {@link component:kpUniversalForm}, model from this form passed else `undefined`. |
  *
  * @property {boolean} sendWholeForm If `true`, `onAddItem` hook will contain whole form.
  * @property {{}} additionalParameters Some static parameters passed from definition.

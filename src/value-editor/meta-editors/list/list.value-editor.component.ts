@@ -92,7 +92,8 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
                     $model: this.model,
                     $propertyName: this.valueEditorController.editorName,
                     $formModel: this.options.sendWholeForm ? getFormModel(this.valueEditorController.formController) : undefined,
-                    $additionalParameters: this.options.additionalParameters
+                    $additionalParameters: this.options.additionalParameters,
+                    $universalFormModel: angular.copy(this.valueEditorController.universalFormController?.model)
                 });
             } finally {
                 this.$timeout.cancel(showSpinnerTimeoutPromise);

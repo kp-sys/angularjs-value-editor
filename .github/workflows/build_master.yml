@@ -47,7 +47,7 @@ jobs:
 
       - run: npm ci
 
-      - run: EXAMPLES_SCRIPTS_URL_PREFIX="https://kp-sys.github.io/angularjs-value-editor" RELEASE=true npm run docs:build
+      - run: EXAMPLES_SCRIPTS_URL_PREFIX="https://unpkg.com/@kpsys/angularjs-value-editor/dist" RELEASE=true npm run docs:build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
