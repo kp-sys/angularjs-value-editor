@@ -1,7 +1,10 @@
 import {DefaultOptions} from '../../typings';
 import AbstractValueEditorConfigurationProvider, {AbstractValueEditorConfigurationService} from '../../abstract/abstract-value-editor-configuration.provider';
-import {ValueEditorOptions, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
-import {CustomValueEditorType} from '../../aliases/kp-value-editor-aliases.service';
+import {
+    ValueEditorBindings,
+    ValueEditorOptions,
+    ValueEditorValidations
+} from '../../kp-value-editor/kp-value-editor.component';
 import {TextValueEditorOptions} from '../../editors/text/text-value-editor-configuration.provider';
 import {TextValueEditorValidations} from '../../editors/text/text.value-editor.component';
 import {Injectable, IPromise} from 'angular';
@@ -12,13 +15,9 @@ import {Injectable, IPromise} from 'angular';
  * @module angularjs-value-editor.list
  *
  * @template MODEL
- * @template OPTIONS
- * @template VALIDATIONS
  *
- * @property {CustomValueEditorType} subEditorType
+ * @property {ValueEditorBindings} subEditor Sub editor definition.
  * @property {MODEL} newItemPrototype
- * @property {OPTIONS=} subEditorOptions
- * @property {VALIDATIONS=} subEditorValidations
  * @property {function()=} onAddItem Async hook called if 'add' button clicked. It waits for resolving of promise and then fill a created record with given model.
  * | Injectable&nbsp;argument&nbsp;name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description                                                                           |
  * | ------------------------ | ------------------------------------------------------------------------------------------------------- |
@@ -38,10 +37,8 @@ import {Injectable, IPromise} from 'angular';
  * Default value: {@link listValueEditorDefaultOptions}
  */
 export interface ListValueEditorOptions<MODEL = any, OPTIONS extends ValueEditorOptions = ValueEditorOptions, VALIDATIONS extends ValueEditorValidations = ValueEditorValidations> extends ValueEditorOptions {
-    subEditorType: CustomValueEditorType;
+    subEditor?: ValueEditorBindings<OPTIONS, VALIDATIONS>;
     newItemPrototype: MODEL;
-    subEditorOptions?: OPTIONS;
-    subEditorValidations?: VALIDATIONS;
     // tslint:disable-next-line:ban-types
     onAddItem?: Injectable<Function | ((...args: any[]) => (Promise<MODEL> | IPromise<MODEL>))>;
     sendWholeForm?: boolean;
@@ -58,18 +55,17 @@ export interface ListValueEditorOptions<MODEL = any, OPTIONS extends ValueEditor
  *
  * ```javascript
  * {
- *      subEditorType: 'text',
- *      newItemPrototype: '',
- *      subEditorOptions: undefined,
- *      subEditorValidations: undefined
+ *   subEditor: {type: 'text'},
+ *   newItemPrototype: '',
+ *   onAddItem: undefined,
+ *   sendWholeForm: false,
+ *   additionalParameters: undefined
  * }
  * ```
  */
 export const LIST_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<ListValueEditorOptions<string, TextValueEditorOptions, TextValueEditorValidations>> = {
-    subEditorType: 'text',
+    subEditor: {type: 'text'},
     newItemPrototype: '',
-    subEditorOptions: undefined,
-    subEditorValidations: undefined,
     onAddItem: undefined,
     sendWholeForm: false,
     additionalParameters: undefined

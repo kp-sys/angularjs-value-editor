@@ -45,7 +45,7 @@ describe('list-value-editor', () => {
     }
 
     function getEditorOnIndex(index: number): HTMLElement {
-        const items = valueEditorMocker.getCompiledElement().querySelectorAll<HTMLElement>('.list-item');
+        const items = valueEditorMocker.getCompiledElement().querySelectorAll<HTMLElement>('.list-item:not(.placeholder)');
 
         if (index > (items.length - 1)) {
             throw new Error(`Cannot access item on index ${index}.`);
@@ -73,7 +73,7 @@ describe('list-value-editor', () => {
         valueEditorMocker.create('list', {
             options: {
                 newItemPrototype: '',
-                subEditorType: 'text'
+                subEditor: {type: 'text'}
             }
         });
 
@@ -92,7 +92,7 @@ describe('list-value-editor', () => {
         valueEditorMocker.create('list', {
             options: {
                 newItemPrototype: '',
-                subEditorType: 'text'
+                subEditor: {type: 'text'}
             }
         });
 
@@ -111,7 +111,7 @@ describe('list-value-editor', () => {
         valueEditorMocker.create('list', {
             options: {
                 newItemPrototype: '',
-                subEditorType: 'text'
+                subEditor: {type: 'text'}
             }
         });
 
@@ -130,7 +130,7 @@ describe('list-value-editor', () => {
         valueEditorMocker.create('list', {
             options: {
                 newItemPrototype: '',
-                subEditorType: 'text'
+                subEditor: {type: 'text'}
             }
         });
 
@@ -145,7 +145,7 @@ describe('list-value-editor', () => {
         valueEditorMocker.create('list', {
             options: {
                 newItemPrototype: '',
-                subEditorType: 'text'
+                subEditor: {type: 'text'}
             },
             validations: {
                 required: true
@@ -161,7 +161,7 @@ describe('list-value-editor', () => {
             editorName: 'list',
             options: {
                 newItemPrototype: '',
-                subEditorType: 'text'
+                subEditor: {type: 'text'}
             },
             validations: {
                 required: true
@@ -184,7 +184,7 @@ describe('list-value-editor', () => {
             editorName: 'list',
             options: {
                 newItemPrototype: '',
-                subEditorType: 'text'
+                subEditor: {type: 'text'}
             },
             validations: {
                 maxCount: 2
@@ -222,11 +222,13 @@ describe('list-value-editor', () => {
         valueEditorMocker.create('list', {
             editorName: 'list',
             options: {
-                subEditorType: 'text',
-                newItemPrototype: '',
-                subEditorValidations: {
-                    minlength: 3
-                }
+                subEditor: {
+                    type: 'text',
+                    validations: {
+                        minlength: 3
+                    } as TextValueEditorValidations
+                },
+                newItemPrototype: ''
             }
         });
 
@@ -247,7 +249,7 @@ describe('list-value-editor', () => {
         valueEditorMocker.create('list', {
             options: {
                 newItemPrototype: '',
-                subEditorType: 'text'
+                subEditor: {type: 'text'}
             }
         });
 
@@ -258,7 +260,7 @@ describe('list-value-editor', () => {
         valueEditorMocker.create('list', {
             options: {
                 newItemPrototype: '',
-                subEditorType: 'text'
+                subEditor: {type: 'text'}
             },
             validations: {
                 required: true
@@ -274,7 +276,7 @@ describe('list-value-editor', () => {
         valueEditorMocker.create('list', {
             options: {
                 newItemPrototype: '',
-                subEditorType: 'text',
+                subEditor: {type: 'text'},
                 emptyAsNull: true
             }
         });
@@ -302,7 +304,7 @@ describe('list-value-editor', () => {
             editorName: 'listEditor',
             options: {
                 newItemPrototype: '',
-                subEditorType: 'text',
+                subEditor: {type: 'text'},
                 onAddItem: /*@ngInject*/ ($model, $propertyName, $additionalParameters, $timeout) => onAddItemFunction($model, $propertyName, $additionalParameters, $timeout),
                 additionalParameters: {
                     blabla: 'ughugh'
@@ -398,7 +400,7 @@ describe('list-value-editor', () => {
             editorName: 'listEditor',
             options: {
                 newItemPrototype: '',
-                subEditorType: 'text',
+                subEditor: {type: 'text'},
                 onAddItem: /*@ngInject*/ ($universalFormModel, $timeout) => onAddItemFunction($universalFormModel, $timeout)
             }
         });

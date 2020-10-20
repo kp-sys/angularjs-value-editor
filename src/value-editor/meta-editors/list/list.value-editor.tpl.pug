@@ -17,24 +17,25 @@
     )
 
     .panel-body
+        .list-item.placeholder(ng-show="($ctrl.model.length === 0 || !$ctrl.model) && $ctrl.valueEditorController.placeholder" ng-bind="$ctrl.valueEditorController.placeholder")
         .list-item(
             ng-repeat-start="itemModel in $ctrl.model track by $index"
         )
             .list-item-content(ng-class="{'has-error': $ctrl.showValidationError('{{name}}_' + $index), 'has-not-error': !$ctrl.showValidationError('{{name}}_' + $index)}")
                 kp-value-editor(
-                    editor-id="$index"
-                    editor-name="'{{name}}_' + $index"
-                    placeholder="$ctrl.valueEditorController.placeholder"
+                    editor-id="$ctrl.resolveProperty($index, 'editorId')"
+                    editor-name="$ctrl.resolveProperty($index, 'editorName')"
+                    placeholder="$ctrl.options.subEditor.placeholder"
 
                     ng-model="$ctrl.model[$index]"
                     ng-model-options="{ getterSetter: true }"
 
-                    type="$ctrl.options.subEditorType"
-                    is-disabled="$ctrl.valueEditorController.isDisabled"
-                    is-visible="$ctrl.trueIfUndefined($ctrl.valueEditorController.isVisible)"
+                    type="$ctrl.resolveType()"
+                    is-disabled="$ctrl.resolveIsDisabled()"
+                    is-visible="$ctrl.resolveIsVisible()"
 
-                    validations="$ctrl.options.subEditorValidations"
-                    options="$ctrl.adjustForceShowErrors($ctrl.options.subEditorOptions)"
+                    validations="$ctrl.options.subEditor.validations"
+                    options="$ctrl.adjustForceShowErrors($ctrl.options.subEditor.options)"
                 )
 
             .list-item-delete-button
