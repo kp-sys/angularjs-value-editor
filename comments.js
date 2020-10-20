@@ -3114,13 +3114,9 @@
  * @module angularjs-value-editor.list
  *
  * @template MODEL
- * @template OPTIONS
- * @template VALIDATIONS
  *
- * @property {CustomValueEditorType} subEditorType
+ * @property {ValueEditorBindings} subEditor Sub editor definition.
  * @property {MODEL} newItemPrototype
- * @property {OPTIONS=} subEditorOptions
- * @property {VALIDATIONS=} subEditorValidations
  * @property {function()=} onAddItem Async hook called if 'add' button clicked. It waits for resolving of promise and then fill a created record with given model.
  * | Injectable&nbsp;argument&nbsp;name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description                                                                           |
  * | ------------------------ | ------------------------------------------------------------------------------------------------------- |
@@ -3150,10 +3146,11 @@
  *
  * ```javascript
  * {
- *      subEditorType: 'text',
- *      newItemPrototype: '',
- *      subEditorOptions: undefined,
- *      subEditorValidations: undefined
+ *   subEditor: {type: 'text'},
+ *   newItemPrototype: '',
+ *   onAddItem: undefined,
+ *   sendWholeForm: false,
+ *   additionalParameters: undefined
  * }
  * ```
  */
