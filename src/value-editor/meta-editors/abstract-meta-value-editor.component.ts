@@ -1,17 +1,14 @@
 import {IFormController} from 'angular';
 import AbstractTemplateValueEditor from '../abstract/abstract-template-value-editor';
 import {ValueEditorOptions, ValueEditorValidations} from '../kp-value-editor/kp-value-editor.component';
+import {trueIfUndefined} from '../utils/object-utils';
 
 export abstract class AbstractMetaValueEditorComponentController<MODEL, OPTIONS extends ValueEditorOptions, VALIDATIONS extends ValueEditorValidations = ValueEditorValidations> extends AbstractTemplateValueEditor<MODEL, OPTIONS, VALIDATIONS> {
 
     public form: IFormController;
 
-    public trueIfUndefined(value): boolean {
-        if (typeof value === 'undefined') {
-            return true;
-        }
-
-        return value;
+    public trueIfUndefined<T>(value: T): T | true {
+        return trueIfUndefined(value);
     }
 
     public showValidationError(fieldName: string): boolean {

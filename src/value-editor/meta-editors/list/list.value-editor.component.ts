@@ -38,7 +38,7 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
     constructor(
         $interpolate: IInterpolateService,
         $templateCache: ITemplateCacheService,
-        listValueEditorConfigurationService: ListValueEditorConfigurationService<MODEL, OPTIONS>,
+        private listValueEditorConfigurationService: ListValueEditorConfigurationService<MODEL, OPTIONS>,
         listValueEditorLocalizationsService: ListValueEditorLocalizationsService,
         private $timeout: ITimeoutService,
         private $injector: IInjectorService,
@@ -142,6 +142,24 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
         }
 
         return subEditorOptions;
+    }
+
+    public resolveProperty(index: number, property: 'editorId' | 'editorName'): string {
+        const propertyValue = this.options.subEditor?.[property] ?? this.valueEditorController[property];
+
+        return `${propertyValue}_${index}`;
+    }
+
+    public resolveType(): string {
+        return this.options.subEditor?.type ?? this.listValueEditorConfigurationService.getDefaults().subEditor.type;
+    }
+
+    public resolveIsDisabled(): boolean {
+        return this.options.subEditor?.isDisabled ?? this.valueEditorController.isDisabled;
+    }
+
+    public resolveIsVisible(): boolean {
+        return this.options.subEditor?.isVisible ?? this.valueEditorController.isVisible ?? true;
     }
 
     private normalizeModelIfNeeded() {
