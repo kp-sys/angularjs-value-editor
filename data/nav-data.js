@@ -73,6 +73,11 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
                 "href": "api/angularjs-value-editor/directive/disableNgAnimate"
               },
               {
+                "name": "kpFocusableInput",
+                "type": "directive",
+                "href": "api/angularjs-value-editor/directive/kpFocusableInput"
+              },
+              {
                 "name": "patternDescriptionTooltip",
                 "type": "directive",
                 "href": "api/angularjs-value-editor/directive/patternDescriptionTooltip"
@@ -142,6 +147,11 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
                 "name": "ConfigurationBuilder",
                 "type": "type",
                 "href": "api/angularjs-value-editor/type/ConfigurationBuilder"
+              },
+              {
+                "name": "FocusableInputAPI",
+                "type": "type",
+                "href": "api/angularjs-value-editor/type/FocusableInputAPI"
               },
               {
                 "name": "KpUniversalFormComponentOptions",

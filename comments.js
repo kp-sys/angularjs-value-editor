@@ -42,6 +42,15 @@
      * @return {boolean}
      */
 /**
+     * Focus input inside editor.
+     *
+     */
+/**
+     * This method is called from template during editors initialization if there is focusable input.
+     * 
+     * @param {FocusableInputAPI} $api Exposed API object of {@link KpFocusableInputDirective}
+     */
+/**
      * This method is called always, when value editor options is changed with old and new options object merged with default options.
      * @param {OPTIONS} newOptions New options.
      * @param {OPTIONS} oldOptions Old options.
@@ -368,6 +377,34 @@
 /*@ngInject*/
 /* if true, it force to not using ngAnimate, due to some special technical issues, specially if ngAnimate is present*/
 /* and classNameFilter is set, uiSelect does not showing options.*//**
+ * @ngdoc directive
+ * @name kpFocusableInput
+ * @module angularjs-value-editor
+ *
+ * @restrict A
+ *
+ * @param {expression} kpFocusableInput Expression evaluated in `link` phase. Publishing `$api` as parameter with API reference.
+ *
+ * @description
+ * Directive which provides API ({@link FocusableInputAPI}) to focus Input Element with this directive.
+ * 
+ * # API
+ * | Method name | Description |
+ * |-------------|-------------|
+ * | `focusInput(): void` | Triggers focus on the element|
+ *
+ */
+/*@ngInject*/
+/**
+ * @ngdoc type
+ * @name FocusableInputAPI
+ * @module angularjs-value-editor
+ *
+ * @property {function(): void} focusInput function that focuses the element.
+ *
+ * @description
+ * Exposed API objects interface
+ *//**
  * @ngdoc directive
  * @name patternDescriptionTooltip
  * @module angularjs-value-editor
@@ -765,7 +802,6 @@
 /* set classNameFilter*/
 /*@ngInject*/
 /*@ngInject*/
-/* tslint:disable-next-line:variable-name*/
 /*@ngInject*/
 /* enable bug workaround*/
 /* noinspection JSUnusedAssignment*/
@@ -1252,8 +1288,7 @@
  *
  * @description
  *
- *//* tslint:disable:variable-name */
-/* TODO: Write some more test, for example: Test for some settings options and for min/max validations.*/
+ *//* TODO: Write some more test, for example: Test for some settings options and for min/max validations.*/
 /*@ngInject*//**
  * @ngdoc component
  * @name hiddenValueEditor
@@ -2151,8 +2186,7 @@
  *
  * @description
  *
- *//* tslint:disable-next-line:variable-name*/
-/*@ngInject*/
+ *//*@ngInject*/
 /*@ngInject*/
 /*@ngInject*/
 /*@ngInject*/
@@ -2314,6 +2348,10 @@
  * }
  * ```
  *//*@ngInject*/
+/**
+     * Focus input inside editor.
+     * Special case for ACE editor
+     */
 /**
      * Get number of rows between nim and max range.
      */
@@ -2583,9 +2621,7 @@
  *
  * @description
  *
- *//* tslint:disable:variable-name */
-/*@ngInject*//* tslint:disable-next-line:variable-name*/
-/*@ngInject*/
+ *//*@ngInject*//*@ngInject*/
 /*@ngInject*/
 /*@ngInject*/
 /*@ngInject*/
@@ -2837,6 +2873,7 @@
  * @module angularjs-value-editor
  *
  * @property {boolean} preciseWatchForOptionsChanges {@link kpValueEditorConfigurationServiceProvider}
+ * @property {boolean} autofocusFirstField {@link kpValueEditorConfigurationServiceProvider}
  *
  * @description
  * Options for {@link kpUniversalForm}
@@ -2919,8 +2956,7 @@
  *
  * @description
  *
- *//* tslint:disable-next-line:variable-name*/
-/*@ngInject*/
+ *//*@ngInject*/
 /* @ts-ignore*/
 /*@ngInject*/
 /* @ts-ignore*/
@@ -2966,13 +3002,26 @@
      * If `true`, {@link errorMessages} directive will not wrap value editor, if its parent element isn't relatively positioned.
      */
 /**
+     * @ngdoc method
+     * @name kpValueEditorConfigurationServiceProvider#setAutofocusFirstField
+     *
+     * @param {boolean} autofocusFirstField
+     *
+     * @description
+     * If `true`, input inside first value editor in form will be focused when the form is loaded.
+     * This applies only if the value editor supports it.
+     * If Metaeditor should be focused it will focus it's first nested editor.
+     * 
+     */
+/**
  * @ngdoc service
  * @name kpValueEditorConfigurationService
  * @module angularjs-value-editor
  *
  * @property {boolean} debugMode Show debug information
  * @property {boolean} preciseWatchForOptionsChanges
- *
+ * @property {boolean} autofocusFirstField
+ * 
  * @description
  *
  * Default options:
@@ -2980,6 +3029,7 @@
  *  {
  *      debugMode: false,
  *      preciseWatchForOptionsChanges: false
+ *      autofocusFirstField: false
  *  }
  * ```
  *//*@ngInject*/
@@ -3044,6 +3094,9 @@
      */
 /* initialization in $onInit section*/
 /**
+     * This methods is called when dynamically loaded editor instance is linked
+     */
+/**
  * @ngdoc component
  * @name kpValueEditor
  * @module angularjs-value-editor
@@ -3100,8 +3153,9 @@
  * @property {string} editorName Input name.
  * @property {string} placeholder Placeholder.
  * @property {string} type ValueEditor type.
- * @property {boolean} disabled If input is disabled.
- * @property {boolean} visible If input is visible.
+ * @property {boolean} isDisabled If input is disabled.
+ * @property {boolean} isVisible If input is visible.
+ * @property {boolean} isFocused If input should be focused.
  * @property {ValueEditorValidations} validations ValueEditor validations.
  * @property {ValueEditorOptions} options ValueEditor options. Type depends on ValueEditor type.
  * @property {ValueEditorLocalizations} localizations Custom localizations overriding default ones.
@@ -3272,9 +3326,7 @@
  *
  * @description
  *
- *//* tslint:disable-next-line:variable-name*/
-/* tslint:disable-next-line:variable-name*/
-/**
+ *//**
      * Simulates click on add button
      * @returns {HTMLElement}
      */
@@ -3381,6 +3433,7 @@
  */
 /* if true, it does not render ng-form around nested fields. This functionality use kp-universal-form.*//*@ngInject*/
 /* @ts-ignore Init form with anything*/
+/* only 1 field can be focused, unset focus from others*/
 /* Empty object value editor does not give a sense.*/
 /* TODO: Compose empty model by editor configuration*/
 /**
