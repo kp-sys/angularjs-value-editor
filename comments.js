@@ -2805,6 +2805,12 @@
  * @description
  * Component for generating forms by definition passed via `formSettings` attribute.
  *
+ * It supports transclusion with following scopes:
+ *  - `kpUniversalFormBeforeHeader`
+ *  - `kpUniversalFormAfterHeader`
+ *  - `kpUniversalFormBeforeFooter`
+ *  - `kpUniversalFormAfterFooter`
+ *
  * @example
  * <example name="universalFormExample" module="universalFormExample" frame-no-resize="true">
  *     <file name="index.html">
