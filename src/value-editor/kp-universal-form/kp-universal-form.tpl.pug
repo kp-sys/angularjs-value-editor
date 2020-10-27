@@ -1,10 +1,10 @@
 form(name="{{name}}" ng-submit="$ctrl.onSubmit({$event: $event})" novalidate)
 
-    div {{transclusion.beforeHeader}}
+    | {{transclusion.beforeHeader}}
 
     p.text-info.text-info-up(ng-if="$ctrl.formSettings.header" ng-bind-html="$ctrl.formSettings.header")
 
-    div {{transclusion.afterHeader}}
+    | {{transclusion.afterHeader}}
 
     kp-value-editor(
         type="'object'"
@@ -22,11 +22,11 @@ form(name="{{name}}" ng-submit="$ctrl.onSubmit({$event: $event})" novalidate)
         "}"
     )
 
-    div {{transclusion.beforeFooter}}
+    | {{transclusion.beforeFooter}}
 
     p.text-info.text-info-bottom(ng-if="$ctrl.formSettings.footer" ng-bind-html="$ctrl.formSettings.footer")
 
-    div {{transclusion.afterFooter}}
+    | {{transclusion.afterFooter}}
 
     // invisible submit button - due to html specification, form doesn't submit by enter when submit button is missing
     // see https://github.com/angular/angular.js/issues/6017#issuecomment-50808489
