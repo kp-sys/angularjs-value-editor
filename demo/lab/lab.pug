@@ -1,17 +1,16 @@
 main.container(ng-controller="labController as $ctrl")
 
-    kp-value-editor-force-settings
-        kp-value-editor-force-setting(type="acceptable" options="{switchToInlineModeThreshold: 1}")
+    kp-universal-form(ng-model = "$ctrl.model" form-settings="{header: 'header', footer: 'Footer', fields: [{editor: {type: 'text'}, editorId: 'd', fieldName: 'd'}]}")
+        kp-universal-form-before-header
+            span Before header
+        kp-universal-form-after-header
+            span After header
+        kp-universal-form-before-footer
+            span Before footer
+        kp-universal-form-after-footer
+            span after footer
 
-        kp-value-editor(
-            type="'autocomplete'"
-
-            ng-model="$ctrl.model"
-
-            options=""
-
-            validations=""
-        )
 
     div Model:
     pre {{$ctrl.model | json}}
+
