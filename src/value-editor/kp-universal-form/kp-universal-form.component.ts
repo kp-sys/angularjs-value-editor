@@ -5,7 +5,8 @@ import {
     ILogService,
     IPostLink,
     ITemplateCacheService,
-    ITimeoutService
+    ITimeoutService,
+    ITranscludeFunction
 } from 'angular';
 import {ObjectValueEditorField} from '../meta-editors/object/object-value-editor-configuration.provider';
 import {generateUuid} from '../utils/uuid-generator';
@@ -42,10 +43,17 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
     public options: KpUniversalFormComponentOptions;
     public asyncValidationsModel: {};
 
+    private transclusion: {
+        beforeHeader: string
+        afterHeader: string
+        beforeFooter: string
+        afterFooter: string
+    };
+
     private uuid: string;
 
     /*@ngInject*/
-    constructor(private $interpolate: IInterpolateService, private $templateCache: ITemplateCacheService, private $timeout: ITimeoutService, private $log: ILogService) {
+    constructor(private $interpolate: IInterpolateService, private $templateCache: ITemplateCacheService, private $timeout: ITimeoutService, private $log: ILogService, private $transclude: ITranscludeFunction) {
         super();
 
         this.uuid = generateUuid();
@@ -55,6 +63,8 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
         super.$onInit();
 
         this.validateName();
+
+        this.resolveTransclusion();
 
         this.updateTemplate();
     }
@@ -74,7 +84,8 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
         const newTemplateName = `${TEMPLATE_PREFIX}_${this.uuid}_${new Date().valueOf()}`;
         const template = this.$templateCache.get<string>(KpUniversalFormComponentController.TEMPLATE_URL);
         const interpolated = this.$interpolate(template)({
-            name: this.name
+            name: this.name,
+            transclusion: this.transclusion
         });
         this.$templateCache.put(newTemplateName, interpolated);
         this.templateUrl = newTemplateName;
@@ -88,6 +99,15 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
         if (!/^[a-zA-Z0-9._]*$/.test(this.name)) {
             this.$log.warn(`Invalid value of attribute name - ${this.name}. Fallbacking to default name 'universalForm'.`);
         }
+    }
+
+    private resolveTransclusion() {
+        this.transclusion = {
+            beforeHeader: this.$transclude.isSlotFilled('beforeHeader') ? this.$transclude(null, null, 'beforeHeader').html() : null,
+            afterHeader: this.$transclude.isSlotFilled('afterHeader') ? this.$transclude(null, null, 'afterHeader').html() : null,
+            beforeFooter: this.$transclude.isSlotFilled('beforeFooter') ? this.$transclude(null, null, 'beforeFooter').html() : null,
+            afterFooter: this.$transclude.isSlotFilled('afterFooter') ? this.$transclude(null, null, 'afterFooter').html() : null
+        };
     }
 }
 
@@ -109,6 +129,12 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
  *
  * @description
  * Component for generating forms by definition passed via `formSettings` attribute.
+ *
+ * It supports transclusion with following scopes:
+ *  - `kpUniversalFormBeforeHeader`
+ *  - `kpUniversalFormAfterHeader`
+ *  - `kpUniversalFormBeforeFooter`
+ *  - `kpUniversalFormAfterFooter`
  *
  * @example
  * <example name="universalFormExample" module="universalFormExample" frame-no-resize="true">
@@ -177,6 +203,13 @@ export default class KpUniversalFormComponent {
 
     public require = {
         ngModelController: 'ngModel'
+    };
+
+    public transclude = {
+        beforeHeader: '?kpUniversalFormBeforeHeader',
+        afterHeader: '?kpUniversalFormAfterHeader',
+        beforeFooter: '?kpUniversalFormBeforeFooter',
+        afterFooter: '?kpUniversalFormAfterFooter'
     };
 
     public bindings = {
