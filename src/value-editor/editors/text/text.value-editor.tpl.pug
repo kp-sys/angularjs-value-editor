@@ -22,13 +22,13 @@
         ng-required="$ctrl.valueEditorController.validations.required"
         prefixed-minlength="$ctrl.valueEditorController.validations.minlength"
         prefixed-maxlength="$ctrl.valueEditorController.validations.maxlength"
-        ng-pattern="$ctrl.valueEditorController.validations.pattern"
+        prefixed-pattern-validation="$ctrl.valueEditorController.validations.pattern"
         kp-additional-text-validations
 
         kp-async-validation="$ctrl.valueEditorController.validations.async"
 
         kp-focusable-input="$ctrl.connectToFocusApi($api)"
-        
+
         prefix-suffix-model-adder
 
         pattern-description-tooltip
@@ -99,7 +99,7 @@ textarea.form-control(
     kp-async-validation="$ctrl.valueEditorController.validations.async"
 
     kp-focusable-input="$ctrl.connectToFocusApi($api)"
-        
+
     error-messages
 
     data-main-input

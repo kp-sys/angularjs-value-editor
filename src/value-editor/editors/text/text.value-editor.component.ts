@@ -1,7 +1,7 @@
 import './text.value-editor.less';
 import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
-import {IDoCheck, INgModelController, IOnInit, IPostLink} from 'angular';
+import {IDoCheck, INgModelController, IOnInit} from 'angular';
 import {Ace} from 'ace-builds';
 import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import {

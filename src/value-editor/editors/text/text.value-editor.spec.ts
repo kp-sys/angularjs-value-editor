@@ -1,17 +1,17 @@
 import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
+import {IFlushPendingTasksService} from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {TextValueEditorBindings} from './text.value-editor.component';
 import 'ace-builds';
 import objectContaining = jasmine.objectContaining;
-import { IFlushPendingTasksService } from 'angular';
 
 describe('text-value-editor', () => {
 
     let valueEditorMocker: ValueEditorMocker<TextValueEditorBindings>;
     let $scope: ScopeWithBindings<string, TextValueEditorBindings>;
     let ngFlushPendingTasks: IFlushPendingTasksService;
-    
+
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
 
@@ -32,7 +32,7 @@ describe('text-value-editor', () => {
             expect($scope.model).toBe('hello');
         });
 
-        it('should change value if model is changed', () => {
+        it('should change value if model changed', () => {
             valueEditorMocker.create('text');
 
             $scope.model = 'hello';
@@ -131,7 +131,7 @@ describe('text-value-editor', () => {
             expect(suffixText).toBe('SUFFIX');
         });
 
-        it('should add prefix and suffix to model', () => {
+        it('should add a prefix and suffix to model', () => {
             const PREFIX = 'prefix';
             const SUFFIX = 'suffix';
 
@@ -152,7 +152,7 @@ describe('text-value-editor', () => {
             expect($scope.model).toBe(`${PREFIX}hello${SUFFIX}`);
         });
 
-        it('should parse prefix and suffix from model', () => {
+        it('should parse a prefix and suffix from model', () => {
             const PREFIX = 'prefix';
             const SUFFIX = 'suffix';
 
@@ -308,6 +308,31 @@ describe('text-value-editor', () => {
             valueEditorMocker.detachElementFromDocument();
         });
 
+        it('should have working pattern validation in combination with a prefix, suffix and includePrefixAndSuffixToModel', () => {
+            valueEditorMocker.create('text', {
+                editorName: 'text',
+                options: {
+                    prefix: 'prefix',
+                    suffix: 'suffix',
+                    includePrefixAndSuffixToModel: true
+                },
+                validations: {
+                    pattern: '^(prefix)[0-9]*(suffix)$'
+                }
+            });
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = 'hello';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.form.text.$error).toEqual({pattern: true});
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = '123456';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect($scope.model).toBe('prefix123456suffix');
+            expect($scope.form.text.$error).toEqual({});
+        });
+
     });
 
     describe('type: textarea', () => {
@@ -452,7 +477,11 @@ describe('text-value-editor', () => {
         });
 
         it('should have working notBlank validation', () => {
-            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'textarea'}, validations: {notBlank: true}});
+            valueEditorMocker.create('text', {
+                editorName: 'text',
+                options: {type: 'textarea'},
+                validations: {notBlank: true}
+            });
 
             valueEditorMocker.getInputElement<HTMLInputElement>().value = '   ';
             valueEditorMocker.triggerHandlerOnInput('input');
@@ -626,7 +655,11 @@ describe('text-value-editor', () => {
         });
 
         it('should have working notBlank validation', () => {
-            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'rich-textarea'}, validations: {notBlank: true}});
+            valueEditorMocker.create('text', {
+                editorName: 'text',
+                options: {type: 'rich-textarea'},
+                validations: {notBlank: true}
+            });
 
             (window as any).ace.edit(valueEditorMocker.getInputElement()).setValue('   ');
             $scope.$apply();
@@ -655,7 +688,11 @@ describe('text-value-editor', () => {
         });
 
         it('should be focused', () => {
-            valueEditorMocker.create('text', {editorName: 'text', options: {type: 'rich-textarea'}, isFocused: true}, true);
+            valueEditorMocker.create('text', {
+                editorName: 'text',
+                options: {type: 'rich-textarea'},
+                isFocused: true
+            }, true);
 
             $scope.$apply();
             ngFlushPendingTasks();
