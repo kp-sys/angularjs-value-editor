@@ -2234,6 +2234,18 @@
  * Prefix and suffix aware minlength validation.
  */
 /*@ngInject*//**
+ * @ngdoc directive
+ * @name prefixedPatternValidation
+ * @module angularjs-value-editor.text
+ *
+ * @restrict A
+ *
+ * @param {number} prefixedPatternValidation Length
+ *
+ * @description
+ * Prefix and suffix aware pattern validation.
+ */
+/*@ngInject*//**
  * @ngdoc type
  * @name TTextValueEditorType
  * @module angularjs-value-editor.text

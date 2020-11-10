@@ -1637,6 +1637,11 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
                 "name": "prefixedMinlength",
                 "type": "directive",
                 "href": "api/angularjs-value-editor.text/directive/prefixedMinlength"
+              },
+              {
+                "name": "prefixedPatternValidation",
+                "type": "directive",
+                "href": "api/angularjs-value-editor.text/directive/prefixedPatternValidation"
               }
             ]
           },
