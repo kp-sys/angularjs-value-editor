@@ -1,14 +1,10 @@
 main.container(ng-controller="labController as $ctrl")
 
-    kp-universal-form(ng-model = "$ctrl.model" form-settings="{header: 'header', footer: 'Footer', fields: [{editor: {type: 'text'}, editorId: 'd', fieldName: 'd'}]}")
-        kp-universal-form-before-header
-            span Before header
-        kp-universal-form-after-header
-            span After header
-        kp-universal-form-before-footer
-            span Before footer
-        kp-universal-form-after-footer
-            span after footer
+    kp-universal-form(
+        ng-model="$ctrl.model"
+
+        form-settings="$ctrl.formSettings"
+    )
 
 
     div Model:
