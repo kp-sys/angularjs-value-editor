@@ -12,6 +12,7 @@ import {ValueEditorBindings, ValueEditorOptions} from '../../kp-value-editor/kp-
  * @property {string} label Field label.
  * @property {string} fieldName Name of field in model.
  * @property {ValueEditorBindings} editor Value editor definition.
+ * @property {string} hint If defined, question mark with popover containing hint text is added after label.
  *
  * @description
  * Definition of {@link objectValueEditor} fields.
@@ -21,6 +22,7 @@ export interface ObjectValueEditorField {
     label: string;
     fieldName: string;
     editor: ValueEditorBindings;
+    hint?: string;
 }
 
 /**

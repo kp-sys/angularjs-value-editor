@@ -11,8 +11,9 @@ fieldset.form-horizontal("{{withoutNgForm ? '' : 'ng-form'}}"="{{withoutNgForm ?
             ng-class="{'required': transformedFieldEditor.validations.required}"
             ng-if="field.label"
             ng-attr-for="\\{\\{transformedFieldEditor.editorId\\}\\}"
-            ng-bind="field.label"
         )
+            span(ng-bind="field.label")
+            i.glyphicon.glyphicon-question-sign.text-primary.editor-label-hint(ng-show="field.hint" uib-popover="\\{\\{field.hint\\}\\}" popover-trigger="'mouseenter'")
 
         div(ng-class="field.label ? 'col-sm-{{inputsWidth}}' : 'col-sm-12'")
             kp-value-editor(
