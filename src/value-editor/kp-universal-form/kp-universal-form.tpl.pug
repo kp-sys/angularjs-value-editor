@@ -11,6 +11,7 @@ form(name="{{name}}" ng-submit="$ctrl.onSubmit({$event: $event})" novalidate)
 
         ng-model="$ctrl.model"
         ng-model-options="{getterSetter: true}"
+        ng-change="$ctrl.onChange()"
 
         is-focused="$ctrl.options.autofocusFirstField"
 

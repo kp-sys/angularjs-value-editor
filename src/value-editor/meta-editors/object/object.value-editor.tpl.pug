@@ -23,6 +23,7 @@ fieldset.form-horizontal("{{withoutNgForm ? '' : 'ng-form'}}"="{{withoutNgForm ?
 
                 ng-model="$ctrl.model[field.fieldName]"
                 ng-model-options="{ getterSetter: true }"
+                ng-change="$ctrl.onChange()"
 
                 type="transformedFieldEditor.type"
                 is-disabled="transformedFieldEditor.isDisabled || $ctrl.valueEditorController.isDisabled"

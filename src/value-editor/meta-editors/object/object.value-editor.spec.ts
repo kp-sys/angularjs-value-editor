@@ -219,7 +219,7 @@ describe('object-value-editor', () => {
     });
 
     it('should focus first nested editor when no editor is specified', () => {
-        
+
         const valueEditorElement = valueEditorMocker.create('object', {
             options: {
                 fields: FIELDS
@@ -244,7 +244,7 @@ describe('object-value-editor', () => {
             },
             isFocused: true
         }, true);
-        
+
         const numberValueEditor = valueEditorMocker.getInputElement<HTMLInputElement>('number-value-editor');
         expect(document.activeElement).toBe(numberValueEditor);
 
@@ -255,7 +255,7 @@ describe('object-value-editor', () => {
 
         const editedFields = angular.copy(FIELDS);
         editedFields[1].editor.isFocused = true;
-        
+
         const valueEditorElement = valueEditorMocker.create('object', {
             options: {
                 fields: editedFields
@@ -267,4 +267,39 @@ describe('object-value-editor', () => {
 
         valueEditorMocker.detachElementFromDocument();
     });
+
+    it('should trigger ng-change', () => {
+        $scope.model = {
+            text: 'hello'
+        };
+
+        const ngChange = jasmine.createSpy('ngChange').and.stub();
+
+        valueEditorMocker.create('object', {
+            options: {
+                fields: [
+                    {
+                        fieldName: 'text',
+                        label: 'text',
+                        editor: {
+                            type: 'text'
+                        }
+                    }
+                ]
+            },
+            isFocused: true,
+            // @ts-ignore
+            'ngChange()': 'ngChange()'
+        });
+
+        // @ts-ignore
+        $scope.ngChange = ngChange;
+
+        valueEditorMocker.getInputElement<HTMLInputElement>('text-value-editor').value = 'world';
+        valueEditorMocker.triggerHandlerOnInput('input');
+        $scope.$apply();
+
+        expect(ngChange).toHaveBeenCalled();
+    });
+
 });

@@ -53,7 +53,11 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
     private uuid: string;
 
     /*@ngInject*/
-    constructor(private $interpolate: IInterpolateService, private $templateCache: ITemplateCacheService, private $timeout: ITimeoutService, private $log: ILogService, private $transclude: ITranscludeFunction) {
+    constructor(private $interpolate: IInterpolateService,
+                private $templateCache: ITemplateCacheService,
+                private $timeout: ITimeoutService,
+                private $log: ILogService,
+                private $transclude: ITranscludeFunction) {
         super();
 
         this.uuid = generateUuid();
@@ -78,6 +82,14 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
     public abstract formController(locals: { $formController: IFormController });
 
     public abstract onSubmit(locals: { $event: Event });
+
+    public abstract ngChange();
+
+    public onChange() {
+        if (this.ngChange) {
+            this.ngChange();
+        }
+    }
 
     private updateTemplate() {
         this.$templateCache.remove(this.templateUrl);
@@ -220,7 +232,8 @@ export default class KpUniversalFormComponent {
         labelsWidth: '@?',
         forceShowErrors: '<?',
         options: '<?',
-        asyncValidationsModel: '<?'
+        asyncValidationsModel: '<?',
+        ngChange: '&?'
     };
 
     public controller = KpUniversalFormComponentController;
@@ -256,4 +269,6 @@ export interface KpUniversalFormComponentBindings {
     formController(locals: { $formController: IFormController });
 
     onSubmit(locals: { $event: Event });
+
+    ngChange();
 }
