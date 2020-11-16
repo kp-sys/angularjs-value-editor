@@ -3127,6 +3127,7 @@
  * @param {string} type ValueEditor type. <.
  * @param {boolean} isDisabled If input is disabled. <.
  * @param {boolean} isVisible If input is visible. <.
+ * @param {boolean} isFocused If input should have been focused. <.
  * @param {ValueEditorValidations} validations ValueEditor validations. <.
  * @param {ValueEditorOptions} options ValueEditor options. Type depends on ValueEditor type. <.
  * @param {ValueEditorLocalizations} localizations Custom localizations overriding default ones.
@@ -3361,7 +3362,9 @@
 /* @ts-ignore*/
 /*@ngInject*/
 /* add input*/
-/*@ngInject*//**
+/*@ngInject*/
+/* @ts-ignore*/
+/* @ts-ignore*//**
  * @ngdoc type
  * @name ObjectValueEditorField
  * @module angularjs-value-editor.object
@@ -3525,7 +3528,9 @@
  *
  * @description
  *
- *//*@ngInject*//**
+ *//*@ngInject*/
+/* @ts-ignore*/
+/* @ts-ignore*//**
  * @ngdoc type
  * @name TMetaValueEditor
  * @module angularjs-value-editor
