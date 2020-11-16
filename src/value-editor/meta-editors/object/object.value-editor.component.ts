@@ -49,7 +49,7 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
             }
         }
 
-        const focusedFields = this.options?.fields.filter((field) => field.editor.isFocused) ?? [];
+        const focusedFields = this.options?.fields?.filter((field) => field.editor.isFocused) ?? [];
         if (focusedFields.length > 1) {
             focusedFields.slice(1).forEach((field) => field.editor.isFocused = false); // only 1 field can be focused, unset focus from others
         }
