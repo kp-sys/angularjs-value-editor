@@ -11,7 +11,7 @@ export default class LabController {
             {
                 fieldName: 'text',
                 label: 'Lejbl',
-                hint: 'blablablablablablabla',
+                hint: 'blablablablablabreghrs hearhgwREAHRST GERATHTGHRS HDHTRY HRTSJTF SRT HEHj ghdjsrh htrhth trhrhytersh hrlabla',
                 editor: {
                     type: 'text'
                 }
