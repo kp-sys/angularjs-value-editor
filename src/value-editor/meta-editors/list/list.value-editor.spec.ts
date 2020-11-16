@@ -15,6 +15,7 @@ describe('list-value-editor', () => {
     let $scope: ScopeWithBindings<string[], ListValueEditorBindings>;
     let ngFlushPendingTasks: IFlushPendingTasksService;
     let ngCompile: ICompileService;
+
     /**
      * Simulates click on add button
      * @returns {HTMLElement}
@@ -59,7 +60,7 @@ describe('list-value-editor', () => {
             valueEditorMocker = new ValueEditorMocker<ListValueEditorBindings>($compile, $scope);
             ngFlushPendingTasks = $flushPendingTasks;
             ngCompile = $compile;
-            
+
             valueEditorMocker.setPostConstructHook(() => $flushPendingTasks());
         });
     });
@@ -429,5 +430,30 @@ describe('list-value-editor', () => {
         expect(document.activeElement).toBe(editorInput);
 
         valueEditorMocker.detachElementFromDocument();
+    });
+
+    it('should trigger ng-change', () => {
+        $scope.model = ['hello'];
+
+        const ngChange = jasmine.createSpy('ngChange').and.stub();
+
+        valueEditorMocker.create('list', {
+            options: {
+                newItemPrototype: '',
+                subEditor: {type: 'text'}
+            },
+            isFocused: true,
+            // @ts-ignore
+            'ngChange()': 'ngChange()'
+        });
+
+        // @ts-ignore
+        $scope.ngChange = ngChange;
+
+        valueEditorMocker.getInputElement<HTMLInputElement>().value = 'world';
+        valueEditorMocker.triggerHandlerOnInput('input');
+        $scope.$apply();
+
+        expect(ngChange).toHaveBeenCalled();
     });
 });

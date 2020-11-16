@@ -12,6 +12,7 @@ import {generateUuid} from '../../utils/uuid-generator';
 import {PropertyChangeDetection} from '../../utils/equals';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
+import {Component} from '@kpsys/angularjs-register';
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.objectValueEditor';
 
@@ -48,11 +49,11 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
             }
         }
 
-        const focusedFileds = this.options.fields.filter((field) => field.editor.isFocused);
-        if (focusedFileds.length > 1) {
-            focusedFileds.slice(1).forEach((field) => field.editor.isFocused = false); // only 1 field can be focused, unset focus from others
+        const focusedFields = this.options?.fields.filter((field) => field.editor.isFocused) ?? [];
+        if (focusedFields.length > 1) {
+            focusedFields.slice(1).forEach((field) => field.editor.isFocused = false); // only 1 field can be focused, unset focus from others
         }
-        this.shouldFocusSpecificEditor = focusedFileds.length > 0;
+        this.shouldFocusSpecificEditor = focusedFields.length > 0;
     }
 
     protected get emptyModel(): MODEL {
@@ -83,6 +84,10 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
         }
 
         return fieldEditor;
+    }
+
+    public onChange() {
+        this.valueEditorController.triggerModelChange();
     }
 
     public resolveIsFocused(fieldEditor: ValueEditorBindings, isFirstField: boolean): boolean {
@@ -178,7 +183,7 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
  *     </file>
  * </example>
  */
-export default class ObjectValueEditorComponent extends AbstractValueEditorComponent {
+export default class ObjectValueEditorComponent extends AbstractValueEditorComponent implements Component<any> {
     public static readonly componentName = 'objectValueEditor';
     public static readonly valueEditorType: TValueEditorType = 'object';
 

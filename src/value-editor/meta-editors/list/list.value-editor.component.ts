@@ -104,6 +104,8 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
         }
 
         this.model.push(angular.fromJson(angular.toJson(prototype)));
+
+        this.onChange();
     }
 
     public removeItem(index) {
@@ -113,6 +115,8 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
             } else {
                 this.model.splice(index, 1);
             }
+
+            this.onChange();
         }
     }
 
@@ -152,6 +156,10 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
 
     public resolveType(): string {
         return this.options.subEditor?.type ?? this.listValueEditorConfigurationService.getDefaults().subEditor.type;
+    }
+
+    public onChange() {
+        this.valueEditorController.triggerModelChange();
     }
 
     public resolveIsDisabled(): boolean {

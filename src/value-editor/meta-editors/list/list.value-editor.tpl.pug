@@ -29,6 +29,7 @@
 
                     ng-model="$ctrl.model[$index]"
                     ng-model-options="{ getterSetter: true }"
+                    ng-change="$ctrl.onChange()"
 
                     type="$ctrl.resolveType()"
                     is-disabled="$ctrl.resolveIsDisabled()"

@@ -126,6 +126,10 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
         this.optionChangeListeners.push(listener);
     }
 
+    public triggerModelChange() {
+        this.ngModelController.$viewChangeListeners.forEach((listener) => listener());
+    }
+
     private generateEditorName(): string {
         return this.editorId || `${this.type}_${generateUuid()}`;
     }
@@ -173,6 +177,7 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
  * @param {string} type ValueEditor type. <.
  * @param {boolean} isDisabled If input is disabled. <.
  * @param {boolean} isVisible If input is visible. <.
+ * @param {boolean} isFocused If input should have been focused. <.
  * @param {ValueEditorValidations} validations ValueEditor validations. <.
  * @param {ValueEditorOptions} options ValueEditor options. Type depends on ValueEditor type. <.
  * @param {ValueEditorLocalizations} localizations Custom localizations overriding default ones.
