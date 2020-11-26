@@ -1,4 +1,4 @@
-form(name="{{name}}" ng-submit="$ctrl.onSubmit({$event: $event})" novalidate)
+form(id="\\{\\{$ctrl.formId\\}\\}" name="{{formName}}" ng-submit="$ctrl.onSubmit({$event: $event})" novalidate)
 
     | {{transclusion.beforeHeader}}
 
@@ -33,4 +33,4 @@ form(name="{{name}}" ng-submit="$ctrl.onSubmit({$event: $event})" novalidate)
     // see https://github.com/angular/angular.js/issues/6017#issuecomment-50808489
     button(type="submit" style="display: none;") ok
 
-| \{\{ $ctrl.internalFormController = {{name}}; '' \}\}
+| \{\{ $ctrl.internalFormController = {{formName}}; '' \}\}

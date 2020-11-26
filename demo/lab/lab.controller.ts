@@ -9,36 +9,22 @@ export default class LabController {
     public formSettings = {
         fields: [
             {
-                fieldName: 'text',
-                label: 'Lejbl',
-                hint: 'blablablablablabreghrs hearhgwREAHRST GERATHTGHRS HDHTRY HRTSJTF SRT HEHj ghdjsrh htrhth trhrhytersh hrlabla',
-                editor: {
-                    type: 'text'
-                }
-            },
-            {
-                fieldName: 'text2',
-                label: 'Lejbl',
-                editor: {
-                    type: 'text'
-                }
-            },
-            {
                 fieldName: 'list',
                 label: 'list lejbl',
                 editor: {
                     type: 'list',
                     options: {
                         subEditor: {
-                            type: 'text'
-                        }
-                    } as ListValueEditorOptions
+                            type: 'text',
+                        },
+                        dontAutoCreateNewItemIfRequired: true
+                    } as ListValueEditorOptions,
+                    validations: {
+                        required: true
+                    }
                 }
             }
         ]
     } as KpUniversalFormSettings;
 
-    public change() {
-        console.log('Change');
-    }
 };

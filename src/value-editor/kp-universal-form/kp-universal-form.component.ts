@@ -37,7 +37,8 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
     public templateUrl: string;
     public formSettings: KpUniversalFormSettings;
     public internalFormController: IFormController;
-    public name: string;
+    public formName: string;
+    public formId: string;
     public labelsWidth: number;
     public forceShowErrors: boolean;
     public options: KpUniversalFormComponentOptions;
@@ -96,7 +97,7 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
         const newTemplateName = `${TEMPLATE_PREFIX}_${this.uuid}_${new Date().valueOf()}`;
         const template = this.$templateCache.get<string>(KpUniversalFormComponentController.TEMPLATE_URL);
         const interpolated = this.$interpolate(template)({
-            name: this.name,
+            formName: this.formName,
             transclusion: this.transclusion
         });
         this.$templateCache.put(newTemplateName, interpolated);
@@ -104,12 +105,12 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
     }
 
     private validateName() {
-        if (!this.name) {
-            this.name = 'universalForm';
+        if (!this.formName) {
+            this.formName = 'universalForm';
         }
 
-        if (!/^[a-zA-Z0-9._]*$/.test(this.name)) {
-            this.$log.warn(`Invalid value of attribute name - ${this.name}. Fallbacking to default name 'universalForm'.`);
+        if (!/^[a-zA-Z0-9._]*$/.test(this.formName)) {
+            this.$log.warn(`Invalid value of attribute name - ${this.formName}. Fallbacking to default name 'universalForm'.`);
         }
     }
 
@@ -129,7 +130,8 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
  * @module angularjs-value-editor
  *
  * @param {KpUniversalFormSettings} formSettings Definition of form content.
- * @param {string=} name Name of the form. Due to internal reason, it must be in accordance with `^[a-zA-Z0-9._]*$` regexp.
+ * @param {string=} formName Name of the form. Due to internal reason, it must be in accordance with `^[a-zA-Z0-9._]*$` regexp.
+ * @param {string=} formId Id of the form.
  * @param {function(IFormController)=} formController Connecting to controller.
  * @param {function(IFormController)=} formController.$formController Exposed form controller.
  * @param {function(Event)=} onSubmit Function called on submit form.
@@ -226,7 +228,8 @@ export default class KpUniversalFormComponent {
 
     public bindings = {
         formSettings: '<',
-        name: '@?',
+        formName: '@?',
+        formId: '@?',
         formController: '&?',
         onSubmit: '&?',
         labelsWidth: '@?',
@@ -260,7 +263,8 @@ export interface KpUniversalFormComponentOptions {
 
 export interface KpUniversalFormComponentBindings {
     formSettings: KpUniversalFormSettings;
-    name?: string;
+    formName?: string;
+    formId?: string;
     labelsWidth?: number;
     forceShowErrors?: boolean;
     options?: KpUniversalFormComponentOptions;

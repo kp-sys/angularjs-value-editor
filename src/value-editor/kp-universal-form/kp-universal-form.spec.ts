@@ -55,7 +55,7 @@ const TEMPLATE = `
     <kp-universal-form
         ng-model="model"
         form-settings="formSettings"
-        name="{{name}}"
+        form-name="{{name}}"
         form-controller="formController = $formController"
         on-submit="onSubmit($event)"
     ></kp-universal-form>
@@ -217,7 +217,7 @@ describe('kp-universal-form', () => {
                 ></kp-universal-form>
             `)).not.toThrow();
         });
-        
+
         it('should autofocus fist form field', () => {
 
             $scope.formSettings = FORM_SETTINGS;
@@ -240,7 +240,7 @@ describe('kp-universal-form', () => {
             `, true);
 
             const input = element.querySelector<HTMLInputElement>('text-value-editor [data-main-input]');
-            
+
             expect(document.activeElement).toBe(input);
             detachElementFromDocument(element);
         });

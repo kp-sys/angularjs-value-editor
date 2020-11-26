@@ -19,16 +19,18 @@ import {Injectable, IPromise} from 'angular';
  * @property {ValueEditorBindings} subEditor Sub editor definition.
  * @property {MODEL} newItemPrototype
  * @property {function()=} onAddItem Async hook called if 'add' button clicked. It waits for resolving of promise and then fill a created record with given model.
- * | Injectable&nbsp;argument&nbsp;name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description                                                                           |
+ *
+ * | Injectable&nbsp;argument&nbsp;name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description                                               |
  * | ------------------------ | ------------------------------------------------------------------------------------------------------- |
  * | `$propertyName`          | Property name passed from `editorName` attribute of kpValueEditor component                             |
  * | `$model`                 | Current model                                                                                           |
  * | `$formModel`             | If `sendWholeForm` {@link type:KpAsyncValidationOptions option} is true, it contains form model         |
  * | `$additionalParameters`  | Some static parameters passed from `additionalParameters` in options.                                   |
- * | `$universalFormModel  `  | If editor is member of {@link component:kpUniversalForm}, model from this form passed else `undefined`. |
+ * | `$universalFormModel`    | If editor is member of {@link component:kpUniversalForm}, model from this form passed else `undefined`. |
  *
  * @property {boolean} sendWholeForm If `true`, `onAddItem` hook will contain whole form.
- * @property {{}} additionalParameters Some static parameters passed from definition.
+ * @property { {} } additionalParameters Some static parameters passed from definition.
+ * @property {boolean} dontAutoCreateNewItemIfRequired If `true` and required, new item will not be created.
  *
  *
  * @description
@@ -43,6 +45,7 @@ export interface ListValueEditorOptions<MODEL = any, OPTIONS extends ValueEditor
     onAddItem?: Injectable<Function | ((...args: any[]) => (Promise<MODEL> | IPromise<MODEL>))>;
     sendWholeForm?: boolean;
     additionalParameters?: {};
+    dontAutoCreateNewItemIfRequired?: boolean;
 }
 
 /**
@@ -68,7 +71,8 @@ export const LIST_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<ListValueEditorOp
     newItemPrototype: '',
     onAddItem: undefined,
     sendWholeForm: false,
-    additionalParameters: undefined
+    additionalParameters: undefined,
+    dontAutoCreateNewItemIfRequired: false
 };
 
 /**

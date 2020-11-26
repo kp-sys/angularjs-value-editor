@@ -59,7 +59,7 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
         this.$timeout(() => {
             this.normalizeModelIfNeeded();
 
-            if (this.valueEditorController.validations?.required && this.model?.length < 1) {
+            if (this.valueEditorController.validations?.required && this.model?.length < 1 && !this.options.dontAutoCreateNewItemIfRequired) {
                 this.model.push(this.options.newItemPrototype);
             }
         });
@@ -108,7 +108,7 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
         this.onChange();
     }
 
-    public removeItem(index) {
+    public removeItem(index: number) {
         if (this.canRemoveItems()) {
             if (this.model.length === 1 && this.options.emptyAsNull) {
                 this.model = null;
