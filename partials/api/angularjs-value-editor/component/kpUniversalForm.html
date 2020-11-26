@@ -41,7 +41,7 @@
   
 
   
-  <pre><code>&lt;kp-universal-form&#10;    form-settings=&quot;KpUniversalFormSettings&quot;&#10;    [name=&quot;string&quot;]&#10;    [form-controller=&quot;&quot;]&#10;    [on-submit=&quot;&quot;]&#10;    [labels-width=&quot;ObjectValueEditorLabelsWidth&quot;]&#10;    [force-show-errors]&#10;    [options=&quot;KpUniversalFormComponentOptions&quot;]&#10;    [async-validations-model=&quot;&quot;]&gt;&#10;&lt;/kp-universal-form&gt;</code></pre>
+  <pre><code>&lt;kp-universal-form&#10;    form-settings=&quot;KpUniversalFormSettings&quot;&#10;    [form-name=&quot;string&quot;]&#10;    [form-id=&quot;string&quot;]&#10;    [form-controller=&quot;&quot;]&#10;    [on-submit=&quot;&quot;]&#10;    [labels-width=&quot;ObjectValueEditorLabelsWidth&quot;]&#10;    [force-show-errors]&#10;    [options=&quot;KpUniversalFormComponentOptions&quot;]&#10;    [async-validations-model=&quot;&quot;]&gt;&#10;&lt;/kp-universal-form&gt;</code></pre>
   </div>
   
 <section class="api-section">
@@ -76,7 +76,7 @@
     
     <tr>
       <td>
-        name
+        formName
         
         <div><em>(optional)</em></div>
       </td>
@@ -85,6 +85,23 @@
       </td>
       <td>
         <p>Name of the form. Due to internal reason, it must be in accordance with <code>^[a-zA-Z0-9._]*$</code> regexp.</p>
+
+        
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        formId
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <span class="label type-hint type-hint-string"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" _target="blank">String</a></span>
+      </td>
+      <td>
+        <p>Id of the form.</p>
 
         
         
