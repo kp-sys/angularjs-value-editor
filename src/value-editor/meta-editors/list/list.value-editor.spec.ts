@@ -268,6 +268,21 @@ describe('list-value-editor', () => {
         expect($scope.model).toEqual(['']);
     });
 
+    it('should not add one editor if it is empty and required validation is set to true and dontAutoCreateNewItemIfRequired is true too', () => {
+        valueEditorMocker.create('list', {
+            options: {
+                newItemPrototype: '',
+                subEditor: {type: 'text'},
+                dontAutoCreateNewItemIfRequired: true
+            },
+            validations: {
+                required: true
+            }
+        });
+
+        expect($scope.model).toEqual([]);
+    });
+
     it('should have working emptyAsNull option', () => {
         $scope.model = ['hello'];
 
