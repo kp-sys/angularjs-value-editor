@@ -13,7 +13,7 @@ form(id="\\{\\{$ctrl.formId\\}\\}" name="{{formName}}" ng-submit="$ctrl.onSubmit
         ng-model-options="{getterSetter: true}"
         ng-change="$ctrl.onChange()"
 
-        is-focused="$ctrl.options.autofocusFirstField"
+        is-focused="$ctrl.resolveAutofocusFirstField()"
 
         options="{" +
             "fields: $ctrl.formSettings.fields, " +

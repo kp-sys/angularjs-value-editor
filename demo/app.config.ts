@@ -6,6 +6,7 @@ import PasswordValueEditorLocalizationsServiceProvider
     from '../src/value-editor/editors/password/password-value-editor-localization.provider';
 import AutocompleteValueEditorConfigurationServiceProvider
     from '../src/value-editor/editors/autocomplete/autocomplete-value-editor-configuration.provider';
+import KpUniversalFormConfigurationServiceProvider from 'src/value-editor/kp-universal-form/kp-universal-form-configuration-provider';
 
 interface ResponseContent {
     value: string;
@@ -18,11 +19,13 @@ interface Response {
 
 /*@ngInject*/
 export default function config(
+    kpUniversalFormConfigurationServiceProvider: KpUniversalFormConfigurationServiceProvider,
     kpValueEditorConfigurationServiceProvider: KpValueEditorConfigurationServiceProvider,
     passwordValueEditorLocalizationsServiceProvider: PasswordValueEditorLocalizationsServiceProvider,
     $animateProvider: angular.animate.IAnimateProvider,
     autocompleteValueEditorConfigurationServiceProvider: AutocompleteValueEditorConfigurationServiceProvider<string>
 ) {
+    kpUniversalFormConfigurationServiceProvider.setAutofocusFirstField(true);
     kpValueEditorConfigurationServiceProvider.setDebugMode(true);
     kpValueEditorConfigurationServiceProvider.setPreciseWatchForOptionsChanges(false);
 
