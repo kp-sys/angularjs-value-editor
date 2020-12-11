@@ -13,7 +13,6 @@ export default class KpValueEditorConfigurationServiceProvider {
     #debugMode: boolean = false;
     #preciseWatchForOptionsChanges: boolean = false;
     #disableAutoWrapping: boolean = false;
-    #autofocusFirstField: boolean = false;
 
     /**
      * @ngdoc method
@@ -56,22 +55,6 @@ export default class KpValueEditorConfigurationServiceProvider {
         this.#disableAutoWrapping = disableAutoWrapping;
     }
 
-    /**
-     * @ngdoc method
-     * @name kpValueEditorConfigurationServiceProvider#setAutofocusFirstField
-     *
-     * @param {boolean} autofocusFirstField
-     *
-     * @description
-     * If `true`, input inside first value editor in form will be focused when the form is loaded.
-     * This applies only if the value editor supports it.
-     * If Metaeditor should be focused it will focus it's first nested editor.
-     * 
-     */
-    public setAutofocusFirstField(autofocusFirstField: boolean) {
-        this.#autofocusFirstField = autofocusFirstField;
-    }
-
     protected $get(): KpValueEditorConfigurationService {
         return Object.defineProperties({}, {
             debugMode: {
@@ -82,9 +65,6 @@ export default class KpValueEditorConfigurationServiceProvider {
             },
             disableAutoWrapping: {
                 get: () => this.#disableAutoWrapping
-            },
-            autofocusFirstField: {
-                get: () => this.#autofocusFirstField
             }
         })
     }
@@ -97,7 +77,7 @@ export default class KpValueEditorConfigurationServiceProvider {
  *
  * @property {boolean} debugMode Show debug information
  * @property {boolean} preciseWatchForOptionsChanges
- * @property {boolean} autofocusFirstField
+ * @property {boolean} disableAutoWrapping
  * 
  * @description
  *
@@ -105,8 +85,8 @@ export default class KpValueEditorConfigurationServiceProvider {
  * ```
  *  {
  *      debugMode: false,
- *      preciseWatchForOptionsChanges: false
- *      autofocusFirstField: false
+ *      preciseWatchForOptionsChanges: false,
+ *      disableAutoWrapping: false
  *  }
  * ```
  */
@@ -114,5 +94,4 @@ export interface KpValueEditorConfigurationService {
     readonly debugMode: boolean;
     readonly preciseWatchForOptionsChanges: boolean;
     readonly disableAutoWrapping: boolean;
-    readonly autofocusFirstField: boolean;
 }

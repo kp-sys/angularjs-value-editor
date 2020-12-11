@@ -10,6 +10,7 @@ import {
 } from 'angular';
 import {ObjectValueEditorField} from '../meta-editors/object/object-value-editor-configuration.provider';
 import {generateUuid} from '../utils/uuid-generator';
+import { KpUniversalFormConfigurationService } from './kp-universal-form-configuration-provider';
 
 /**
  * @ngdoc type
@@ -43,6 +44,7 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
     public forceShowErrors: boolean;
     public options: KpUniversalFormComponentOptions;
     public asyncValidationsModel: {};
+    public configuration: KpUniversalFormConfigurationService;
 
     private transclusion: {
         beforeHeader: string
@@ -54,13 +56,15 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
     private uuid: string;
 
     /*@ngInject*/
-    constructor(private $interpolate: IInterpolateService,
+    constructor(kpUniversalFormConfigurationService: KpUniversalFormConfigurationService,
+                private $interpolate: IInterpolateService,
                 private $templateCache: ITemplateCacheService,
                 private $timeout: ITimeoutService,
                 private $log: ILogService,
                 private $transclude: ITranscludeFunction) {
         super();
-
+        
+        this.configuration = kpUniversalFormConfigurationService;
         this.uuid = generateUuid();
     }
 
@@ -90,6 +94,10 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
         if (this.ngChange) {
             this.ngChange();
         }
+    }
+
+    public resolveAutofocusFirstField(): boolean {
+        return this.options?.autofocusFirstField ?? this.configuration.autofocusFirstField;
     }
 
     private updateTemplate() {

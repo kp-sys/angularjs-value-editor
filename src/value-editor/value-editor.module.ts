@@ -21,15 +21,17 @@ import rangeValueEditorModule from './editors/range/range.value-editor.module';
 // META EDITORS
 import listValueEditorModule from './meta-editors/list/list.value-editor.module';
 import objectValueEditorModule from './meta-editors/object/object.value-editor.module';
+// UNIVERSAL FORM
+import universalFormModule from './kp-universal-form/kp-universal-form-module';
 // OTHER COMPONENTS
 import KpValueEditorComponent from './kp-value-editor/kp-value-editor.component';
 import valueEditorForceSettingsModule from './kp-value-editor-force-settings/kp-value-editor-force-settings.module';
-import KpUniversalFormComponent from './kp-universal-form/kp-universal-form.component';
 // DIRECTIVES
 import errorMessagesModule from './error-messages/error-messages.module';
 import PatternDescriptionTooltipDirective from './common/directives/pattern-description-tooltip.directive';
 import DisableNgAnimateDirective from './common/directives/disable-ngAnimate.directive';
 import asyncValidationsModule from './kp-async-validation/kp-async-validation.module';
+import KpFocusableInputDirective from './common/directives/kp-focusable-input.directive';
 // COMMON SERVICES AND PROVIDERS
 import {EmptyConfigurationService} from './abstract/abstract-value-editor-component-controller';
 import aliasesModule from './aliases/kp-value-editor-aliases.module';
@@ -38,7 +40,6 @@ import KpValueEditorRegistrationServiceProvider from './kp-value-editor/kp-value
 // CONFIG
 import valueEditorsConfig from './value-editor.config';
 import nullAwareFilter from './common/null-aware-filter.filter';
-import KpFocusableInputDirective from './common/directives/kp-focusable-input.directive';
 
 /**
  * @ngdoc constant
@@ -81,7 +82,8 @@ export default register('angularjs-value-editor', [
     objectValueEditorModule,
     errorMessagesModule,
     valueEditorForceSettingsModule,
-    asyncValidationsModule
+    asyncValidationsModule,
+    universalFormModule
 ])
     .constant('loadingSpinnerTemplateUrl', LOADING_SPINNER_TPL_URL)
     .config(valueEditorsConfig)
@@ -93,7 +95,6 @@ export default register('angularjs-value-editor', [
     .directive(DisableNgAnimateDirective.directiveName, DisableNgAnimateDirective)
     .directive(KpFocusableInputDirective.directiveName, KpFocusableInputDirective)
     .component(KpValueEditorComponent.componentName, KpValueEditorComponent)
-    .component(KpUniversalFormComponent.componentName, KpUniversalFormComponent)
     .name();
 
 /**
