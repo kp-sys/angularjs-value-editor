@@ -1,5 +1,5 @@
 angular.module('docApp').constant('CONFIG', {
   "TITLE": "AngularJS Value Editor Doc",
   "ROOT": "api",
-  "VERSION": "v2.4.0"
+  "VERSION": "v2.4.1"
 });

@@ -100,6 +100,11 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
                 "href": "api/angularjs-value-editor/provider/AbstractValueEditorLocalizationProvider"
               },
               {
+                "name": "kpUniversalFormConfigurationServiceProvider",
+                "type": "provider",
+                "href": "api/angularjs-value-editor/provider/kpUniversalFormConfigurationServiceProvider"
+              },
+              {
                 "name": "kpValueEditorConfigurationServiceProvider",
                 "type": "provider",
                 "href": "api/angularjs-value-editor/provider/kpValueEditorConfigurationServiceProvider"
@@ -125,6 +130,11 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
                 "name": "AbstractValueEditorLocalizationService",
                 "type": "service",
                 "href": "api/angularjs-value-editor/service/AbstractValueEditorLocalizationService"
+              },
+              {
+                "name": "kpUniversalFormConfigurationService",
+                "type": "service",
+                "href": "api/angularjs-value-editor/service/kpUniversalFormConfigurationService"
               },
               {
                 "name": "kpValueEditorConfigurationService",
@@ -1707,6 +1717,12 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
             ]
           }
         ]
+      },
+      {
+        "name": "angularjs-value-editor.universal-form",
+        "type": "groups",
+        "href": "api/angularjs-value-editor.universal-form",
+        "navItems": []
       },
       {
         "name": "angularjs-value-editor.velocity-template",

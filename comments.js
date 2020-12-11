@@ -2786,6 +2786,48 @@
      * | `$formModel`             | If `sendWholeForm` {@link type:KpAsyncValidationOptions option} is true, it contains form model |
      * | `$additionalParameters`  | Current model                                                                                   |
      *//**
+ * @ngdoc provider
+ * @name kpUniversalFormConfigurationServiceProvider
+ * @module angularjs-value-editor
+ *
+ * @description
+ * Provider for {@link kpUniversalFormConfigurationService}
+ */
+/**
+     * @ngdoc method
+     * @name kpUniversalFormConfigurationServiceProvider#setAutofocusFirstField
+     *
+     * @param {boolean} autofocusFirstField
+     *
+     * @description
+     * If `true`, input inside first value editor in form will be focused when the form is loaded.
+     * This applies only if the value editor supports it.
+     * If Metaeditor should be focused it will focus it's first nested editor.
+     * 
+     */
+/**
+ * @ngdoc service
+ * @name kpUniversalFormConfigurationService
+ * @module angularjs-value-editor
+ *
+ * @property {boolean} autofocusFirstField
+ * 
+ * @description
+ *
+ * Default options:
+ * ```
+ *  {
+ *      autofocusFirstField: false
+ *  }
+ * ```
+ *//**
+ * @ngdoc module
+ * @name angularjs-value-editor.universal-form
+ * @module angularjs-value-editor.universal-form
+ *
+ * @description
+ *
+ *//**
  * @ngdoc type
  * @name KpUniversalFormSettings
  * @module angularjs-value-editor
@@ -3021,25 +3063,13 @@
      * If `true`, {@link errorMessages} directive will not wrap value editor, if its parent element isn't relatively positioned.
      */
 /**
-     * @ngdoc method
-     * @name kpValueEditorConfigurationServiceProvider#setAutofocusFirstField
-     *
-     * @param {boolean} autofocusFirstField
-     *
-     * @description
-     * If `true`, input inside first value editor in form will be focused when the form is loaded.
-     * This applies only if the value editor supports it.
-     * If Metaeditor should be focused it will focus it's first nested editor.
-     * 
-     */
-/**
  * @ngdoc service
  * @name kpValueEditorConfigurationService
  * @module angularjs-value-editor
  *
  * @property {boolean} debugMode Show debug information
  * @property {boolean} preciseWatchForOptionsChanges
- * @property {boolean} autofocusFirstField
+ * @property {boolean} disableAutoWrapping
  * 
  * @description
  *
@@ -3047,8 +3077,8 @@
  * ```
  *  {
  *      debugMode: false,
- *      preciseWatchForOptionsChanges: false
- *      autofocusFirstField: false
+ *      preciseWatchForOptionsChanges: false,
+ *      disableAutoWrapping: false
  *  }
  * ```
  *//*@ngInject*/
@@ -3633,6 +3663,7 @@
 /* Core editors*/
 /* Meta editors*//* EDITORS*/
 /* META EDITORS*/
+/* UNIVERSAL FORM*/
 /* OTHER COMPONENTS*/
 /* DIRECTIVES*/
 /* COMMON SERVICES AND PROVIDERS*/
