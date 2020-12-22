@@ -406,6 +406,13 @@
  * Exposed API objects interface
  *//**
  * @ngdoc directive
+ * @name modelToJsonViewFormatter
+ * @module angularjs-value-editor
+ *
+ * @description
+ * Directive formatting model value to JSON.
+ *//**
+ * @ngdoc directive
  * @name patternDescriptionTooltip
  * @module angularjs-value-editor
  *
@@ -2187,6 +2194,7 @@
  * @description
  *
  *//*@ngInject*/
+/*@ngInject*/
 /*@ngInject*/
 /*@ngInject*/
 /*@ngInject*/
