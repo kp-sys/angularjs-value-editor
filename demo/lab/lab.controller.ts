@@ -1,5 +1,5 @@
 import {KpUniversalFormSettings} from '../../src/value-editor/kp-universal-form/kp-universal-form.component';
-import {ListValueEditorOptions} from '../../src/value-editor/meta-editors/list/list-value-editor-configuration.provider';
+import {SearchableValueEditorOptions} from '../../src/value-editor/editors/searchable/searchable-value-editor-configuration.provider';
 
 export default class LabController {
     public static readonly controllerName = 'labController';
@@ -9,22 +9,17 @@ export default class LabController {
     public formSettings = {
         fields: [
             {
-                fieldName: 'list',
-                label: 'list lejbl',
+                fieldName: 'search',
+                label: 'searchable',
                 editor: {
-                    type: 'list',
+                    type: 'searchable',
                     options: {
-                        subEditor: {
-                            type: 'text',
-                        },
-                        dontAutoCreateNewItemIfRequired: true
-                    } as ListValueEditorOptions,
+                    } as SearchableValueEditorOptions<any>,
                     validations: {
-                        required: true
+                        async: true
                     }
                 }
             }
         ]
     } as KpUniversalFormSettings;
-
 };

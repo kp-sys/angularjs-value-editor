@@ -1,0 +1,11 @@
+.modal-header Select
+
+.modal-body
+    button.btn.btn-default(type="button" ng-click="$ctrl.select({opt: 1})") Select 1
+    button.btn.btn-default(type="button" ng-click="$ctrl.select({opt: 2})") Select 2
+    hr
+    div {{$ctrl.model | json}}
+
+.modal-footer
+    button.btn.btn-primary(ng-click="$ctrl.close({$value: $ctrl.model})") Ok
+    button.btn.btn-danger(ng-click="$ctrl.dismiss()") Close

@@ -4,6 +4,7 @@ import {IFlushPendingTasksService, ITimeoutService} from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
 import {SearchableValueEditorBindings} from './searchable.value-editor.component';
 import SearchableValueEditorConfigurationServiceProvider from './searchable-value-editor-configuration.provider';
+import {KpAsyncValidationServiceProvider} from '../../kp-async-validation/kp-async-validation.provider';
 
 const ADDITIONAL_PARAMETERS = {
     param1: 'param1',
@@ -11,36 +12,58 @@ const ADDITIONAL_PARAMETERS = {
     world: ' world'
 };
 
-const MODEL = 'hello';
+interface SearchableModel {
+    hello: string;
+}
+
+const MODEL = Object.freeze({hello: 'world'});
+const TEXTUAL_MODEL = JSON.stringify(MODEL);
 
 describe('searchable-value-editor', () => {
 
-    let valueEditorMocker: ValueEditorMocker<SearchableValueEditorBindings<string>>;
-    let $scope: ScopeWithBindings<string, SearchableValueEditorBindings<string>>;
+    let valueEditorMocker: ValueEditorMocker<SearchableValueEditorBindings<SearchableModel>>;
+    let $scope: ScopeWithBindings<SearchableModel, SearchableValueEditorBindings<SearchableModel>>;
     let ngFlushPendingTasks: IFlushPendingTasksService;
 
-    let searchFunction: (...args: any[]) => Promise<string>;
-    let editFunction: (...args: any[]) => Promise<string>;
+    let searchFunction: (...args: any[]) => Promise<SearchableModel>;
+    let editFunction: (...args: any[]) => Promise<SearchableModel>;
+    let asyncValidationFunction: (...args: any[]) => Promise<void>;
 
     function getViewValue(): string {
         return valueEditorMocker.getInputElement<HTMLInputElement>().parentElement.querySelector('.model-value').textContent;
     }
 
+    function createTimeouted(callback: () => void): () => Promise<void> {
+        return () => new Promise((resolve) => {
+            setTimeout(() => {
+                callback();
+
+                resolve();
+            }, 10);
+        }).then(() => $scope.$apply());
+    }
+
     beforeEach(() => {
         searchFunction = jasmine.createSpy('searchFunction', (model, params: typeof ADDITIONAL_PARAMETERS, timeout: ITimeoutService) => {
-            return new Promise<string>((resolve) => timeout(() => resolve(MODEL + params.world), 100));
+            return new Promise<SearchableModel>((resolve) => timeout(() => resolve(MODEL), 100));
         }).and.callThrough();
 
         editFunction = jasmine.createSpy('editFunction', (model, params: typeof ADDITIONAL_PARAMETERS, timeout: ITimeoutService) => {
-            return new Promise<string>((resolve) => timeout(() => resolve(MODEL + params.param1), 100));
+            return new Promise<SearchableModel>((resolve) => timeout(() => resolve(MODEL), 100));
         }).and.callThrough();
 
-        angular.mock.module(valueEditorModule, /*@ngInject*/ (searchableValueEditorConfigurationServiceProvider: SearchableValueEditorConfigurationServiceProvider<string>) => {
+        asyncValidationFunction = jasmine.createSpy('asyncValidationFunction', ($model, timeout: ITimeoutService) => {
+            return new Promise<void>((resolve, reject) => timeout(() => angular.equals($model, MODEL) ? resolve() : reject()));
+        }).and.callThrough();
+
+        angular.mock.module(valueEditorModule, /*@ngInject*/ (searchableValueEditorConfigurationServiceProvider: SearchableValueEditorConfigurationServiceProvider<string>, kpAsyncValidationServiceProvider: KpAsyncValidationServiceProvider) => {
             searchableValueEditorConfigurationServiceProvider.setConfiguration({
                 additionalParameters: ADDITIONAL_PARAMETERS,
                 searchModelFunction: /*@ngInject*/ ($model, $additionalParameters, $timeout) => searchFunction.bind(this, $model, $additionalParameters, $timeout),
                 editModelFunction: /*@ngInject*/ ($model, $additionalParameters, $timeout) => editFunction.bind(this, $model, $additionalParameters, $timeout)
             });
+
+            kpAsyncValidationServiceProvider.setValidationFunction(/*@ngInject*/ ($model, $timeout) => asyncValidationFunction($model, $timeout));
         });
 
         inject(/*@ngInject*/ ($compile, $rootScope, $flushPendingTasks) => {
@@ -51,14 +74,14 @@ describe('searchable-value-editor', () => {
     });
 
     it('should change model if search button is pressed', (done) => {
-        const INITIAL_MODEL_VALUE = 'some model';
+        const INITIAL_MODEL_VALUE = {hello: 'bla'};
         $scope.model = INITIAL_MODEL_VALUE;
 
         valueEditorMocker.create('searchable', {
             editorName: 'searchable'
         });
 
-        expect(getViewValue()).toBe(INITIAL_MODEL_VALUE);
+        expect(getViewValue()).toBe(JSON.stringify(INITIAL_MODEL_VALUE));
 
         valueEditorMocker.getInputElement<HTMLInputElement>().parentElement.querySelector<HTMLButtonElement>('.search-button').click();
 
@@ -119,6 +142,27 @@ describe('searchable-value-editor', () => {
             expect($scope.form.searchable.$error).toEqual({});
             done();
         }, 150);
+    });
+
+    it('should have working async validation', (done) => {
+        $scope.model = {hello: 'ughugh'};
+
+        valueEditorMocker.create('searchable', {editorName: 'searchable', validations: {async: true}});
+        ngFlushPendingTasks();
+
+        expect(asyncValidationFunction).toHaveBeenCalledWith({hello: 'ughugh'}, jasmine.anything());
+
+        Promise.resolve()
+            .then(createTimeouted(() => {
+                expect($scope.form.searchable.$error).toEqual({async: true});
+            }))
+            .then(() => {
+                $scope.model = Object.assign({}, MODEL);
+                ngFlushPendingTasks();
+                expect(asyncValidationFunction).toHaveBeenCalledWith(MODEL, jasmine.anything());
+                expect($scope.form.searchable.$error).toEqual({});
+            })
+            .finally(done);
     });
 
     it('should have visible edit button if editModelFunction is specified', () => {

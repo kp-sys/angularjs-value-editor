@@ -1,42 +1,38 @@
 import KpValueEditorConfigurationServiceProvider
     from '../src/value-editor/kp-value-editor/kp-value-editor-configuration-provider';
 import * as angular from 'angular';
-import {IHttpService, ITimeoutService} from 'angular';
-import PasswordValueEditorLocalizationsServiceProvider
-    from '../src/value-editor/editors/password/password-value-editor-localization.provider';
-import AutocompleteValueEditorConfigurationServiceProvider
-    from '../src/value-editor/editors/autocomplete/autocomplete-value-editor-configuration.provider';
-import KpUniversalFormConfigurationServiceProvider from 'src/value-editor/kp-universal-form/kp-universal-form-configuration-provider';
-
-interface ResponseContent {
-    value: string;
-}
-
-interface Response {
-    totalElements: number;
-    content: ResponseContent[];
-}
+import KpUniversalFormConfigurationServiceProvider
+    from 'src/value-editor/kp-universal-form/kp-universal-form-configuration-provider';
+import SearchableValueEditorConfigurationServiceProvider
+    from '../src/value-editor/editors/searchable/searchable-value-editor-configuration.provider';
+import {KpAsyncValidationServiceProvider} from '../src/value-editor/kp-async-validation/kp-async-validation.provider';
 
 /*@ngInject*/
 export default function config(
     kpUniversalFormConfigurationServiceProvider: KpUniversalFormConfigurationServiceProvider,
     kpValueEditorConfigurationServiceProvider: KpValueEditorConfigurationServiceProvider,
-    passwordValueEditorLocalizationsServiceProvider: PasswordValueEditorLocalizationsServiceProvider,
     $animateProvider: angular.animate.IAnimateProvider,
-    autocompleteValueEditorConfigurationServiceProvider: AutocompleteValueEditorConfigurationServiceProvider<string>
+    searchableValueEditorConfigurationServiceProvider: SearchableValueEditorConfigurationServiceProvider<any>,
+    kpAsyncValidationServiceProvider: KpAsyncValidationServiceProvider
 ) {
     kpUniversalFormConfigurationServiceProvider.setAutofocusFirstField(true);
     kpValueEditorConfigurationServiceProvider.setDebugMode(true);
     kpValueEditorConfigurationServiceProvider.setPreciseWatchForOptionsChanges(false);
 
-    autocompleteValueEditorConfigurationServiceProvider.setConfiguration({
-        emptyAsNull: false,
-        dataSource: /*@ngInject*/ ($timeout: ITimeoutService, $http: IHttpService) => {
-            return $http.get<Response>('https://develop.kpsys.cz/api/autocomplete/FRZ264_b')
-                .then((response) => response.data)
-                .then((response) => response.content)
-                .then((listResult) => listResult.map((item) => item.value));
-        }
+    searchableValueEditorConfigurationServiceProvider.setConfiguration({
+        searchModelFunction: /*@ngInject*/ ($model, $uibModal) => $uibModal.open({
+            component: 'modal',
+            resolve: {
+                model: () => $model
+            }
+        }).result
+    });
+
+    kpAsyncValidationServiceProvider.setValidationFunction(/*@ngInject*/ ($model: { opt: number }) => {
+        // tslint:disable-next-line:no-console
+        console.log('Validation model: ', $model);
+
+        return Promise.resolve();
     });
 
     $animateProvider.classNameFilter(/ng-animate-enabled/);
