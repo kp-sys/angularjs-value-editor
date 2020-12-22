@@ -59,6 +59,7 @@
     "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/npm": "^7.0.5",
     "@types/angular": "^1.7.2",
+    "@types/angular-ui-bootstrap": "^1.0.0",
     "@types/angular-animate": "^1.5.10",
     "@types/angular-mocks": "latest",
     "@types/jasmine": "^3.5.11",
