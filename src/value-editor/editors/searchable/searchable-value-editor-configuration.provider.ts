@@ -33,6 +33,7 @@ import {Injectable} from 'angular';
  * | ------------------------ | ---------------------------------- |
  * | `$model`                 | Current model                      |
  * | `$additionalParameters`  | Additional parameters from options |
+ * @property {boolean} immediatelyTriggerSearch Run search function right after initialization.
  *
  * @description
  * Extends {@link type:ValueEditorOptions}
@@ -46,6 +47,7 @@ export interface SearchableValueEditorOptions<MODEL> extends ValueEditorOptions 
     searchModelFunction?: Injectable<Function | ((...args: any[]) => PromiseLike<MODEL>)>;
     // tslint:disable-next-line:ban-types
     editModelFunction?: Injectable<Function | ((...args: any[]) => PromiseLike<MODEL>)>;
+    immediatelyTriggerSearch?: boolean;
 }
 
 /**
@@ -61,7 +63,8 @@ export interface SearchableValueEditorOptions<MODEL> extends ValueEditorOptions 
  *      modelTemplate: '{{$model}}',
  *      additionalParameters: undefined,
  *      searchModelFunction: async () => {throw new Error('searchModelFunction is not set')},
- *      editModelFunction: undefined
+ *      editModelFunction: undefined,
+ *      immediatelyTriggerSearch: false
  * }
  * ```
  */
@@ -69,7 +72,8 @@ export const SEARCHABLE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<SearchableV
     modelTemplate: '{{$model}}',
     additionalParameters: undefined,
     searchModelFunction: async () => {throw new Error('searchModelFunction is not set')},
-    editModelFunction: undefined
+    editModelFunction: undefined,
+    immediatelyTriggerSearch: false
 };
 
 /**

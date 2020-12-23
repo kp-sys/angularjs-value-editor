@@ -1,6 +1,6 @@
 import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
-import {IInterpolateService, ITemplateCacheService, ITimeoutService} from 'angular';
+import {IInterpolateService, IPostLink, ITemplateCacheService, ITimeoutService} from 'angular';
 import {
     SearchableValueEditorConfigurationService,
     SearchableValueEditorOptions
@@ -15,7 +15,7 @@ import IInjectorService = angular.auto.IInjectorService;
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.searchableValueEditor';
 
-export class SearchableValueEditorComponentController<MODEL = any> extends AbstractTemplateValueEditor<any, SearchableValueEditorOptions<MODEL>> {
+export class SearchableValueEditorComponentController<MODEL = any> extends AbstractTemplateValueEditor<any, SearchableValueEditorOptions<MODEL>> implements IPostLink {
     private static readonly TEMPLATE_URL = require('./searchable.value-editor.tpl.pug');
 
     public searching: boolean = false;
@@ -37,6 +37,14 @@ export class SearchableValueEditorComponentController<MODEL = any> extends Abstr
             searchableValueEditorConfigurationService,
             searchableValueEditorLocalizationsService
         );
+    }
+
+    public $postLink() {
+        super.$postLink();
+
+        if (this.options.immediatelyTriggerSearch) {
+            this.search();
+        }
     }
 
     protected get emptyModel(): any {
