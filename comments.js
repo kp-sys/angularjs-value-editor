@@ -2060,6 +2060,7 @@
  * | ------------------------ | ---------------------------------- |
  * | `$model`                 | Current model                      |
  * | `$additionalParameters`  | Additional parameters from options |
+ * @property {boolean} immediatelyTriggerSearch Run search function right after initialization.
  *
  * @description
  * Extends {@link type:ValueEditorOptions}
@@ -2081,7 +2082,8 @@
  *      modelTemplate: '{{$model}}',
  *      additionalParameters: undefined,
  *      searchModelFunction: async () => {throw new Error('searchModelFunction is not set')},
- *      editModelFunction: undefined
+ *      editModelFunction: undefined,
+ *      immediatelyTriggerSearch: false
  * }
  * ```
  */
