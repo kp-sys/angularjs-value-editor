@@ -180,6 +180,16 @@ describe('searchable-value-editor', () => {
         valueEditorMocker.detachElementFromDocument();
     });
 
+    it('should trigger search function after render', (done) => {
+        valueEditorMocker.create('searchable', {options: {immediatelyTriggerSearch: true}});
+        ngFlushPendingTasks();
+
+        setTimeout(() => {
+            expect(searchFunction).toHaveBeenCalled();
+            done();
+        }, 10);
+    });
+
     it('should be focused', () => {
         valueEditorMocker.create('searchable', {isFocused: true}, true);
 

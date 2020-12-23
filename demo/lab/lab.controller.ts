@@ -14,6 +14,7 @@ export default class LabController {
                 editor: {
                     type: 'searchable',
                     options: {
+                        immediatelyTriggerSearch: true
                     } as SearchableValueEditorOptions<any>,
                     validations: {
                         async: true
