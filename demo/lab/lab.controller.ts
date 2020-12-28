@@ -20,6 +20,18 @@ export default class LabController {
                         async: true
                     }
                 }
+            },
+            {
+                fieldName: 'search2',
+                label: 'searchable',
+                editor: {
+                    type: 'searchable',
+                    options: {
+                    } as SearchableValueEditorOptions<any>,
+                    validations: {
+                        async: true
+                    }
+                }
             }
         ]
     } as KpUniversalFormSettings;

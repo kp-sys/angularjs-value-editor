@@ -77,6 +77,7 @@ export class ErrorMessagesDirectiveController {
     private ngModelController: INgModelController;
     private localize: AbstractValueEditorLocalizationService<ValueEditorErrorMessagesLocalizations>['getLocalization'];
     private appendedElements: { [errorName: string]: HTMLElement };
+    private lastAsyncValidationMessage: string;
 
     /*@ngInject*/
     constructor(private $timeout: ITimeoutService,
@@ -93,11 +94,15 @@ export class ErrorMessagesDirectiveController {
 
     @bind
     public processErrors() {
+        const newSerializedErrors = getSerializedErrors(this.ngModelController.$error);
+
         if ((this.ngModelController.$touched || (this.kpValueEditorController.valueEditorInstance.options.forceShowErrors ?? false)) &&
-            getSerializedErrors(this.ngModelController.$error) !== getSerializedErrors(this.appendedElements)) {
+            (newSerializedErrors !== getSerializedErrors(this.appendedElements)) || newSerializedErrors.includes('async')) {
 
             const errorsToRemove = arraySubtraction(Object.keys(this.appendedElements), Object.keys(this.ngModelController.$error));
             const errorsToAdd = arraySubtraction(Object.keys(this.ngModelController.$error), Object.keys(this.appendedElements));
+
+            this.processAsyncValidation();
 
             errorsToRemove.forEach((error) => {
                 this.appendedElements[error].classList.add('not-visible');
@@ -124,6 +129,13 @@ export class ErrorMessagesDirectiveController {
                         errorsObject[currentErrorElement.getAttribute('data-error')] = currentErrorElement;
                         return errorsObject;
                     }), {});
+    }
+
+    private processAsyncValidation() {
+        if (this.localize('async') !== this.lastAsyncValidationMessage && this.appendedElements?.async) {
+            this.lastAsyncValidationMessage = this.localize('async');
+            this.appendedElements.async.innerText = this.lastAsyncValidationMessage;
+        }
     }
 }
 
