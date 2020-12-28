@@ -29,10 +29,7 @@ export default function config(
     });
 
     kpAsyncValidationServiceProvider.setValidationFunction(/*@ngInject*/ ($model: { opt: number }) => {
-        // tslint:disable-next-line:no-console
-        console.log('Validation model: ', $model);
-
-        return Promise.resolve();
+        return Promise.reject(`opt-${$model?.opt}`);
     });
 
     $animateProvider.classNameFilter(/ng-animate-enabled/);
