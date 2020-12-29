@@ -35,9 +35,10 @@
                     is-disabled="$ctrl.resolveIsDisabled()"
                     is-visible="$ctrl.resolveIsVisible()"
                     is-focused="$ctrl.valueEditorController.isFocused && $first"
+                    show-errors="$ctrl.valueEditorController.showErrors"
 
                     validations="$ctrl.options.subEditor.validations"
-                    options="$ctrl.adjustForceShowErrors($ctrl.options.subEditor.options)"
+                    options="$ctrl.options.subEditor.options"
                 )
 
             .list-item-delete-button

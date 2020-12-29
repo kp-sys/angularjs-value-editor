@@ -14,12 +14,12 @@ form(id="\\{\\{$ctrl.formId\\}\\}" name="{{formName}}" ng-submit="$ctrl.onSubmit
         ng-change="$ctrl.onChange()"
 
         is-focused="$ctrl.resolveAutofocusFirstField()"
+        show-errors="$ctrl.showErrors"
 
         options="{" +
             "fields: $ctrl.formSettings.fields, " +
             "__withoutNgForm: true, " +
-            "{{labelsWidth ? 'labelsWidth: $ctrl.labelsWidth,' : ''}} " +
-            "forceShowErrors: $ctrl.forceShowErrors " +
+            "{{labelsWidth ? 'labelsWidth: $ctrl.labelsWidth' : ''}} " +
         "}"
     )
 

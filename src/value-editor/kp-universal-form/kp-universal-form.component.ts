@@ -10,7 +10,7 @@ import {
 } from 'angular';
 import {ObjectValueEditorField} from '../meta-editors/object/object-value-editor-configuration.provider';
 import {generateUuid} from '../utils/uuid-generator';
-import { KpUniversalFormConfigurationService } from './kp-universal-form-configuration-provider';
+import {KpUniversalFormConfigurationService} from './kp-universal-form-configuration-provider';
 
 /**
  * @ngdoc type
@@ -41,7 +41,7 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
     public formName: string;
     public formId: string;
     public labelsWidth: number;
-    public forceShowErrors: boolean;
+    public showErrors: boolean;
     public options: KpUniversalFormComponentOptions;
     public asyncValidationsModel: {};
     public configuration: KpUniversalFormConfigurationService;
@@ -63,7 +63,7 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
                 private $log: ILogService,
                 private $transclude: ITranscludeFunction) {
         super();
-        
+
         this.configuration = kpUniversalFormConfigurationService;
         this.uuid = generateUuid();
     }
@@ -145,7 +145,7 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
  * @param {function(Event)=} onSubmit Function called on submit form.
  * @param {Event=} onSubmit.$event Submit event.
  * @param {ObjectValueEditorLabelsWidth=} labelsWidth See {@link ObjectValueEditorOptions}. Default value is `2`.
- * @param {boolean=} forceShowErrors If `true` it displays all validation error messages.
+ * @param {boolean=} showErrors If `true` it displays all validation error messages.
  * @param {KpUniversalFormComponentOptions=} options Specific options for universal form.
  * @param {{}=} asyncValidationsModel Specify model for async validations. If defined, all async validations with set `wholeForm = true` use this model.
  *
@@ -241,7 +241,7 @@ export default class KpUniversalFormComponent {
         formController: '&?',
         onSubmit: '&?',
         labelsWidth: '@?',
-        forceShowErrors: '<?',
+        showErrors: '<?',
         options: '<?',
         asyncValidationsModel: '<?',
         ngChange: '&?'
@@ -274,7 +274,7 @@ export interface KpUniversalFormComponentBindings {
     formName?: string;
     formId?: string;
     labelsWidth?: number;
-    forceShowErrors?: boolean;
+    showErrors?: boolean;
     options?: KpUniversalFormComponentOptions;
     asyncValidationsModel?: {};
 

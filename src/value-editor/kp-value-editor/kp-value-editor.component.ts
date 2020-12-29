@@ -39,6 +39,7 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
     public isDisabled: boolean;
     public isVisible: boolean = true;
     public isFocused;
+    public showErrors: boolean;
     public validations: EDITORVALIDATIONS;
     // settings for specific value editor sub-component
     public options: EDITOROPTS;
@@ -178,6 +179,7 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
  * @param {boolean} isDisabled If input is disabled. <.
  * @param {boolean} isVisible If input is visible. <.
  * @param {boolean} isFocused If input should have been focused. <.
+ * @param {boolean} showErrors If true, error messages is displayed.
  * @param {ValueEditorValidations} validations ValueEditor validations. <.
  * @param {ValueEditorOptions} options ValueEditor options. Type depends on ValueEditor type. <.
  * @param {ValueEditorLocalizations} localizations Custom localizations overriding default ones.
@@ -205,6 +207,7 @@ export default class KpValueEditorComponent implements Component<ValueEditorBind
         isDisabled: '<?',
         isVisible: '<?',
         isFocused: '<?',
+        showErrors: '<?',
         validations: '<?',
         options: '<?',
         localizations: '<?'
@@ -233,7 +236,6 @@ export interface ValueEditorValidations {
  * @name ValueEditorOptions
  * @module angularjs-value-editor
  *
- * @property {boolean} forceShowErrors Force show validations error messages.
  * @property {boolean} emptyAsNull If `true`, empty value will be passed as `null` to model.
  * @property {function} customEmptyAsNullCheck Custom check of empty value. If returns `true` it sign empty value.
  *  ```
@@ -246,7 +248,6 @@ export interface ValueEditorValidations {
  * | `$value`: `MODEL`                  | Current value-editor model |
  */
 export interface ValueEditorOptions {
-    forceShowErrors?: boolean;
     emptyAsNull?: boolean;
     // tslint:disable-next-line:ban-types
     customEmptyAsNullCheck?: Injectable<Function | ((...args: any[]) => boolean)>;
@@ -264,6 +265,7 @@ export interface ValueEditorOptions {
  * @property {boolean} isDisabled If input is disabled.
  * @property {boolean} isVisible If input is visible.
  * @property {boolean} isFocused If input should be focused.
+ * @property {boolean} showErrors If true, error messages is displayed.
  * @property {ValueEditorValidations} validations ValueEditor validations.
  * @property {ValueEditorOptions} options ValueEditor options. Type depends on ValueEditor type.
  * @property {ValueEditorLocalizations} localizations Custom localizations overriding default ones.
@@ -279,6 +281,7 @@ export interface ValueEditorBindings<EDITOROPTS extends ValueEditorOptions = Val
     isDisabled?: boolean;
     isVisible?: boolean;
     isFocused?: boolean;
+    showErrors?: boolean;
     validations?: EDITORVALIDATIONS;
     options?: EDITOROPTS;
     localizations?: ValueEditorLocalizations;

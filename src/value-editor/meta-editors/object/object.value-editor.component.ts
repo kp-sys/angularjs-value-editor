@@ -75,14 +75,6 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
             fieldEditor.editorName = fieldName;
         }
 
-        if (this.options.forceShowErrors) {
-            if (!fieldEditor.options) {
-                fieldEditor.options = {};
-            }
-
-            fieldEditor.options.forceShowErrors = true;
-        }
-
         return fieldEditor;
     }
 

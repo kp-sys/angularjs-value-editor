@@ -11,7 +11,7 @@ describe('error-messages', () => {
 
     let valueEditorMocker: ValueEditorMocker<TextValueEditorBindings>;
     let $scope: ScopeWithBindings<string, TextValueEditorBindings>;
-    let ngFlushPendingTasks: IFlushPendingTasksService
+    let ngFlushPendingTasks: IFlushPendingTasksService;
 
     beforeEach(() => {
         angular.mock.module(valueEditorModule);
@@ -39,7 +39,7 @@ describe('error-messages', () => {
     it('should display validation error message with force option enabled', () => {
         const element = valueEditorMocker.create('text', {
             editorName: 'text',
-            options: {forceShowErrors: true},
+            showErrors: true,
             validations: {required: true}
         }, true);
 
@@ -70,9 +70,7 @@ describe('error-messages', () => {
 
         const element = valueEditorMocker.create('text', {
             editorName: 'text',
-            options: {
-                forceShowErrors: true
-            },
+            showErrors: true,
             validations: {minlength: 5, pattern: 'abc'}
         });
 
