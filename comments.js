@@ -2863,7 +2863,7 @@
  * @param {function(Event)=} onSubmit Function called on submit form.
  * @param {Event=} onSubmit.$event Submit event.
  * @param {ObjectValueEditorLabelsWidth=} labelsWidth See {@link ObjectValueEditorOptions}. Default value is `2`.
- * @param {boolean=} forceShowErrors If `true` it displays all validation error messages.
+ * @param {boolean=} showErrors If `true` it displays all validation error messages.
  * @param {KpUniversalFormComponentOptions=} options Specific options for universal form.
  * @param {{}=} asyncValidationsModel Specify model for async validations. If defined, all async validations with set `wholeForm = true` use this model.
  *
@@ -3169,6 +3169,7 @@
  * @param {boolean} isDisabled If input is disabled. <.
  * @param {boolean} isVisible If input is visible. <.
  * @param {boolean} isFocused If input should have been focused. <.
+ * @param {boolean} showErrors If true, error messages is displayed.
  * @param {ValueEditorValidations} validations ValueEditor validations. <.
  * @param {ValueEditorOptions} options ValueEditor options. Type depends on ValueEditor type. <.
  * @param {ValueEditorLocalizations} localizations Custom localizations overriding default ones.
@@ -3191,7 +3192,6 @@
  * @name ValueEditorOptions
  * @module angularjs-value-editor
  *
- * @property {boolean} forceShowErrors Force show validations error messages.
  * @property {boolean} emptyAsNull If `true`, empty value will be passed as `null` to model.
  * @property {function} customEmptyAsNullCheck Custom check of empty value. If returns `true` it sign empty value.
  *  ```
@@ -3216,6 +3216,7 @@
  * @property {boolean} isDisabled If input is disabled.
  * @property {boolean} isVisible If input is visible.
  * @property {boolean} isFocused If input should be focused.
+ * @property {boolean} showErrors If true, error messages is displayed.
  * @property {ValueEditorValidations} validations ValueEditor validations.
  * @property {ValueEditorOptions} options ValueEditor options. Type depends on ValueEditor type.
  * @property {ValueEditorLocalizations} localizations Custom localizations overriding default ones.
