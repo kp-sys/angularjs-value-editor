@@ -96,7 +96,7 @@ export class ErrorMessagesDirectiveController {
     public processErrors() {
         const newSerializedErrors = getSerializedErrors(this.ngModelController.$error);
 
-        if ((this.ngModelController.$touched || (this.kpValueEditorController.valueEditorInstance.options.forceShowErrors ?? false)) &&
+        if ((this.ngModelController.$touched || (this.kpValueEditorController.showErrors ?? false)) &&
             (newSerializedErrors !== getSerializedErrors(this.appendedElements)) || newSerializedErrors.includes('async')) {
 
             const errorsToRemove = arraySubtraction(Object.keys(this.appendedElements), Object.keys(this.ngModelController.$error));

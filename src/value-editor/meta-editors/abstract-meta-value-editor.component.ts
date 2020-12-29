@@ -15,7 +15,7 @@ export abstract class AbstractMetaValueEditorComponentController<MODEL, OPTIONS 
         if (this.form[fieldName]) {
             const {$invalid, $touched = true} = this.form[fieldName];
 
-            return $invalid && ($touched || this.options.forceShowErrors);
+            return $invalid && ($touched || this.valueEditorController.showErrors);
         }
 
         return false;

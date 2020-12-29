@@ -139,15 +139,6 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
         return true;
     }
 
-    public adjustForceShowErrors(subEditorOptions: OPTIONS): OPTIONS {
-
-        if (subEditorOptions) {
-            subEditorOptions.forceShowErrors = subEditorOptions.forceShowErrors || this.options.forceShowErrors;
-        }
-
-        return subEditorOptions;
-    }
-
     public resolveProperty(index: number, property: 'editorId' | 'editorName'): string {
         const propertyValue = this.options.subEditor?.[property] ?? this.valueEditorController[property];
 
