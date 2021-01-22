@@ -31,4 +31,15 @@
       transition: all $pretty--smooth-transition-duration ease;
     }
   }
+
+  .state {
+    label {
+      text-indent: 0;
+
+      &:before,
+      &:after {
+        top: calc((0% - (100% - 1em)) - 20%);
+      }
+    }
+  }
 }
