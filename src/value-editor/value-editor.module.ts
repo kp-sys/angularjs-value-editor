@@ -33,6 +33,7 @@ import DisableNgAnimateDirective from './common/directives/disable-ngAnimate.dir
 import asyncValidationsModule from './kp-async-validation/kp-async-validation.module';
 import KpFocusableInputDirective from './common/directives/kp-focusable-input.directive';
 import ModelToJsonViewFormatterDirective from './common/directives/model-to-json-view-formatter.directive';
+import KpIndeterminateCheckboxDirective from './common/directives/kp-indeterminate-checkbox.directive';
 // COMMON SERVICES AND PROVIDERS
 import {EmptyConfigurationService} from './abstract/abstract-value-editor-component-controller';
 import aliasesModule from './aliases/kp-value-editor-aliases.module';
@@ -96,6 +97,7 @@ export default register('angularjs-value-editor', [
     .directive(DisableNgAnimateDirective.directiveName, DisableNgAnimateDirective)
     .directive(KpFocusableInputDirective.directiveName, KpFocusableInputDirective)
     .directive(ModelToJsonViewFormatterDirective.directiveName, ModelToJsonViewFormatterDirective)
+    .directive(KpIndeterminateCheckboxDirective.directiveName, KpIndeterminateCheckboxDirective)
     .component(KpValueEditorComponent.componentName, KpValueEditorComponent)
     .name();
 

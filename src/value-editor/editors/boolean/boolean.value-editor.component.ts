@@ -64,9 +64,6 @@ export class BooleanValueEditorComponentController<MODEL = boolean> extends Abst
 
     @bind
     private adjustIndeterminateState<T>(value: T): T {
-        // @ts-ignore - $$element is not typed, because it's internal API
-        (this.inputElementModelController.$$element[0] as HTMLInputElement).indeterminate = this.options.nullAsIndeterminate && value === null;
-
         const isInvalid = this.valueEditorController.validations?.required && this.options.nullAsIndeterminate && (value === null || value === undefined);
         this.inputElementModelController.$setValidity('required', !isInvalid);
 
