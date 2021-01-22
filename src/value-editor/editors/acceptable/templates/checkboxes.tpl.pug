@@ -2,6 +2,7 @@
     ul(ng-ref="ulElement")
         li.av-item(ng-repeat="$item in $ctrl.getAcceptableValuesForCheckboxes() track by $index" ng-init="index = $index")
             include ./checkbox-template.tpl.pug
+            span.checkbox-label(ng-click="$ctrl.updateModel($item)") {{optionsTemplate}}
 
         li.more-container(class="{{uuid}}" ng-if="$ctrl.hasMore()")
             style(type="text/css").
@@ -18,6 +19,7 @@
             ul
                 li.av-item(ng-repeat="$item in $ctrl.getAcceptableValuesForCheckboxes($ctrl.options.showFirstCount, 9007199254740990) track by $index" ng-init="index = $index + $ctrl.options.showFirstCount")
                     include ./checkbox-template.tpl.pug
+                    span.checkbox-label(ng-click="$ctrl.updateModel($item)") {{optionsTemplate}}
 
     .btn-group
         button.btn.btn-default.btn-xs.select-all(type="button" ng-disabled="$ctrl.model.length === $ctrl.options.acceptableValues.length" ng-click="$ctrl.model = $ctrl.options.acceptableValues.slice()" ng-bind="$ctrl.localize('selectAll')")

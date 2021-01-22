@@ -46,24 +46,27 @@ class CheckboxesController {
     }
 
     public getMultipleSelectedValuesAsTexts(): string[] {
-        return Array.from(this.element.querySelectorAll<HTMLSpanElement>('[name^="acceptable_"]:checked + div label span'))
+        return Array.from(this.element.querySelectorAll<HTMLSpanElement>('input[name^="acceptable_"]:checked'))
+            .map((element: HTMLInputElement) => element.parentElement.nextElementSibling)
             .map((element) => element.textContent);
     }
 
     public getOptionsCount(): number {
         // -1 because validation helper also pass selector test
-        return this.element.querySelectorAll<HTMLDivElement>('[name^="acceptable_"]').length - 1;
+        return this.element.querySelectorAll<HTMLDivElement>('input[name^="acceptable_"]').length - 1;
     }
 
     public getOptionsText(): string[] {
-        return Array.from(this.element.querySelectorAll<HTMLDivElement>('[name^="acceptable_"] + div label span')).map((element) => element.textContent);
+        return Array.from(this.element.querySelectorAll<HTMLDivElement>('input[name^="acceptable_"]:not(.validation-helper)'))
+            .map((element: HTMLInputElement) => element.parentElement.nextSibling)
+            .map((element) => element.textContent);
     }
 
     public clearSelection() {
         let item: HTMLInputElement;
 
         // tslint:disable-next-line:no-conditional-assignment
-        while ((item = this.element.querySelector('[name^="acceptable_"]:checked')) !== null) {
+        while ((item = this.element.querySelector('input[name^="acceptable_"]:checked')) !== null) {
             item.click();
         }
     }
@@ -886,7 +889,7 @@ describe('acceptable-value-editor', () => {
                         acceptableValues: ACCEPTABLE_VALUES.slice(),
                         multiselectable: true
                     }
-                });
+                }, true);
 
                 let option3 = new CheckboxesController(valueEditorMocker.getInputElement()).getOptionsText()[3];
 
