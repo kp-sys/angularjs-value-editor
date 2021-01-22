@@ -78,6 +78,11 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
                 "href": "api/angularjs-value-editor/directive/kpFocusableInput"
               },
               {
+                "name": "kpIndeterminateCheckbox",
+                "type": "directive",
+                "href": "api/angularjs-value-editor/directive/kpIndeterminateCheckbox"
+              },
+              {
                 "name": "modelToJsonViewFormatter",
                 "type": "directive",
                 "href": "api/angularjs-value-editor/directive/modelToJsonViewFormatter"

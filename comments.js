@@ -404,7 +404,17 @@
  *
  * @description
  * Exposed API objects interface
- *//**
+ *//*@ngInject*//**
+ * @ngdoc directive
+ * @name kpIndeterminateCheckbox
+ * @module angularjs-value-editor
+ *
+ * @param {boolean} kpIndeterminateCheckbox True if set to indeterminate state.
+ *
+ * @description
+ * Directive set indeterminate state based on input.
+ */
+/*@ngInject*//**
  * @ngdoc directive
  * @name modelToJsonViewFormatter
  * @module angularjs-value-editor
@@ -564,7 +574,6 @@
  *//* istanbul ignore file */
 /* neni cas... :-(*/
 /*@ngInject*/
-/* expanded is always first level*/
 /**
  * @ngdoc component
  * @name acceptableRootValueEditor
@@ -628,29 +637,33 @@
  *
  * @description
  *
- *//*@ngInject*//* istanbul ignore file */
+ *//*@ngInject*//* @ts-ignore*/
+/* @ts-ignore*/
+/**
+ * @param cssClass - the css class
+ * @param addClassProperty - should we wrap the class name with class=""
+ *//* istanbul ignore file */
 /* neni cas... :-(*/
 /**
  * Taken from https://github.com/wix/angular-tree-control and modified
  * TODO: Refactoring needed.
  */
-/**
-         * @param cssClass - the css class
-         * @param addClassProperty - should we wrap the class name with class=""
-         */
+/*@ngInject*/
+/*@ngInject*/
 /* Branch node is not selectable, expand*/
 /* Leaf node is not selectable*/
-/* tree template*/
+/* najdu pozici node v selected nodes*/
+/* neni multiselectable*/
+/* pokud current node neni selected*/
 /* find all nodes visible on the tree and the scope $id of the scopes including them*/
-/* iterate over the newValue, the new expanded nodes, and for each find it in the existingNodesAndScopes*/
-/* if found, add the mapping $id -> node into newExpandedNodesMap*/
-/* if not found, add the mapping num -> node into newExpandedNodesMap*/
+/* iterate over the newValue, the new expanded nodes, and for each find it in the existingNodesAndScopes
+                    if found, add the mapping $id -> node into newExpandedNodesMap
+                    if not found, add the mapping num -> node into newExpandedNodesMap */
 /* Rendering template for a root node*/
-/* save the transclude function from compile (which is not bound to a scope as apposed to the one from link)*/
-/* we can fix this to work with the link transclude function with angular 1.2.6. as for angular 1.2.0 we need*/
-/* to keep using the compile function*/
 /* Rendering template for the current node*/
-/* create a scope for the transclusion, whos parent is the parent of the tree control*//* tslint:disable:ban-types */
+/*@ngInject*/
+/* create a $scope for the transclusion, whos parent is the parent of the tree control*/
+/* @ts-ignore*//* tslint:disable:ban-types */
 /**
  * @ngdoc type
  * @name AcceptableValueEditorOptions
@@ -1145,7 +1158,6 @@
  *
  * Default options: {@link booleanValueEditorDefaultOptions}
  *//*@ngInject*/
-/* @ts-ignore - $$element is not typed, because it's internal API*/
 /**
  * @ngdoc component
  * @name booleanValueEditor
