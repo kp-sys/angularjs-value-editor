@@ -1,11 +1,13 @@
-main.container(ng-controller="labController as $ctrl")
+main.container(ng-controller="labController as $ctrl" ng-init="model = null")
 
-    kp-universal-form(
-        form-id="aj-dyy"
+    button(type="button" ng-click="$ctrl.setModel()") Set
+
+    kp-value-editor(
+        type="'acceptable-root'"
+
         ng-model="$ctrl.model"
-        ng-change="$ctrl.change()"
 
-        form-settings="$ctrl.formSettings"
+        options="$ctrl.options"
     )
 
 

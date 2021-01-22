@@ -1,18 +1,32 @@
-/* istanbul ignore file */  // neni cas... :-(
+/* istanbul ignore file */        // neni cas... :-(
 import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
 import {
     AcceptableRootValueEditorConfigurationService,
     AcceptableRootValueEditorOptions
 } from './acceptable-root-value-editor-configuration.provider';
 import {AcceptableRootValueEditorLocalizationsService} from './acceptable-root-value-editor-localization.provider';
-import {IInterpolateService, IOnInit, ITemplateCacheService} from 'angular';
-import {AngularTreeControlOptions} from './tree-control/angular-tree-control';
+import {IDoCheck, IInterpolateService, IOnInit, ITemplateCacheService} from 'angular';
 import bind from 'bind-decorator';
 import AbstractTemplateValueEditor from '../../abstract/abstract-template-value-editor';
 import {PropertyChangeDetection} from '../../utils/equals';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
+import {TreeControlOptions} from './tree-control/tree-control.types';
 import IInjectorService = angular.auto.IInjectorService;
+
+export function arrayEquals<E1 = any, E2 = any>(arr1: E1[], arr2: E2[], compareFunction: (element1: E1, element2: E2) => boolean = (e1, e2) => e1 as any === e2 as any): boolean {
+    if (arr1.length !== arr2.length) {
+        return false;
+    }
+
+    for (let i = 0; i < arr1.length; i++) {
+        if (!compareFunction(arr1[i], arr2[i])) {
+            return false;
+        }
+    }
+
+    return true;
+}
 
 export interface Childrenable {
     children?: Childrenable[];
@@ -20,7 +34,7 @@ export interface Childrenable {
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.acceptableRootValueEditor';
 
-export class AcceptableRootValueEditorComponentController<VALUE extends Childrenable> extends AbstractTemplateValueEditor<VALUE | VALUE[], AcceptableRootValueEditorOptions<VALUE>> implements IOnInit {
+export class AcceptableRootValueEditorComponentController<VALUE extends Childrenable> extends AbstractTemplateValueEditor<VALUE | VALUE[], AcceptableRootValueEditorOptions<VALUE>> implements IOnInit, IDoCheck {
     private static readonly TEMPLATE_URL = require('./acceptable-root.value-editor.tpl.pug');
     private static readonly TREECONTROL_TEMPLATE_URL = require('./treecontrol-custom-template.tpl.html');
 
@@ -28,7 +42,7 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
     public internalAcceptableValues: [VALUE];
     public selectedNodes: VALUE | VALUE[];
 
-    private treeOptions: Partial<AngularTreeControlOptions<VALUE>>;
+    private treeOptions: Partial<TreeControlOptions<VALUE>>;
 
     /*@ngInject*/
     constructor(acceptableRootValueEditorConfigurationService: AcceptableRootValueEditorConfigurationService<VALUE>,
@@ -45,22 +59,25 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
             acceptableRootValueEditorLocalizationsService);
     }
 
+    public $doCheck(): void {
+        if (Array.isArray(this.model) &&
+            Array.isArray(this.selectedNodes) &&
+            !arrayEquals(this.model, this.selectedNodes, this.equalityComparator)) {
+            this.selectedNodes = [...this.model];
+        }
+    }
+
     public $onInit(): void {
         super.$onInit();
 
         this.internalAcceptableValues = [this.options.acceptableValue];
         this.treeOptions = {
             nodeChildren: 'children',
-            equality: ($element1, $element2) => this.$injector.invoke(this.options.equalityComparator, null, {
-                $element1,
-                $element2
-            }),
+            equality: this.equalityComparator,
             multiSelection: this.options.multiselect,
             templateUrl: AcceptableRootValueEditorComponentController.TREECONTROL_TEMPLATE_URL,
             isSelectable: this.isSelectable
         };
-        // expanded is always first level
-        this.expandedNodes = [this.options.acceptableValue];
 
         const originalRender = this.ngModelController.$render;
         this.ngModelController.$render = () => {
@@ -111,6 +128,14 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
             optionsTemplate: this.options.optionsTemplate,
             multiselect: this.options.multiselect
         };
+    }
+
+    @bind
+    private equalityComparator($element1, $element2): boolean {
+        return this.$injector.invoke(this.options.equalityComparator, null, {
+            $element1,
+            $element2
+        });
     }
 }
 
