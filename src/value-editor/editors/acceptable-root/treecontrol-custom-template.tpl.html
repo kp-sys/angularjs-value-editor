@@ -4,40 +4,29 @@
         {{options.liClass}}
         set-node-to-data>
 
-        <div class="item" ng-class="{'has-children': $node.children.length > 0, 'has-not-children': !$node.children || $node.children.length === 0}">
-            <div class="switcher" ng-click="selectNodeHead($node)">
+        <div class="item">
+            <div class="switcher" ng-click="toggleNode($node)">
                 <i class="tree-branch-head glyphicon glyphicon-triangle-right" ng-class="iBranchClass()"></i>
             </div>
 
-            <div class="content" ng-class="selectedClass()">
-                <div class="tree-label {{options.labelClass}}" ng-class="unselectableClass()" ng-click="selectNodeHead($node)" tree-transclude></div>
+            <div class="content">
+                <div class="pretty p-icon p-smooth p-curve p-has-indeterminate">
+                    <input type="checkbox" ng-click="selectNode($node); expandSelfAndAllChildren($node)" ng-checked="selectedClass()" kp-indeterminate-checkbox="hasCheckedAnyChild($node) && !selectedClass()">
 
-                <div class="selector" ng-click="selectNodeLabel($node)">
-                    <i class="tcf tcf-checkmark-empty" ng-hide="selectedClass()"></i>
-                    <i class="tcf tcf-checkmark" ng-show="selectedClass()"></i>
-                </div>
-            </div>
+                    <div class="state p-primary">
+                        <i class="icon glyphicon glyphicon-ok"></i>
+                        <label></label>
+                    </div>
 
-            {{'{' + '{checkedAllChildren = hasCheckedAllChildren($node);' +
-              'checkedAnyChild = hasCheckedAnyChild($node);' +
-              'expandedAndAllChildrenToo = isExpandedAndAllChildrenToo($node);' +
-              '\'\'' +
-              '}' + '}' }}
+                    <div class="state p-is-indeterminate">
+                        <i class="icon glyphicon glyphicon-minus"></i>
+                        <label></label>
+                    </div>
 
-            <div class="multiselector"
-                 ng-class="{'checked': checkedAllChildren, 'semi-checked': checkedAnyChild, 'clickable': options.multiSelection || (!options.multiSelection && !expandedAndAllChildrenToo)}"
-                 ng-click="expandOrSelectAll($node)"
-                 ng-attr-title="{{ '{' + '{!expandedAndAllChildrenToo ? $ctrl.localize(\'showAll\') :' +
-                                           'options.multiSelection && expandedAndAllChildrenToo && checkedAllChildren ? $ctrl.localize(\'deselectAll\') : ' +
-                                           'options.multiSelection && expandedAndAllChildrenToo && !checkedAllChildren ? $ctrl.localize(\'selectAll\') : \'\'}' + '}' }}">
-                <!-- Unselect all children -->
-                <i class="tcf tcf-checkmark-double" ng-show="checkedAllChildren"></i>
-                <!-- Select all children -->
-                <i class="tcf tcf-checkmark-double-semi" ng-show="checkedAnyChild && !checkedAllChildren"></i>
-                <!-- Select all children -->
-                <i class="tcf tcf-checkmark-double-empty" ng-show="!checkedAllChildren && !checkedAnyChild"></i>
-                <!-- Expand all children -->
-                <i class="glyphicon glyphicon-arrow-down" ng-show="!expandedAndAllChildrenToo"></i>
+                </div><!--
+
+            --><div class="tree-label {{options.labelClass}}" ng-class="unselectableClass()" ng-click="selectNode($node); expandSelfAndAllChildren($node)" tree-transclude></div>
+
             </div>
         </div>
 

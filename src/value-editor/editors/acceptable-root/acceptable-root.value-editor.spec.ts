@@ -1,76 +1,45 @@
 import valueEditorModule from '../../value-editor.module';
 import * as angular from 'angular';
 import ValueEditorMocker, {ScopeWithBindings} from '../../../../test/utils/value-editor-mocker';
-import {AcceptableRootValueEditorBindings} from './acceptable-root.value-editor.component';
+import {AcceptableRootValueEditorBindings, arrayEquals} from './acceptable-root.value-editor.component';
 
 describe('acceptable-root-value-editor', () => {
 
-    let valueEditorMocker: ValueEditorMocker<AcceptableRootValueEditorBindings<any>>;
-    let $scope: ScopeWithBindings<{}, AcceptableRootValueEditorBindings<any>>;
+    describe('utils', () => {
 
-    beforeEach(() => {
-        angular.mock.module(valueEditorModule);
+        it('should have working array comparing function', () => {
+            expect(arrayEquals([1, 2], [1, 2])).toBeTrue();
+            expect(arrayEquals([1], [1, 2])).toBeFalse();
+            expect(arrayEquals([1, 2], [1])).toBeFalse();
+            expect(arrayEquals([1, 2], [2, 3])).toBeFalse();
 
-        inject(/*@ngInject*/ ($compile, $rootScope) => {
-            $scope = $rootScope.$new();
-            valueEditorMocker = new ValueEditorMocker<AcceptableRootValueEditorBindings<any>>($compile, $scope);
+            const compareFunction = (e1, e2) => e1.a === e2.a;
+
+            expect(arrayEquals([{a: 1}, {a: 2}], [{a: 1}, {a: 2}], compareFunction)).toBeTrue();
+            expect(arrayEquals([{a: 1}], [{a: 1}, {a: 2}], compareFunction)).toBeFalse();
+            expect(arrayEquals([{a: 1}, {a: 2}], [{a: 1}], compareFunction)).toBeFalse();
+            expect(arrayEquals([{a: 1}, {a: 2}], [{a: 2}, {a: 3}], compareFunction)).toBeFalse();
         });
     });
 
-    it('should render component', () => {
-        valueEditorMocker.create('acceptable-root');
+    describe('component', () => {
+        let valueEditorMocker: ValueEditorMocker<AcceptableRootValueEditorBindings<any>>;
+        let $scope: ScopeWithBindings<{}, AcceptableRootValueEditorBindings<any>>;
 
-        expect(valueEditorMocker.getInputElement()).not.toBeNull();
-    });
+        beforeEach(() => {
+            angular.mock.module(valueEditorModule);
 
-    xit('should change model on input', () => {
-        valueEditorMocker.create('acceptable-root');
-
-        valueEditorMocker.getInputElement().value = 'hello';
-        valueEditorMocker.triggerHandlerOnInput('input');
-
-        expect($scope.model).toEqual({from: 10, to: 20});
-    });
-
-    xit('should change value if model is changed', () => {
-        $scope.model = {from: 10, to: 20};
-
-        valueEditorMocker.create('acceptable-root');
-
-        const input = valueEditorMocker.getInputElement();
-        expect(input.value).toBe('hello');
-
-        $scope.model = {from: 10, to: 20};
-        $scope.$apply();
-
-        expect(input.value).toBe('world');
-    });
-
-    xit('should have working required validation', () => {
-        valueEditorMocker.create('acceptable-root', {
-            editorName: 'acceptable-root',
-            validations: {required: true}
+            inject(/*@ngInject*/ ($compile, $rootScope) => {
+                $scope = $rootScope.$new();
+                valueEditorMocker = new ValueEditorMocker<AcceptableRootValueEditorBindings<any>>($compile, $scope);
+            });
         });
 
-        $scope.$apply();
+        it('should render component', () => {
+            valueEditorMocker.create('acceptable-root');
 
-        expect($scope.form['acceptable-root'].$error).toEqual({required: true});
-
-        $scope.model = {from: 10, to: 20};
-        $scope.$apply();
-
-        expect($scope.form['acceptable-root'].$error).toEqual({});
+            expect(valueEditorMocker.getInputElement()).not.toBeNull();
+        });
     });
 
-    xit('should be disabled', () => {
-        valueEditorMocker.create('acceptable-root', {isDisabled: false});
-        const input = valueEditorMocker.getInputElement<HTMLInputElement>();
-
-        expect(input.disabled).toBe(false);
-
-        $scope.isDisabled = true;
-        $scope.$apply();
-
-        expect(input.disabled).toBe(true);
-    });
 });
