@@ -17,7 +17,10 @@ import {
     ITranscludeFunction
 } from 'angular';
 import {TreeControlOptions, TreeControlScope} from './tree-control.types';
-import {classIfDefined, createPath, ensureAllDefaultOptions} from './tree-control.functions';
+import {createPath, ensureAllDefaultOptions} from './tree-control.functions';
+
+// tslint:disable-next-line:no-var-requires
+const templateUrl = require('./tree-control.tpl.pug');
 
 export default register('treeControl')
     .constant('treeConfig', {
@@ -43,53 +46,27 @@ export default register('treeControl')
             },
             controller: /*@ngInject*/ function TreeControlController<NODE>($scope: TreeControlScope<NODE>, $templateCache: ITemplateCacheService, $interpolate: IInterpolateService, treeConfig: TreeControlOptions<NODE>) {
 
-                $scope.options = $scope.options ?? {} as TreeControlOptions<NODE>;
+                $scope.parentScopeOfTree = $scope.$parent as TreeControlScope<NODE>;
+                $scope.selectedNodes = Array.isArray($scope.selectedNodes) ? $scope.selectedNodes : [];
+                $scope.expandedNodes = Array.isArray($scope.expandedNodes) ? $scope.expandedNodes : [];
 
                 ensureAllDefaultOptions($scope);
 
-                $scope.selectedNodes = $scope.selectedNodes ?? [];
-                $scope.expandedNodes = $scope.expandedNodes ?? [];
-                $scope.parentScopeOfTree = $scope.$parent as TreeControlScope<NODE>;
-
                 $scope.expandedNodesMap = {};
-                for (let i = 0; i < $scope.expandedNodes.length; i++) {
-                    $scope.expandedNodesMap[`a${i}`] = $scope.expandedNodes[i];
-                }
+                $scope.expandedNodes.forEach((node, index) => $scope.expandedNodesMap[`a${index}`] = node);
 
-                const templateUrl = $scope.options.templateUrl ?? treeConfig.templateUrl;
-                let template;
-
-                if (templateUrl) {
-                    template = $templateCache.get(templateUrl);
-                }
-
-                if (!template) {
-                    template =
-                        '<ul {{options.ulClass}} >' +
-                        '<li ng-repeat="$node in $node.{{options.nodeChildren}} | filter:filterExpression:filterComparator {{options.orderBy}}" ng-class="headClass($node)" {{options.liClass}}' +
-                        'set-node-to-data>' +
-                        '<i class="tree-branch-head" ng-class="iBranchClass()" ng-click="toggleNode($node)"></i>' +
-                        '<i class="tree-leaf-head {{options.iLeafClass}}"></i>' +
-                        '<div class="tree-label {{options.labelClass}}" ng-class="[selectedClass(), unselectableClass()]" ng-click="selectNode($node)" tree-transclude></div>' +
-                        '<treeitem ng-if="nodeExpanded()"></treeitem>' +
-                        '</li>' +
-                        '</ul>';
-                }
+                const template: string = $templateCache.get(templateUrl);
 
                 const templateOptions = {
                     orderBy: $scope.orderBy ? ' | orderBy:orderByFunc():isReverse()' : '',
-                    ulClass: classIfDefined($scope.options.injectClasses.ul, true),
-                    nodeChildren: $scope.options.nodeChildren,
-                    liClass: classIfDefined($scope.options.injectClasses.li, true),
-                    iLeafClass: classIfDefined($scope.options.injectClasses.iLeaf, false),
-                    labelClass: classIfDefined($scope.options.injectClasses.label, false)
+                    nodeChildrenPropertyName: $scope.options.nodeChildrenPropertyName
                 };
 
                 this.template = $compile($interpolate(template)({options: templateOptions}));
 
-                function expandAllChildren(node) {
-                    if (node[$scope.options.nodeChildren]) {
-                        for (const child of node[$scope.options.nodeChildren]) {
+                function expandAllChildren(node: NODE) {
+                    if (node[$scope.options.nodeChildrenPropertyName]) {
+                        for (const child of node[$scope.options.nodeChildrenPropertyName]) {
                             if (!isExpandedNode(child)) {
                                 $scope.expandedNodes.push(child);
                             }
@@ -99,11 +76,11 @@ export default register('treeControl')
                     }
                 }
 
-                function isExpandedNode(node): boolean {
+                function isExpandedNode(node: NODE): boolean {
                     return $scope.expandedNodes.some((child) => $scope.options.equality(node, child, $scope));
                 }
 
-                function isSelectedNode(node) {
+                function isSelectedNode(node: NODE): boolean {
                     if (!$scope.options.multiSelection && ($scope.options.equality(node, $scope.selectedNode, $scope))) {
                         return true;
                     } else if ($scope.options.multiSelection && $scope.selectedNodes) {
@@ -113,44 +90,31 @@ export default register('treeControl')
 
                 $scope.isSelectedNode = isSelectedNode;
 
-                $scope.headClass = function headClass(node) {
-                    const liSelectionClass = classIfDefined($scope.options.injectClasses.liSelected, false);
-                    let injectSelectionClass = '';
-                    if (liSelectionClass && isSelectedNode(node)) {
-                        injectSelectionClass = ` ${liSelectionClass}`;
-                    }
+                $scope.headClass = function headClass(node: NODE) {
                     if ($scope.options.isLeaf(node, $scope)) {
-                        return `tree-leaf${injectSelectionClass}`;
+                        return `tree-leaf`;
                     }
                     if ($scope.expandedNodesMap[this.$id]) {
-                        return `tree-expanded${injectSelectionClass}`;
+                        return `tree-expanded`;
                     } else {
-                        return `tree-collapsed${injectSelectionClass}`;
+                        return `tree-collapsed`;
                     }
                 };
 
-                $scope.iBranchClass = function iBranchClass() {
-                    if ($scope.expandedNodesMap[this.$id]) {
-                        return classIfDefined($scope.options.injectClasses.iExpanded);
-                    } else {
-                        return classIfDefined($scope.options.injectClasses.iCollapsed);
-                    }
-                };
-
-                $scope.nodeExpanded = function nodeExpanded() {
+                $scope.isNodeExpanded = function nodeExpanded() {
                     return !!$scope.expandedNodesMap[this.$id];
                 };
 
                 $scope.toggleNode = function toggleNode() {
-                    const transcludedScope = this;
-                    const expanding = $scope.expandedNodesMap[transcludedScope.$id] === undefined;
-                    $scope.expandedNodesMap[transcludedScope.$id] = (expanding ? transcludedScope.$node : undefined);
+                    const expanding = $scope.expandedNodesMap[this.$id] === undefined;
+                    $scope.expandedNodesMap[this.$id] = (expanding ? this.$node : undefined);
+
                     if (expanding) {
-                        $scope.expandedNodes.push(transcludedScope.$node);
+                        $scope.expandedNodes.push(this.$node);
                     } else {
                         let index;
                         for (let i = 0; (i < $scope.expandedNodes.length) && !index; i++) {
-                            if ($scope.options.equality($scope.expandedNodes[i], transcludedScope.$node, $scope)) {
+                            if ($scope.options.equality($scope.expandedNodes[i], this.$node, $scope)) {
                                 index = i;
                             }
                         }
@@ -158,26 +122,27 @@ export default register('treeControl')
                             $scope.expandedNodes.splice(index, 1);
                         }
                     }
+
                     if ($scope.onNodeToggle) {
-                        const parentNode = (transcludedScope.$parent.$node === transcludedScope.syntheticRoot) ? null : transcludedScope.$parent.$node;
-                        const path = createPath<NODE>(transcludedScope);
+                        const parentNode = (this.$parent.$node === this.syntheticRoot) ? null : this.$parent.$node;
+                        const path = createPath<NODE>(this);
                         $scope.onNodeToggle({
-                            node: transcludedScope.$node,
+                            node: this.$node,
                             $parentNode: parentNode,
                             $path: path,
-                            $index: transcludedScope.$index,
-                            $first: transcludedScope.$first,
-                            $middle: transcludedScope.$middle,
-                            $last: transcludedScope.$last,
-                            $odd: transcludedScope.$odd,
-                            $even: transcludedScope.$even,
+                            $index: this.$index,
+                            $first: this.$first,
+                            $middle: this.$middle,
+                            $last: this.$last,
+                            $odd: this.$odd,
+                            $even: this.$even,
                             expanded: expanding
                         });
 
                     }
                 };
 
-                $scope.selectNode = function selectNode(currentNode, forceSelect: boolean | undefined) {
+                $scope.selectNode = function selectNode(currentNode: NODE, forceSelect?: boolean) {
                     if (!$scope.options.isLeaf(currentNode, $scope) && (!$scope.options.dirSelectable || !$scope.options.isSelectable(currentNode))) { // Branch node is not selectable, expand
                         this.toggleNode();
                     } else if ($scope.options.isLeaf(currentNode, $scope) && (!$scope.options.isSelectable(currentNode))) { // Leaf node is not selectable
@@ -199,7 +164,7 @@ export default register('treeControl')
                                 selected = true;
 
                                 if (!$scope.options.isLeaf(currentNode, $scope)) {
-                                    for (const child of currentNode[$scope.options.nodeChildren]) {
+                                    for (const child of currentNode[$scope.options.nodeChildrenPropertyName]) {
                                         selectNode(child, true);
                                     }
                                 }
@@ -207,7 +172,7 @@ export default register('treeControl')
                                 $scope.selectedNodes.splice(pos, 1);
 
                                 if (!$scope.options.isLeaf(currentNode, $scope)) {
-                                    for (const child of currentNode[$scope.options.nodeChildren]) {
+                                    for (const child of currentNode[$scope.options.nodeChildrenPropertyName]) {
                                         selectNode(child, false);
                                     }
                                 }
@@ -252,7 +217,7 @@ export default register('treeControl')
                 };
 
                 $scope.hasCheckedAnyChild = function hasCheckedAnyChild(node): boolean {
-                    return node?.[$scope.options.nodeChildren]?.some((child) => {
+                    return node?.[$scope.options.nodeChildrenPropertyName]?.some((child) => {
                         return isSelectedNode(child) || hasCheckedAnyChild(child);
                     });
                 };
@@ -265,21 +230,8 @@ export default register('treeControl')
                     expandAllChildren(node);
                 };
 
-                $scope.selectedClass = function selectedClass() {
-                    const isThisNodeSelected = isSelectedNode(this.$node);
-                    const labelSelectionClass = classIfDefined($scope.options.injectClasses.labelSelected, false);
-                    let injectSelectionClass = '';
-                    if (labelSelectionClass && isThisNodeSelected) {
-                        injectSelectionClass = ` ${labelSelectionClass}`;
-                    }
-
-                    return isThisNodeSelected ? `tree-selected${injectSelectionClass}` : '';
-                };
-
-                $scope.unselectableClass = function unselectableClass() {
-                    const isThisNodeUnselectable = !$scope.options.isSelectable(this.$node);
-                    const labelUnselectableClass = classIfDefined($scope.options.injectClasses.labelUnselectable, false);
-                    return isThisNodeUnselectable ? `tree-unselectable ${labelUnselectableClass}` : '';
+                $scope.isSelectable = function isSelectable(node) {
+                    return $scope.options.isSelectable(node);
                 };
 
                 $scope.isReverse = function isReverse() {
@@ -295,13 +247,13 @@ export default register('treeControl')
 
                 $scope.$watch('treeModel', function updateNodeOnRootScope(newValue) {
                     if (Array.isArray(newValue)) {
-                        if (angular.isDefined($scope.$node) && angular.equals($scope.$node[$scope.options.nodeChildren], newValue)) {
+                        if (angular.isDefined($scope.$node) && angular.equals($scope.$node[$scope.options.nodeChildrenPropertyName], newValue)) {
                             return;
                         }
 
                         $scope.$node = {};
                         $scope.syntheticRoot = $scope.$node;
-                        $scope.$node[$scope.options.nodeChildren] = newValue;
+                        $scope.$node[$scope.options.nodeChildrenPropertyName] = newValue;
                     } else {
                         if (angular.equals($scope.$node, newValue)) {
                             return;
@@ -381,13 +333,12 @@ export default register('treeControl')
 
         link<NODE>($scope: TreeControlScope<NODE>, $element: IAugmentedJQuery) {
             if (!$scope.options.isLeaf($scope.$node, $scope)) {
-
-                angular.forEach($scope.expandedNodesMap, (node, id) => {
+                for (const [id, node] of Object.entries($scope.expandedNodesMap)) {
                     if ($scope.options.equality(node, $scope.$node, $scope)) {
                         $scope.expandedNodesMap[$scope.$id] = $scope.$node;
                         $scope.expandedNodesMap[id] = undefined;
                     }
-                });
+                }
             }
 
             if (!$scope.options.multiSelection && $scope.options.equality($scope.$node, $scope.selectedNode, $scope)) {
@@ -395,7 +346,7 @@ export default register('treeControl')
             } else if ($scope.options.multiSelection) {
                 const newSelectedNodes = [];
 
-                $scope.selectedNodes.forEach((selectedNode) => {
+                $scope.selectedNodes?.forEach((selectedNode) => {
                     if ($scope.options.equality($scope.$node, selectedNode, $scope)) {
                         newSelectedNodes.push($scope.$node);
                     }

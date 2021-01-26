@@ -4,9 +4,8 @@ export type TreeControlPathFunction<NODE> = () => NODE[];
 
 export interface TreeControlOptions<NODE> {
     multiSelection: boolean;
-    nodeChildren: string;
+    nodeChildrenPropertyName: string;
     dirSelectable: boolean;
-    injectClasses: TreeControlOptionsInjectClasses;
     equality: (node1: NODE, node2: NODE, $scope?: TreeControlScope<NODE>) => boolean;
     isLeaf: (node: NODE, $scope?: TreeControlScope<NODE>) => boolean;
     allowDeselect: boolean;
@@ -14,30 +13,16 @@ export interface TreeControlOptions<NODE> {
     templateUrl: string;
 }
 
-export interface TreeControlOptionsInjectClasses {
-    ul: string;
-    li: string;
-    liSelected: string;
-    iExpanded: string;
-    iCollapsed: string;
-    iLeaf: string;
-    label: string;
-    labelSelected: string;
-    labelUnselectable: string;
-}
-
 export interface TreeControlScopeFunctions<NODE> {
-    isSelectedNode: (...args: any[]) => any;
-    headClass: (...args: any[]) => any;
-    iBranchClass: (...args: any[]) => any;
-    nodeExpanded: (...args: any[]) => any;
-    toggleNode: (...args: any[]) => any;
-    selectNode: (...args: any[]) => any;
-    hasCheckedAnyChild: (...args: any[]) => any;
+    toggleNode: () => void;
+    selectNode: (currentNode: NODE, forceSelect?: boolean) => void;
     expandSelfAndAllChildren: (...args: any[]) => any;
-    selectedClass: (...args: any[]) => any;
-    unselectableClass: (...args: any[]) => any;
-    isReverse: (...args: any[]) => any;
+    isSelectedNode: (node: NODE) => boolean;
+    isSelectable: (node: NODE) => boolean;
+    isNodeExpanded: () => boolean;
+    isReverse: () => boolean;
+    hasCheckedAnyChild: (...args: any[]) => any;
+    headClass: (node: NODE) => string;
     orderByFunc: (...args: any[]) => any;
 }
 

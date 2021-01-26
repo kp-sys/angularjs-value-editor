@@ -34,7 +34,7 @@ import {Childrenable} from './acceptable-root.value-editor.component';
  *
  * Defaults: {@link acceptableRootValueEditorDefaultOptions}
  */
-export interface AcceptableRootValueEditorOptions<MODEL extends Childrenable> extends ValueEditorOptions {
+export interface AcceptableRootValueEditorOptions<MODEL extends Childrenable<any>> extends ValueEditorOptions {
     acceptableValue?: MODEL;
     multiselect?: boolean;
     disabledItems?: MODEL[];
@@ -79,7 +79,7 @@ export const ACCEPTABLE_ROOT_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<Accept
  *
  * Default options: {@link acceptableRootValueEditorDefaultOptions}
  */
-export default class AcceptableRootValueEditorConfigurationServiceProvider<MODEL extends Childrenable> extends AbstractValueEditorConfigurationProvider<AcceptableRootValueEditorOptions<MODEL>> {
+export default class AcceptableRootValueEditorConfigurationServiceProvider<MODEL extends Childrenable<any>> extends AbstractValueEditorConfigurationProvider<AcceptableRootValueEditorOptions<MODEL>> {
     public static readonly providerName = 'acceptableRootValueEditorConfigurationService';
 
     /*@ngInject*/
@@ -99,5 +99,5 @@ export default class AcceptableRootValueEditorConfigurationServiceProvider<MODEL
  *
  * Default options: {@link acceptableRootValueEditorDefaultOptions}
  */
-export interface AcceptableRootValueEditorConfigurationService<MODEL extends Childrenable> extends AbstractValueEditorConfigurationService<AcceptableRootValueEditorOptions<MODEL>> {
+export interface AcceptableRootValueEditorConfigurationService<MODEL extends Childrenable<any>> extends AbstractValueEditorConfigurationService<AcceptableRootValueEditorOptions<MODEL>> {
 }

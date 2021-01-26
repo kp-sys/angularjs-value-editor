@@ -4,7 +4,7 @@ import * as angular from 'angular';
 export default class LabController {
     public static readonly controllerName = 'labController';
 
-    public model = [];
+    public model = [{id: 0}];
 
     public options: AcceptableRootValueEditorOptions<any> = {
         acceptableValue: {
@@ -356,13 +356,10 @@ export default class LabController {
         'disabledItems': [],
         'multiselect': true,
         optionsTemplate: '{{$node.text}}',
-        equalityComparator: /*@ngInject*/ ($element1, $element2) => identifiedValuesEquals($element1, $element2)
+        equalityComparator: /*@ngInject*/ ($element1, $element2) => identifiedValuesEquals($element1, $element2),
+        emptyAsNull: true
     };
 
-    public setModel() {
-        this.model.push(this.options.acceptableValue.children[0].children[2]);
-        this.model = [...this.model];
-    }
 };
 
 function identifiedValuesEquals(iv1, iv2) {
