@@ -1,4 +1,6 @@
-treecontrol.tree-boot(
+treecontrol(
+    ng-init="touched = false"
+
     tree-model="$ctrl.internalAcceptableValues"
     options="$ctrl.treeOptions"
 
@@ -7,10 +9,14 @@ treecontrol.tree-boot(
     on-selection="$ctrl.select(selectedNode, selectedNodes)"
 
     expanded-nodes="$ctrl.expandedNodes"
+
+    ng-click="touched = true"
+
+    data-main-input
 )
 
-    span(ng-class="{'text-muted': !$ctrl.isSelectable(node)}") {{optionsTemplate}}
-    span(class="text-muted" ng-if="!$ctrl.isSelectable(node)") (\{\{$ctrl.localize('cannotSelect')\}\})
+    span(ng-class="{'text-muted': !$ctrl.isSelectable($node)}") {{optionsTemplate}}
+    span(class="text-muted" ng-if="!$ctrl.isSelectable($node) && !$ctrl.valueEditorController.isDisabled") \{\{$ctrl.localize('cannotSelect')\}\}
 
 input.validation-helper(
     type="text"
@@ -21,7 +27,7 @@ input.validation-helper(
     ng-model="$ctrl.model"
     ng-model-options="{ getterSetter: true }"
 
-    acceptable-root-required-validations
+    acceptable-root-required-validations="touched"
 
     kp-async-validation="$ctrl.valueEditorController.validations.async"
 

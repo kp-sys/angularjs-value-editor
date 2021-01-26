@@ -1,4 +1,4 @@
-.checkboxes-mode(ng-class="{'with-more': $ctrl.hasMore()}" data-main-input)
+.checkboxes-mode(ng-class="{'with-more': $ctrl.hasMore()}" data-main-input ng-init="touched = false" ng-click="touched = true")
     ul(ng-ref="ulElement")
         li.av-item(ng-repeat="$item in $ctrl.getAcceptableValuesForCheckboxes() track by $index" ng-init="index = $index")
             include ./checkbox-template.tpl.pug
@@ -38,5 +38,5 @@
         error-messages
         error-messages-custom-class="acceptable-checkboxes standalone"
 
-        checkboxes-validations
+        checkboxes-validations="touched"
     )

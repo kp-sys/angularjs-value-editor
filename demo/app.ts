@@ -23,6 +23,7 @@ window.$ = window.jQuery = jQuery;
 
 register('app', [valueEditorModule, ngAnimateModule, 'ui.bootstrap'])
     .config(config)
+    .filter('prop', () => (value: Array<{}>, prop: string) => value.map((element) => element[prop]))
     .component(ModalComponent.componentName, ModalComponent)
     .controller(DemoController.controllerName, DemoController)
     .controller(LabController.controllerName, LabController);

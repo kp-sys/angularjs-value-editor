@@ -33,6 +33,11 @@
   }
 
   .state {
+
+    .icon {
+      top: calc((0% - (100% - 1em)) - 20%);
+    }
+
     label {
       text-indent: 0;
 

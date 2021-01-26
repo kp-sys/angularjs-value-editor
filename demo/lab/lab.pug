@@ -1,15 +1,22 @@
 main.container(ng-controller="labController as $ctrl" ng-init="model = null")
 
-    button(type="button" ng-click="$ctrl.setModel()") Set
+    div {{$ctrl.model | prop:'id'}}
 
-    kp-value-editor(
-        type="'acceptable-root'"
+    form(name="form")
+        kp-value-editor(
+            type="'acceptable-root'"
 
-        ng-model="$ctrl.model"
+            ng-model="$ctrl.model"
 
-        options="$ctrl.options"
-    )
+            options="$ctrl.options"
 
+            validations="{" +
+                "required: false" +
+            "}"
+        )
+
+    div Form
+    pre {{form | json}}
 
     div Model:
     pre {{$ctrl.model | json}}

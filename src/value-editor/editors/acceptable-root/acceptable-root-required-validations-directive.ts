@@ -1,4 +1,4 @@
-import {IAttributes, IAugmentedJQuery, INgModelController, IScope} from 'angular';
+import {IAttributes, IAugmentedJQuery, INgModelController, IParseService, IScope} from 'angular';
 import KpValueEditorComponent, {KpValueEditorComponentController} from '../../kp-value-editor/kp-value-editor.component';
 import {AcceptableRootValueEditorOptions} from './acceptable-root-value-editor-configuration.provider';
 import {AcceptableRootValueEditorComponentController} from './acceptable-root.value-editor.component';
@@ -9,6 +9,8 @@ type AcceptableRootValueEditorController = KpValueEditorComponentController<any,
  * @ngdoc directive
  * @name acceptableRootRequiredValidations
  * @module angularjs-value-editor.acceptable-root
+ *
+ * @param {boolean} acceptableRootRequiredValidations Is touched?
  *
  * @restrict A
  *
@@ -22,8 +24,22 @@ export default class AcceptableRootRequiredValidationsDirective {
 
     public require = ['ngModel', `^^${KpValueEditorComponent.componentName}`];
 
+    /*@ngInject*/
+    constructor(private $parse: IParseService) {
+    }
+
     public link($scope: IScope, $element: IAugmentedJQuery, $attrs: IAttributes, [ngModelController, valueEditorController]: [INgModelController, AcceptableRootValueEditorController]) {
         ngModelController.$validators.required = this.requiredValidationFactory(valueEditorController);
+
+        const parseTouched: () => boolean = () => {
+            return this.$parse($attrs[AcceptableRootRequiredValidationsDirective.directiveName])($scope);
+        };
+
+        $scope.$watch(parseTouched, (touched) => {
+            if (touched) {
+                ngModelController.$setTouched();
+            }
+        });
 
         valueEditorController.addOptionsChangeListener(() => ngModelController.$validate());
     }
@@ -35,6 +51,6 @@ export default class AcceptableRootRequiredValidationsDirective {
             } else {
                 return !valueEditorController.validations?.required || modelValue;
             }
-        }
+        };
     }
 }

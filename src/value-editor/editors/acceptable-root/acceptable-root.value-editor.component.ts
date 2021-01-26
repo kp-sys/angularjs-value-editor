@@ -1,4 +1,3 @@
-/* istanbul ignore file */        // neni cas... :-(
 import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
 import {
     AcceptableRootValueEditorConfigurationService,
@@ -28,15 +27,14 @@ export function arrayEquals<E1 = any, E2 = any>(arr1: E1[], arr2: E2[], compareF
     return true;
 }
 
-export interface Childrenable {
-    children?: Childrenable[];
+export interface Childrenable<CHILD extends Childrenable<any>> {
+    children?: CHILD[];
 }
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.acceptableRootValueEditor';
 
-export class AcceptableRootValueEditorComponentController<VALUE extends Childrenable> extends AbstractTemplateValueEditor<VALUE | VALUE[], AcceptableRootValueEditorOptions<VALUE>> implements IOnInit, IDoCheck {
+export class AcceptableRootValueEditorComponentController<VALUE extends Childrenable<any>> extends AbstractTemplateValueEditor<VALUE | VALUE[], AcceptableRootValueEditorOptions<VALUE>> implements IOnInit, IDoCheck {
     private static readonly TEMPLATE_URL = require('./acceptable-root.value-editor.tpl.pug');
-    private static readonly TREECONTROL_TEMPLATE_URL = require('./treecontrol-custom-template.tpl.html');
 
     public expandedNodes: VALUE[];
     public internalAcceptableValues: [VALUE];
@@ -59,23 +57,14 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
             acceptableRootValueEditorLocalizationsService);
     }
 
-    public $doCheck(): void {
-        if (Array.isArray(this.model) &&
-            Array.isArray(this.selectedNodes) &&
-            !arrayEquals(this.model, this.selectedNodes, this.equalityComparator)) {
-            this.selectedNodes = [...this.model];
-        }
-    }
-
     public $onInit(): void {
         super.$onInit();
 
         this.internalAcceptableValues = [this.options.acceptableValue];
         this.treeOptions = {
-            nodeChildren: 'children',
+            nodeChildrenPropertyName: 'children',
             equality: this.equalityComparator,
             multiSelection: this.options.multiselect,
-            templateUrl: AcceptableRootValueEditorComponentController.TREECONTROL_TEMPLATE_URL,
             isSelectable: this.isSelectable
         };
 
@@ -91,8 +80,20 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
         };
     };
 
+    public $doCheck(): void {
+        if (Array.isArray(this.model) &&
+            Array.isArray(this.selectedNodes) &&
+            !arrayEquals(this.model, this.selectedNodes, this.equalityComparator)) {
+            this.selectedNodes = [...this.model];
+        }
+    }
+
     protected get emptyModel(): VALUE[] | VALUE {
         return this.options.multiselect ? [] : undefined;
+    }
+
+    public click() {
+        this.ngModelController.$setTouched();
     }
 
     public select(selectedNode: VALUE, selectedNodes: VALUE[]) {
@@ -109,7 +110,7 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
 
     @bind
     public isSelectable(node: VALUE): boolean {
-        return !this.options.disabledItems.some((disabledItem) => this.$injector.invoke(this.options.equalityComparator, null, {
+        return !this.valueEditorController.isDisabled && !this.options.disabledItems.some((disabledItem) => this.$injector.invoke(this.options.equalityComparator, null, {
             $element1: disabledItem,
             $element2: node
         }));
@@ -205,5 +206,5 @@ export default class AcceptableRootValueEditorComponent extends AbstractValueEdi
     public controller = AcceptableRootValueEditorComponentController;
 }
 
-export interface AcceptableRootValueEditorBindings<MODEL extends Childrenable> extends ValueEditorBindings<AcceptableRootValueEditorOptions<MODEL>, ValueEditorValidations> {
+export interface AcceptableRootValueEditorBindings<MODEL extends Childrenable<any>> extends ValueEditorBindings<AcceptableRootValueEditorOptions<MODEL>, ValueEditorValidations> {
 }

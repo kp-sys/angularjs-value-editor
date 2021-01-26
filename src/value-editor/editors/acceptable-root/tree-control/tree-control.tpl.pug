@@ -1,0 +1,24 @@
+ul.tree-list
+    li(ng-repeat="$node in $node.{{options.nodeChildrenPropertyName}} | filter:filterExpression:filterComparator {{options.orderBy}}" ng-class="headClass($node)" set-node-to-data)
+        .item
+            .switcher(ng-click="toggleNode($node)")
+                i.tree-branch-switcher.glyphicon.glyphicon-triangle-right
+            .content
+                .pretty.p-icon.p-smooth.p-curve.p-has-indeterminate
+                    input(
+                        type="checkbox"
+                        ng-disabled="!isSelectable($node)"
+                        ng-click="selectNode($node); expandSelfAndAllChildren($node)"
+                        ng-checked="isSelectedNode($node)"
+                        kp-indeterminate-checkbox="hasCheckedAnyChild($node) && !isSelectedNode($node)"
+                        data-subtree-index="\\{\\{$index\\}\\}"
+                    )
+                    .state.p-primary
+                        i.icon.glyphicon.glyphicon-ok
+                        label
+                    .state.p-is-indeterminate
+                        i.icon.glyphicon.glyphicon-minus
+                        label
+
+                .tree-label(ng-click="selectNode($node); expandSelfAndAllChildren($node)" tree-transclude)
+        treeitem(ng-if="isNodeExpanded()")

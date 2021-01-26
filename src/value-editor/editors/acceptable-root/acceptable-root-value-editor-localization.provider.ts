@@ -68,7 +68,7 @@ export interface AcceptableRootValueEditorLocalizations extends ValueEditorLocal
  * ```
  */
 export const ACCEPTABLE_ROOT_VALUE_EDITOR_DEFAULT_LOCALIZATIONS: Readonly<AcceptableRootValueEditorLocalizations> = Object.freeze({
-    cannotSelect: '(cannot select)',
+    cannotSelect: ' (cannot select)',
     showAll: 'Show all',
     deselectAll: 'Deselect all',
     selectAll: 'Select all'
