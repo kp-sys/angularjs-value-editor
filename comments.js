@@ -452,11 +452,14 @@
  * @name acceptableRootRequiredValidations
  * @module angularjs-value-editor.acceptable-root
  *
+ * @param {boolean} acceptableRootRequiredValidations Is touched?
+ *
  * @restrict A
  *
  * @description
  * Directive adding required validation to {@link acceptableRootValueEditor}.
- *//* tslint:disable:ban-types */
+ */
+/*@ngInject*//* tslint:disable:ban-types */
 /**
  * @ngdoc type
  * @name AcceptableRootValueEditorOptions
@@ -571,9 +574,7 @@
  *      selectAll: 'Select all'
  * }
  * ```
- *//* istanbul ignore file */
-/* neni cas... :-(*/
-/*@ngInject*/
+ *//*@ngInject*/
 /**
  * @ngdoc component
  * @name acceptableRootValueEditor
@@ -637,17 +638,15 @@
  *
  * @description
  *
- *//*@ngInject*//* @ts-ignore*/
-/* @ts-ignore*/
-/**
- * @param cssClass - the css class
- * @param addClassProperty - should we wrap the class name with class=""
- *//* istanbul ignore file */
+ *//*@ngInject*/
+/*@ngInject*//* @ts-ignore*/
+/* @ts-ignore*//* istanbul ignore file */
 /* neni cas... :-(*/
 /**
  * Taken from https://github.com/wix/angular-tree-control and modified
  * TODO: Refactoring needed.
  */
+/* tslint:disable-next-line:no-var-requires*/
 /*@ngInject*/
 /*@ngInject*/
 /* Branch node is not selectable, expand*/
@@ -949,11 +948,14 @@
  *
  * @restrict A
  *
+ * @param {boolean} acceptableRootRequiredValidations Is touched?
+ *
  * @description
  * Validation helper for acceptable value editor.
  *
  * It adds right version of required validation to acceptable value editor - checkboxes mode.
- *//**
+ */
+/*@ngInject*//**
  * @ngdoc service
  * @name uiSelectDecorator
  * @module angularjs-value-editor.acceptable
