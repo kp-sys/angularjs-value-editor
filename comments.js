@@ -482,6 +482,7 @@
  * | `$element2`  | Element 2                          |
  *
  * @property {string} optionsTemplate Angular template for displaying value in tree. Current option is accessible via `$node` variable name.
+ * @property {string} titleTemplate Angular template for displaying value in option title.
  *
  * @description
  * Extends {@link type:ValueEditorOptions}
@@ -502,7 +503,8 @@
  *      multiselect: false,
  *      disabledItems: [],
  *      equalityComparator: angular.equals,
- *      optionsTemplate: '{{$node}}'
+ *      optionsTemplate: '{{$node}}',
+ *      titleTemplate: undefined
  *  }
  * ```
  */
@@ -673,6 +675,7 @@
  * @property {VALUE[]} acceptableValues Array of predefined values.
  * @property {boolean} multiselectable If true, value editor will accept multiple values and init model as empty array if not.
  * @property {string} optionsTemplate Angular template for displaying options. Current option is accessible via `$item` variable name.
+ * @property {string} titleTemplate Angular template for displaying value in option title.
  * @property {Injectable<Function>} equalityComparator
  * ```
  * function(...args: any[]) => boolean
@@ -725,6 +728,7 @@
  *      multiselectable: false,
  *      searchable: true,
  *      optionsTemplate: '{{$item}}',
+ *      titleTemplate: undefined
  *      equalityComparator: \/*@ngInject*\/ ($element1, $element2) => angular.equals($element1, $element2),
  *      reorderable: false,
  *      showFirstCount: 0,
