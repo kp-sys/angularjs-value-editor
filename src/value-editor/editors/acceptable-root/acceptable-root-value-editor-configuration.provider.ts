@@ -28,6 +28,7 @@ import {Childrenable} from './acceptable-root.value-editor.component';
  * | `$element2`  | Element 2                          |
  *
  * @property {string} optionsTemplate Angular template for displaying value in tree. Current option is accessible via `$node` variable name.
+ * @property {string} titleTemplate Angular template for displaying value in option title.
  *
  * @description
  * Extends {@link type:ValueEditorOptions}
@@ -40,6 +41,7 @@ export interface AcceptableRootValueEditorOptions<MODEL extends Childrenable<any
     disabledItems?: MODEL[];
     equalityComparator?: Injectable<Function | ((...args: any[]) => boolean)>;
     optionsTemplate?: string;
+    titleTemplate?: string;
 }
 
 /**
@@ -56,7 +58,8 @@ export interface AcceptableRootValueEditorOptions<MODEL extends Childrenable<any
  *      multiselect: false,
  *      disabledItems: [],
  *      equalityComparator: angular.equals,
- *      optionsTemplate: '{{$node}}'
+ *      optionsTemplate: '{{$node}}',
+ *      titleTemplate: undefined
  *  }
  * ```
  */
@@ -65,7 +68,8 @@ export const ACCEPTABLE_ROOT_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<Accept
     multiselect: false,
     disabledItems: [],
     equalityComparator: /*@ngInject*/ ($element1, $element2) => angular.equals($element1, $element2),
-    optionsTemplate: '{{$node}}'
+    optionsTemplate: '{{$node}}',
+    titleTemplate: undefined
 };
 
 /**

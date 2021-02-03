@@ -189,6 +189,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
     protected getTemplateModel(): {} {
         return {
             optionsTemplate: this.options.optionsTemplate,
+            titleTemplate: this.options.titleTemplate,
             searchable: this.options.searchable,
             multiselectable: this.options.multiselectable,
             uuid: this.uuid,

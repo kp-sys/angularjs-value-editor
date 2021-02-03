@@ -16,6 +16,7 @@ import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../commo
  * @property {VALUE[]} acceptableValues Array of predefined values.
  * @property {boolean} multiselectable If true, value editor will accept multiple values and init model as empty array if not.
  * @property {string} optionsTemplate Angular template for displaying options. Current option is accessible via `$item` variable name.
+ * @property {string} titleTemplate Angular template for displaying value in option title.
  * @property {Injectable<Function>} equalityComparator
  * ```
  * function(...args: any[]) => boolean
@@ -59,6 +60,7 @@ export interface AcceptableValueEditorOptions<VALUE> extends ValueEditorOptions 
     multiselectable?: boolean,
     searchable?: boolean;
     optionsTemplate?: string;
+    titleTemplate?: string;
     equalityComparator?: Injectable<Function | ((...args: any[]) => boolean)>;
     reorderable?: boolean;
     sortComparator?: Injectable<Function | ((...args: any[]) => number | undefined)>;
@@ -84,6 +86,7 @@ export interface AcceptableValueEditorOptions<VALUE> extends ValueEditorOptions 
  *      multiselectable: false,
  *      searchable: true,
  *      optionsTemplate: '{{$item}}',
+ *      titleTemplate: undefined
  *      equalityComparator: \/*@ngInject*\/ ($element1, $element2) => angular.equals($element1, $element2),
  *      reorderable: false,
  *      showFirstCount: 0,
@@ -101,6 +104,7 @@ export const ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<AcceptableV
     multiselectable: false,
     searchable: true,
     optionsTemplate: '{{$item}}',
+    titleTemplate: undefined,
     equalityComparator: /*@ngInject*/ ($element1, $element2) => angular.equals($element1, $element2),
     reorderable: false,
     showFirstCount: 0,
