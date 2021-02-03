@@ -127,6 +127,7 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
     protected getTemplateModel(): {} {
         return {
             optionsTemplate: this.options.optionsTemplate,
+            titleTemplate: this.options.titleTemplate,
             multiselect: this.options.multiselect
         };
     }

@@ -15,7 +15,7 @@ treecontrol(
     data-main-input
 )
 
-    span(ng-class="{'text-muted': !$ctrl.isSelectable($node)}" ng-attr-title="{{optionsTemplate}}") {{optionsTemplate}}
+    span(ng-class="{'text-muted': !$ctrl.isSelectable($node)}" ng-attr-title="{{titleTemplate}}") {{optionsTemplate}}
     span(class="text-muted" ng-if="!$ctrl.isSelectable($node) && !$ctrl.valueEditorController.isDisabled") \{\{$ctrl.localize('cannotSelect')\}\}
 
 input.validation-helper(
