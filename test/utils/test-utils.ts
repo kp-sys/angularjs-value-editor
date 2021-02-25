@@ -1,7 +1,6 @@
-import IInjectorService = angular.auto.IInjectorService;
 import * as angular from 'angular';
 
-export function patchAngularElementToReturnInjector($injector: IInjectorService) {
+export function patchAngularElementToReturnInjector($injector: angular.auto.IInjectorService) {
     spyOn(angular.element.prototype, 'injector').and.callFake(() => {
         return $injector;
     });

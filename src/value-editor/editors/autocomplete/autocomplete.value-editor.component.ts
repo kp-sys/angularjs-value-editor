@@ -8,7 +8,6 @@ import {
 } from './autocomplete-value-editor-configuration.provider';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
-import IInjectorService = angular.auto.IInjectorService;
 
 /**
  * @ngdoc type
@@ -38,7 +37,7 @@ export class AutocompleteValueEditorComponentController<PARAMS> extends Abstract
                 private $log: ILogService,
                 private $timeout: ITimeoutService,
                 private $element: IAugmentedJQuery,
-                private $injector: IInjectorService
+                private $injector: angular.auto.IInjectorService
     ) {
         super(autocompleteValueEditorConfigurationService);
     }

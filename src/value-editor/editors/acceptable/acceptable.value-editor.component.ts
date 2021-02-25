@@ -12,7 +12,6 @@ import {PropertyChangeDetection} from '../../utils/equals';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 import {isInjectableOrFunction} from '../../utils/injectables';
-import IInjectorService = angular.auto.IInjectorService;
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.acceptableValueEditor';
 
@@ -29,7 +28,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
                 public acceptableValueEditorLocalizationsService: AcceptableValueEditorLocalizationsService,
                 public acceptableValueEditorConfigurationService: AcceptableValueEditorConfigurationService<VALUE>,
                 private $element: IAugmentedJQuery,
-                private $injector: IInjectorService) {
+                private $injector: angular.auto.IInjectorService) {
         super(
             AcceptableValueEditorComponentController.INLINE_TEMPLATE_URL,
             TEMPLATE_NAME_PREFIX,

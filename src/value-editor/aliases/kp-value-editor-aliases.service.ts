@@ -1,6 +1,5 @@
 import {TValueEditorType} from '../typings';
 import {ILogProvider, ILogService, IServiceProvider} from 'angular';
-import IInjectorService = angular.auto.IInjectorService;
 
 /**
  * @ngdoc type
@@ -26,7 +25,7 @@ export class KpValueEditorAliasesServiceProviderImpl implements KpValueEditorAli
     private $log: ILogService;
 
     /*@ngInject*/
-    constructor($injector: IInjectorService, $logProvider: ILogProvider, $windowProvider: IServiceProvider) {
+    constructor($injector: angular.auto.IInjectorService, $logProvider: ILogProvider, $windowProvider: IServiceProvider) {
         const $window = $injector.instantiate($windowProvider.$get);
         this.$log = $injector.instantiate($logProvider.$get, {$window});
     }

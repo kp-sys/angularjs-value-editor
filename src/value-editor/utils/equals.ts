@@ -8,7 +8,7 @@ import * as angular from 'angular';
 
 function isRegExp(value) {
     try {
-        return toString.call(value) === '[object RegExp]';
+        return Object.toString.call(value) === '[object RegExp]';
     } catch (e) {
         // console.log(value);
     }

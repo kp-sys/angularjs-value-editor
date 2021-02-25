@@ -11,7 +11,6 @@ import {PropertyChangeDetection} from '../../utils/equals';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 import {isInjectable} from '../../utils/injectables';
-import IInjectorService = angular.auto.IInjectorService;
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.searchableValueEditor';
 
@@ -28,7 +27,7 @@ export class SearchableValueEditorComponentController<MODEL = any> extends Abstr
                 $templateCache: ITemplateCacheService,
                 public loadingSpinnerTemplateUrl: string,
                 private $timeout: ITimeoutService,
-                private $injector: IInjectorService) {
+                private $injector: angular.auto.IInjectorService) {
         super(
             SearchableValueEditorComponentController.TEMPLATE_URL,
             TEMPLATE_NAME_PREFIX,

@@ -21,7 +21,6 @@ import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 import {isInjectableOrFunction} from '../../utils/injectables';
 import {getFormModel} from '../../utils/forms';
-import IInjectorService = angular.auto.IInjectorService;
 
 const TEMPLATE_NAME_PREFIX = 'value-editor.listValueEditor';
 
@@ -41,7 +40,7 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
         private listValueEditorConfigurationService: ListValueEditorConfigurationService<MODEL, OPTIONS>,
         listValueEditorLocalizationsService: ListValueEditorLocalizationsService,
         private $timeout: ITimeoutService,
-        private $injector: IInjectorService,
+        private $injector: angular.auto.IInjectorService,
         public loadingSpinnerTemplateUrl: string
     ) {
         super(
