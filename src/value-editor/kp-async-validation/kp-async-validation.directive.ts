@@ -14,7 +14,6 @@ import bind from 'bind-decorator';
 import {getFormModel} from '../utils/forms';
 import ErrorMessagesDirective, {ErrorMessagesDirectiveController} from '../error-messages/error-messages.directive';
 import {ValueEditorErrorMessagesLocalizationsService} from '../error-messages/error-messages-localization.provider';
-import IInjectorService = angular.auto.IInjectorService;
 
 /**
  * @ngdoc directive
@@ -69,7 +68,7 @@ export default class KpAsyncValidationDirective {
 
     /*@ngInject*/
     constructor(private $parse: IParseService,
-                private $injector: IInjectorService,
+                private $injector: angular.auto.IInjectorService,
                 private kpAsyncValidationService: KpAsyncValidationService,
                 private $timeout: ITimeoutService,
                 private valueEditorErrorMessagesLocalizationsService: ValueEditorErrorMessagesLocalizationsService) {

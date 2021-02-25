@@ -11,7 +11,6 @@ import {PropertyChangeDetection} from '../../utils/equals';
 import {TValueEditorType} from '../../typings';
 import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-component';
 import {TreeControlOptions} from './tree-control/tree-control.types';
-import IInjectorService = angular.auto.IInjectorService;
 
 export function arrayEquals<E1 = any, E2 = any>(arr1: E1[], arr2: E2[], compareFunction: (element1: E1, element2: E2) => boolean = (e1, e2) => e1 as any === e2 as any): boolean {
     if (arr1.length !== arr2.length) {
@@ -47,7 +46,7 @@ export class AcceptableRootValueEditorComponentController<VALUE extends Children
                 acceptableRootValueEditorLocalizationsService: AcceptableRootValueEditorLocalizationsService,
                 $interpolate: IInterpolateService,
                 $templateCache: ITemplateCacheService,
-                private $injector: IInjectorService) {
+                private $injector: angular.auto.IInjectorService) {
         super(
             AcceptableRootValueEditorComponentController.TEMPLATE_URL,
             TEMPLATE_NAME_PREFIX,
