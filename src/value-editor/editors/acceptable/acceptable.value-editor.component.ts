@@ -193,7 +193,8 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
             multiselectable: this.options.multiselectable,
             uuid: this.uuid,
             sort: isInjectableOrFunction(this.options.sortComparator),
-            name: this.valueEditorController.editorName
+            name: this.valueEditorController.editorName,
+            size: this.valueEditorController.size
         };
     }
 

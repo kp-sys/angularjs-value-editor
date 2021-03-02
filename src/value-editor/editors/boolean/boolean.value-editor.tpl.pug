@@ -1,4 +1,6 @@
-span.pretty.p-icon.p-smooth.p-curve(ng-class="{'p-has-indeterminate': $ctrl.options.nullAsIndeterminate}")
+span.pretty.p-icon.p-smooth.p-curve(
+        ng-class="[{true: 'p-has-indeterminate'}[$ctrl.options.nullAsIndeterminate], {xs: 'size-xs', sm: 'size-sm', md: 'size-md'}[$ctrl.valueEditorController.size]]"
+    )
     input(  type="checkbox"
 
         id="{{$ctrl.valueEditorController.editorId}}"
@@ -26,8 +28,8 @@ span.pretty.p-icon.p-smooth.p-curve(ng-class="{'p-has-indeterminate': $ctrl.opti
 
     .state
         i.icon.glyphicon.glyphicon-ok
-        label
+        label &nbsp;
 
     .state.p-is-indeterminate
         i.icon.glyphicon.glyphicon-minus
-        label
+        label &nbsp;

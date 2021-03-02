@@ -16,6 +16,8 @@ form(id="\\{\\{$ctrl.formId\\}\\}" name="{{formName}}" ng-submit="$ctrl.onSubmit
         is-focused="$ctrl.resolveAutofocusFirstField()"
         show-errors="$ctrl.showErrors"
 
+        size="$ctrl.size"
+
         options="{" +
             "fields: $ctrl.formSettings.fields, " +
             "__withoutNgForm: true, " +

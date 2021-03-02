@@ -135,7 +135,6 @@ export default class DemoController {
             editor: {
                 type: 'single-acceptable',
                 editorName: 'acceptable-inline-single',
-
                 validations: {
                     required: true
                 },
@@ -145,6 +144,7 @@ export default class DemoController {
                         'two',
                         'three'
                     ],
+                    switchToInlineModeThreshold: 1,
                     __forceDisableNgAnimate: true
                 } as AcceptableValueEditorOptions<string> & UndocumentedDisableNgAnimateValueEditorInternalOption
             }
@@ -155,7 +155,9 @@ export default class DemoController {
             editor: {
                 type: 'single-acceptable',
                 editorName: 'acceptable-block-single',
-
+                validations: {
+                    required: true
+                },
                 options: {
                     acceptableValues: [
                         'one',
@@ -163,7 +165,7 @@ export default class DemoController {
                         'three'
                     ],
                     switchToInlineModeThreshold: 0,
-                    allowSelectNull: true,
+                    allowSelectNull: false,
                     __forceDisableNgAnimate: true
                 } as AcceptableValueEditorOptions<string> & UndocumentedDisableNgAnimateValueEditorInternalOption
             }

@@ -1,5 +1,5 @@
 // INLINE INPUT WITH PREFIX/SUFFIX
-.input-group(ng-if="$ctrl.isText() && ($ctrl.options.prefix || $ctrl.options.suffix)")
+.input-group(ng-if="$ctrl.isText() && ($ctrl.options.prefix || $ctrl.options.suffix)" ng-class="'input-group-' + $ctrl.valueEditorController.size")
     .input-group-addon.prefix(ng-if="$ctrl.options.prefix") {{$ctrl.options.prefix}}
     input.form-control(
         ng-if="$ctrl.isText()"
@@ -9,6 +9,8 @@
         id="{{$ctrl.valueEditorController.editorId}}"
         name="{{$ctrl.valueEditorController.editorName}}"
         placeholder="{{$ctrl.valueEditorController.placeholder}}"
+
+        ng-class="'input-' + $ctrl.valueEditorController.size"
 
         ng-model="$ctrl.model"
         ng-model-options="{ getterSetter: true}"
@@ -56,6 +58,8 @@ input.form-control(
     ng-model-options="{ getterSetter: true}"
     ng-trim="false"
 
+    ng-class="'input-' + $ctrl.valueEditorController.size"
+
     ng-disabled="$ctrl.valueEditorController.isDisabled"
 
     ng-required="$ctrl.valueEditorController.validations.required"
@@ -87,6 +91,8 @@ textarea.form-control(
     ng-model="$ctrl.model"
     ng-model-options="{ getterSetter: true}"
     ng-trim="false"
+
+    ng-class="'input-' + $ctrl.valueEditorController.size"
 
     ng-disabled="$ctrl.valueEditorController.isDisabled"
 

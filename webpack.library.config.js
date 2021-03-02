@@ -44,7 +44,7 @@ module.exports = (env, {mode}) => ({
             },
             {
                 test: /\.ts$/,
-                include: [/src/],
+                include: [/src/, /test/],
                 use: [
                     {
                         loader: 'babel-loader',

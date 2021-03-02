@@ -25,6 +25,12 @@ import {KpValueEditorRegistrationService} from './kp-value-editor-registration.p
 import {Component} from '@kpsys/angularjs-register';
 import {KpAsyncValidationOptions} from '../kp-async-validation/kp-async-validation.directive';
 
+export enum ValueEditorSize {
+    MD = 'md',
+    SM = 'sm',
+    XS = 'xs'
+}
+
 export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS extends ValueEditorOptions = ValueEditorOptions, EDITORVALIDATIONS extends ValueEditorValidations = ValueEditorValidations>
     extends NgModelConnector<MODEL>
     implements ValueEditorBindings<EDITOROPTS, EDITORVALIDATIONS>, IOnInit, IDoCheck, IOnDestroy, IOnChanges {
@@ -38,7 +44,8 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
     public placeholder: string;
     public isDisabled: boolean;
     public isVisible: boolean = true;
-    public isFocused;
+    public isFocused: boolean;
+    public size: ValueEditorSize;
     public showErrors: boolean;
     public validations: EDITORVALIDATIONS;
     // settings for specific value editor sub-component
@@ -84,6 +91,10 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
 
         if (!this.editorName) {
             this.editorName = this.editorId || this.generateEditorName();
+        }
+
+        if (!this.size) {
+            this.size = ValueEditorSize.MD;
         }
 
         if (!this.templateUpdated) {
@@ -180,6 +191,7 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
  * @param {boolean} isVisible If input is visible. <.
  * @param {boolean} isFocused If input should have been focused. <.
  * @param {boolean} showErrors If true, error messages is displayed.
+ * @param {ValueEditorSize} size Bootstrap size of editor. Possible values are: `'md'`, `'sm'`, `'xs'`. Default value is: `'md'`.
  * @param {ValueEditorValidations} validations ValueEditor validations. <.
  * @param {ValueEditorOptions} options ValueEditor options. Type depends on ValueEditor type. <.
  * @param {ValueEditorLocalizations} localizations Custom localizations overriding default ones.
@@ -208,6 +220,7 @@ export default class KpValueEditorComponent implements Component<ValueEditorBind
         isVisible: '<?',
         isFocused: '<?',
         showErrors: '<?',
+        size: '<?',
         validations: '<?',
         options: '<?',
         localizations: '<?'
@@ -282,6 +295,7 @@ export interface ValueEditorBindings<EDITOROPTS extends ValueEditorOptions = Val
     isVisible?: boolean;
     isFocused?: boolean;
     showErrors?: boolean;
+    size?: ValueEditorSize;
     validations?: EDITORVALIDATIONS;
     options?: EDITOROPTS;
     localizations?: ValueEditorLocalizations;

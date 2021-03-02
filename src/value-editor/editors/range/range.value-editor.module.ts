@@ -1,3 +1,4 @@
+import './range.value-editor.less';
 import register from '@kpsys/angularjs-register';
 import sliderModule from '@kpsys/angularjs-histogram-slider';
 import RangeValueEditorComponent from './range.value-editor.component';

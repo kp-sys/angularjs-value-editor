@@ -1,0 +1,32 @@
+range-value-editor {
+    .size-md {
+        .handlers(24px, 4px);
+    }
+
+    .size-sm {
+        font-size: 12px;
+        .handlers(20px, 2px);
+    }
+
+    .size-xs {
+        font-size: 12px;
+        .handlers(16px, 1px);
+    }
+
+}
+
+.handlers(@size, @background-thickness) {
+    .slider {
+        .handle {
+            height: @size;
+            width: @size;
+            top: -(@size / 2) + (@background-thickness / 2);
+            padding-inline: 0;
+        }
+
+        .slider-line-progress,
+        .slider-line-background {
+            height: @background-thickness;
+        }
+    }
+}

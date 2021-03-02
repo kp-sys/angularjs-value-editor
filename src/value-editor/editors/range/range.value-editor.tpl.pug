@@ -2,10 +2,12 @@
 | \{\{$setTo = $ctrl.setTo; ''\}\}
 | \{\{$options = $ctrl.options; ''\}\}
 
-div.curent-value {{currentValueTemplate}}
+div.curent-value(ng-class="'size-' + $ctrl.valueEditorController.size") {{currentValueTemplate}}
 td-slider(
     ng-model="$ctrl.internalModel"
     ng-model-options="{ getterSetter: true}"
+
+    ng-class="'size-' + $ctrl.valueEditorController.size"
 
     slider-model-transformer="$ctrl.options.extremesAsNull"
 

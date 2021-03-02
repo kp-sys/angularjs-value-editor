@@ -1,16 +1,42 @@
-main.container(ng-controller="demoController as $ctrl" ng-init="isDisabled = false")
+main.container-fluid(ng-controller="demoController as $ctrl" ng-init="isDisabled = false")
     button.btn.btn-default(ng-click="$ctrl.forceShowErrors()") Show errors &nbsp;
         i.glyphicon.glyphicon-ok(ng-show="$ctrl.showErrors")
 
-    kp-universal-form(
-        name="myForm"
-        form-settings="::{fields: $ctrl.fields}"
-        form-controller="formController = $formController"
-        on-submit="$ctrl.submit()"
-        labels-width="2"
-        show-errors="$ctrl.showErrors"
-        ng-model="$ctrl.model"
-    )
+    .row
+        .col-sm-4
+            kp-universal-form(
+                name="myForm"
+                form-settings="::{fields: $ctrl.fields}"
+                form-controller="formController = $formController"
+                on-submit="$ctrl.submit()"
+                labels-width="2"
+                show-errors="$ctrl.showErrors"
+                ng-model="$ctrl.model"
+                size="'md'"
+            )
+        .col-sm-4
+            kp-universal-form(
+                name="myForm"
+                form-settings="::{fields: $ctrl.fields}"
+                form-controller="formController = $formController"
+                on-submit="$ctrl.submit()"
+                labels-width="2"
+                show-errors="$ctrl.showErrors"
+                ng-model="$ctrl.model"
+                size="'sm'"
+            )
+        .col-sm-4
+            kp-universal-form(
+                name="myForm"
+                form-settings="::{fields: $ctrl.fields}"
+                form-controller="formController = $formController"
+                on-submit="$ctrl.submit()"
+                labels-width="2"
+                show-errors="$ctrl.showErrors"
+                ng-model="$ctrl.model"
+                size="'xs'"
+            )
+
 
     button(type="button" ng-click="$ctrl.model = undefined") Reset
 

@@ -1,19 +1,35 @@
 main.container(ng-controller="labController as $ctrl" ng-init="model = null")
 
-    div {{$ctrl.model | prop:'id'}}
+    button.btn.btn-default.btn-md Button
+    kp-value-editor(
+        type="'boolean'"
+        ng-model="$ctrl.model"
 
-    form(name="form" style="width: 200px; border: 1px solid gray; padding: 10px;")
-        kp-value-editor(
-            type="'acceptable'"
+        placeholder="'placeholder'"
+        options="$ctrl.options"
+    )
 
-            ng-model="$ctrl.model"
+    br
 
-            options="$ctrl.options"
+    button.btn.btn-default.btn-sm Button
+    kp-value-editor(
+        type="'boolean'"
+        ng-model="$ctrl.model"
+        size="'sm'"
+        placeholder="'placeholder'"
+        options="$ctrl.options"
+    )
 
-            validations="{" +
-                "required: false" +
-            "}"
-        )
+    br
+
+    button.btn.btn-default.btn-xs Button
+    kp-value-editor(
+        type="'boolean'"
+        ng-model="$ctrl.model"
+        size="'xs'"
+        placeholder="'placeholder'"
+        options="$ctrl.options"
+    )
 
     div Form
     pre {{form | json}}

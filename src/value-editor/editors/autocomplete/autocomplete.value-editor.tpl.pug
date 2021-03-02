@@ -1,4 +1,4 @@
-div.kp-autocomplete.input-group
+div.kp-autocomplete.input-group(ng-class="'input-group-' + $ctrl.valueEditorController.size")
     input.form-control(
         id="{{$ctrl.valueEditorController.editorId}}"
         name="{{$ctrl.valueEditorController.editorName}}"
@@ -13,6 +13,8 @@ div.kp-autocomplete.input-group
         typeahead-min-length="$ctrl.minLength"
 
         ng-disabled="$ctrl.valueEditorController.isDisabled"
+
+        ng-class="'input-' + $ctrl.valueEditorController.size"
 
         ng-required="$ctrl.valueEditorController.validations.required"
 
