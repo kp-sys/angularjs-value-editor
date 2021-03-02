@@ -1,104 +1,261 @@
 @import '~bootstrap-less/bootstrap/variables';
 
 acceptable-value-editor {
-    @av-item-height: 32px;
-    @transition: 0.45s cubic-bezier(0.44, 0.99, 0.48, 1);
-
-    ul {
-        padding: 0;
-        margin: 0;
-    }
-
-    ul, li {
-        list-style-type: none;
-    }
-
-    .ui-select-multiple {
-        &.ui-select-bootstrap {
+    .checkboxes-mode {
+        ul {
             padding: 0;
+            margin: 0;
+        }
 
-            .ui-select-search {
-                margin-bottom: 0;
-                margin-left: 3px;
-                height: calc(1.42857143em + 12px);
+        ul, li {
+            list-style-type: none;
+        }
+
+        .av-item {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            .checkbox-label {
                 cursor: pointer;
             }
+        }
 
-            .ui-select-match {
-                padding-left: 3px;
-            }
-
-            .ui-select-match-item {
-                margin: 3px 3px 3px 0;
+        &.size-md {
+            .av-item {
+                padding-top: 7px;
+                padding-bottom: 7px;
             }
         }
-    }
 
-    .av-item {
-        height: @av-item-height;
-        line-height: @av-item-height;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        &.size-sm,
+        &.size-xs {
+            .av-item {
+                font-size: 12px;
+                line-height: 1.5;
+            }
 
-        .checkbox-label {
+            .more-label {
+                font-size: 12px;
+            }
+        }
+
+        &.size-sm {
+            .av-item {
+                padding-top: 6px;
+                padding-bottom: 6px;
+            }
+        }
+
+        &.size-xs {
+            .av-item {
+                padding-top: 2px;
+                padding-bottom: 2px;
+            }
+        }
+
+        .more-label {
             cursor: pointer;
         }
-    }
 
-    .more-container {
-        position: relative;
-        height: auto;
-        border-top: 0;
-    }
+        .more-checkbox {
+            position: absolute;
+            visibility: hidden;
 
-    .more-label {
-        display: block;
-        width: 100%;
-        height: @av-item-height;
-        cursor: pointer;
-        position: absolute;
-        top: 0;
-        transition: top @transition;
-        background-color: white;
-        z-index: 2;
-    }
-
-    .more-checkbox {
-        position: absolute;
-        left: -9999px;
-
-        ~ ul {
-            width: 100%;
-            overflow: hidden;
-            max-height: 0;
-            transition: max-height @transition;
-        }
-
-        &:checked {
             ~ ul {
-                max-height: 300px;
+                width: 100%;
+                overflow: hidden;
+                max-height: 0;
+                transition: max-height 0.45s cubic-bezier(0.44, 0.99, 0.48, 1);
             }
 
-            + .more-label {
-                top: 100%;
+            &:checked {
+                ~ ul {
+                    max-height: 300px;
+                }
+
+                + .more-label {
+                    top: 100%;
+                }
             }
         }
     }
 
-    .with-more ul li:last-child {
-        margin-bottom: @av-item-height;
+    .ui-select-container {
+        &.ui-select-bootstrap .ui-select-match-text span {
+            display: inline;
+        }
+
+        &.ui-select-multiple {
+            &.ui-select-bootstrap {
+                .ui-select-search {
+                    cursor: pointer;
+                    display: block;
+                }
+
+                .ui-select-match-text span {
+                    display: inline;
+                }
+            }
+        }
+
+        &.size-md {
+            &.ui-select-multiple {
+                padding: 6px 12px;
+                min-height: @input-height-base;
+
+                .ui-select-search.input-xs {
+                    padding: 2px 12px 6px;
+                    margin: 0 -12px -6px;
+                    line-height: @line-height-base;
+                    font-size: 14px;
+                }
+
+                .ui-select-match-item {
+                    font-size: 14px;
+                }
+
+                .ui-select-match .close {
+                    font-size: 20px;
+                    line-height: 1;
+                }
+
+                .ui-select-match-padding(6px);
+            }
+        }
+
+        &.size-sm {
+            &.ui-select-multiple {
+                padding: 5px 10px;
+                min-height: @input-height-small;
+
+                .ui-select-search.input-xs {
+                    padding: 2px 10px 5px;
+                    margin: 0 -10px -5px;
+                    font-size: 12px;
+                }
+
+                .ui-select-match-item {
+                    font-size: 12px;
+                }
+
+                .ui-select-match .close {
+                    font-size: 18px;
+                    line-height: 1;
+                }
+
+                .ui-select-match-padding(5px);
+            }
+
+            &:not(.ui-select-multiple) {
+                .ui-select-toggle,
+                .ui-select-match ~ .ui-select-search {
+                    height: auto;
+                    min-height: 30px;
+                    font-size: 12px;
+                    padding: 5px 10px;
+                }
+            }
+
+            .ui-select-choices {
+                font-size: 12px;
+
+                .ui-select-choices-row > span {
+                    padding: 3px 16px;
+                }
+            }
+        }
+
+        &.size-xs {
+            &.ui-select-multiple {
+                @input-height-extra-small: (floor(@font-size-small * @line-height-small) + (1 * 2) + 2);
+
+                padding: 0 5px;
+                min-height: @input-height-extra-small;
+
+                .ui-select-search.input-xs {
+                    padding: 1px 5px;
+                    margin: 0 -5px -1px;
+                    font-size: 12px;
+                }
+
+                .ui-select-match-item {
+                    font-size: 12px;
+                }
+
+                .ui-select-match .close {
+                    font-size: 18px;
+                    line-height: 1;
+                }
+
+                .ui-select-match-padding(1px);
+            }
+
+            &:not(.ui-select-multiple) {
+                .ui-select-toggle,
+                .ui-select-match ~ .ui-select-search {
+                    height: auto;
+                    min-height: 22px;
+                    font-size: 12px;
+                    padding: 1px 5px;
+                }
+            }
+
+            .ui-select-choices {
+                font-size: 12px;
+
+                .ui-select-choices-row > span {
+                    padding: 3px 16px;
+                }
+            }
+        }
+    }
+
+    .list-group {
+        margin-bottom: 0;
+
+        &.size-md {
+            .list-group-item {
+                padding-top: 6px;
+                padding-bottom: 6px;
+            }
+        }
+
+        &.size-sm,
+        &.size-xs {
+            .list-group-item {
+                font-size: 12px;
+                line-height: 1.5;
+            }
+        }
+
+        &.size-sm {
+            .list-group-item {
+                padding-top: 6px;
+                padding-bottom: 4px;
+            }
+        }
+
+        &.size-xs {
+            .list-group-item {
+                padding-top: 2px;
+                padding-bottom: 0;
+            }
+        }
+
     }
 }
 
-kp-value-editor .error-message.acceptable-select {
-    margin-top: 1px;
-}
+kp-value-editor .error-message {
+    &.single-acceptable-select {
+        margin-top: 1px;
+    }
 
-kp-value-editor .error-message.acceptable-checkboxes {
-    right: auto !important;
-    position: relative;
-    margin-top: 5px;
+    &.acceptable-checkboxes {
+        right: auto !important;
+        position: relative;
+        margin-top: 5px;
+    }
 }
 
 .has-error acceptable-value-editor .pretty label::before {
@@ -107,3 +264,8 @@ kp-value-editor .error-message.acceptable-checkboxes {
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
+.ui-select-match-padding(@ui-select-match-padding) {
+    .ui-select-match-item {
+        margin: @ui-select-match-padding @ui-select-match-padding @ui-select-match-padding 0;
+    }
+}

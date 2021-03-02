@@ -42,7 +42,8 @@ export default register('treeControl')
                 orderBy: '=?',
                 reverseOrder: '@',
                 filterExpression: '=?',
-                filterComparator: '=?'
+                filterComparator: '=?',
+                bootstrapSize: '=size'
             },
             controller: /*@ngInject*/ function TreeControlController<NODE>($scope: TreeControlScope<NODE>, $templateCache: ITemplateCacheService, $interpolate: IInterpolateService, treeConfig: TreeControlOptions<NODE>) {
 

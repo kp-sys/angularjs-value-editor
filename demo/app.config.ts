@@ -6,6 +6,8 @@ import KpUniversalFormConfigurationServiceProvider
 import SearchableValueEditorConfigurationServiceProvider
     from '../src/value-editor/editors/searchable/searchable-value-editor-configuration.provider';
 import {KpAsyncValidationServiceProvider} from '../src/value-editor/kp-async-validation/kp-async-validation.provider';
+import ObjectValueEditorConfigurationServiceProvider
+    from '../src/value-editor/meta-editors/object/object-value-editor-configuration.provider';
 
 /*@ngInject*/
 export default function config(
@@ -13,10 +15,11 @@ export default function config(
     kpValueEditorConfigurationServiceProvider: KpValueEditorConfigurationServiceProvider,
     $animateProvider: angular.animate.IAnimateProvider,
     searchableValueEditorConfigurationServiceProvider: SearchableValueEditorConfigurationServiceProvider<any>,
-    kpAsyncValidationServiceProvider: KpAsyncValidationServiceProvider
+    kpAsyncValidationServiceProvider: KpAsyncValidationServiceProvider,
+    objectValueEditorConfigurationServiceProvider: ObjectValueEditorConfigurationServiceProvider
 ) {
     kpUniversalFormConfigurationServiceProvider.setAutofocusFirstField(true);
-    kpValueEditorConfigurationServiceProvider.setDebugMode(true);
+    kpValueEditorConfigurationServiceProvider.setDebugMode(false);
     kpValueEditorConfigurationServiceProvider.setPreciseWatchForOptionsChanges(false);
 
     searchableValueEditorConfigurationServiceProvider.setConfiguration({
@@ -33,4 +36,8 @@ export default function config(
     });
 
     $animateProvider.classNameFilter(/ng-animate-enabled/);
+
+    objectValueEditorConfigurationServiceProvider.setConfiguration({
+        labelsWidth: 4
+    });
 }

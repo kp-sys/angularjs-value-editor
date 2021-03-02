@@ -1,4 +1,4 @@
-.checkboxes-mode(ng-class="{'with-more': $ctrl.hasMore()}" data-main-input ng-init="touched = false" ng-click="touched = true")
+.checkboxes-mode(class="size-{{size}}" ng-class="{'with-more': $ctrl.hasMore()}" data-main-input ng-init="touched = false" ng-click="touched = true")
     ul(ng-ref="ulElement")
         li.av-item(ng-attr-title="{{titleTemplate}}" ng-repeat="$item in $ctrl.getAcceptableValuesForCheckboxes() track by $index" ng-init="index = $index")
             include ./checkbox-template.tpl.pug
@@ -11,15 +11,15 @@
                 }
 
             input.more-checkbox(id="check-{{uuid}}" type="checkbox" ng-model="expanded")
-            label.more-label(for="check-{{uuid}}")
-                i.glyphicon(ng-class="expanded ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'")
-                span(ng-show="expanded" ng-bind="$ctrl.localize('less')")
-                span(ng-hide="expanded" ng-bind="$ctrl.localize('more') + ' (' + $ctrl.getMoreCount() + ')'")
-
             ul
                 li.av-item(ng-attr-title="{{titleTemplate}}" ng-repeat="$item in $ctrl.getAcceptableValuesForCheckboxes($ctrl.options.showFirstCount, 9007199254740990) track by $index" ng-init="index = $index + $ctrl.options.showFirstCount")
                     include ./checkbox-template.tpl.pug
                     span.checkbox-label(ng-click="$ctrl.updateModel($item)") {{optionsTemplate}}
+
+            label.more-label(for="check-{{uuid}}")
+                i.glyphicon(ng-class="expanded ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'")
+                span(ng-show="expanded" ng-bind="$ctrl.localize('less')")
+                span(ng-hide="expanded" ng-bind="$ctrl.localize('more') + ' (' + $ctrl.getMoreCount() + ')'")
 
     .btn-group
         button.btn.btn-default.btn-xs.select-all(type="button" ng-disabled="$ctrl.model.length === $ctrl.options.acceptableValues.length" ng-click="$ctrl.model = $ctrl.options.acceptableValues.slice()" ng-bind="$ctrl.localize('selectAll')")

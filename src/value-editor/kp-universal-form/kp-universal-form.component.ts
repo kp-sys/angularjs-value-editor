@@ -11,6 +11,8 @@ import {
 import {ObjectValueEditorField} from '../meta-editors/object/object-value-editor-configuration.provider';
 import {generateUuid} from '../utils/uuid-generator';
 import {KpUniversalFormConfigurationService} from './kp-universal-form-configuration-provider';
+import {ValueEditorSize} from '../kp-value-editor/kp-value-editor.component';
+import {Component} from '@kpsys/angularjs-register';
 
 /**
  * @ngdoc type
@@ -146,6 +148,7 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
  * @param {Event=} onSubmit.$event Submit event.
  * @param {ObjectValueEditorLabelsWidth=} labelsWidth See {@link ObjectValueEditorOptions}. Default value is `2`.
  * @param {boolean=} showErrors If `true` it displays all validation error messages.
+ * @param {ValueEditorSize} size Bootstrap size of editor. Possible values are: `'md'`, `'sm'`, `'xs'`. Default value is: `'md'`.
  * @param {KpUniversalFormComponentOptions=} options Specific options for universal form.
  * @param {{}=} asyncValidationsModel Specify model for async validations. If defined, all async validations with set `wholeForm = true` use this model.
  *
@@ -220,7 +223,7 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
  *     </file>
  * </example>
  */
-export default class KpUniversalFormComponent {
+export default class KpUniversalFormComponent implements Component<KpUniversalFormComponentBindings> {
     public static readonly componentName = 'kpUniversalForm';
 
     public require = {
@@ -244,8 +247,9 @@ export default class KpUniversalFormComponent {
         showErrors: '<?',
         options: '<?',
         asyncValidationsModel: '<?',
-        ngChange: '&?'
-    };
+        ngChange: '&?',
+        size: '<?'
+    } as const;
 
     public controller = KpUniversalFormComponentController;
 
@@ -277,6 +281,7 @@ export interface KpUniversalFormComponentBindings {
     showErrors?: boolean;
     options?: KpUniversalFormComponentOptions;
     asyncValidationsModel?: {};
+    size?: ValueEditorSize
 
     formController(locals: { $formController: IFormController });
 

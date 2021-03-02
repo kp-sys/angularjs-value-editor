@@ -1,10 +1,40 @@
 object-value-editor {
-    label.required::after {
-        content: '*';
-        color: red;
-        vertical-align: super;
-        font-size: 10px;
-        margin-left: 2px;
+    .value-editor-label {
+        &.required::after {
+            content: '*';
+            color: red;
+            vertical-align: super;
+            font-size: 10px;
+            margin-left: 2px;
+        }
+    }
+
+    .size-sm,
+    .size-xs {
+        .value-editor-label {
+            font-size: 12px;
+            line-height: 1.5;
+        }
+    }
+
+    .size-sm {
+        &.value-editor-form-group {
+            margin-bottom: 10px;
+        }
+
+        .value-editor-label {
+            padding-top: 5px;
+        }
+    }
+
+    .size-xs {
+        &.value-editor-form-group {
+            margin-bottom: 5px;
+        }
+
+        .value-editor-label {
+            padding-top: 1px;
+        }
     }
 
     .editor-label-hint {

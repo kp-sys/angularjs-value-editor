@@ -3,6 +3,33 @@
 @import '~bootstrap-less/bootstrap/mixins/vendor-prefixes';
 
 kp-value-editor {
+
+    .input-xs {
+        height: 22px;
+        padding: 1px 5px;
+        font-size: 12px;
+        line-height: 1.5;
+        border-radius: 3px;
+    }
+
+    .input-group.input-group-xs {
+        .input-group-addon,
+        .input-group-btn .btn {
+            height: 22px;
+            padding: 3px 5px 0 5px;
+            font-size: 12px;
+            line-height: 1.3;
+        }
+
+        > .input-group-addon {
+            border-radius: 3px 0 0 3px;
+        }
+
+        .input-group-addon:last-child {
+            border-radius: 0 3px 3px 0;
+        }
+    }
+
     .input-group-select {
         padding: 0;
         border: none;
@@ -10,9 +37,12 @@ kp-value-editor {
         .ui-select-toggle,
         .ui-select-search {
             border-right: 0;
-
             border-top-left-radius: 4px !important;
             border-bottom-left-radius: 4px !important;
+        }
+
+        .ui-select-search {
+            padding-left: 6px;
         }
 
         .ui-select-placeholder,
@@ -21,18 +51,66 @@ kp-value-editor {
         }
     }
 
-    .has-error .input-group .btn-default {
-        border-color: @state-danger-text;
-        transition: border-color 0.15s ease-in-out;
+    .list-group {
+        .size-sm .list-group-item {
+            font-size: 12px;
+            padding: 9px 12px;
+        }
+
+        .size-xs .list-group-item {
+            font-size: 12px;
+            padding: 2px 10px;
+        }
     }
 
-    .has-error .has-not-error .input-group .btn-default {
-        border-color: @input-border;
-        transition: border-color 0.15s ease-in-out;
+    .pretty {
+        line-height: revert;
+
+        &.p-smooth .state label {
+            user-select: none;
+
+            &::before,
+            &::after {
+                top: 0;
+            }
+
+            &::before {
+                background-color: white;
+            }
+        }
+
+        &.p-icon .state .icon {
+            top: 0;
+            border: none;
+        }
+
+        &.size-md {
+            .checkbox-size(1.42857143em);
+        }
+
+        &.size-sm,
+        &.size-xs {
+            font-size: 12px;
+            margin-right: 0.6em;
+
+            .checkbox-size(1.42857143em);
+        }
     }
 
-    .has-error .has-not-error {
-        .form-control-validation(@input-color, @input-border, @input-bg);
+    .has-error {
+        .input-group .btn-default {
+            border-color: @state-danger-text;
+            transition: border-color 0.15s ease-in-out;
+        }
+
+        .has-not-error {
+            .input-group .btn-default {
+                border-color: @input-border;
+                transition: border-color 0.15s ease-in-out;
+            }
+
+            .form-control-validation(@input-color, @input-border, @input-bg);
+        }
     }
 
     .validation-helper {
@@ -43,5 +121,20 @@ kp-value-editor {
         border: 0;
         opacity: 0;
         position: absolute;
+    }
+}
+
+.checkbox-size(@size) {
+    &.p-smooth .state label {
+        &::before,
+        &::after {
+            width: @size;
+            height: @size;
+        }
+    }
+
+    &.p-icon .state .icon {
+        width: @size;
+        height: @size;
     }
 }

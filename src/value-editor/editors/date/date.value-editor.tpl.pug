@@ -1,4 +1,4 @@
-.input-group(uib-dropdown='' dropdown-append-to-body='' is-open='datePickerOpen')
+.input-group(ng-class="'input-group-' + $ctrl.valueEditorController.size" uib-dropdown='' dropdown-append-to-body='' is-open='datePickerOpen')
     input.form-control(
         type='text'
 
@@ -10,6 +10,8 @@
         ng-model-options="{ getterSetter: true}"
 
         ng-disabled="$ctrl.valueEditorController.isDisabled"
+
+        ng-class="'input-' + $ctrl.valueEditorController.size"
 
         ng-required="$ctrl.valueEditorController.validations.required"
 

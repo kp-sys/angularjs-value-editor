@@ -35,13 +35,21 @@ import KpFocusableInputDirective from './common/directives/kp-focusable-input.di
 import ModelToJsonViewFormatterDirective from './common/directives/model-to-json-view-formatter.directive';
 import KpIndeterminateCheckboxDirective from './common/directives/kp-indeterminate-checkbox.directive';
 // COMMON SERVICES AND PROVIDERS
-import {EmptyConfigurationService} from './abstract/abstract-value-editor-component-controller';
+import AbstractValueEditorComponentController, {EmptyConfigurationService} from './abstract/abstract-value-editor-component-controller';
 import aliasesModule from './aliases/kp-value-editor-aliases.module';
 import KpValueEditorConfigurationServiceProvider from './kp-value-editor/kp-value-editor-configuration-provider';
 import KpValueEditorRegistrationServiceProvider from './kp-value-editor/kp-value-editor-registration.provider';
 // CONFIG
 import valueEditorsConfig from './value-editor.config';
 import nullAwareFilter from './common/null-aware-filter.filter';
+// REEXPORTS
+import {AbstractMetaValueEditorComponentController} from './meta-editors/abstract-meta-value-editor.component';
+import AbstractValueEditorComponent from './abstract/abstract-value-editor-component';
+import AbstractTemplateValueEditor from './abstract/abstract-template-value-editor';
+import AbstractValueEditorLocalizationProvider from './abstract/abstract-value-editor-localization.provider';
+import AbstractValueEditorConfigurationProvider from './abstract/abstract-value-editor-configuration.provider';
+import ValueEditorMocker from '../../test/utils/value-editor-mocker';
+import {camelCaseToKebabCase, camelCaseToKebabCaseAndRemoveBrackets} from './utils/string-utils';
 
 /**
  * @ngdoc constant
@@ -100,6 +108,19 @@ export default register('angularjs-value-editor', [
     .directive(KpIndeterminateCheckboxDirective.directiveName, KpIndeterminateCheckboxDirective)
     .component(KpValueEditorComponent.componentName, KpValueEditorComponent)
     .name();
+
+export {
+    AbstractValueEditorComponent,
+    AbstractValueEditorComponentController,
+    AbstractMetaValueEditorComponentController,
+    AbstractTemplateValueEditor,
+    AbstractValueEditorConfigurationProvider,
+    AbstractValueEditorLocalizationProvider,
+
+    ValueEditorMocker,
+    camelCaseToKebabCase,
+    camelCaseToKebabCaseAndRemoveBrackets
+};
 
 /**
  * @typedef ng.type.ngModel

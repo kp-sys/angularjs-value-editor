@@ -1,4 +1,6 @@
 treecontrol(
+    ng-class="'size-' + $ctrl.valueEditorController.size"
+
     ng-init="touched = false"
 
     tree-model="$ctrl.internalAcceptableValues"
@@ -11,6 +13,8 @@ treecontrol(
     expanded-nodes="$ctrl.expandedNodes"
 
     ng-click="touched = true"
+
+    size="$ctrl.valueEditorController.size"
 
     data-main-input
 )

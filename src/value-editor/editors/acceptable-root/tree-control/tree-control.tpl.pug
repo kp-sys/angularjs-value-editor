@@ -4,7 +4,7 @@ ul.tree-list
             .switcher(ng-click="toggleNode($node)")
                 i.tree-branch-switcher.glyphicon.glyphicon-triangle-right
             .content
-                .pretty.p-icon.p-smooth.p-curve.p-has-indeterminate
+                .pretty.p-icon.p-smooth.p-curve.p-has-indeterminate(ng-class="'size-' + bootstrapSize")
                     input(
                         type="checkbox"
                         ng-disabled="!isSelectable($node)"

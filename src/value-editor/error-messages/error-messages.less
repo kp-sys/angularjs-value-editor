@@ -1,10 +1,6 @@
 @import '~bootstrap-less/bootstrap/variables';
 
 kp-value-editor ~ .error-message {
-    &:hover {
-        z-index: 20;
-    }
-
     display: inline-block;
     text-align: center;
     color: @state-danger-text;
@@ -22,6 +18,10 @@ kp-value-editor ~ .error-message {
     box-shadow: 0 2px 6px -2px lighten(@state-danger-text, 20%);
     transition: opacity 0.15s ease-in-out;
 
+    &:hover {
+        z-index: 20;
+    }
+
     &.not-visible {
         opacity: 0;
     }
@@ -30,6 +30,16 @@ kp-value-editor ~ .error-message {
         border-radius: @border-radius-base;
         border: 1px solid @state-danger-text;
         box-shadow: 0 0 2px lighten(@state-danger-text, 20%);
+    }
+
+    &.size-sm,
+    &.size-xs {
+        font-size: 12px;
+    }
+
+    &.size-xs {
+        line-height: 1;
+        padding-top: 3px;
     }
 }
 

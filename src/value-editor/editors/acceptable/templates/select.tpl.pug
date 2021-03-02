@@ -2,6 +2,8 @@ ui-select(
     input-id="\\{\\{$ctrl.valueEditorController.editorId\\}\\}"
     name="{{name}}"
 
+    class="size-{{size}}"
+
     ng-model="$ctrl.model"
     ng-model-options="{getterSetter: true}"
 
@@ -16,7 +18,7 @@ ui-select(
     disable-ng-animate
 
     error-messages
-    error-messages-custom-class="acceptable-select"
+    error-messages-custom-class="{{multiselectable ? 'multiple' : 'single'}}-acceptable-select"
 
     data-main-input
 )

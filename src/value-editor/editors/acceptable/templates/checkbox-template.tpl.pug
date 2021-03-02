@@ -1,4 +1,4 @@
-.pretty.p-icon.p-smooth.p-curve
+.pretty.p-icon.p-smooth.p-curve(ng-class="'size-' + $ctrl.valueEditorController.size")
     input(
         type="checkbox"
         name!="\\{\\{$ctrl.valueEditorController.editorName + '_' + index\\}\\}"
@@ -13,4 +13,4 @@
 
     .state.p-primary
         i.icon.glyphicon.glyphicon-ok
-        label
+        label &nbsp;

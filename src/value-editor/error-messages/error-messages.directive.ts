@@ -1,7 +1,10 @@
 import './error-messages.less';
 import * as angular from 'angular';
 import {IAttributes, IAugmentedJQuery, INgModelController, IScope, ITimeoutService} from 'angular';
-import KpValueEditorComponent, {KpValueEditorComponentController} from '../kp-value-editor/kp-value-editor.component';
+import KpValueEditorComponent, {
+    KpValueEditorComponentController,
+    ValueEditorSize
+} from '../kp-value-editor/kp-value-editor.component';
 import {
     ValueEditorErrorMessagesLocalizations,
     ValueEditorErrorMessagesLocalizationsService
@@ -113,7 +116,7 @@ export class ErrorMessagesDirectiveController {
             });
 
             errorsToAdd.forEach((error, index) => {
-                const element = angular.element(template`custom class: ${this.$attrs.errorMessagesCustomClass ?? ''}, right position: ${20 * index}, message: ${this.localize(error)}, error: ${error}`);
+                const element = angular.element(template`custom class: ${this.$attrs.errorMessagesCustomClass ?? ''}, right position: ${20 * index}, message: ${this.localize(error)}, error: ${error}, size: ${this.kpValueEditorController.size}`);
                 this.appendedElements[error] = element[0];
                 this.kpValueEditorController.$element.after(element);
                 this.$timeout(() => element.removeClass('not-visible'));
@@ -168,6 +171,6 @@ function arraySubtraction<T>(from: T[], what: T[]): T[] {
         }, []);
 }
 
-function template(strings, customClass: string, rightPosition: number, message: string, error: string) {
-    return `<div class="error-message not-visible ${customClass}" style="right: calc(10% + ${rightPosition}px)" data-error="${error}">${message}</div>`;
+function template(strings, customClass: string, rightPosition: number, message: string, error: string, size: ValueEditorSize) {
+    return `<div class="error-message not-visible size-${size} ${customClass}" style="right: calc(10% + ${rightPosition}px)" data-error="${error}">${message}</div>`;
 }

@@ -75,6 +75,10 @@ export class ObjectValueEditorComponentController<MODEL> extends AbstractMetaVal
             fieldEditor.editorName = fieldName;
         }
 
+        if (!fieldEditor.size) {
+            fieldEditor.size = this.valueEditorController.size;
+        }
+
         return fieldEditor;
     }
 

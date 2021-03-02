@@ -1,8 +1,37 @@
 autocomplete-value-editor {
-    .autocomplete-loading-svg svg {
-        width: 14px;
-        height: 15px;
-        position: relative;
-        top: 2px;
+    .autocomplete-loading-svg {
+        display: block;
+
+        svg {
+            width: 14px;
+            height: 15px;
+            position: relative;
+            top: 2px;
+        }
+    }
+
+    .input-group-sm {
+        .dropdown-menu {
+            font-size: 12px;
+
+            > li > a {
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+        }
+    }
+
+    .input-group-xs {
+        .dropdown-menu {
+            font-size: 12px;
+
+            > li > a {
+                padding: 1px 6px;
+            }
+        }
+
+        .autocomplete-loading-svg svg {
+            top: 0;
+        }
     }
 }
