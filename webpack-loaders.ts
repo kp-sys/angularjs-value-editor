@@ -12,9 +12,9 @@ export const babelLoader = {
     }
 };
 
-export const tsLoader = {
+export const tsLoaderFactory = (configFile: string) => ({
     loader: 'ts-loader',
     options: {
-        configFile: path.resolve(__dirname, 'tsconfig.frontend.json')
+        configFile: path.resolve(__dirname, configFile)
     }
-};
+});

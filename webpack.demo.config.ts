@@ -1,6 +1,6 @@
 import * as path from 'path';
 
-import {babelLoader, tsLoader} from './webpack-loaders';
+import {babelLoader, tsLoaderFactory} from './webpack-loaders';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
@@ -35,7 +35,7 @@ module.exports = {
                 include: [/demo/, /dist/, /src/],
                 use: [
                     babelLoader,
-                    tsLoader
+                    tsLoaderFactory('tsconfig.frontend-demo.json')
                 ]
             },
             {
