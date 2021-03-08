@@ -11,7 +11,7 @@ import {AbstractValueEditorLocalizationService} from './abstract-value-editor-lo
 import {KpValueEditorAliasesServiceProvider} from '../aliases/kp-value-editor-aliases.service';
 import {customEquals, PropertyChangeDetection, whichPropertiesAreNotEqual} from '../utils/equals';
 import bind from 'bind-decorator';
-import { FocusableInputAPI } from '../common/directives/kp-focusable-input.directive';
+import {FocusableInputAPI} from '../common/directives/kp-focusable-input.directive';
 
 /**
  * Abstract base class for general value-editor features.
@@ -106,7 +106,7 @@ export default abstract class AbstractValueEditorComponentController<MODEL, OPTI
 
     /**
      * This method is called from template during editors initialization if there is focusable input.
-     * 
+     *
      * @param {FocusableInputAPI} $api Exposed API object of {@link KpFocusableInputDirective}
      */
     protected connectToFocusApi($api: FocusableInputAPI) {
@@ -129,6 +129,7 @@ export default abstract class AbstractValueEditorComponentController<MODEL, OPTI
     protected abstract get emptyModel(): MODEL;
 
     private processNewOptions(newOptions: OPTIONS): OPTIONS {
+        // FIXME: process annotated functions. It is an array, so merge function wants to merge it as arrays, but this is a wrong way.
         let options = angular.merge({}, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration(), newOptions);
 
         if (this.valueEditorController.forceSettingsController) {
