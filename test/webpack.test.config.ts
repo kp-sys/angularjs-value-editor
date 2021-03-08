@@ -1,5 +1,5 @@
 import * as path from 'path';
-import {babelLoader, tsLoader} from '../webpack-loaders';
+import {babelLoader, tsLoaderFactory} from '../webpack-loaders';
 
 module.exports = ({
     mode: getMode(),
@@ -21,7 +21,7 @@ module.exports = ({
                 include: [/(src)|(test)/],
                 use: [
                     babelLoader,
-                    tsLoader
+                    tsLoaderFactory('tsconfig.frontend.json')
                 ]
             },
             {

@@ -23,7 +23,6 @@
     "jquery": "3.x",
     "luxon": "1.x",
     "pretty-checkbox": "3.x",
-    "ramda": "^0.27.1",
     "trumbowyg": "2.x",
     "ui-select": "^0.19.8"
   },
@@ -37,6 +36,9 @@
   "directories": {
     "lib": "src/"
   },
+  "browserslist": [
+    "last 2 years, IE 11, not dead"
+  ],
   "files": [
     "demo/",
     "dist/",
