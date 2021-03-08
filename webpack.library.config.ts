@@ -1,9 +1,11 @@
-const {babelLoaderOptions} = require('./babel-loader');
+import * as path from 'path';
 
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const UnminifiedWebpackPlugin = require('unminified-webpack-plugin');
+import {babelLoader, tsLoader} from './webpack-loaders';
+import UnminifiedWebpackPlugin from 'unminified-webpack-plugin';
+import {CleanWebpackPlugin} from 'clean-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+
+import * as pkg from './package.json';
 
 module.exports = (env, {mode}) => ({
     mode: 'none',
@@ -17,7 +19,7 @@ module.exports = (env, {mode}) => ({
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
-        library: 'angularjs-value-editor',
+        library: pkg.name,
         libraryTarget: 'umd'
     },
 
@@ -46,18 +48,8 @@ module.exports = (env, {mode}) => ({
                 test: /\.ts$/,
                 include: [/src/, /test/],
                 use: [
-                    {
-                        loader: 'babel-loader',
-                        options: {
-                            ...babelLoaderOptions
-                        }
-                    },
-                    {
-                        loader: 'ts-loader',
-                        options: {
-                            onlyCompileBundledFiles: true
-                        }
-                    }
+                    babelLoader,
+                    tsLoader
                 ]
             },
             {
@@ -134,7 +126,11 @@ module.exports = (env, {mode}) => ({
             },
             {
                 test: /\.woff/,
-                loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    mimetype: 'application/font-woff'
+                }
             }
         ]
     },
@@ -163,12 +159,12 @@ module.exports = (env, {mode}) => ({
 
     devtool: 'source-map',
 
-    plugins: (function () {
+    plugins: (() => {
         const plugins = [
             new MiniCssExtractPlugin({
                 filename: '[name].css'
             }),
-            new CleanWebpackPlugin.CleanWebpackPlugin({
+            new CleanWebpackPlugin({
                 verbose: true,
                 cleanStaleWebpackAssets: false
             })];

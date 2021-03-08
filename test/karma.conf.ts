@@ -1,12 +1,10 @@
-/* tslint:disable:no-var-requires */
-const nodejsPath = require('path');
+// tslint:disable-next-line:no-var-requires
+const path = require('path');
 
-declare module 'process' {
-    global {
-        namespace NodeJS {
-            interface Process {
-                binding: (...args: any[]) => any;
-            }
+declare global {
+    namespace NodeJS {
+        interface Process {
+            binding: (...args: any[]) => any;
         }
     }
 }
@@ -38,11 +36,11 @@ const isDebugging = (() => {
     return true;
 })();
 
-module.exports = (config) => {
+export default (config) => {
     config.set({
-        basePath: nodejsPath.resolve(__dirname, '..'),
+        basePath: path.resolve(__dirname, '..'),
 
-        frameworks: ['jasmine'],
+        frameworks: ['jasmine', 'webpack'],
 
         client: {
             jasmine: {
@@ -51,9 +49,9 @@ module.exports = (config) => {
         },
 
         files: [
-            nodejsPath.resolve(__dirname, '..', 'node_modules', 'jquery', 'dist', 'jquery.js'),
-            nodejsPath.resolve(__dirname, '..', 'node_modules', 'angular', 'angular.js'),
-            nodejsPath.resolve(__dirname, '..', 'node_modules', 'angular-mocks', 'angular-mocks.js'),
+            path.resolve(__dirname, '..', 'node_modules', 'jquery', 'dist', 'jquery.js'),
+            path.resolve(__dirname, '..', 'node_modules', 'angular', 'angular.js'),
+            path.resolve(__dirname, '..', 'node_modules', 'angular-mocks', 'angular-mocks.js'),
             './test/all-tests.spec.ts'
         ],
 
@@ -103,7 +101,7 @@ module.exports = (config) => {
 
         coverageIstanbulReporter: {
             reports: ['text-summary', 'html'],
-            dir: nodejsPath.resolve(__dirname, '..', 'reports', 'coverage'),
+            dir: path.resolve(__dirname, '..', 'reports', 'coverage'),
             fixWebpackSourcePaths: true,
             combineBrowserReports: true,
             'es-modules': true,

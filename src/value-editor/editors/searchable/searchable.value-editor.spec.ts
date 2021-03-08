@@ -59,8 +59,8 @@ describe('searchable-value-editor', () => {
         angular.mock.module(valueEditorModule, /*@ngInject*/ (searchableValueEditorConfigurationServiceProvider: SearchableValueEditorConfigurationServiceProvider<string>, kpAsyncValidationServiceProvider: KpAsyncValidationServiceProvider) => {
             searchableValueEditorConfigurationServiceProvider.setConfiguration({
                 additionalParameters: ADDITIONAL_PARAMETERS,
-                searchModelFunction: /*@ngInject*/ ($model, $additionalParameters, $timeout) => searchFunction.bind(this, $model, $additionalParameters, $timeout),
-                editModelFunction: /*@ngInject*/ ($model, $additionalParameters, $timeout) => editFunction.bind(this, $model, $additionalParameters, $timeout)
+                searchModelFunction: /*@ngInject*/ ($model, $additionalParameters, $timeout) => searchFunction.call(this, $model, $additionalParameters, $timeout),
+                editModelFunction: /*@ngInject*/ ($model, $additionalParameters, $timeout) => editFunction.call(this, $model, $additionalParameters, $timeout)
             });
 
             kpAsyncValidationServiceProvider.setValidationFunction(/*@ngInject*/ ($model, $timeout) => asyncValidationFunction($model, $timeout));
@@ -94,7 +94,7 @@ describe('searchable-value-editor', () => {
             }, 150);
         }).then(() => {
             $scope.$apply();
-            expect(getViewValue()).toBe('hello world');
+            expect(getViewValue()).toBe(JSON.stringify(MODEL));
         }).finally(done);
     });
 
@@ -114,7 +114,7 @@ describe('searchable-value-editor', () => {
             }, 150);
         }).then(() => {
             $scope.$apply();
-            expect(getViewValue()).toBe(`hello${ADDITIONAL_PARAMETERS.param1}`);
+            expect(getViewValue()).toBe(JSON.stringify(MODEL));
         }).finally(done);
     });
 

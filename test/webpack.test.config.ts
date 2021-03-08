@@ -1,4 +1,5 @@
 import * as path from 'path';
+import {babelLoader, tsLoader} from '../webpack-loaders';
 
 module.exports = ({
     mode: getMode(),
@@ -19,23 +20,8 @@ module.exports = ({
                 test: /\.ts$/,
                 include: [/(src)|(test)/],
                 use: [
-                    {
-                        loader: 'babel-loader',
-                        options: {
-                            plugins: [
-                                'angularjs-annotate'
-                            ],
-                            presets: [
-                                '@babel/preset-env'
-                            ]
-                        }
-                    },
-                    {
-                        loader: 'ts-loader',
-                        options: {
-                            onlyCompileBundledFiles: true
-                        }
-                    }
+                    babelLoader,
+                    tsLoader
                 ]
             },
             {
@@ -43,7 +29,7 @@ module.exports = ({
                 enforce: 'post',
                 loader: 'istanbul-instrumenter-loader',
                 exclude: [/((\.spec\.)|test|node_modules)/],
-                query: {
+                options: {
                     esModules: true
                 }
             },
@@ -120,7 +106,11 @@ module.exports = ({
             },
             {
                 test: /\.woff/,
-                loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    mimetype: 'application/font-woff'
+                }
             }
         ]
     },
@@ -131,6 +121,8 @@ module.exports = ({
             utils: path.resolve(__dirname, 'utils')
         }
     },
+
+    watch: true,
 
     devtool: 'inline-source-map'
 });

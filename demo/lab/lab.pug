@@ -2,31 +2,9 @@ main.container(ng-controller="labController as $ctrl" ng-init="model = null")
 
     button.btn.btn-default.btn-md Button
     kp-value-editor(
-        type="'boolean'"
+        type="'searchable'"
         ng-model="$ctrl.model"
 
-        placeholder="'placeholder'"
-        options="$ctrl.options"
-    )
-
-    br
-
-    button.btn.btn-default.btn-sm Button
-    kp-value-editor(
-        type="'boolean'"
-        ng-model="$ctrl.model"
-        size="'sm'"
-        placeholder="'placeholder'"
-        options="$ctrl.options"
-    )
-
-    br
-
-    button.btn.btn-default.btn-xs Button
-    kp-value-editor(
-        type="'boolean'"
-        ng-model="$ctrl.model"
-        size="'xs'"
         placeholder="'placeholder'"
         options="$ctrl.options"
     )

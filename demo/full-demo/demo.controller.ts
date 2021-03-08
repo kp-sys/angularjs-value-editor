@@ -341,7 +341,8 @@ export default class DemoController {
                     required: true
                 },
                 options: {
-                    searchModelFunction: /*@ngInject*/ ($timeout: ITimeoutService) => new Promise<string>((resolve) => $timeout(() => resolve('value'), 1000))
+                    searchModelFunction: ($timeout: ITimeoutService) =>
+                        new Promise<string>((resolve) => $timeout(() => resolve('value'), 1000))
                 } as SearchableValueEditorOptions<string>
             }
         },
