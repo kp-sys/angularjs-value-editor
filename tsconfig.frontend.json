@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "ES2015"
+  },
+  "exclude": [
+    "node_modules/*",
+    "webpack*"
+  ]
+}

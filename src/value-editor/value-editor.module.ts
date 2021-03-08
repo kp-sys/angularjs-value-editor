@@ -1,4 +1,4 @@
-import '@kpsys/angular-ui-bootstrap';
+import uiBootstrap from '@kpsys/angular-ui-bootstrap';
 import './resources/styles.less';
 
 import register from '@kpsys/angularjs-register';
@@ -71,7 +71,7 @@ const LOADING_SPINNER_TPL_URL = require('ngtemplate-loader!html-loader!./resourc
  */
 
 export default register('angularjs-value-editor', [
-    'ui.bootstrap',
+    uiBootstrap,
     aliasesModule,
     acceptableValueEditorModule,
     booleanValueEditorModule,

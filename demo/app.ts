@@ -19,6 +19,7 @@ declare global {
     }
 }
 
+// @ts-ignore
 window.$ = window.jQuery = jQuery;
 
 register('app', [valueEditorModule, ngAnimateModule, 'ui.bootstrap'])

@@ -5,7 +5,10 @@
         "sourceMap": true,
         "experimentalDecorators": true,
         "baseUrl": ".",
-        "declaration": false
+        "declaration": false,
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true
     },
     "exclude": [
         "node_modules",

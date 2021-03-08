@@ -1,8 +1,8 @@
-const {babelLoaderOptions} = require('./babel-loader');
+import * as path from 'path';
 
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import {babelLoader, tsLoader} from './webpack-loaders';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 module.exports = {
     mode: 'development',
@@ -34,15 +34,8 @@ module.exports = {
                 test: /\.ts$/,
                 include: [/demo/, /dist/, /src/],
                 use: [
-                    {
-                        loader: 'babel-loader',
-                        options: {
-                            ...babelLoaderOptions
-                        }
-                    },
-                    {
-                        loader: 'ts-loader'
-                    }
+                    babelLoader,
+                    tsLoader
                 ]
             },
             {
@@ -67,12 +60,19 @@ module.exports = {
             },
             {
                 test: /\.tpl.pug$/,
-                loader: `ngtemplate-loader!html-loader!pug-html-loader`
+                use: [
+                    {loader: 'ngtemplate-loader'},
+                    {loader: 'html-loader'},
+                    {loader: 'pug-html-loader'}
+                ]
             },
             {
                 test: /\.(svg|png)$/,
-                loader: 'file-loader?name=[name].[ext]'
-            },
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]'
+                }
+            }
         ]
     },
 
