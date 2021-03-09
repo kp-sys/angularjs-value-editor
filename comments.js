@@ -14,7 +14,11 @@
      */
 /**
      * Updates template
-     *//**
+     *//*@ngInject*/
+/*@ngInject*/
+/*@ngInject*/
+/* FIXME See AbstractValueEditorComponentController#processNewOptions*/
+/*@ngInject*//**
  * Abstract base class for general value-editor features.
  *
  * @template OPTIONS
@@ -47,7 +51,7 @@
      */
 /**
      * This method is called from template during editors initialization if there is focusable input.
-     * 
+     *
      * @param {FocusableInputAPI} $api Exposed API object of {@link KpFocusableInputDirective}
      */
 /**
@@ -61,6 +65,7 @@
      * Every editor must have defined empty model. It is important for `emptyAsNull` functionality (for now...).
      * @returns {MODEL}
      */
+/* FIXME: process annotated functions. It is an array, so merge function wants to merge it as arrays, but this is a wrong way.*/
 /*@ngInject*//*@ngInject*/
 /*@ngInject*/
 /* try to change options via reference*/
@@ -2882,6 +2887,7 @@
  * @param {Event=} onSubmit.$event Submit event.
  * @param {ObjectValueEditorLabelsWidth=} labelsWidth See {@link ObjectValueEditorOptions}. Default value is `2`.
  * @param {boolean=} showErrors If `true` it displays all validation error messages.
+ * @param {ValueEditorSize} size Bootstrap size of editor. Possible values are: `'md'`, `'sm'`, `'xs'`. Default value is: `'md'`.
  * @param {KpUniversalFormComponentOptions=} options Specific options for universal form.
  * @param {{}=} asyncValidationsModel Specify model for async validations. If defined, all async validations with set `wholeForm = true` use this model.
  *
@@ -3188,6 +3194,7 @@
  * @param {boolean} isVisible If input is visible. <.
  * @param {boolean} isFocused If input should have been focused. <.
  * @param {boolean} showErrors If true, error messages is displayed.
+ * @param {ValueEditorSize} size Bootstrap size of editor. Possible values are: `'md'`, `'sm'`, `'xs'`. Default value is: `'md'`.
  * @param {ValueEditorValidations} validations ValueEditor validations. <.
  * @param {ValueEditorOptions} options ValueEditor options. Type depends on ValueEditor type. <.
  * @param {ValueEditorLocalizations} localizations Custom localizations overriding default ones.
@@ -3697,6 +3704,7 @@
 /* DIRECTIVES*/
 /* COMMON SERVICES AND PROVIDERS*/
 /* CONFIG*/
+/* REEXPORTS*/
 /**
  * @ngdoc constant
  * @name loadingSpinnerTemplateUrl
