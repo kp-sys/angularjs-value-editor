@@ -1,12 +1,9 @@
 main.container(ng-controller="labController as $ctrl" ng-init="model = null")
 
-    button.btn.btn-default.btn-md Button
-    kp-value-editor(
-        type="'searchable'"
-        ng-model="$ctrl.model"
+    kp-universal-form(
+        form-settings="$ctrl.options"
 
-        placeholder="'placeholder'"
-        options="$ctrl.options"
+        ng-model="$ctrl.model"
     )
 
     div Form

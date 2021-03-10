@@ -18,10 +18,10 @@ import {ValueEditorBindings, ValueEditorOptions} from '../../kp-value-editor/kp-
  * Definition of {@link objectValueEditor} fields.
  *
  */
-export interface ObjectValueEditorField {
+export interface ObjectValueEditorField<BINDINGS extends ValueEditorBindings = ValueEditorBindings> {
     label: string;
     fieldName: string;
-    editor: ValueEditorBindings;
+    editor: BINDINGS;
     hint?: string;
 }
 
@@ -61,8 +61,8 @@ export type ObjectValueEditorLabelsWidth = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 1
  *
  * Default value: {@link objectValueEditorDefaultOptions}
  */
-export interface ObjectValueEditorOptions extends ValueEditorOptions {
-    fields?: ObjectValueEditorField[];
+export interface ObjectValueEditorOptions<FIELDS extends ObjectValueEditorField[] = ObjectValueEditorField[]> extends ValueEditorOptions {
+    fields?: FIELDS;
     attributesTransformation?: (attributes: ValueEditorBindings) => ValueEditorBindings;
     labelsWidth?: ObjectValueEditorLabelsWidth;
 }
