@@ -1,4 +1,4 @@
-const semanticRelease = require('semantic-release');
+import semanticRelease from 'semantic-release';
 
 module.exports = (grunt) => {
     const pkg = grunt.file.readJSON('package.json');
@@ -114,6 +114,7 @@ module.exports = (grunt) => {
 
 async function getReleaseVersion(grunt) {
     try {
+        // @ts-ignore
         const {nextRelease: {name}} = await semanticRelease({
             branches: [
                 'master'

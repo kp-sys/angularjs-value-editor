@@ -3,6 +3,7 @@ import * as angular from 'angular';
 import {IFormController, IInterpolateService, IOnInit, ITemplateCacheService} from 'angular';
 import {
     ObjectValueEditorConfigurationService,
+    ObjectValueEditorField,
     ObjectValueEditorOptions,
     UndocumentedObjectValueEditorInternalOptions
 } from './object-value-editor-configuration.provider';
@@ -194,5 +195,5 @@ export default class ObjectValueEditorComponent extends AbstractValueEditorCompo
     public controller = ObjectValueEditorComponentController;
 }
 
-export interface ObjectValueEditorBindings extends ValueEditorBindings<ObjectValueEditorOptions> {
+export interface ObjectValueEditorBindings<FIELDS extends ObjectValueEditorField[] = ObjectValueEditorField[]> extends ValueEditorBindings<ObjectValueEditorOptions<FIELDS>> {
 }

@@ -1,7 +1,10 @@
 fieldset.form-horizontal("{{withoutNgForm ? '' : 'ng-form'}}"="{{withoutNgForm ? '' : name}}")
     .form-group.value-editor-form-group(
-        class="\\{\\{transformedFieldEditor.editorName\\}\\} size-\\{\\{transformedFieldEditor.size\\}\\}"
-        ng-class="{'has-error': $ctrl.showValidationError(transformedFieldEditor.editorName), 'has-not-error': !$ctrl.showValidationError(transformedFieldEditor.editorName)}"
+        ng-class="[{" +
+            "'has-error': $ctrl.showValidationError(transformedFieldEditor.editorName), " +
+            "'has-not-error': !$ctrl.showValidationError(transformedFieldEditor.editorName)" +
+        "}, transformedFieldEditor.editorName, 'size-'+transformedFieldEditor.size]"
+
         ng-repeat="field in $ctrl.options.fields"
         ng-init="showDebugInfo = true; transformedFieldEditor = $ctrl.transformFieldEditor(field.editor, field.fieldName)"
         ng-show="$ctrl.trueIfUndefined(transformedFieldEditor.isVisible)"
