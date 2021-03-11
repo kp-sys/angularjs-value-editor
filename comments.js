@@ -2298,13 +2298,14 @@
  * @name TextValueEditorOptions
  * @module angularjs-value-editor.text
  *
- * @property {TTextValueEditorType} type Input type. Possible values are `text`, `textarea`, `rich-textarea`.
+ * @property {TTextValueEditorType} type Input type. Possible values are `text`, `textarea`, `rich-textarea`, `email`, `url`, `tel`.
  * @property {object} aceOptions Options for ACE editor. Applicable only if `type` is `'rich-textarea'`.
  * @property {string} prefix Non-editable prefix before input element.
  * @property {string} suffix Non-editable prefix after input element.
  * @property {boolean} includePrefixAndSuffixToModel If `true`, prefix and suffix will be appended to the model.
  * @property {boolean} trim If true, model will be trimmed.
- *
+ * @property {boolean} switchToTextareaThreshold If type is `text` and length of input text is greater or equal than this threshold, input will force to `textarea` type.
+ *                                               If `0`, input never switch to `textarea` type.
  * @description
  * Extends {@link type:ValueEditorOptions}
  *

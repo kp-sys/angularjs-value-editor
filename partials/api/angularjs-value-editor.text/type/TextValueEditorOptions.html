@@ -41,7 +41,7 @@
     <table class="variables-matrix return-arguments">
   <tr>
     <td><span class="label type-hint type-hint-ttextvalueeditortype"><a href="api/angularjs-value-editor.text/type/TTextValueEditorType">TTextValueEditorType</a></span></td>
-    <td><p>Input type. Possible values are <code>text</code>, <code>textarea</code>, <code>rich-textarea</code>.</p>
+    <td><p>Input type. Possible values are <code>text</code>, <code>textarea</code>, <code>rich-textarea</code>, <code>email</code>, <code>url</code>, <code>tel</code>.</p>
 </td>
   </tr>
 </table>
@@ -122,6 +122,23 @@
   <tr>
     <td><span class="label type-hint type-hint-boolean"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" _target="blank">Boolean</a></span></td>
     <td><p>If true, model will be trimmed.</p>
+</td>
+  </tr>
+</table>
+  </li>
+  
+  <li id="switchToTextareaThreshold">
+    <h3 class="">
+      <span class="title"><code>switchToTextareaThreshold</code></span>
+      
+      
+  
+    </h3>
+    <table class="variables-matrix return-arguments">
+  <tr>
+    <td><span class="label type-hint type-hint-boolean"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" _target="blank">Boolean</a></span></td>
+    <td><p>If type is <code>text</code> and length of input text is greater or equal than this threshold, input will force to <code>textarea</code> type.
+                                              If <code>0</code>, input never switch to <code>textarea</code> type.</p>
 </td>
   </tr>
 </table>
