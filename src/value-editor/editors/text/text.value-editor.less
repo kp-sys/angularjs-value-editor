@@ -9,4 +9,13 @@ text-value-editor {
         line-height: 1.5;
         border-radius: 3px;
     }
+
+    [ng-if] {
+        &.ng-enter,
+        &.ng-leave,
+        &.ng-animate {
+            -webkit-transition: none !important;
+            transition: none !important;
+        }
+    }
 }

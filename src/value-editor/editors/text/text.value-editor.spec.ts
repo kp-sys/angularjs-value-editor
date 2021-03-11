@@ -726,6 +726,29 @@ describe('text-value-editor', () => {
             expect(aceEditorTextarea.attributes.getNamedItem('readonly')).not.toBe(null);
         });
 
+        it('should transit between text and textarea if switchToTextareaThresholdis set', () => {
+            valueEditorMocker.create('text', {
+                options: {
+                    switchToTextareaThreshold: 5
+                }
+            });
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = '123';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect(valueEditorMocker.getInputElement().tagName.toUpperCase()).toBe('INPUT');
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = '12345';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect(valueEditorMocker.getInputElement().tagName.toUpperCase()).toBe('TEXTAREA');
+
+            valueEditorMocker.getInputElement<HTMLInputElement>().value = '123';
+            valueEditorMocker.triggerHandlerOnInput('input');
+
+            expect(valueEditorMocker.getInputElement().tagName.toUpperCase()).toBe('INPUT');
+        });
+
     });
 
     describe('type: email', () => {
