@@ -13,7 +13,7 @@ import {AcceptableValueEditorBindings} from '../../src/value-editor/editors/acce
 export default class LabController {
     public static readonly controllerName = 'labController';
 
-    public model = null;
+    public model = 'bfrjkfjkghbenslfknertbj';
 
     public options: { id: any, text: string } & KpUniversalFormSettings<[
         ObjectValueEditorField<TextValueEditorBindings>,

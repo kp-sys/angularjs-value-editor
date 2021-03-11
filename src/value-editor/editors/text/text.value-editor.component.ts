@@ -43,6 +43,12 @@ export class TextValueEditorComponentController extends AbstractValueEditorCompo
         this.ngModelController.$parsers.push(this.trim);
 
         this.originalType = this.options.type;
+
+        const originalRender = this.ngModelController.$render;
+        this.ngModelController.$render = () => {
+            originalRender();
+            this.processThreshold();
+        };
     }
 
     public $doCheck(): void {
