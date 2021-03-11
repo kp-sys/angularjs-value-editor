@@ -1,8 +1,7 @@
 main.container(ng-controller="labController as $ctrl" ng-init="model = null")
 
-    kp-universal-form(
-        form-settings="$ctrl.options"
-
+    kp-value-editor(
+        type="'text'"
         ng-model="$ctrl.model"
     )
 

@@ -1,7 +1,7 @@
 import './text.value-editor.less';
 import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
 import * as angular from 'angular';
-import {IDoCheck, INgModelController, IOnInit} from 'angular';
+import {IDoCheck, INgModelController, IOnInit, ITimeoutService} from 'angular';
 import {Ace} from 'ace-builds';
 import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import {
@@ -28,10 +28,12 @@ export class TextValueEditorComponentController extends AbstractValueEditorCompo
 
     private aceEditor: Ace.Editor;
     private isDisabled: boolean;
+    private originalType: TTextValueEditorType;
 
     /*@ngInject*/
     constructor(private textValueEditorConfigurationService: TextValueEditorConfigurationService,
-                textValueEditorLocalizationsService: TextValueEditorLocalizationsService) {
+                textValueEditorLocalizationsService: TextValueEditorLocalizationsService,
+                private $timeout: ITimeoutService) {
         super(textValueEditorConfigurationService, textValueEditorLocalizationsService);
     }
 
@@ -39,6 +41,8 @@ export class TextValueEditorComponentController extends AbstractValueEditorCompo
         super.$onInit();
 
         this.ngModelController.$parsers.push(this.trim);
+
+        this.originalType = this.options.type;
     }
 
     public $doCheck(): void {
@@ -61,6 +65,24 @@ export class TextValueEditorComponentController extends AbstractValueEditorCompo
             this.aceEditor.focus();
         } else {
             super.focus();
+        }
+    }
+
+    public processThreshold() {
+        if (this.options.switchToTextareaThreshold !== 0 &&
+            this.originalType === 'text' &&
+            typeof this.model === 'string' &&
+            this.model.length >= this.options.switchToTextareaThreshold
+        ) {
+            if (this.options.type !== 'textarea') {
+                this.options.type = 'textarea';
+
+                this.$timeout(() => this.focusApi.focusInput());
+            }
+        } else if (this.options.type !== this.originalType) {
+            this.options.type = this.originalType;
+
+            this.$timeout(() => this.focusApi.focusInput());
         }
     }
 

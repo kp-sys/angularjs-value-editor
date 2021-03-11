@@ -57,6 +57,7 @@ input.form-control(
     ng-model="$ctrl.model"
     ng-model-options="{ getterSetter: true}"
     ng-trim="false"
+    ng-change="$ctrl.processThreshold()"
 
     ng-class="'input-' + $ctrl.valueEditorController.size"
 
@@ -91,6 +92,7 @@ textarea.form-control(
     ng-model="$ctrl.model"
     ng-model-options="{ getterSetter: true}"
     ng-trim="false"
+    ng-change="$ctrl.processThreshold()"
 
     ng-class="'input-' + $ctrl.valueEditorController.size"
 
