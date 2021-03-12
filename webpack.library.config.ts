@@ -143,16 +143,10 @@ module.exports = (env, {mode}) => ({
     optimization: {
         splitChunks: {
             cacheGroups: {
-                jsVendors: {
-                    test: isJsVendor,
-                    name: 'vendors',
+                templates: {
+                    test: isTemplate,
+                    name: `angularjs-value-editor.templates${mode === 'production' ? '.min' : ''}`,
                     chunks: 'all'
-                },
-                cssVendors: {
-                    test: isCssVendor,
-                    name: 'vendors',
-                    chunks: 'all',
-                    enforce: true
                 }
             }
         }
@@ -178,14 +172,7 @@ module.exports = (env, {mode}) => ({
     })()
 });
 
-function isJsVendor({resource}) {
+function isTemplate({resource}) {
     return resource &&
-        resource.indexOf('node_modules') >= 0 &&
-        resource.match(/.js$/);
-}
-
-function isCssVendor({resource}) {
-    return resource &&
-        resource.indexOf('node_modules') >= 0 &&
-        resource.match(/.css$/);
+        resource.match(/((\.tpl\.(pug|html))|(\.svg))$/);
 }

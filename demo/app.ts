@@ -3,6 +3,7 @@ import 'angular';
 import './required-vendors';
 import '@kpsys/angular-ui-bootstrap';
 import register from '@kpsys/angularjs-register';
+import '../dist/angularjs-value-editor.templates';
 import valueEditorModule from '../dist/angularjs-value-editor';
 import '../dist/angularjs-value-editor.css';
 import DemoController from './full-demo/demo.controller';

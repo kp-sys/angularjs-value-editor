@@ -61,7 +61,7 @@ import {camelCaseToKebabCase, camelCaseToKebabCaseAndRemoveBrackets} from './uti
  * It can be used for waiting for async operations, etc...
  */
 // tslint:disable-next-line:no-var-requires
-const LOADING_SPINNER_TPL_URL = require('ngtemplate-loader!html-loader!./resources/loading-spinner.svg');
+const LOADING_SPINNER_TPL_URL = require('ngtemplate-loader!html-loader?minimize=true!./resources/loading-spinner.svg');
 
 /**
  * @ngdoc module

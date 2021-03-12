@@ -6,7 +6,8 @@ export const babelLoader = {
         cacheDirectory: true,
         plugins: [
             'angularjs-annotate',
-            '@babel/plugin-proposal-class-properties'
+            '@babel/plugin-proposal-class-properties',
+            '@babel/plugin-transform-runtime'
         ],
         presets: ['@babel/preset-env']
     }
