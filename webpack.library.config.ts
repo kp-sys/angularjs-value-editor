@@ -18,8 +18,10 @@ module.exports = (env, {mode}) => ({
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
-        library: pkg.name,
-        libraryTarget: 'umd'
+        library: {
+            name: pkg.name,
+            type: 'umd'
+        },
     },
 
     externals: {

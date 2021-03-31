@@ -3,6 +3,7 @@
  */
 
 import '@babel/runtime/regenerator/index';
+import '@kpsys/angular-ui-bootstrap';
 
 const context = require.context('./../src/value-editor', true, /\.spec\.ts$/);
 context.keys().forEach(context);

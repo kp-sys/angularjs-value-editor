@@ -198,8 +198,36 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
  * @description
  * Generic value editor depends on type:
  *
+ * Simple
+ *
  * - `text`: {@link textValueEditor}
  * - `number`: {@link numberValueEditor}
+ * - `boolean`: {@link booleanValueEditor}
+ * - `hidden`: {@link hiddenValueEditor}
+ * - `html`: {@link htmlValueEditor}
+ * - `date`: {@link dateValueEditor}
+ * - `acceptable`: {@link acceptableValueEditor}
+ * - `year`: {@link yearValueEditor}
+ * - `autocomplete`: {@link autocompleteValueEditor}
+ * - `password`: {@link passwordValueEditor}
+ * - `number-range`: {@link numberRangeValueEditor}
+ * - `acceptable-root`: {@link acceptableRootValueEditor}
+ * - `searchable`: {@link searchableValueEditor}
+ * - `range`: {@link rangeValueEditor}
+ *
+ * Complex
+ *
+ * - `list`: {@link listValueEditor}
+ * - `object`: {@link objectValueEditor}
+ *
+ * Aliased
+ *
+ * - `single-acceptable`: {@link acceptableValueEditor}
+ * - `multiple-acceptable`: {@link acceptableValueEditor}
+ * - `single-acceptable-root`: {@link acceptableRootValueEditor}
+ * - `multiple-acceptable-root`: {@link acceptableRootValueEditor}
+ * - `velocity-template`: {@link textValueEditor}
+ *
  */
 export default class KpValueEditorComponent implements Component<ValueEditorBindings> {
     public static componentName = 'kpValueEditor';
