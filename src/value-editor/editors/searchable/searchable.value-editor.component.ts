@@ -114,7 +114,7 @@ export class SearchableValueEditorComponentController<MODEL = any> extends Abstr
  * <example name="searchableValueEditorExample" module="searchableValueEditorExample" frame-no-resize="true">
  *     <file name="index.html">
  *         <main>
- *              <kp-value-editor type="'searchable'" ng-model="model" placeholder="Search some value..."></kp-value-editor>
+ *              <kp-value-editor type="'searchable'" ng-model="model" placeholder="'Search some value...'"></kp-value-editor>
  *              <div>Model: {{model}}</div>
  *         </main>
  *     </file>

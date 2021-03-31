@@ -11,7 +11,7 @@ module.exports = (grunt) => {
             source: {
                 expand: true,
                 cwd: 'dist',
-                src: ['angularjs-value-editor.js', 'angularjs-value-editor.css'],
+                src: ['angularjs-value-editor.min.js', 'angularjs-value-editor.min.css'],
                 dest: 'docs'
             },
             demo: {
@@ -48,7 +48,7 @@ module.exports = (grunt) => {
                         commonFiles: {
                             scripts: [
                                 'https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.8.7/polyfill.min.js',
-                                'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.7/angular.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.1/angular.js',
                                 'https://unpkg.com/@kpsys/angularjs-register/dist/register.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js',
                                 'https://unpkg.com/angular-ui-ace/src/ui-ace.js',
@@ -56,11 +56,11 @@ module.exports = (grunt) => {
                                 'https://unpkg.com/@kpsys/angularjs-date-parser/dist/angularjs-date-parser.js',
                                 'https://unpkg.com/@kpsys/angularjs-bootstrap-datetimepicker/dist/angularjs-bootstrap-datetimepicker.js',
                                 'https://unpkg.com/@kpsys/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
-                                'https://unpkg.com/@kpsys/angularjs-histogram-slider/dist/slider.js',
+                                'https://unpkg.com/@kpsys/angularjs-histogram-slider',
                                 'https://unpkg.com/angular-sanitize/angular-sanitize.js',
                                 'https://unpkg.com/ui-select/dist/select.js',
                                 'https://unpkg.com/regenerator-runtime/runtime.js',
-                                `${process.env.EXAMPLES_SCRIPTS_URL_PREFIX || ''}/angularjs-value-editor.js`
+                                `${process.env.EXAMPLES_SCRIPTS_URL_PREFIX || ''}/angularjs-value-editor.min.js`
                             ],
                             stylesheets: [
                                 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
@@ -68,7 +68,7 @@ module.exports = (grunt) => {
                                 'https://unpkg.com/@kpsys/angularjs-bootstrap-datetimepicker/dist/angularjs-bootstrap-datetimepicker.css',
                                 'https://unpkg.com/@kpsys/angularjs-histogram-slider/dist/slider.css',
                                 'https://unpkg.com/ui-select/dist/select.css',
-                                `${process.env.EXAMPLES_SCRIPTS_URL_PREFIX || ''}/angularjs-value-editor.css`
+                                `${process.env.EXAMPLES_SCRIPTS_URL_PREFIX || ''}/angularjs-value-editor.min.css`
                             ]
                         }
                     }

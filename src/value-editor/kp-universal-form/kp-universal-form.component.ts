@@ -17,7 +17,7 @@ import {Component} from '@kpsys/angularjs-register';
 /**
  * @ngdoc type
  * @name KpUniversalFormSettings
- * @module angularjs-value-editor
+ * @module angularjs-value-editor.universal-form
  *
  * @property {ObjectValueEditorField[]} fields Fields definition.
  * @property {string=} header Form header
@@ -137,7 +137,7 @@ export abstract class KpUniversalFormComponentController<MODEL = {}> extends NgM
 /**
  * @ngdoc component
  * @name kpUniversalForm
- * @module angularjs-value-editor
+ * @module angularjs-value-editor.universal-form
  *
  * @param {KpUniversalFormSettings} formSettings Definition of form content.
  * @param {string=} formName Name of the form. Due to internal reason, it must be in accordance with `^[a-zA-Z0-9._]*$` regexp.
@@ -259,7 +259,7 @@ export default class KpUniversalFormComponent implements Component<KpUniversalFo
 /**
  * @ngdoc type
  * @name KpUniversalFormComponentOptions
- * @module angularjs-value-editor
+ * @module angularjs-value-editor.universal-form
  *
  * @property {boolean} preciseWatchForOptionsChanges {@link kpValueEditorConfigurationServiceProvider}
  * @property {boolean} autofocusFirstField {@link kpValueEditorConfigurationServiceProvider}
