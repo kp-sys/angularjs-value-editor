@@ -39,11 +39,6 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
             "href": "api/angularjs-value-editor/component",
             "navItems": [
               {
-                "name": "kpUniversalForm",
-                "type": "component",
-                "href": "api/angularjs-value-editor/component/kpUniversalForm"
-              },
-              {
                 "name": "kpValueEditor",
                 "type": "component",
                 "href": "api/angularjs-value-editor/component/kpValueEditor"
@@ -110,11 +105,6 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
                 "href": "api/angularjs-value-editor/provider/AbstractValueEditorLocalizationProvider"
               },
               {
-                "name": "kpUniversalFormConfigurationServiceProvider",
-                "type": "provider",
-                "href": "api/angularjs-value-editor/provider/kpUniversalFormConfigurationServiceProvider"
-              },
-              {
                 "name": "kpValueEditorConfigurationServiceProvider",
                 "type": "provider",
                 "href": "api/angularjs-value-editor/provider/kpValueEditorConfigurationServiceProvider"
@@ -172,16 +162,6 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
                 "name": "FocusableInputAPI",
                 "type": "type",
                 "href": "api/angularjs-value-editor/type/FocusableInputAPI"
-              },
-              {
-                "name": "KpUniversalFormComponentOptions",
-                "type": "type",
-                "href": "api/angularjs-value-editor/type/KpUniversalFormComponentOptions"
-              },
-              {
-                "name": "KpUniversalFormSettings",
-                "type": "type",
-                "href": "api/angularjs-value-editor/type/KpUniversalFormSettings"
               },
               {
                 "name": "TMetaValueEditor",
@@ -1732,7 +1712,49 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
         "name": "angularjs-value-editor.universal-form",
         "type": "groups",
         "href": "api/angularjs-value-editor.universal-form",
-        "navItems": []
+        "navItems": [
+          {
+            "name": "component",
+            "type": "section",
+            "href": "api/angularjs-value-editor.universal-form/component",
+            "navItems": [
+              {
+                "name": "kpUniversalForm",
+                "type": "component",
+                "href": "api/angularjs-value-editor.universal-form/component/kpUniversalForm"
+              }
+            ]
+          },
+          {
+            "name": "provider",
+            "type": "section",
+            "href": "api/angularjs-value-editor.universal-form/provider",
+            "navItems": [
+              {
+                "name": "kpUniversalFormConfigurationServiceProvider",
+                "type": "provider",
+                "href": "api/angularjs-value-editor.universal-form/provider/kpUniversalFormConfigurationServiceProvider"
+              }
+            ]
+          },
+          {
+            "name": "type",
+            "type": "section",
+            "href": "api/angularjs-value-editor.universal-form/type",
+            "navItems": [
+              {
+                "name": "KpUniversalFormComponentOptions",
+                "type": "type",
+                "href": "api/angularjs-value-editor.universal-form/type/KpUniversalFormComponentOptions"
+              },
+              {
+                "name": "KpUniversalFormSettings",
+                "type": "type",
+                "href": "api/angularjs-value-editor.universal-form/type/KpUniversalFormSettings"
+              }
+            ]
+          }
+        ]
       },
       {
         "name": "angularjs-value-editor.velocity-template",

@@ -917,12 +917,13 @@
  *              sortModel;
  *              switchToBlockModeThreshold;
  *              modelAsArray;
- *              sortComparatorString = `(e1, e2) => ((e1 || {x: ''}).x || '').localeCompare((e2 || {x: ''}).x) * -1`;
- *              equalityComparatorString = '(e1, e2) => e1.x === e2.x';
+ *              sortComparatorString = `($element1, $element2) => (($element1 || {x: ''}).x || '').localeCompare(($element2 || {x: ''}).x) * -1`;
+ *              equalityComparatorString = '($element1, $element2) => $element1 && $element2 && $element1.x === $element2.x';
  *
  *              constructor(acceptableValueEditorDefaultOptions) {
  *                  angular.merge(this, acceptableValueEditorDefaultOptions);
  *                  this.acceptableValues = [{x: 'a'}, {x: 'b'}, {x: 'c'}, {x: 'd'}, {x: 'e'}, {x: 'f'}, {x: 'g'}, {x: 'h'}];
+ *                  this.optionsTemplate = '{{$item.x}}';
  *                  this.evalComparators();
  *              }
  *
@@ -2198,7 +2199,7 @@
  * <example name="searchableValueEditorExample" module="searchableValueEditorExample" frame-no-resize="true">
  *     <file name="index.html">
  *         <main>
- *              <kp-value-editor type="'searchable'" ng-model="model" placeholder="Search some value..."></kp-value-editor>
+ *              <kp-value-editor type="'searchable'" ng-model="model" placeholder="'Search some value...'"></kp-value-editor>
  *              <div>Model: {{model}}</div>
  *         </main>
  *     </file>
@@ -2822,7 +2823,7 @@
      *//**
  * @ngdoc provider
  * @name kpUniversalFormConfigurationServiceProvider
- * @module angularjs-value-editor
+ * @module angularjs-value-editor.universal-form
  *
  * @description
  * Provider for {@link kpUniversalFormConfigurationService}
@@ -2837,7 +2838,7 @@
      * If `true`, input inside first value editor in form will be focused when the form is loaded.
      * This applies only if the value editor supports it.
      * If Metaeditor should be focused it will focus it's first nested editor.
-     * 
+     *
      */
 /**
  * @ngdoc service
@@ -2845,7 +2846,7 @@
  * @module angularjs-value-editor
  *
  * @property {boolean} autofocusFirstField
- * 
+ *
  * @description
  *
  * Default options:
@@ -2864,7 +2865,7 @@
  *//**
  * @ngdoc type
  * @name KpUniversalFormSettings
- * @module angularjs-value-editor
+ * @module angularjs-value-editor.universal-form
  *
  * @property {ObjectValueEditorField[]} fields Fields definition.
  * @property {string=} header Form header
@@ -2877,7 +2878,7 @@
 /**
  * @ngdoc component
  * @name kpUniversalForm
- * @module angularjs-value-editor
+ * @module angularjs-value-editor.universal-form
  *
  * @param {KpUniversalFormSettings} formSettings Definition of form content.
  * @param {string=} formName Name of the form. Due to internal reason, it must be in accordance with `^[a-zA-Z0-9._]*$` regexp.
@@ -2966,7 +2967,7 @@
 /**
  * @ngdoc type
  * @name KpUniversalFormComponentOptions
- * @module angularjs-value-editor
+ * @module angularjs-value-editor.universal-form
  *
  * @property {boolean} preciseWatchForOptionsChanges {@link kpValueEditorConfigurationServiceProvider}
  * @property {boolean} autofocusFirstField {@link kpValueEditorConfigurationServiceProvider}
@@ -3202,8 +3203,36 @@
  * @description
  * Generic value editor depends on type:
  *
+ * Simple
+ *
  * - `text`: {@link textValueEditor}
  * - `number`: {@link numberValueEditor}
+ * - `boolean`: {@link booleanValueEditor}
+ * - `hidden`: {@link hiddenValueEditor}
+ * - `html`: {@link htmlValueEditor}
+ * - `date`: {@link dateValueEditor}
+ * - `acceptable`: {@link acceptableValueEditor}
+ * - `year`: {@link yearValueEditor}
+ * - `autocomplete`: {@link autocompleteValueEditor}
+ * - `password`: {@link passwordValueEditor}
+ * - `number-range`: {@link numberRangeValueEditor}
+ * - `acceptable-root`: {@link acceptableRootValueEditor}
+ * - `searchable`: {@link searchableValueEditor}
+ * - `range`: {@link rangeValueEditor}
+ *
+ * Complex
+ *
+ * - `list`: {@link listValueEditor}
+ * - `object`: {@link objectValueEditor}
+ *
+ * Aliased
+ *
+ * - `single-acceptable`: {@link acceptableValueEditor}
+ * - `multiple-acceptable`: {@link acceptableValueEditor}
+ * - `single-acceptable-root`: {@link acceptableRootValueEditor}
+ * - `multiple-acceptable-root`: {@link acceptableRootValueEditor}
+ * - `velocity-template`: {@link textValueEditor}
+ *
  */
 /**
  * @ngdoc type

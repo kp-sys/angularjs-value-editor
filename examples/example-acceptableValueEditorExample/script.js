@@ -11,12 +11,13 @@ angular.module('acceptableValueEditorExample', ['angularjs-value-editor'])
      sortModel;
      switchToBlockModeThreshold;
      modelAsArray;
-     sortComparatorString = `(e1, e2) => ((e1 || {x: ''}).x || '').localeCompare((e2 || {x: ''}).x) * -1`;
-     equalityComparatorString = '(e1, e2) => e1.x === e2.x';
+     sortComparatorString = `($element1, $element2) => (($element1 || {x: ''}).x || '').localeCompare(($element2 || {x: ''}).x) * -1`;
+     equalityComparatorString = '($element1, $element2) => $element1 && $element2 && $element1.x === $element2.x';
 
      constructor(acceptableValueEditorDefaultOptions) {
          angular.merge(this, acceptableValueEditorDefaultOptions);
          this.acceptableValues = [{x: 'a'}, {x: 'b'}, {x: 'c'}, {x: 'd'}, {x: 'e'}, {x: 'f'}, {x: 'g'}, {x: 'h'}];
+         this.optionsTemplate = '{{$item.x}}';
          this.evalComparators();
      }
 
