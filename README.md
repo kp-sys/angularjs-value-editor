@@ -6,6 +6,53 @@
 
 
 # angularjs-value-editor
-Dynamically created inputs
+Dynamically created form / inputs from JS definition / JSON.
+- Zero configuration.
+- Supporting aliases (pre-configured inputs).
+- Extensible of Your own editors (inputs)
 
-[Documentation](https://kp-sys.github.io/angularjs-value-editor/#/api/angularjs-value-editor)
+![form](https://user-images.githubusercontent.com/5617576/114096458-054c6400-98bf-11eb-8004-237bc8010a8d.png)
+
+```html 
+<kp-universal-form ng-model="model" form-settings="$ctrl.formSettings"></kp-universal-form>
+```
+```typescript
+class Controller {
+  public formSettings: KpUniversalFormSettings = {
+    header: 'Login',
+    fields: [
+      {
+        label: 'Username',
+        fieldName: 'username',
+        editor: {
+          type: 'text',
+          validations: {
+              required: true
+          }
+        }
+      },
+      {
+        label: 'Password',
+        fieldName: 'password',
+        editor: {
+          type: 'password',
+          options: {
+            withConfirmation: true
+          },
+          validations: {
+            required: true
+          },
+          localizations: {
+              confirmPassword: 'Confirm password'
+          }
+        }
+      }
+    ]
+  }  
+}
+```
+
+## [API Documentation](https://kp-sys.github.io/angularjs-value-editor/#/api/angularjs-value-editor)
+ - With live examples
+ - With huge Demo
+ - With guide for creating own editor
