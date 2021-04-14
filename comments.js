@@ -713,6 +713,18 @@
  * @property {boolean} selectedFirst If `true`, selected options will be moved on top of options. Applicable only for multiselectable, checkbox mode.
  * @property {boolean} modelAsArray If `true`, model will be array also if `multiple = false`. In this case array will contain only one element.
  * @property {boolean} allowSelectNull If `true`, single selectable editors will allow select null option or deselect selected.
+ * @property {Injectable<Function>} disabledItemsResolver
+ * ```
+ * function(...args: any[]) => boolean
+ * ```
+ * Resolver for determine if `$item` is disabled.
+ *
+ * | Injectable&nbsp;argument&nbsp;name | Description  |
+ * | ------------------------ | ---------------------- |
+ * | `$item`                  | Acceptable item        |
+ * | `$model`                 | Current model          |
+ * | `$options`               | Full options           |
+ *
  *
  * @description
  * Extends {@link type:ValueEditorOptions}
@@ -742,10 +754,12 @@
  *      sortModel: false,
  *      switchToInlineModeThreshold: 13,
  *      modelAsArray: false,
- *      allowSelectNull: false
+ *      allowSelectNull: false,
+ *      disabledItemResolver: \/*@ngInject*\/ ($element) => $element?.disabled === true
  *  }
  * ```
  */
+/*@ngInject*/
 /*@ngInject*/
 /**
  * @ngdoc provider
@@ -823,7 +837,11 @@
 /*@ngInject*/
 /*@ngInject*/
 /*@ngInject*/
+/*@ngInject*/
+/*@ngInject*/
 /* 4 because selected options disappears from list*/
+/*@ngInject*/
+/*@ngInject*/
 /*@ngInject*/
 /*@ngInject*/
 /*@ngInject*/
@@ -836,7 +854,7 @@
 /* items should be visible*/
 /* close select*/
 /* disable bug workaround*/
-/* items should be hidden -> buggy behaviour*//*@ngInject*/
+/* items should be hidden -> buggy behaviour*//* tslint:disable-next-line:only-arrow-functions*//*@ngInject*/
 /**
      * For block single selectable
      * @param {VALUE} item
@@ -967,7 +985,17 @@
  */
 /*@ngInject*//**
  * @ngdoc service
- * @name uiSelectDecorator
+ * @name uiSelectMultipleDirectiveDecorator
+ * @module angularjs-value-editor.acceptable
+ *
+ * @description
+ * This decorator modifies placeholder behaviour in multiselectable ui-select. In original, placeholder disappears if some values is selected,
+ * but empty space under items is confusing, so in terms of UX, it is better to leave placeholder visible always.
+ * If all items are selected, it shows `allSelected` localization from {@link AcceptableValueEditorLocalizations}
+ */
+/*@ngInject*//**
+ * @ngdoc service
+ * @name uiSelectMultipleDirectiveDecorator
  * @module angularjs-value-editor.acceptable
  *
  * @description

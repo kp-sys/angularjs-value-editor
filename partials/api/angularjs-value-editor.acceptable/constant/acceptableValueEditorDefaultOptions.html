@@ -30,7 +30,8 @@
     sortModel: false,
     switchToInlineModeThreshold: 13,
     modelAsArray: false,
-    allowSelectNull: false
+    allowSelectNull: false,
+    disabledItemResolver: \/*@ngInject*\/ ($element) =&gt; $element?.disabled === true
 }
 </code></pre>
 

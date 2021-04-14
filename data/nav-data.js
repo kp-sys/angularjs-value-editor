@@ -293,9 +293,14 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
                 "href": "api/angularjs-value-editor.acceptable/service/acceptableValueEditorLocalizationsService"
               },
               {
-                "name": "uiSelectDecorator",
+                "name": "uiSelectMultipleDirectiveDecorator",
                 "type": "service",
-                "href": "api/angularjs-value-editor.acceptable/service/uiSelectDecorator"
+                "href": "api/angularjs-value-editor.acceptable/service/uiSelectMultipleDirectiveDecorator"
+              },
+              {
+                "name": "uiSelectMultipleDirectiveDecorator",
+                "type": "service",
+                "href": "api/angularjs-value-editor.acceptable/service/uiSelectMultipleDirectiveDecorator"
               }
             ]
           },
