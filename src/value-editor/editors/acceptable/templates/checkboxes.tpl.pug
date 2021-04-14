@@ -22,8 +22,8 @@
                 span(ng-hide="expanded" ng-bind="$ctrl.localize('more') + ' (' + $ctrl.getMoreCount() + ')'")
 
     .btn-group
-        button.btn.btn-default.btn-xs.select-all(type="button" ng-disabled="$ctrl.model.length === $ctrl.options.acceptableValues.length" ng-click="$ctrl.model = $ctrl.options.acceptableValues.slice()" ng-bind="$ctrl.localize('selectAll')")
-        button.btn.btn-default.btn-xs.deselect-all(type="button" ng-disabled="$ctrl.model.length === 0" ng-click="$ctrl.model = []" ng-bind="$ctrl.localize('deselectAll')")
+        button.btn.btn-default.btn-xs.select-all(type="button" ng-disabled="$ctrl.valueEditorController.isDisabled || $ctrl.model.length === $ctrl.options.acceptableValues.length" ng-click="$ctrl.model = $ctrl.options.acceptableValues.slice()" ng-bind="$ctrl.localize('selectAll')")
+        button.btn.btn-default.btn-xs.deselect-all(type="button" ng-disabled="$ctrl.valueEditorController.isDisabled || $ctrl.model.length === 0" ng-click="$ctrl.model = []" ng-bind="$ctrl.localize('deselectAll')")
 
     input.validation-helper(
         type="text"

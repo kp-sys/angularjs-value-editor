@@ -73,6 +73,30 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
         return this.options.multiselectable || this.options.modelAsArray ? [] : null;
     }
 
+    private get sortComparator(): ((a, b) => number) | undefined {
+        if (isInjectableOrFunction(this.options.sortComparator)) {
+            return ($element1, $element2) => this.$injector.invoke(this.options.sortComparator, null, {
+                $element1,
+                $element2
+            });
+        }
+
+        return undefined;
+    }
+
+    private get equalityComparator(): (a, b) => boolean {
+        let comparator = this.acceptableValueEditorConfigurationService.getDefaults().equalityComparator;
+
+        if (isInjectableOrFunction(this.options.equalityComparator)) {
+            comparator = this.options.equalityComparator;
+        }
+
+        return ($element1, $element2) => this.$injector.invoke(comparator, null, {
+            $element1,
+            $element2
+        });
+    }
+
     public hasMore(): boolean {
         return this.options.showFirstCount && this.getMoreCount() > 0;
     }
@@ -160,6 +184,26 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
         }
     }
 
+    public isDisabled(item: VALUE): boolean {
+        if (this.valueEditorController.isDisabled) {
+            return true;
+        } else {
+            if (!isInjectableOrFunction(this.options.disabledItemsResolver)) {
+                throw new Error(`disabledItemResolver is not function: ${this.options.disabledItemsResolver}`);
+            }
+
+            try {
+                return this.$injector.invoke(this.options.disabledItemsResolver, null, {
+                    $item: item,
+                    $options: this.options,
+                    $model: this.model
+                });
+            } catch (e) {
+                throw new Error(`Error in custom disabledItemsResolver: ${e}`);
+            }
+        }
+    }
+
     protected onOptionsChange(newOptions: AcceptableValueEditorOptions<VALUE>, oldOptions: AcceptableValueEditorOptions<VALUE>, whichOptionIsChanged: PropertyChangeDetection<AcceptableValueEditorOptions<VALUE>>) {
         if (whichOptionIsChanged.optionsTemplate ||
             whichOptionIsChanged.searchable ||
@@ -196,30 +240,6 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
             name: this.valueEditorController.editorName,
             size: this.valueEditorController.size
         };
-    }
-
-    private get sortComparator(): ((a, b) => number) | undefined {
-        if (isInjectableOrFunction(this.options.sortComparator)) {
-            return ($element1, $element2) => this.$injector.invoke(this.options.sortComparator, null, {
-                $element1,
-                $element2
-            });
-        }
-
-        return undefined;
-    }
-
-    private get equalityComparator(): (a, b) => boolean {
-        let comparator = this.acceptableValueEditorConfigurationService.getDefaults().equalityComparator;
-
-        if (isInjectableOrFunction(this.options.equalityComparator)) {
-            comparator = this.options.equalityComparator;
-        }
-
-        return ($element1, $element2) => this.$injector.invoke(comparator, null, {
-            $element1,
-            $element2
-        });
     }
 
     private setValidationHelperTouched() {

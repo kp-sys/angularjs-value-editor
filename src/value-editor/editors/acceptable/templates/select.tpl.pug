@@ -22,7 +22,7 @@ ui-select(
 
     data-main-input
 )
-    ui-select-choices(repeat="$item in $ctrl.getAcceptableValuesForUiSelect() {{sort ? '| orderBy : \\'\\' : false : $ctrl.uiSelectComparator' : ''}} {{searchable ? '| nullAwareFilter:$select.search' : ''}} track by $index")
+    ui-select-choices(repeat="$item in $ctrl.getAcceptableValuesForUiSelect() {{sort ? '| orderBy : \\'\\' : false : $ctrl.uiSelectComparator' : ''}} {{searchable ? '| nullAwareFilter:$select.search' : ''}} track by $index" ui-disable-choice="$ctrl.isDisabled($item)")
         span(ng-if="$item === null" ng-bind="::$ctrl.localize('noItemSelected')")
         span(ng-if="$item !== null") {{optionsTemplate}}
 
