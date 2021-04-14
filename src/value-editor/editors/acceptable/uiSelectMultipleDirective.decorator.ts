@@ -1,9 +1,10 @@
 import {IDirective} from 'angular';
 import {AcceptableValueEditorLocalizationsService} from './acceptable-value-editor-localizations.provider';
+import {decorateIsDisabledFunctionInController} from './acceptable-value-editor.utils';
 
 /**
  * @ngdoc service
- * @name uiSelectDecorator
+ * @name uiSelectMultipleDirectiveDecorator
  * @module angularjs-value-editor.acceptable
  *
  * @description
@@ -13,7 +14,7 @@ import {AcceptableValueEditorLocalizationsService} from './acceptable-value-edit
  */
 
 /*@ngInject*/
-export default function uiSelectDecorator($delegate: [IDirective], acceptableValueEditorLocalizationsService: AcceptableValueEditorLocalizationsService) {
+export default function uiSelectMultipleDirectiveDecorator($delegate: [IDirective], acceptableValueEditorLocalizationsService: AcceptableValueEditorLocalizationsService) {
 
     const directive = $delegate[0];
 
@@ -34,9 +35,11 @@ export default function uiSelectDecorator($delegate: [IDirective], acceptableVal
 
             return $select.placeholder;
         };
+
+        decorateIsDisabledFunctionInController($select);
     };
 
     return $delegate;
 }
 
-uiSelectDecorator.decoratorName = 'uiSelectMultipleDirective';
+uiSelectMultipleDirectiveDecorator.decoratorName = 'uiSelectMultipleDirective';

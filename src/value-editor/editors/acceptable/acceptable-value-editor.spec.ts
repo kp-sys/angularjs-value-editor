@@ -347,6 +347,24 @@ describe('acceptable-value-editor', () => {
 
                 expect($scope.model).toEqual([]);
             });
+
+            it('should have working disabling single option', () => {
+                valueEditorMocker.create('acceptable', {
+                    options: {
+                        acceptableValues: ACCEPTABLE_VALUES,
+                        switchToInlineModeThreshold: 5,
+                        disabledItemsResolver: /*@ngInject*/ ($item: AcceptableValueEditorModel) => $item.value === 'b'
+                    }
+                });
+                const uiSelect = valueEditorMocker.getInputElement<HTMLElement>();
+                const controller = new UISelectController(uiSelect);
+
+                controller.openUiSelect();
+
+                const hasDisabledClass = uiSelect.querySelectorAll('.ui-select-choices-row')[1].classList.contains('disabled');
+
+                expect(hasDisabledClass).toBeTrue();
+            });
         });
 
         describe('single selectable block', () => {
@@ -508,6 +526,22 @@ describe('acceptable-value-editor', () => {
 
                 expect($scope.model).toEqual([]);
             });
+
+            it('should have working disabling single option', () => {
+                valueEditorMocker.create('acceptable', {
+                    options: {
+                        acceptableValues: ACCEPTABLE_VALUES,
+                        switchToInlineModeThreshold: 0,
+                        disabledItemsResolver: /*@ngInject*/ ($item: AcceptableValueEditorModel) => $item.value === 'b'
+                    }
+                });
+                const uiSelect = valueEditorMocker.getInputElement<HTMLElement>();
+
+                const hasDisabledClass = uiSelect.querySelector('.list-group-item:nth-child(2)').classList.contains('disabled');
+
+                expect(hasDisabledClass).toBeTrue();
+            });
+
         });
 
         describe('multi selectable ui-select', () => {
@@ -806,6 +840,24 @@ describe('acceptable-value-editor', () => {
                 expect($scope.model).toBeNull();
             });
 
+            it('should have working disabling single option', () => {
+                valueEditorMocker.create('acceptable', {
+                    options: {
+                        acceptableValues: ACCEPTABLE_VALUES,
+                        multiselectable: true,
+                        switchToInlineModeThreshold: 5,
+                        disabledItemsResolver: /*@ngInject*/ ($item: AcceptableValueEditorModel) => $item.value === 'b'
+                    }
+                });
+                const uiSelect = valueEditorMocker.getInputElement<HTMLElement>();
+                const controller = new UISelectController(uiSelect);
+
+                controller.openUiSelect();
+
+                const hasDisabledClass = uiSelect.querySelectorAll('.ui-select-choices-row')[1].classList.contains('disabled');
+
+                expect(hasDisabledClass).toBeTrue();
+            });
 
         });
 
@@ -1071,6 +1123,22 @@ describe('acceptable-value-editor', () => {
                 checkboxesController.clearSelection();
 
                 expect($scope.model).toBeNull();
+            });
+
+            it('should have working disabling single option', () => {
+                valueEditorMocker.create('acceptable', {
+                    options: {
+                        acceptableValues: ACCEPTABLE_VALUES,
+                        multiselectable: true,
+                        switchToInlineModeThreshold: 0,
+                        disabledItemsResolver: /*@ngInject*/ ($item: AcceptableValueEditorModel) => $item.value === 'b'
+                    }
+                });
+                const uiSelect = valueEditorMocker.getInputElement<HTMLElement>();
+
+                const hasDisabledClass = uiSelect.querySelector<HTMLInputElement>('.av-item:nth-child(2) .pretty input').disabled;
+
+                expect(hasDisabledClass).toBeTrue();
             });
         });
     });

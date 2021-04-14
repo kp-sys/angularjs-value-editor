@@ -1,14 +1,10 @@
 main.container(ng-controller="labController as $ctrl" ng-init="model = null")
 
     kp-value-editor(
-        type="'text'"
+        type="'acceptable'"
         ng-model="$ctrl.model"
 
-        options="{" +
-            "switchToTextareaThreshold: 10" +
-        "}"
-
-        size="'xs'"
+        options="$ctrl.options"
     )
 
     div Form

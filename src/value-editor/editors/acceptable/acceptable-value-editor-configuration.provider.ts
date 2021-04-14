@@ -49,6 +49,18 @@ import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../commo
  * @property {boolean} selectedFirst If `true`, selected options will be moved on top of options. Applicable only for multiselectable, checkbox mode.
  * @property {boolean} modelAsArray If `true`, model will be array also if `multiple = false`. In this case array will contain only one element.
  * @property {boolean} allowSelectNull If `true`, single selectable editors will allow select null option or deselect selected.
+ * @property {Injectable<Function>} disabledItemsResolver
+ * ```
+ * function(...args: any[]) => boolean
+ * ```
+ * Resolver for determine if `$item` is disabled.
+ *
+ * | Injectable&nbsp;argument&nbsp;name | Description  |
+ * | ------------------------ | ---------------------- |
+ * | `$item`                  | Acceptable item        |
+ * | `$model`                 | Current model          |
+ * | `$options`               | Full options           |
+ *
  *
  * @description
  * Extends {@link type:ValueEditorOptions}
@@ -70,6 +82,7 @@ export interface AcceptableValueEditorOptions<VALUE> extends ValueEditorOptions 
     selectedFirst?: boolean;
     modelAsArray?: boolean;
     allowSelectNull?: boolean;
+    disabledItemsResolver?: Injectable<Function | ((...args: any[]) => boolean)>;
 }
 
 /**
@@ -95,7 +108,8 @@ export interface AcceptableValueEditorOptions<VALUE> extends ValueEditorOptions 
  *      sortModel: false,
  *      switchToInlineModeThreshold: 13,
  *      modelAsArray: false,
- *      allowSelectNull: false
+ *      allowSelectNull: false,
+ *      disabledItemResolver: \/*@ngInject*\/ ($element) => $element?.disabled === true
  *  }
  * ```
  */
@@ -114,6 +128,7 @@ export const ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<AcceptableV
     switchToInlineModeThreshold: 13,
     modelAsArray: false,
     allowSelectNull: false,
+    disabledItemsResolver: /*@ngInject*/ ($item) => $item?.disabled === true,
     __forceDisableNgAnimate: false
 };
 

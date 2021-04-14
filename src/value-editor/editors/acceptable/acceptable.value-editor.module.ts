@@ -4,7 +4,8 @@ import aliasesModule from '../../aliases/kp-value-editor-aliases.module';
 import 'angular-sanitize';
 import 'ui-select';
 
-import uiSelectDecorator from './uiSelect.decorator';
+import uiSelectMultipleDirectiveDecorator from './uiSelectMultipleDirective.decorator';
+import uiSelectSingleDirectiveDecorator from './uiSelectSingleDirective.decorator';
 import AcceptableValueEditorLocalizationsServiceProvider, {ACCEPTABLE_VALUE_EDITOR_DEFAULT_LOCALIZATIONS} from './acceptable-value-editor-localizations.provider';
 import AcceptableValueEditorComponent from './acceptable.value-editor.component';
 import AcceptableValueEditorConfigurationServiceProvider, {ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS} from './acceptable-value-editor-configuration.provider';
@@ -22,7 +23,8 @@ import {acceptableValueEditorConfig} from './acceptable.value-editor.config';
 
 export default register('angularjs-value-editor.acceptable', [aliasesModule, 'ngSanitize', 'ui.select'])
     .config(acceptableValueEditorConfig)
-    .decorator(uiSelectDecorator.decoratorName, uiSelectDecorator)
+    .decorator(uiSelectMultipleDirectiveDecorator.decoratorName, uiSelectMultipleDirectiveDecorator)
+    .decorator(uiSelectSingleDirectiveDecorator.decoratorName, uiSelectSingleDirectiveDecorator)
     .constant('acceptableValueEditorDefaultOptions', ACCEPTABLE_VALUE_EDITOR_DEFAULT_OPTIONS)
     .constant('acceptableValueEditorDefaultLocalizations', ACCEPTABLE_VALUE_EDITOR_DEFAULT_LOCALIZATIONS)
     .provider(AcceptableValueEditorConfigurationServiceProvider.providerName, AcceptableValueEditorConfigurationServiceProvider)
