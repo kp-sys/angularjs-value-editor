@@ -199,6 +199,29 @@ describe('searchable-value-editor', () => {
         expect(document.activeElement).toEqual(valueEditorMocker.getInputElement<HTMLInputElement>().parentElement.querySelector<HTMLButtonElement>('.search-button'));
         valueEditorMocker.detachElementFromDocument();
     });
+
+    it('should empty model on delete button click', () => {
+        $scope.model = {hello: 'hello'};
+
+        const element = valueEditorMocker.create('searchable', {
+            editorName: 'searchable',
+            options: {
+                allowToDeleteValue: true
+            }
+        }, true);
+
+        const deleteButtonElement = element.querySelector<HTMLButtonElement>('.delete-button');
+
+        expect(isVisibleInDOM(deleteButtonElement)).toBe(true);
+
+        deleteButtonElement.click();
+        $scope.$apply();
+
+        expect($scope.model).toBeNull();
+
+        valueEditorMocker.detachElementFromDocument();
+
+    });
 });
 
 function isVisibleInDOM(element: HTMLElement): boolean {

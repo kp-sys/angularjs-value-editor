@@ -4,16 +4,20 @@ span.model-value(ng-class="'size-' + $ctrl.valueEditorController.size" ng-if="$c
 span.text-muted.placeholder(ng-class="'size-' + $ctrl.valueEditorController.size" ng-if="!$ctrl.model" ng-bind="$ctrl.valueEditorController.placeholder")
 
 button.search-button.btn.btn-default(type="button" ng-class="'btn-' + $ctrl.valueEditorController.size" ng-disabled="$ctrl.valueEditorController.isDisabled || $ctrl.searching" ng-click="$ctrl.search()" kp-focusable-input="$ctrl.connectToFocusApi($api)")
-    span.glyphicon.glyphicon-search(ng-show="!$ctrl.searching")
+    span.glyphicon.glyphicon-search(ng-hide="$ctrl.searching")
     ng-include.glyphicon.searchable-loading-svg(src="$ctrl.loadingSpinnerTemplateUrl" ng-show="$ctrl.searching")
     span(ng-if="$ctrl.model" ng-bind="$ctrl.localize('searchOther')")
     span(ng-if="!$ctrl.model" ng-bind="$ctrl.localize('search')")
 
 button.edit-button.btn.btn-default(type="button" ng-class="'btn-' + $ctrl.valueEditorController.size" ng-disabled="$ctrl.valueEditorController.isDisabled || $ctrl.editing" ng-show="$ctrl.hasEditModelFunction" ng-click="$ctrl.edit()")
-    span.glyphicon.glyphicon-pencil(ng-show="!$ctrl.editing")
+    span.glyphicon.glyphicon-pencil(ng-hide="$ctrl.editing")
     ng-include.glyphicon.searchable-loading-svg(src="$ctrl.loadingSpinnerTemplateUrl" ng-show="$ctrl.editing")
     span(ng-if="$ctrl.model" ng-bind="$ctrl.localize('editValue')")
     span(ng-if="!$ctrl.model" ng-bind="$ctrl.localize('createNew')")
+
+button.delete-button.btn.btn-default(type="button" ng-class="'btn-' + $ctrl.valueEditorController.size" ng-disabled="$ctrl.valueEditorController.isDisabled || $ctrl.isEmpty()" ng-show="$ctrl.options.allowToDeleteValue" ng-click="$ctrl.setToEmpty()")
+    span.glyphicon.glyphicon-trash
+    span(ng-bind="$ctrl.localize('delete')")
 
 input.validation-helper(
     type="text"

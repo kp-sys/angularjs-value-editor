@@ -34,6 +34,7 @@ import {Injectable} from 'angular';
  * | `$model`                 | Current model                      |
  * | `$additionalParameters`  | Additional parameters from options |
  * @property {boolean} immediatelyTriggerSearch Run search function right after initialization.
+ * @property {boolean} allowToDeleteValue Displays delete button and sets empty model value.
  *
  * @description
  * Extends {@link type:ValueEditorOptions}
@@ -48,6 +49,7 @@ export interface SearchableValueEditorOptions<MODEL> extends ValueEditorOptions 
     // tslint:disable-next-line:ban-types
     editModelFunction?: Injectable<Function | ((...args: any[]) => PromiseLike<MODEL>)>;
     immediatelyTriggerSearch?: boolean;
+    allowToDeleteValue?: boolean;
 }
 
 /**
@@ -64,7 +66,8 @@ export interface SearchableValueEditorOptions<MODEL> extends ValueEditorOptions 
  *      additionalParameters: undefined,
  *      searchModelFunction: async () => {throw new Error('searchModelFunction is not set')},
  *      editModelFunction: undefined,
- *      immediatelyTriggerSearch: false
+ *      immediatelyTriggerSearch: false,
+ *      allowToDeleteValue: false
  * }
  * ```
  */
@@ -73,7 +76,8 @@ export const SEARCHABLE_VALUE_EDITOR_DEFAULT_OPTIONS: DefaultOptions<SearchableV
     additionalParameters: undefined,
     searchModelFunction: async () => {throw new Error('searchModelFunction is not set')},
     editModelFunction: undefined,
-    immediatelyTriggerSearch: false
+    immediatelyTriggerSearch: false,
+    allowToDeleteValue: false
 };
 
 /**

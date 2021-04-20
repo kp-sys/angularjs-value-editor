@@ -80,6 +80,10 @@ export class SearchableValueEditorComponentController<MODEL = any> extends Abstr
         }
     }
 
+    public setToEmpty() {
+        this.model = this.emptyModel;
+    }
+
     protected onOptionsChange(newOptions: SearchableValueEditorOptions<MODEL>, oldOptions, whatChanged: PropertyChangeDetection<SearchableValueEditorOptions<MODEL>>) {
         if (whatChanged.modelTemplate) {
             this.updateTemplate();
