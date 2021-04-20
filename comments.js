@@ -2113,6 +2113,7 @@
  * | `$model`                 | Current model                      |
  * | `$additionalParameters`  | Additional parameters from options |
  * @property {boolean} immediatelyTriggerSearch Run search function right after initialization.
+ * @property {boolean} allowToDeleteValue Displays delete button and sets empty model value.
  *
  * @description
  * Extends {@link type:ValueEditorOptions}
@@ -2135,7 +2136,8 @@
  *      additionalParameters: undefined,
  *      searchModelFunction: async () => {throw new Error('searchModelFunction is not set')},
  *      editModelFunction: undefined,
- *      immediatelyTriggerSearch: false
+ *      immediatelyTriggerSearch: false,
+ *      allowToDeleteValue: false
  * }
  * ```
  */
@@ -2187,6 +2189,7 @@
  * @property {string} searchOther
  * @property {string} editValue
  * @property {string} createNew
+ * @property {string} delete
  *
  * @description
  * Default localizations: {@link searchableValueEditorDefaultLocalizations}
@@ -2202,7 +2205,8 @@
  *      search: 'Search',
  *      searchOther: 'Search other',
  *      editValue: 'Edit value',
- *      createNew: 'Create new'
+ *      createNew: 'Create new',
+ *      delete: 'Delete'
  * }
  * ```
  *//*@ngInject*/
