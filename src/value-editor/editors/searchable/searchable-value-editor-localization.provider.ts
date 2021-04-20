@@ -40,6 +40,7 @@ export interface SearchableValueEditorLocalizationsService extends AbstractValue
  * @property {string} searchOther
  * @property {string} editValue
  * @property {string} createNew
+ * @property {string} delete
  *
  * @description
  * Default localizations: {@link searchableValueEditorDefaultLocalizations}
@@ -49,6 +50,7 @@ export interface SearchableValueEditorLocalizations extends ValueEditorLocalizat
     searchOther;
     editValue;
     createNew;
+    delete;
 }
 
 /**
@@ -62,7 +64,8 @@ export interface SearchableValueEditorLocalizations extends ValueEditorLocalizat
  *      search: 'Search',
  *      searchOther: 'Search other',
  *      editValue: 'Edit value',
- *      createNew: 'Create new'
+ *      createNew: 'Create new',
+ *      delete: 'Delete'
  * }
  * ```
  */
@@ -70,5 +73,6 @@ export const SEARCHABLE_VALUE_EDITOR_DEFAULT_LOCALIZATIONS: Readonly<SearchableV
     search: 'Search',
     searchOther: 'Search other',
     editValue: 'Edit value',
-    createNew: 'Create new'
+    createNew: 'Create new',
+    delete: 'Delete'
 });

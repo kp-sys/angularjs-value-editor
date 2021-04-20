@@ -1,14 +1,13 @@
-main.container(ng-controller="labController as $ctrl" ng-init="model = null")
+main.container(ng-controller="labController as $ctrl")
 
-    kp-value-editor(
-        type="'acceptable'"
+    kp-universal-form(
+        form-id="aj-dyy"
         ng-model="$ctrl.model"
+        ng-change="$ctrl.change()"
 
-        options="$ctrl.options"
+        form-settings="$ctrl.formSettings"
     )
 
-    div Form
-    pre {{form | json}}
 
     div Model:
     pre {{$ctrl.model | json}}
