@@ -194,6 +194,96 @@ If watching for changes is not needed, it&#39;s recommended set it to <code>fals
 
     
   </li>
+  
+  <li id="addValueEditorPreInitHook">
+    <h3 class="">
+      <span class="title"><p><code>addValueEditorPreInitHook(editor, hook, [runOnce]);</code></p>
+
+</span>
+      
+      
+  
+    </h3>
+    <div><p>Set value editor pre-init hook. This hook is triggered before rendering of specific value editor and holds rendering until the hook is resolved.
+If it takes too long (<a href="api/angularjs-value-editor/constant/showLoadingSpinnerDueToEditorHookDelay">showLoadingSpinnerDueToEditorHookDelay</a>), spinner is displayed.
+Setting hook is good e.g. for load some needed dependencies, concretely for async import of <code>trumbowyg</code> in <a href="api/angularjs-value-editor.html-editor/component/htmlValueEditor">htmlValueEditor</a>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments ">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        editor
+        
+        
+      </td>
+      <td>
+        <span class="label type-hint type-hint-customvalueeditortype"><a href="api/angularjs-value-editor.aliases/type/CustomValueEditorType">CustomValueEditorType</a></span><span class="label type-hint type-hint-array"><a href="api/angularjs-value-editor.aliases/type/CustomValueEditorType">Array.&lt;CustomValueEditorType&gt;</a></span>
+      </td>
+      <td>
+        <p>Value editor type.</p>
+
+        
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        hook
+        
+        
+      </td>
+      <td>
+        <span class="label type-hint type-hint-function"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" _target="blank">Promise function(): Promise</a></span>
+      </td>
+      <td>
+        <p>Async hook. It must return <code>Promise</code>.</p>
+
+        
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        runOnce
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <span class="label type-hint type-hint-boolean"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" _target="blank">Boolean</a></span>
+      </td>
+      <td>
+        <p>If it is one-time hook or if this hook should be triggered each time when editor is rendered. Default is <code>true</code>.</p>
+
+        
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+    
+  </li>
   </ul>
 
   

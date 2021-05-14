@@ -54,6 +54,11 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
                 "name": "loadingSpinnerTemplateUrl",
                 "type": "constant",
                 "href": "api/angularjs-value-editor/constant/loadingSpinnerTemplateUrl"
+              },
+              {
+                "name": "showLoadingSpinnerDueToEditorHookDelay",
+                "type": "constant",
+                "href": "api/angularjs-value-editor/constant/showLoadingSpinnerDueToEditorHookDelay"
               }
             ]
           },
@@ -192,6 +197,11 @@ angular.module('docApp').constant('DOCS_NAVIGATION', {
                 "name": "ValueEditorOptions",
                 "type": "type",
                 "href": "api/angularjs-value-editor/type/ValueEditorOptions"
+              },
+              {
+                "name": "ValueEditorPreInitHook",
+                "type": "type",
+                "href": "api/angularjs-value-editor/type/ValueEditorPreInitHook"
               },
               {
                 "name": "ValueEditorValidations",

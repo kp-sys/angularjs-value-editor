@@ -9,7 +9,7 @@ angular.module('acceptableValueEditorExample', ['angularjs-value-editor'])
      showFirstCount;
      selectedFirst;
      sortModel;
-     switchToBlockModeThreshold;
+     switchToInlineModeThreshold;
      modelAsArray;
      sortComparatorString = `($element1, $element2) => (($element1 || {x: ''}).x || '').localeCompare(($element2 || {x: ''}).x) * -1`;
      equalityComparatorString = '($element1, $element2) => $element1 && $element2 && $element1.x === $element2.x';

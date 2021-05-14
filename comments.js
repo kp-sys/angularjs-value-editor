@@ -902,7 +902,7 @@
  *                  sortComparator: $ctrl.sortComparator,
  *                  equalityComparator: $ctrl.equalityComparator,
  *                  modelAsArray: $ctrl.modelAsArray,
- *                  switchToBlockModeThreshold: $ctrl.switchToBlockModeThreshold
+ *                  switchToInlineModeThreshold: $ctrl.switchToInlineModeThreshold
  *              }" placeholder="'Select...'">
  *              </kp-value-editor>
  *              <div>Model: {{model}}</div>
@@ -917,7 +917,7 @@
  *              <div>showFirstCount: <input type="number" ng-model="$ctrl.showFirstCount"></div>
  *              <div>selectedFirst: <input type="checkbox" ng-model="$ctrl.selectedFirst"></div>
  *              <div>sortModel: <input type="checkbox" ng-model="$ctrl.sortModel"></div>
- *              <div>switchToBlockModeThreshold: <input type="number" ng-model="$ctrl.switchToBlockModeThreshold"></div>
+ *              <div>switchToInlineModeThreshold: <input type="number" ng-model="$ctrl.switchToInlineModeThreshold"></div>
  *              <div>sortComparator: <input type="text" ng-model="$ctrl.sortComparatorString" ng-change="$ctrl.evalComparators()"></div>
  *              <div>equalityComparator: <input type="text" ng-model="$ctrl.equalityComparatorString" ng-change="$ctrl.evalComparators()"></div>
  *              <div>modelAsArray: <input type="checkbox" ng-model="$ctrl.modelAsArray"></div>
@@ -933,7 +933,7 @@
  *              showFirstCount;
  *              selectedFirst;
  *              sortModel;
- *              switchToBlockModeThreshold;
+ *              switchToInlineModeThreshold;
  *              modelAsArray;
  *              sortComparatorString = `($element1, $element2) => (($element1 || {x: ''}).x || '').localeCompare(($element2 || {x: ''}).x) * -1`;
  *              equalityComparatorString = '($element1, $element2) => $element1 && $element2 && $element1.x === $element2.x';
@@ -1482,22 +1482,41 @@
  *         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/ui/trumbowyg.min.css">
  *         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/colors/ui/trumbowyg.colors.min.css">
  *         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/table/ui/trumbowyg.table.min.css">
- *         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
- *         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/trumbowyg.min.js"></script>
- *         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/colors/trumbowyg.colors.min.js"></script>
- *         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/table/trumbowyg.table.min.js"></script>
+ *         <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Cerdic/jQl@master/jQl.min.js"></script>
  *         <main>
- *             <em>Example probably doesn't work, because jQuery is need to be load before angular. You can use >>Edit in Plunker<< button and prepend jQuery script tag before angular.</em>
- *             <em>Hmmm... It isn't all yet. You must load SVG icons, but plunker doesn't allow CORS requests. No help...</em>
+ *              <h2>Pay attention to value editor pre-init hook implementation</h2>
  *              <kp-value-editor type="'html'" ng-model="model"></kp-value-editor>
  *              <div>{{model}}</div>
  *         </main>
  *     </file>
  *     <file name="script.js">
- *         angular.module('htmlValueEditorExample', ['angularjs-value-editor']);
- *         $(document).ready(() => {
- *             $.trumbowyg.svgPath = 'https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/ui/icons.svg';
- *         });
+ *         angular.module('htmlValueEditorExample', ['angularjs-value-editor'])
+ *              .config(['kpValueEditorConfigurationServiceProvider', (kpValueEditorConfigurationServiceProvider) => {
+ *                  kpValueEditorConfigurationServiceProvider.addValueEditorPreInitHook('html', () => new Promise((resolve) => {
+ *                      jQl.loadjQ('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js', () => {
+ *
+ *                          window.$ = $.noConflict();
+ *
+ *                          function loadScript(url) {
+ *                              return new Promise((resolve) => {
+ *                                    const element = document.createElement('script');
+ *                                    element.onload = resolve;
+ *                                    element.src = url;
+ *                                    element.type = 'text/javascript';
+ *                                    document.head.append(element);
+ *                              });
+ *                          }
+ *
+ *                          return Promise.all([
+ *                              loadScript('https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/trumbowyg.min.js'),
+ *                              loadScript('https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/colors/trumbowyg.colors.min.js'),
+ *                              loadScript('https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/table/trumbowyg.table.min.js')
+ *                          ])
+ *                          .then(() => $.trumbowyg.svgPath = 'https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/ui/icons.svg')
+ *                          .then(resolve);
+ *                      });
+ *                  }));
+ *              }]);
  *     </file>
  * </example>
  *//**
@@ -3093,13 +3112,26 @@
 /* @ts-ignore*/
 /*@ngInject*/
 /* @ts-ignore*/
-/*@ngInject*//**
+/*@ngInject*//* tslint:disable:ban-types */
+/**
  * @ngdoc provider
  * @name kpValueEditorConfigurationServiceProvider
  * @module angularjs-value-editor
  *
  * @description
  * Provider for {@link kpValueEditorConfigurationService}
+ */
+/**
+ * @ngdoc type
+ * @name ValueEditorPreInitHook
+ * @module angularjs-value-editor
+ *
+ * @property {function(): Promise} hook Hook implementation. It must return `Promise`.
+ * @property {boolean} runOnce If it is one-time hook or if this hook should be triggered each time when editor is rendered.
+ * @property {boolean} triggered If hook has been triggered.
+ *
+ * @description
+ * Value editor pre-init hook configuration
  */
 /**
      * @ngdoc method
@@ -3131,6 +3163,19 @@
      * If `true`, {@link errorMessages} directive will not wrap value editor, if its parent element isn't relatively positioned.
      */
 /**
+     * @ngdoc method
+     * @name kpValueEditorConfigurationServiceProvider#addValueEditorPreInitHook
+     *
+     * @param {CustomValueEditorType | CustomValueEditorType[]} editor Value editor type.
+     * @param {function(): Promise} hook Async hook. It must return `Promise`.
+     * @param {boolean=} runOnce If it is one-time hook or if this hook should be triggered each time when editor is rendered. Default is `true`.
+     *
+     * @description
+     * Set value editor pre-init hook. This hook is triggered before rendering of specific value editor and holds rendering until the hook is resolved.
+     * If it takes too long ({@link showLoadingSpinnerDueToEditorHookDelay}), spinner is displayed.
+     * Setting hook is good e.g. for load some needed dependencies, concretely for async import of `trumbowyg` in {@link htmlValueEditor}.
+     */
+/**
  * @ngdoc service
  * @name kpValueEditorConfigurationService
  * @module angularjs-value-editor
@@ -3138,7 +3183,7 @@
  * @property {boolean} debugMode Show debug information
  * @property {boolean} preciseWatchForOptionsChanges
  * @property {boolean} disableAutoWrapping
- * 
+ *
  * @description
  *
  * Default options:
@@ -3149,7 +3194,17 @@
  *      disableAutoWrapping: false
  *  }
  * ```
- *//*@ngInject*/
+ */
+/**
+     * @ngdoc method
+     * @name kpValueEditorConfigurationService#getPreInitHooksFor
+     * @module angularjs-value-editor
+     *
+     * @return {ValueEditorPreInitHook[]} Hooks.
+     *
+     * @description
+     * Return pre-init hooks for specified value editor.
+     *//*@ngInject*/
 /*@ngInject*/
 /*@ngInject*/
 /*@ngInject*/
@@ -3199,7 +3254,8 @@
      * Returns registered value editor component selector for dynamic create HTML tag as editor template.
      *
      * If no selector for type is found, it throws error.
-     *//* Bindings */
+     *//*@ngInject*/
+/*@ngInject*//* Bindings */
 /* settings for specific value editor sub-component*/
 /* required component controllers*/
 /* settings for common kp-value-editor wrapper component*/
@@ -3783,6 +3839,16 @@
  * @name angularjs-value-editor
  * @module angularjs-value-editor
  */
+/**
+     * @ngdoc constant
+     * @name showLoadingSpinnerDueToEditorHookDelay
+     * @module angularjs-value-editor
+     *
+     * @description
+     * If pre init hook takes more than this time, loading spinner is displayed.
+     *
+     * Default value is `100` [ms].
+     */
 /**
  * @typedef ng.type.ngModel
  * @typedef ng.type.ngModel.NgModelController

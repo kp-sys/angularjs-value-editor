@@ -8,7 +8,7 @@
   <link href="https://unpkg.com/@kpsys/angularjs-bootstrap-datetimepicker/dist/angularjs-bootstrap-datetimepicker.css" rel="stylesheet" type="text/css">
   <link href="https://unpkg.com/@kpsys/angularjs-histogram-slider/dist/slider.css" rel="stylesheet" type="text/css">
   <link href="https://unpkg.com/ui-select/dist/select.css" rel="stylesheet" type="text/css">
-  <link href="https://unpkg.com/@kpsys/angularjs-value-editor/dist/angularjs-value-editor.min.css" rel="stylesheet" type="text/css">
+  <link href="https://unpkg.com/@kpsys/angularjs-value-editor/dist/angularjs-value-editor.css" rel="stylesheet" type="text/css">
   
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.8.7/polyfill.min.js"></script>
@@ -24,7 +24,7 @@
   <script src="https://unpkg.com/angular-sanitize/angular-sanitize.js"></script>
   <script src="https://unpkg.com/ui-select/dist/select.js"></script>
   <script src="https://unpkg.com/regenerator-runtime/runtime.js"></script>
-  <script src="https://unpkg.com/@kpsys/angularjs-value-editor/dist/angularjs-value-editor.min.js"></script>
+  <script src="https://unpkg.com/@kpsys/angularjs-value-editor/dist/angularjs-value-editor.js"></script>
   <script src="/bower_components/iframe-resizer/js/iframeResizer.contentWindow.min.js"></script>
   <script src="script.js"></script>
   
@@ -45,7 +45,7 @@
          sortComparator: $ctrl.sortComparator,
          equalityComparator: $ctrl.equalityComparator,
          modelAsArray: $ctrl.modelAsArray,
-         switchToBlockModeThreshold: $ctrl.switchToBlockModeThreshold
+         switchToInlineModeThreshold: $ctrl.switchToInlineModeThreshold
      }" placeholder="'Select...'">
      </kp-value-editor>
      <div>Model: {{model}}</div>
@@ -60,7 +60,7 @@
      <div>showFirstCount: <input type="number" ng-model="$ctrl.showFirstCount"></div>
      <div>selectedFirst: <input type="checkbox" ng-model="$ctrl.selectedFirst"></div>
      <div>sortModel: <input type="checkbox" ng-model="$ctrl.sortModel"></div>
-     <div>switchToBlockModeThreshold: <input type="number" ng-model="$ctrl.switchToBlockModeThreshold"></div>
+     <div>switchToInlineModeThreshold: <input type="number" ng-model="$ctrl.switchToInlineModeThreshold"></div>
      <div>sortComparator: <input type="text" ng-model="$ctrl.sortComparatorString" ng-change="$ctrl.evalComparators()"></div>
      <div>equalityComparator: <input type="text" ng-model="$ctrl.equalityComparatorString" ng-change="$ctrl.evalComparators()"></div>
      <div>modelAsArray: <input type="checkbox" ng-model="$ctrl.modelAsArray"></div>
