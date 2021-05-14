@@ -1,5 +1,5 @@
 import {ValueEditorBindings, ValueEditorValidations} from '../../kp-value-editor/kp-value-editor.component';
-import {IDoCheck, IOnDestroy, IPostLink, ITimeoutService} from 'angular';
+import angular, {IAugmentedJQuery, IDoCheck, IOnDestroy, IPostLink, ITimeoutService} from 'angular';
 import AbstractValueEditorComponentController from '../../abstract/abstract-value-editor-component-controller';
 import {HtmlValueEditorConfigurationService, HtmlValueEditorOptions} from './html-value-editor-configuration.provider';
 import bind from 'bind-decorator';
@@ -8,21 +8,27 @@ import AbstractValueEditorComponent from '../../abstract/abstract-value-editor-c
 
 export class HtmlValueEditorComponentController extends AbstractValueEditorComponentController<string, HtmlValueEditorOptions> implements IPostLink, IDoCheck, IOnDestroy {
     public container: JQuery;
+    public angularContainer: IAugmentedJQuery;
     private isDisabled: boolean;
 
     /*@ngInject*/
-    constructor(htmlValueEditorConfigurationService: HtmlValueEditorConfigurationService, private $timeout: ITimeoutService) {
+    constructor(htmlValueEditorConfigurationService: HtmlValueEditorConfigurationService, private $timeout: ITimeoutService, $element: IAugmentedJQuery) {
         super(htmlValueEditorConfigurationService);
+
+        const element = $element[0].querySelector('textarea');
+
+        this.angularContainer = angular.element(element);
+        if (this.angularContainer.trumbowyg) {
+            this.container = this.angularContainer;
+        } else {
+            this.container = $(element);
+        }
     }
 
     public $postLink(): void {
         super.$postLink();
 
         this.$timeout(this.initTrumbowyg);
-    }
-
-    protected get emptyModel(): string {
-        return '';
     }
 
     $doCheck(): void {
@@ -39,17 +45,21 @@ export class HtmlValueEditorComponentController extends AbstractValueEditorCompo
         }
     }
 
+    protected get emptyModel(): string {
+        return '';
+    }
+
     @bind
     private initTrumbowyg() {
         const options = {...this.options.editorOptions, disabled: this.valueEditorController.isDisabled};
 
         this.container.trumbowyg(options);
 
-        this.container.on('tbwchange tbwpaste', () => this.container.triggerHandler('input'));
+        this.container.on('tbwchange tbwpaste', () => this.angularContainer.triggerHandler('input'));
 
         const setTouchedHandler = () => {
-            this.container.controller('ngModel').$setTouched();
-            this.container.triggerHandler('input');
+            this.angularContainer.controller('ngModel').$setTouched();
+            this.angularContainer.triggerHandler('input');
             this.container.off('tbwchange tbwpaste tbwblur', setTouchedHandler);
         };
         this.container.on('tbwchange tbwpaste tbwblur', setTouchedHandler);
@@ -104,22 +114,41 @@ export class HtmlValueEditorComponentController extends AbstractValueEditorCompo
  *         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/ui/trumbowyg.min.css">
  *         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/colors/ui/trumbowyg.colors.min.css">
  *         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/table/ui/trumbowyg.table.min.css">
- *         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
- *         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/trumbowyg.min.js"></script>
- *         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/colors/trumbowyg.colors.min.js"></script>
- *         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/table/trumbowyg.table.min.js"></script>
+ *         <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Cerdic/jQl@master/jQl.min.js"></script>
  *         <main>
- *             <em>Example probably doesn't work, because jQuery is need to be load before angular. You can use >>Edit in Plunker<< button and prepend jQuery script tag before angular.</em>
- *             <em>Hmmm... It isn't all yet. You must load SVG icons, but plunker doesn't allow CORS requests. No help...</em>
+ *              <h2>Pay attention to value editor pre-init hook implementation</h2>
  *              <kp-value-editor type="'html'" ng-model="model"></kp-value-editor>
  *              <div>{{model}}</div>
  *         </main>
  *     </file>
  *     <file name="script.js">
- *         angular.module('htmlValueEditorExample', ['angularjs-value-editor']);
- *         $(document).ready(() => {
- *             $.trumbowyg.svgPath = 'https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/ui/icons.svg';
- *         });
+ *         angular.module('htmlValueEditorExample', ['angularjs-value-editor'])
+ *              .config(['kpValueEditorConfigurationServiceProvider', (kpValueEditorConfigurationServiceProvider) => {
+ *                  kpValueEditorConfigurationServiceProvider.addValueEditorPreInitHook('html', () => new Promise((resolve) => {
+ *                      jQl.loadjQ('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js', () => {
+ *
+ *                          window.$ = $.noConflict();
+ *
+ *                          function loadScript(url) {
+ *                              return new Promise((resolve) => {
+ *                                    const element = document.createElement('script');
+ *                                    element.onload = resolve;
+ *                                    element.src = url;
+ *                                    element.type = 'text/javascript';
+ *                                    document.head.append(element);
+ *                              });
+ *                          }
+ *
+ *                          return Promise.all([
+ *                              loadScript('https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/trumbowyg.min.js'),
+ *                              loadScript('https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/colors/trumbowyg.colors.min.js'),
+ *                              loadScript('https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/plugins/table/trumbowyg.table.min.js')
+ *                          ])
+ *                          .then(() => $.trumbowyg.svgPath = 'https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.14.0/ui/icons.svg')
+ *                          .then(resolve);
+ *                      });
+ *                  }));
+ *              }]);
  *     </file>
  * </example>
  */

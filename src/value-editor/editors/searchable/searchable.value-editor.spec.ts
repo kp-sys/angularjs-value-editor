@@ -34,7 +34,7 @@ describe('searchable-value-editor', () => {
     }
 
     function createTimeouted(callback: () => void): () => Promise<void> {
-        return () => new Promise((resolve) => {
+        return () => new Promise<void>((resolve) => {
             setTimeout(() => {
                 callback();
 
@@ -87,7 +87,7 @@ describe('searchable-value-editor', () => {
 
         ngFlushPendingTasks();
 
-        new Promise((resolve) => {
+        new Promise<void>((resolve) => {
             setTimeout(() => {
                 expect(searchFunction).toHaveBeenCalledWith(INITIAL_MODEL_VALUE, ADDITIONAL_PARAMETERS, jasmine.anything());
                 resolve();
@@ -107,7 +107,7 @@ describe('searchable-value-editor', () => {
 
         ngFlushPendingTasks();
 
-        new Promise((resolve) => {
+        new Promise<void>((resolve) => {
             setTimeout(() => {
                 expect(editFunction).toHaveBeenCalledWith(undefined, ADDITIONAL_PARAMETERS, jasmine.anything());
                 resolve();

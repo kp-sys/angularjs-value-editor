@@ -3,6 +3,7 @@ import * as path from 'path';
 import {babelLoader, tsLoaderFactory} from './webpack-loaders';
 import {CleanWebpackPlugin} from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import UnminifiedWebpackPlugin from 'unminified-webpack-plugin';
 
 import * as pkg from './package.json';
 
@@ -169,10 +170,9 @@ module.exports = (env, {mode}) => ({
                 verbose: true,
                 cleanStaleWebpackAssets: false
             })];
-       /* TODO: UnminifiedWebpackPlugin has a bug...
         if (mode === 'production') {
             plugins.push(new UnminifiedWebpackPlugin());
-        }*/
+        }
 
         return plugins;
     })()

@@ -24,7 +24,7 @@ describe('kp-async-validation', () => {
             kpAsyncValidationServiceProvider.setValidationFunction(/*@ngInject*/ ($model: string) => {
                 validationFunction();
 
-                return new Promise((resolve) => resolve());
+                return new Promise<void>((resolve) => resolve());
             });
         });
 
@@ -49,7 +49,7 @@ describe('kp-async-validation', () => {
             kpAsyncValidationServiceProvider.setValidationFunction(/*@ngInject*/ ($model: string, $additionalParameters: string) => {
                 validationFunction($model, $additionalParameters);
 
-                return new Promise((resolve) => resolve());
+                return new Promise<void>((resolve) => resolve());
             });
         });
 
@@ -78,7 +78,7 @@ describe('kp-async-validation', () => {
             kpAsyncValidationServiceProvider.setValidationFunction(/*@ngInject*/ ($model: string, $formModel: {}) => {
                 validationFunction($model, $formModel);
 
-                return new Promise((resolve) => resolve());
+                return new Promise<void>((resolve) => resolve());
             });
         });
 
@@ -114,7 +114,7 @@ describe('kp-async-validation', () => {
             kpAsyncValidationServiceProvider.setValidationFunction(/*@ngInject*/ ($model: string, $formModel: {}) => {
                 validationFunction($model, $formModel);
 
-                return new Promise((resolve) => resolve());
+                return new Promise<void>((resolve) => resolve());
             });
         });
 
@@ -158,7 +158,7 @@ describe('kp-async-validation', () => {
             kpAsyncValidationServiceProvider.setValidationFunction(/*@ngInject*/ ($model: string, $formModel: {}) => {
                 validationFunction($model, $formModel);
 
-                return new Promise((resolve) => resolve());
+                return new Promise<void>((resolve) => resolve());
             });
 
             textValueEditorConfigurationServiceProvider.setConfiguration({

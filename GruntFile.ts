@@ -11,7 +11,7 @@ module.exports = (grunt) => {
             source: {
                 expand: true,
                 cwd: 'dist',
-                src: ['angularjs-value-editor.min.js', 'angularjs-value-editor.min.css'],
+                src: ['angularjs-value-editor.js', 'angularjs-value-editor.css'],
                 dest: 'docs'
             },
             demo: {
@@ -60,7 +60,7 @@ module.exports = (grunt) => {
                                 'https://unpkg.com/angular-sanitize/angular-sanitize.js',
                                 'https://unpkg.com/ui-select/dist/select.js',
                                 'https://unpkg.com/regenerator-runtime/runtime.js',
-                                `${process.env.EXAMPLES_SCRIPTS_URL_PREFIX || ''}/angularjs-value-editor.min.js`
+                                `${process.env.EXAMPLES_SCRIPTS_URL_PREFIX || ''}/angularjs-value-editor.js`
                             ],
                             stylesheets: [
                                 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
@@ -68,7 +68,7 @@ module.exports = (grunt) => {
                                 'https://unpkg.com/@kpsys/angularjs-bootstrap-datetimepicker/dist/angularjs-bootstrap-datetimepicker.css',
                                 'https://unpkg.com/@kpsys/angularjs-histogram-slider/dist/slider.css',
                                 'https://unpkg.com/ui-select/dist/select.css',
-                                `${process.env.EXAMPLES_SCRIPTS_URL_PREFIX || ''}/angularjs-value-editor.min.css`
+                                `${process.env.EXAMPLES_SCRIPTS_URL_PREFIX || ''}/angularjs-value-editor.css`
                             ]
                         }
                     }
