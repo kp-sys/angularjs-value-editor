@@ -335,7 +335,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
  *                  sortComparator: $ctrl.sortComparator,
  *                  equalityComparator: $ctrl.equalityComparator,
  *                  modelAsArray: $ctrl.modelAsArray,
- *                  switchToBlockModeThreshold: $ctrl.switchToBlockModeThreshold
+ *                  switchToInlineModeThreshold: $ctrl.switchToInlineModeThreshold
  *              }" placeholder="'Select...'">
  *              </kp-value-editor>
  *              <div>Model: {{model}}</div>
@@ -350,7 +350,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
  *              <div>showFirstCount: <input type="number" ng-model="$ctrl.showFirstCount"></div>
  *              <div>selectedFirst: <input type="checkbox" ng-model="$ctrl.selectedFirst"></div>
  *              <div>sortModel: <input type="checkbox" ng-model="$ctrl.sortModel"></div>
- *              <div>switchToBlockModeThreshold: <input type="number" ng-model="$ctrl.switchToBlockModeThreshold"></div>
+ *              <div>switchToInlineModeThreshold: <input type="number" ng-model="$ctrl.switchToInlineModeThreshold"></div>
  *              <div>sortComparator: <input type="text" ng-model="$ctrl.sortComparatorString" ng-change="$ctrl.evalComparators()"></div>
  *              <div>equalityComparator: <input type="text" ng-model="$ctrl.equalityComparatorString" ng-change="$ctrl.evalComparators()"></div>
  *              <div>modelAsArray: <input type="checkbox" ng-model="$ctrl.modelAsArray"></div>
@@ -366,7 +366,7 @@ export class AcceptableValueEditorComponentController<VALUE> extends AbstractTem
  *              showFirstCount;
  *              selectedFirst;
  *              sortModel;
- *              switchToBlockModeThreshold;
+ *              switchToInlineModeThreshold;
  *              modelAsArray;
  *              sortComparatorString = `($element1, $element2) => (($element1 || {x: ''}).x || '').localeCompare(($element2 || {x: ''}).x) * -1`;
  *              equalityComparatorString = '($element1, $element2) => $element1 && $element2 && $element1.x === $element2.x';

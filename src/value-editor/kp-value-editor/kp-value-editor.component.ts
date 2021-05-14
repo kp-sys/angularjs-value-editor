@@ -1,3 +1,4 @@
+import './kp-value-editor.less';
 import * as angular from 'angular';
 import {
     IAugmentedJQuery,
@@ -8,6 +9,7 @@ import {
     IOnChanges,
     IOnDestroy,
     IOnInit,
+    IQService,
     ITemplateCacheService,
     ITimeoutService
 } from 'angular';
@@ -15,7 +17,7 @@ import NgModelConnector from '../utils/ng-model-connector';
 import {generateUuid} from '../utils/uuid-generator';
 import {TValueEditorType} from '../typings';
 import KpValueEditorAliasesService, {CustomValueEditorType} from '../aliases/kp-value-editor-aliases.service';
-import {KpValueEditorConfigurationService} from './kp-value-editor-configuration-provider';
+import {KpValueEditorConfigurationService, ValueEditorPreInitHook} from './kp-value-editor-configuration-provider';
 import AbstractValueEditorComponentController from '../abstract/abstract-value-editor-component-controller';
 import {customEquals, PropertyChangeDetection, whichPropertiesAreNotEqual} from '../utils/equals';
 import KpUniversalFormComponent, {KpUniversalFormComponentController} from '../kp-universal-form/kp-universal-form.component';
@@ -24,6 +26,8 @@ import KpValueEditorForceSettingsComponent, {KpValueEditorForceSettingsComponent
 import {KpValueEditorRegistrationService} from './kp-value-editor-registration.provider';
 import {Component} from '@kpsys/angularjs-register';
 import {KpAsyncValidationOptions} from '../kp-async-validation/kp-async-validation.directive';
+import bind from 'bind-decorator';
+import IInjectorService = angular.auto.IInjectorService;
 
 export enum ValueEditorSize {
     MD = 'md',
@@ -60,6 +64,7 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
     public valueEditorInstance: AbstractValueEditorComponentController<MODEL, EDITOROPTS>;
     /* Internal */
     public templateUrl: string;
+    public showWaitingSpinner: boolean;
     private uuid: string;
     private previousOptions: EDITOROPTS;
     private optionChangeListeners: Array<(newOptions?: EDITOROPTS, oldOptions?: EDITOROPTS, whatChanged?: PropertyChangeDetection<EDITOROPTS>) => void> = [];
@@ -72,7 +77,11 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
                 private $templateCache: ITemplateCacheService,
                 private kpValueEditorRegistrationService: KpValueEditorRegistrationService,
                 private $document: IDocumentService,
-                private $timeout: ITimeoutService) {
+                private $timeout: ITimeoutService,
+                private $injector: IInjectorService,
+                private $q: IQService,
+                public loadingSpinnerTemplateUrl: string,
+                private showLoadingSpinnerDueToEditorHookDelay: number) {
         super();
         this.configuration = kpValueEditorConfigurationService;
         this.uuid = generateUuid();
@@ -98,7 +107,29 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
         }
 
         if (!this.templateUpdated) {
-            this.updateTemplate();
+
+            const preInitHooks = this.configuration.getPreInitHooksFor(this.type);
+
+            if (preInitHooks) {
+                const showSpinnerTimeoutPromise = this.$timeout(() => this.showWaitingSpinner = true, this.showLoadingSpinnerDueToEditorHookDelay);
+
+                const hookPromises: Array<Promise<void>> = preInitHooks
+                    ?.filter(({runOnce, triggered}) => (runOnce && !triggered) || !runOnce)
+                    .map(this.invokePreInitHook) ?? [Promise.resolve()];
+
+                this.$q.all(hookPromises)
+                    .then(() => {
+                        this.$timeout.cancel(showSpinnerTimeoutPromise);
+                        this.showWaitingSpinner = false;
+                    })
+                    .then(this.updateTemplate)
+                    .catch(() => {
+                        throw new Error(`Error in pre init hook of ${this.type} value editor`);
+                    });
+            } else {
+                this.showWaitingSpinner = false;
+                this.updateTemplate();
+            }
         }
     }
 
@@ -157,6 +188,23 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
         }
     }
 
+    @bind
+    private invokePreInitHook(hook: ValueEditorPreInitHook): Promise<void> {
+        if (hook.runOnce && hook.triggered) {
+            return;
+        }
+
+        const result = this.$injector.invoke(hook.hook);
+
+        if (!result || !result?.then) {
+            throw new Error(`Result from pre-init hook of ${this.type} editor must be Promise`);
+        }
+
+        hook.triggered = true;
+        return result;
+    }
+
+    @bind
     private updateTemplate() {
         const selector = this.kpValueEditorRegistrationService.getSelectorForType(this.resolveAlias());
 
@@ -256,7 +304,7 @@ export default class KpValueEditorComponent implements Component<ValueEditorBind
 
     public controller = KpValueEditorComponentController;
 
-    public template = '<ng-include src="$ctrl.templateUrl"></ng-include>';
+    public templateUrl = require('./kp-value-editor.tpl.pug');
 }
 
 /**

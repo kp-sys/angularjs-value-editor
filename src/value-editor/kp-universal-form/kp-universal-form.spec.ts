@@ -254,7 +254,7 @@ describe('kp-universal-form', () => {
                 kpAsyncValidationServiceProvider.setValidationFunction(/*@ngInject*/ ($model: string, $formModel: {}) => {
                     validationFunction($model, $formModel);
 
-                    return new Promise((resolve) => resolve());
+                    return new Promise<void>((resolve) => resolve());
                 });
             });
 

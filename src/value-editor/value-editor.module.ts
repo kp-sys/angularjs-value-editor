@@ -94,6 +94,17 @@ export default register('angularjs-value-editor', [
     asyncValidationsModule,
     universalFormModule
 ])
+    /**
+     * @ngdoc constant
+     * @name showLoadingSpinnerDueToEditorHookDelay
+     * @module angularjs-value-editor
+     *
+     * @description
+     * If pre init hook takes more than this time, loading spinner is displayed.
+     *
+     * Default value is `100` [ms].
+     */
+    .constant('showLoadingSpinnerDueToEditorHookDelay', 100)
     .constant('loadingSpinnerTemplateUrl', LOADING_SPINNER_TPL_URL)
     .config(valueEditorsConfig)
     .provider(EmptyConfigurationService.serviceName, EmptyConfigurationService)

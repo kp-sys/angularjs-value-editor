@@ -45,7 +45,7 @@ describe('AbstractValueEditorComponentController', () => {
 
         ngFlushPendingTasks();
 
-        new Promise((resolve) => {
+        new Promise<void>((resolve) => {
             setTimeout(() => {
                 resolve();
             }, 150);

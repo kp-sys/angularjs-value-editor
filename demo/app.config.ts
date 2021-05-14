@@ -19,6 +19,9 @@ export default function config(
     kpUniversalFormConfigurationServiceProvider.setAutofocusFirstField(true);
     kpValueEditorConfigurationServiceProvider.setDebugMode(false);
     kpValueEditorConfigurationServiceProvider.setPreciseWatchForOptionsChanges(false);
+    kpValueEditorConfigurationServiceProvider.addValueEditorPreInitHook('searchable', async () => new Promise<void>((resolve) => {
+        setTimeout(resolve, 2000);
+    }), true);
 
     searchableValueEditorConfigurationServiceProvider.setConfiguration({
         searchModelFunction: /*@ngInject*/ ($model, $uibModal) => $uibModal.open({

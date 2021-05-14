@@ -328,7 +328,7 @@ describe('list-value-editor', () => {
         addItem();
         ngFlushPendingTasks();
 
-        new Promise((resolve) => {
+        new Promise<void>((resolve) => {
             setTimeout(() => {
                 expect(onAddItemFunction).toHaveBeenCalledWith(jasmine.arrayContaining(['hello']), 'listEditor', {blabla: 'ughugh'}, jasmine.anything());
 
@@ -389,7 +389,7 @@ describe('list-value-editor', () => {
 
         ngFlushPendingTasks();
 
-        new Promise((resolve) => {
+        new Promise<void>((resolve) => {
             setTimeout(() => {
                 expect(onAddItemFunction).toHaveBeenCalledWith({
                     texts: [],
@@ -421,7 +421,7 @@ describe('list-value-editor', () => {
         addItem();
         ngFlushPendingTasks();
 
-        new Promise((resolve) => {
+        new Promise<void>((resolve) => {
             setTimeout(() => {
                 expect(onAddItemFunction).toHaveBeenCalledWith(undefined, jasmine.anything());
                 resolve();

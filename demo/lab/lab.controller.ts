@@ -11,7 +11,7 @@ export default class LabController {
     public formSettings = {
         fields: [
             {
-                fieldName: 'search',
+                fieldName: 'searchable',
                 label: 'searchable',
                 editor: {
                     type: 'searchable',
