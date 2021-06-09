@@ -12,7 +12,6 @@ export default class KpUniversalFormConfigurationServiceProvider {
 
     #autofocusFirstField: boolean = false;
 
-
     /**
      * @ngdoc method
      * @name kpUniversalFormConfigurationServiceProvider#setAutofocusFirstField
