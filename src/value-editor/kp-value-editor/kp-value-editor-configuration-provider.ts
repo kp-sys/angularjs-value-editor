@@ -129,7 +129,7 @@ export default class KpValueEditorConfigurationServiceProvider {
                     return this.#valueEditorPreInitHooks[type];
                 }
             }
-        });
+        }) as KpValueEditorConfigurationService;
     }
 }
 
