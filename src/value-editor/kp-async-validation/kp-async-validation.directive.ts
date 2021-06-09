@@ -131,7 +131,7 @@ export default class KpAsyncValidationDirective {
             const currentProperty: Pick<MODEL, PROPERTY> = Object.defineProperty({}, propertyName, {
                 value,
                 enumerable: true
-            });
+            }) as Pick<MODEL, PROPERTY>;
 
             return Object.assign({}, model, currentProperty);
         }
