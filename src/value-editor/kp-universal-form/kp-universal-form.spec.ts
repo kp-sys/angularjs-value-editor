@@ -18,6 +18,7 @@ interface UniversalFormScope extends IScope {
 }
 
 const FORM_SETTINGS: KpUniversalFormSettings = {
+    text: 'Hello',
     header: '<div class="hello"></div>',
     footer: '<div class="footer"></div>',
     fields: [

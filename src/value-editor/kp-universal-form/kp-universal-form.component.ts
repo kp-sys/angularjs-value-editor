@@ -27,6 +27,7 @@ import {Component} from '@kpsys/angularjs-register';
  *
  */
 export interface KpUniversalFormSettings<FIELDS extends ObjectValueEditorField[] = ObjectValueEditorField[]> {
+    text?: string;
     fields: FIELDS;
     header?: string;
     footer?: string;
