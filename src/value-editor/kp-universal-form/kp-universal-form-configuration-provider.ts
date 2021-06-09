@@ -34,7 +34,7 @@ export default class KpUniversalFormConfigurationServiceProvider {
             autofocusFirstField: {
                 get: () => this.#autofocusFirstField
             }
-        })
+        }) as KpUniversalFormConfigurationService
     }
 }
 
