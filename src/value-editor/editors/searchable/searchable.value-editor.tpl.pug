@@ -3,7 +3,7 @@
 span.model-value(ng-class="'size-' + $ctrl.valueEditorController.size" ng-if="$ctrl.model") {{modelTemplate}}
 span.text-muted.placeholder(ng-class="'size-' + $ctrl.valueEditorController.size" ng-if="!$ctrl.model" ng-bind="$ctrl.valueEditorController.placeholder")
 
-button.search-button.btn.btn-default(type="button" ng-class="'btn-' + $ctrl.valueEditorController.size" ng-disabled="$ctrl.valueEditorController.isDisabled || $ctrl.searching" ng-click="$ctrl.search()" kp-focusable-input="$ctrl.connectToFocusApi($api)")
+button.search-button.btn.btn-default(type="button" ng-class="'btn-' + $ctrl.valueEditorController.size" ng-disabled="$ctrl.valueEditorController.isDisabled || $ctrl.searching" ng-show="$ctrl.hasSearchModelFunction" ng-click="$ctrl.search()" kp-focusable-input="$ctrl.connectToFocusApi($api)")
     span.glyphicon.glyphicon-search(ng-hide="$ctrl.searching")
     ng-include.glyphicon.searchable-loading-svg(src="$ctrl.loadingSpinnerTemplateUrl" ng-show="$ctrl.searching")
     span(ng-if="$ctrl.model" ng-bind="$ctrl.localize('searchOther')")

@@ -222,6 +222,21 @@ describe('searchable-value-editor', () => {
         valueEditorMocker.detachElementFromDocument();
 
     });
+
+    it('should not have visible search button if searchModelFunction is null', () => {
+        const element = valueEditorMocker.create('searchable', {
+            editorName: 'searchable',
+            options: {
+                searchModelFunction: null
+            }
+        }, true);
+
+        const searchButtonElement = element.querySelector<HTMLButtonElement>('.search-button');
+
+        expect(isVisibleInDOM(searchButtonElement)).toBe(false);
+
+        valueEditorMocker.detachElementFromDocument();
+    });
 });
 
 function isVisibleInDOM(element: HTMLElement): boolean {
