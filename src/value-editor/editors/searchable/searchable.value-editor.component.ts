@@ -54,6 +54,10 @@ export class SearchableValueEditorComponentController<MODEL = any> extends Abstr
         return isInjectable(this.options.editModelFunction) || angular.isFunction(this.options.editModelFunction);
     }
 
+    public get hasSearchModelFunction(): boolean {
+        return isInjectable(this.options.searchModelFunction) || angular.isFunction(this.options.searchModelFunction);
+    }
+
     public async search() {
         this.$timeout(() => this.searching = true);
 
