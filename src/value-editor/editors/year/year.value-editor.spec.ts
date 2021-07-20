@@ -109,4 +109,11 @@ describe('year-value-editor', () => {
         valueEditorMocker.detachElementFromDocument();
     });
 
+    it('should corretly parse year before 1892', () => {
+        valueEditorMocker.create('year');
+        valueEditorMocker.getInputElement<HTMLInputElement>().value = '1666';
+        valueEditorMocker.triggerHandlerOnInput('input');
+
+        expect($scope.model).toBe(1666);
+    });
 });
