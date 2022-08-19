@@ -2,7 +2,7 @@
     ul(ng-ref="ulElement")
         li.av-item(ng-attr-title="{{titleTemplate}}" ng-repeat="$item in $ctrl.getAcceptableValuesForCheckboxes() track by $index" ng-init="index = $index")
             include ./checkbox-template.tpl.pug
-            span.checkbox-label(ng-click="$ctrl.updateModel($item)") {{optionsTemplate}}
+            span.checkbox-label(id="\\{\\{$ctrl.valueEditorController.editorName + '_label_{{uuid}}_' + index\\}\\}" ng-click="$ctrl.updateModel($item)") {{optionsTemplate}}
 
         li.more-container(class="{{uuid}}" ng-if="$ctrl.hasMore()")
             style(type="text/css").
@@ -14,7 +14,7 @@
             ul
                 li.av-item(ng-attr-title="{{titleTemplate}}" ng-repeat="$item in $ctrl.getAcceptableValuesForCheckboxes($ctrl.options.showFirstCount, 9007199254740990) track by $index" ng-init="index = $index + $ctrl.options.showFirstCount")
                     include ./checkbox-template.tpl.pug
-                    span.checkbox-label(ng-click="$ctrl.updateModel($item)") {{optionsTemplate}}
+                    span.checkbox-label(id="\\{\\{$ctrl.valueEditorController.editorName + '_label_{{uuid}}_' + index\\}\\}" ng-click="$ctrl.updateModel($item)") {{optionsTemplate}}
 
             label.more-label(for="check-{{uuid}}")
                 i.glyphicon(ng-class="expanded ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'")

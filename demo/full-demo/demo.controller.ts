@@ -181,6 +181,7 @@ export default class DemoController {
                     required: true
                 },
                 options: {
+                    optionsTemplate: '{{$item}}',
                     acceptableValues: [
                         'one',
                         'two',
