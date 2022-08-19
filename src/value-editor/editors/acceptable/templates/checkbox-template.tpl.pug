@@ -9,8 +9,10 @@
         ng-click="$ctrl.updateModel($item)"
 
         ng-disabled="$ctrl.isDisabled($item)"
+
+        aria-labelledby="\\{\\{$ctrl.valueEditorController.editorName + '_label_{{uuid}}_' + index\\}\\}"
     )
 
-    .state.p-primary
+    .state.p-primary(aria-hidden="true")
         i.icon.glyphicon.glyphicon-ok
         label &nbsp;
