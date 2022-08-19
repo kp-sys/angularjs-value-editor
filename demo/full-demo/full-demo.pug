@@ -5,6 +5,7 @@ main.container-fluid(ng-controller="demoController as $ctrl" ng-init="isDisabled
     .row
         .col-sm-4
             kp-universal-form(
+                form-id="form-md"
                 name="myForm"
                 form-settings="::{fields: $ctrl.fields}"
                 form-controller="formController = $formController"
@@ -16,6 +17,7 @@ main.container-fluid(ng-controller="demoController as $ctrl" ng-init="isDisabled
             )
         .col-sm-4
             kp-universal-form(
+                form-id="form-sm"
                 name="myForm"
                 form-settings="::{fields: $ctrl.fields}"
                 form-controller="formController = $formController"
@@ -27,6 +29,7 @@ main.container-fluid(ng-controller="demoController as $ctrl" ng-init="isDisabled
             )
         .col-sm-4
             kp-universal-form(
+                form-id="form-xs"
                 name="myForm"
                 form-settings="::{fields: $ctrl.fields}"
                 form-controller="formController = $formController"

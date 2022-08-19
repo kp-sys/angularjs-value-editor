@@ -22,6 +22,7 @@ const TEXT_INPUTS: TTextValueEditorType[] = [
     'tel'
 ];
 
+
 export class TextValueEditorComponentController extends AbstractValueEditorComponentController<string, TextValueEditorOptions, TextValueEditorValidations> implements IOnInit, IDoCheck {
 
     public preSufFixedNgModelController: INgModelController;

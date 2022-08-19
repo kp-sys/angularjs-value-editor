@@ -24,12 +24,14 @@ export default class YearParserDirective {
 
     public link($scope: IScope, $element: IAugmentedJQuery, $attrs: IAttributes, ngModelController: INgModelController) {
         function modelParser(textYear: string): number {
+            console.warn('year-parser', textYear, typeof textYear)
             if (!textYear) return null;
 
             return parseInt(textYear, 10);
         }
 
         function modelFormatter(numberYear: number): string {
+            console.warn('year-formatter', numberYear, typeof numberYear)
             if (!numberYear) return null;
 
             return String(numberYear);

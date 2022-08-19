@@ -96,9 +96,9 @@ export abstract class KpValueEditorComponentController<MODEL = any, EDITOROPTS e
             this.$onChanges = this.processOptionsChange;
         }
 
-        this.previousOptions = angular.copy(this.options);
+        this.previousOptions = angular.copy(this.options); // TODO prozkoumat
 
-        if (!this.editorName) {
+        if (!this.editorName) { // done
             this.editorName = this.editorId || this.generateEditorName();
         }
 

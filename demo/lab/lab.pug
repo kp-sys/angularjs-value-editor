@@ -1,13 +1,17 @@
 main.container(ng-controller="labController as $ctrl")
 
+    button(ng-click="$ctrl.test()") Tests
+
     kp-universal-form(
         form-id="aj-dyy"
         ng-model="$ctrl.model"
+        ng-model-options="{debounce: 1000}"
         ng-change="$ctrl.change()"
-
+        form-controller="formController = $formController"
         form-settings="$ctrl.formSettings"
     )
 
 
     div Model:
     pre {{$ctrl.model | json}}
+    pre(ng-bind="formController | json")

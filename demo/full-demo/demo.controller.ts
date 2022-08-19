@@ -9,6 +9,7 @@ import {ITimeoutService} from 'angular';
 import {PasswordValueEditorLocalizations} from '../../src/value-editor/editors/password/password-value-editor-localization.provider';
 import {TextValueEditorLocalizations} from '../../src/value-editor/editors/text/text-value-editor-localization.provider';
 import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../src/value-editor/common/directives/disable-ngAnimate.directive';
+import { DateValueEditorOptions } from 'src/value-editor/editors/date/date-value-editor-configuration.provider';
 
 export default class DemoController {
     public static readonly controllerName = 'demoController';
@@ -20,13 +21,13 @@ export default class DemoController {
         {
             label: 'text:text',
             fieldName: 'text-text',
+            hint: 'super truper hint',
             editor: {
                 type: 'text',
                 editorName: 'text-text',
 
                 validations: {
                     required: true,
-                    pattern: 'abc',
                     minlength: 5
                 } as TextValueEditorValidations,
                 localizations: {
@@ -123,7 +124,12 @@ export default class DemoController {
             editor: {
                 type: 'date',
                 editorName: 'date',
+                options: {
+                    // maximumGranularity: 'hour',
+                    // viewFormat: 'd.L.y HH:mm',
+                    // onlyDate: true,
 
+                } as DateValueEditorOptions,
                 validations: {
                     required: true
                 }
@@ -181,6 +187,7 @@ export default class DemoController {
                     required: true
                 },
                 options: {
+                    optionsTemplate: '{{$item}}',
                     acceptableValues: [
                         'one',
                         'two',
@@ -360,6 +367,7 @@ export default class DemoController {
         }
     ];
 
+    public settings = {fields: this.fields};
     public forceShowErrors() {
         this.showErrors = !this.showErrors;
     }

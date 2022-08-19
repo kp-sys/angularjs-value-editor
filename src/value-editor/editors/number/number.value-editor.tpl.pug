@@ -1,31 +1,31 @@
-input.form-control(
-    type="number"
+input.form-control( 
+    type="number" 
 
-    id="{{$ctrl.valueEditorController.editorId}}"
-    name="{{$ctrl.valueEditorController.editorName}}"
-    placeholder="{{$ctrl.valueEditorController.placeholder}}"
+    id="{{$ctrl.valueEditorController.editorId}}" 
+    name="{{$ctrl.valueEditorController.editorName}}" 
+    placeholder="{{$ctrl.valueEditorController.placeholder}}" 
 
-    class="{{$ctrl.options.hideSpinners ? 'hide-spinners' : ''}}"
-    step="{{$ctrl.options.step}}"
-    min="{{$ctrl.valueEditorController.validations.min}}"
-    max="{{$ctrl.valueEditorController.validations.max}}"
+    class="{{$ctrl.options.hideSpinners ? 'hide-spinners' : ''}}" 
+    step="{{$ctrl.options.step}}" 
+    min="{{$ctrl.valueEditorController.validations.min}}" 
+    max="{{$ctrl.valueEditorController.validations.max}}" 
 
-    ng-model="$ctrl.model"
-    ng-model-options="{ getterSetter: true}"
+    ng-model="$ctrl.model" 
+    ng-model-options="{ getterSetter: true}" 
 
-    ng-disabled="$ctrl.valueEditorController.isDisabled"
+    ng-disabled="$ctrl.valueEditorController.isDisabled" 
 
-    ng-class="'input-' + $ctrl.valueEditorController.size"
+    ng-class="'input-' + $ctrl.valueEditorController.size" 
 
-    ng-required="$ctrl.valueEditorController.validations.required"
-    ng-minlength="$ctrl.valueEditorController.validations.minlength"
-    ng-maxlength="$ctrl.valueEditorController.validations.maxlength"
+    ng-required="$ctrl.valueEditorController.validations.required" 
+    ng-minlength="$ctrl.valueEditorController.validations.minlength" 
+    ng-maxlength="$ctrl.valueEditorController.validations.maxlength" 
 
-    kp-async-validation="$ctrl.valueEditorController.validations.async"
+    kp-async-validation="$ctrl.valueEditorController.validations.async" 
 
     kp-focusable-input="$ctrl.connectToFocusApi($api)"
 
-    error-messages
+    error-messages 
 
-    data-main-input
+    data-main-input  
 )

@@ -17,10 +17,10 @@ export default function config(
     acceptableValueEditorConfigurationServiceProvider: AcceptableValueEditorConfigurationServiceProvider<any>
 ) {
     kpUniversalFormConfigurationServiceProvider.setAutofocusFirstField(true);
-    kpValueEditorConfigurationServiceProvider.setDebugMode(false);
+    kpValueEditorConfigurationServiceProvider.setDebugMode(true);
     kpValueEditorConfigurationServiceProvider.setPreciseWatchForOptionsChanges(false);
     kpValueEditorConfigurationServiceProvider.addValueEditorPreInitHook('searchable', async () => new Promise<void>((resolve) => {
-        setTimeout(resolve, 2000);
+        setTimeout(resolve, 30_000);
     }), true);
 
     searchableValueEditorConfigurationServiceProvider.setConfiguration({

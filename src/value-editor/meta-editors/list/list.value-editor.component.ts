@@ -120,6 +120,7 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
     }
 
     public canRemoveItems(): boolean {
+        // return true;
         return Array.isArray(this.model) &&
             ((this.model.length > 0 && !this.valueEditorController.validations?.required) ||
                 (this.model.length > 1 && this.valueEditorController.validations?.required)
@@ -127,6 +128,7 @@ export class ListValueEditorComponentController<MODEL, OPTIONS extends ValueEdit
     }
 
     public canAddItem(): boolean {
+        // return true;
         if (!Array.isArray(this.model)) return true;
 
         const maxCount = this.valueEditorController.validations?.maxCount;

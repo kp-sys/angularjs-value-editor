@@ -19,22 +19,22 @@ import {FocusableInputAPI} from '../common/directives/kp-focusable-input.directi
  * @template OPTIONS
  */
 export default abstract class AbstractValueEditorComponentController<MODEL, OPTIONS extends ValueEditorOptions, VALIDATIONS extends ValueEditorValidations = ValueEditorValidations> extends NgModelConnector<MODEL> implements IPostLink, IOnInit {
-    private static $inject = ['emptyConfigurationService'];
+    private static $inject = ['emptyConfigurationService']; // ???
 
     public options: OPTIONS;
-    protected valueEditorController: KpValueEditorComponentController<MODEL, OPTIONS, VALIDATIONS>;
-    protected focusApi: FocusableInputAPI = null;
+    protected valueEditorController: KpValueEditorComponentController<MODEL, OPTIONS, VALIDATIONS>;//nn
+    protected focusApi: FocusableInputAPI = null; //nn
 
     constructor(protected configurationService: AbstractValueEditorConfigurationService<OPTIONS>, protected localizationService?: AbstractValueEditorLocalizationService<any>) {
-        super();
-        this.options = angular.merge({}, this.configurationService.getConfiguration());
+        super(); // nn
+        this.options = angular.merge({}, this.configurationService.getConfiguration()); // nn
     }
 
     public $onInit(): void {
-        super.$onInit();
+        super.$onInit(); // nn
 
-        this.valueEditorController.registerValueEditor(this);
-        this.options = this.processNewOptions(this.valueEditorController.options);
+        this.valueEditorController.registerValueEditor(this); //nn - pres bind
+        this.options = this.processNewOptions(this.valueEditorController.options);// done
     }
 
     public $postLink(): void {
@@ -43,8 +43,8 @@ export default abstract class AbstractValueEditorComponentController<MODEL, OPTI
             this.onOptionsChange(this.options, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration() as unknown as OPTIONS, whichPropertiesAreNotEqual(this.options, this.configurationService.forAlias(this.valueEditorController.type).getConfiguration() as unknown as OPTIONS));
         }
 
-        this.ngModelController.$parsers.push(this.emptyAsNullParser);
-        this.ngModelController.$formatters.push(this.emptyAsNullFormatter);
+        this.ngModelController.$parsers.push(this.emptyAsNullParser); // TODO
+        this.ngModelController.$formatters.push(this.emptyAsNullFormatter); // TODO
         this.valueEditorController.onValueEditorPostLink();
     }
 
