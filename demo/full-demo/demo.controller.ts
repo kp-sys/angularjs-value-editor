@@ -10,11 +10,12 @@ import {PasswordValueEditorLocalizations} from '../../src/value-editor/editors/p
 import {TextValueEditorLocalizations} from '../../src/value-editor/editors/text/text-value-editor-localization.provider';
 import {UndocumentedDisableNgAnimateValueEditorInternalOption} from '../../src/value-editor/common/directives/disable-ngAnimate.directive';
 import { DateValueEditorOptions } from 'src/value-editor/editors/date/date-value-editor-configuration.provider';
+import { AutocompleteValueEditorOptions } from 'src/value-editor/editors/autocomplete/autocomplete-value-editor-configuration.provider';
 
 export default class DemoController {
     public static readonly controllerName = 'demoController';
 
-    public model = {};
+    public model = {'acceptable-block-single': 'xxx', 'acceptable-inline-single': 'yyy'};
     public showErrors: boolean;
 
     public fields: ObjectValueEditorField[] = [
@@ -141,10 +142,12 @@ export default class DemoController {
             editor: {
                 type: 'single-acceptable',
                 editorName: 'acceptable-inline-single',
+                placeholder: 'some placeholder',
                 validations: {
-                    required: true
+                    required: false
                 },
                 options: {
+                    searchable: false,
                     acceptableValues: [
                         'one',
                         'two',
@@ -171,7 +174,7 @@ export default class DemoController {
                         'three'
                     ],
                     switchToInlineModeThreshold: 0,
-                    allowSelectNull: false,
+                    allowSelectNull: true,
                     __forceDisableNgAnimate: true
                 } as AcceptableValueEditorOptions<string> & UndocumentedDisableNgAnimateValueEditorInternalOption
             }
@@ -182,7 +185,7 @@ export default class DemoController {
             editor: {
                 type: 'acceptable',
                 editorName: 'acceptable-inline-multiple',
-
+                isDisabled: true,
                 validations: {
                     required: true
                 },
@@ -204,7 +207,7 @@ export default class DemoController {
             editor: {
                 type: 'multiple-acceptable',
                 editorName: 'acceptableCheckboxes',
-
+                isDisabled: true,
                 validations: {
                     required: true
                 },
@@ -237,7 +240,9 @@ export default class DemoController {
             editor: {
                 type: 'autocomplete',
                 editorName: 'autocomplete',
-
+                options: {
+                    dataSource: () => Promise.resolve(['one', 'two', 'three'])
+                } as AutocompleteValueEditorOptions,
                 validations: {
                     required: true
                 }

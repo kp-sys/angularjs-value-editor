@@ -499,7 +499,8 @@ describe('acceptable-value-editor', () => {
                 valueEditorMocker.create('acceptable', {
                     options: {
                         acceptableValues: ACCEPTABLE_VALUES,
-                        modelAsArray: true, switchToInlineModeThreshold: 0
+                        modelAsArray: true, 
+                        switchToInlineModeThreshold: 0
                     }
                 });
 

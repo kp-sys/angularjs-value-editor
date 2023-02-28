@@ -3,13 +3,18 @@ import {SearchableValueEditorOptions} from '../../src/value-editor/editors/searc
 import { TextValueEditorValidations } from 'src/value-editor/editors/text/text.value-editor.component';
 import { TextValueEditorOptions } from 'src/value-editor/editors/text/text-value-editor-configuration.provider';
 import { ObjectValueEditorOptions } from 'src/value-editor/meta-editors/object/object-value-editor-configuration.provider';
+import { UndocumentedDisableNgAnimateValueEditorInternalOption } from 'src/value-editor/common/directives/disable-ngAnimate.directive';
+import { AcceptableValueEditorOptions } from 'src/value-editor/editors/acceptable/acceptable-value-editor-configuration.provider';
+import { AcceptableRootValueEditorOptions } from 'src/value-editor/editors/acceptable-root/acceptable-root-value-editor-configuration.provider';
 
 export default class LabController {
     public static readonly controllerName = 'labController';
 
     public model = {
         textFieldName: 'ahoj',
-        someList: null
+        someList: null,
+        'acceptable-single': 'two',
+        'acceptable-multiple': ['four', 'six']
     };
 
     public change() {
@@ -151,7 +156,142 @@ export default class LabController {
                         }
                     }
                 }
-            }
+            },
+            {
+                label: 'acceptable:single',
+                fieldName: 'acceptable-single',
+                editor: {
+                    type: 'single-acceptable',
+                    validations: {
+                        required: true
+                    },
+                    options: {
+                        switchToInlineModeThreshold: 3,
+                        disabledItemsResolver: /*@ngInject*/($item) => $item === 'two',
+                        reorderable: true,
+                        acceptableValues: [
+                            'one',
+                            'two',
+                            'three',
+                            'four',
+                            'five',
+                            'six',
+                            'seven',
+                            'eight',
+                            'nine',
+                            'ten',
+                            'eleven',
+                            'tvelfe',
+                            'thirteen',
+                            'fourteen',
+                            'fifteen'
+                        ],
+                        __forceDisableNgAnimate: true
+                    } as AcceptableValueEditorOptions<string> & UndocumentedDisableNgAnimateValueEditorInternalOption
+                }
+            },
+            {
+                label: 'acceptable:multiple',
+                fieldName: 'acceptable-multiple',
+                editor: {
+                    type: 'multiple-acceptable',
+                    validations: {
+                        required: true
+                    },
+                    options: {
+                        switchToInlineModeThreshold: 3,
+                        disabledItemsResolver: /*@ngInject*/($item) => $item === 'four',
+                        reorderable: true,
+                        acceptableValues: [
+                            'one',
+                            'two',
+                            'three',
+                            'four',
+                            'five',
+                            'six',
+                            'seven',
+                            'eight',
+                            'nine',
+                            'ten',
+                            'eleven',
+                            'tvelfe',
+                            'thirteen',
+                            'fourteen',
+                            'fifteen'
+                        ],
+                        // allowSelectNull: true,
+                        __forceDisableNgAnimate: true
+                    } as AcceptableValueEditorOptions<string> & UndocumentedDisableNgAnimateValueEditorInternalOption
+                }
+            },
+            {
+                label: 'acceptable-root',
+                fieldName: 'acceptable-root',
+                editor: {
+                    type: 'multiple-acceptable-root',
+                    isDisabled: true,
+                    validations: {
+                        required: true
+                    },
+                    options: {
+                        optionsTemplate: '{{$node.text}}',
+                        disabledItems: [
+                            {
+                                text: '1-1-2'
+                            },
+                            {
+                                text: '1-2',
+                                children: [
+                                    {
+                                        text: '1-2-1'
+                                    },
+                                    {
+                                        text: '1-2-2'
+                                    }
+                                ]
+                            }
+                        ],
+                        acceptableValue: {
+                            text: '0',
+                            children: [
+                                {
+                                    text: '1-1',
+                                    children: [
+                                        {
+                                            text: '1-1-1'
+                                        },
+                                        {
+                                            text: '1-1-2'
+                                        }
+                                    ]
+                                },
+                                {
+                                    text: '1-2',
+                                    children: [
+                                        {
+                                            text: '1-2-1'
+                                        },
+                                        {
+                                            text: '1-2-2'
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        // disabledItems: [{
+                        //     text: '1-1',
+                        //     children: [
+                        //         {
+                        //             text: '1-1-1'
+                        //         },
+                        //         {
+                        //             text: '1-1-2'
+                        //         }
+                        //     ]
+                        // }]
+                    } as AcceptableRootValueEditorOptions<any>
+                }
+            },
             // {
             //     fieldName: 'objectEditorWtf',
             //     label: 'object label',
